@@ -1,0 +1,123 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { MapPin, Navigation } from "lucide-react";
+
+export type Reseller = {
+  name: string;
+  address: string;
+  city: string;
+  country: string;
+  lat: number;
+  lng: number;
+};
+
+/** Icône « pin » BIEN (SVG) — évite les images marqueur par défaut de Leaflet. */
+function pinIcon(active: boolean) {
+  const color = active ? "#f5b301" : "#20302a";
+  return L.divIcon({
+    className: "",
+    html: `<svg width="30" height="42" viewBox="0 0 24 34" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 0C5.4 0 0 5.4 0 12c0 8.4 12 22 12 22s12-13.6 12-22C24 5.4 18.6 0 12 0z" fill="${color}"/>
+      <circle cx="12" cy="12" r="4.5" fill="#fffdf9"/>
+    </svg>`,
+    iconSize: [30, 42],
+    iconAnchor: [15, 42],
+    popupAnchor: [0, -38],
+  });
+}
+
+function directionsUrl(r: Reseller) {
+  return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(`${r.address}, ${r.city}, ${r.country}`)}`;
+}
+
+export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
+  const mapEl = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<L.Map | null>(null);
+  const markersRef = useRef<L.Marker[]>([]);
+  const [active, setActive] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (!mapEl.current || mapRef.current) return;
+
+    const map = L.map(mapEl.current, { scrollWheelZoom: false }).setView([47.5, 4.5], 5);
+    mapRef.current = map;
+
+    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
+      attribution: '&copy; OpenStreetMap &copy; CARTO',
+      subdomains: "abcd",
+      maxZoom: 19,
+    }).addTo(map);
+
+    resellers.forEach((r, i) => {
+      const marker = L.marker([r.lat, r.lng], { icon: pinIcon(false) })
+        .addTo(map)
+        .bindPopup(
+          `<strong>${r.name}</strong><br>${r.address}<br>${r.city} — ${r.country}` +
+            `<br><a href="${directionsUrl(r)}" target="_blank" rel="noopener">Voir l'itinéraire</a>`,
+        )
+        .on("click", () => setActive(i));
+      markersRef.current.push(marker);
+    });
+
+    // Cadre sur l'ensemble des points.
+    const group = L.featureGroup(markersRef.current);
+    map.fitBounds(group.getBounds().pad(0.2));
+
+    return () => {
+      map.remove();
+      mapRef.current = null;
+      markersRef.current = [];
+    };
+  }, [resellers]);
+
+  // Met à jour la couleur des marqueurs + centre sur l'actif.
+  useEffect(() => {
+    markersRef.current.forEach((m, i) => m.setIcon(pinIcon(i === active)));
+    if (active !== null && mapRef.current) {
+      const r = resellers[active];
+      mapRef.current.setView([r.lat, r.lng], 13, { animate: true });
+      markersRef.current[active]?.openPopup();
+    }
+  }, [active, resellers]);
+
+  return (
+    <div className="grid lg:grid-cols-[360px_1fr] rounded-3xl overflow-hidden ring-1 ring-border bien-shadow-sm bg-card">
+      {/* Liste */}
+      <div className="max-h-[320px] lg:max-h-[600px] overflow-y-auto divide-y divide-border">
+        {resellers.map((r, i) => (
+          <button
+            key={r.name}
+            type="button"
+            onClick={() => setActive(i)}
+            className={`w-full text-left p-4 sm:p-5 flex gap-3 transition-colors ${i === active ? "bg-bien-cream" : "hover:bg-bien-cream/50"}`}
+          >
+            <span className={`shrink-0 grid place-items-center h-9 w-9 rounded-full ${i === active ? "bg-bien-gold text-bien-forest" : "bg-bien-leaf/12 text-bien-leaf"}`}>
+              <MapPin className="h-4.5 w-4.5" />
+            </span>
+            <span className="min-w-0">
+              <span className="block font-display font-black text-black leading-tight">{r.name}</span>
+              <span className="mt-1 block text-sm text-black/65 leading-snug">{r.address}<br />{r.city} — {r.country}</span>
+              {i === active && (
+                <a
+                  href={directionsUrl(r)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-bien-leaf hover:underline"
+                >
+                  <Navigation className="h-3.5 w-3.5" /> Voir l&apos;itinéraire
+                </a>
+              )}
+            </span>
+          </button>
+        ))}
+      </div>
+
+      {/* Carte */}
+      <div ref={mapEl} className="h-[360px] lg:h-[600px] w-full bg-muted" aria-label="Carte des revendeurs BIEN" />
+    </div>
+  );
+}

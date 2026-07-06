@@ -1,26 +1,90 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  Design system BIEN — porté depuis la maquette Lovable validée.
+  Palette vert/crème/or, typo Bricolage Grotesque, ombres & dégradé sur-mesure.
+*/
+@theme {
+  /* Palette de marque */
+  --color-bien-forest: #20302a;
+  --color-bien-leaf: #3f6b4f;
+  --color-bien-sage: #6b7f6e;
+  --color-bien-cream: #f5f2ea;
+  --color-bien-gold: #f5b301;
+  --color-bien-bg: #fffdf9;
+
+  /* Tokens sémantiques */
+  --color-background: #fffdf9;
+  --color-foreground: #0a0a0a;
+  --color-card: #ffffff;
+  --color-card-foreground: #20302a;
+  --color-muted: #f1eee6;
+  --color-muted-foreground: #6b7f6e;
+  --color-border: #e7e1d3;
+
+  /* Typographies (variables injectées par next/font dans layout.tsx) */
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), system-ui, sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Texte +2px sur tout le site (16px → 18px de base) */
+    font-size: 112.5%;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.025em;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* --- Animations --- */
+@keyframes bien-fade-down { from { opacity: 0; transform: translateY(-14px); } to { opacity: 1; transform: none; } }
+@keyframes bien-fade-up   { from { opacity: 0; transform: translateY(18px); }  to { opacity: 1; transform: none; } }
+@keyframes bien-blink     { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* Curseur clignotant de la machine à écrire */
+.bien-caret { animation: bien-blink 1s steps(1) infinite; }
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Entrée au chargement */
+  .anim-down { animation: bien-fade-down 0.6s ease both; }
+  .anim-up   { animation: bien-fade-up 0.7s ease both; }
+  .anim-delay-1 { animation-delay: 0.12s; }
+  .anim-delay-2 { animation-delay: 0.22s; }
+
+  /* Révélation au défilement */
+  .reveal { opacity: 0; transform: translateY(30px); }
+  .reveal.in { opacity: 1; transform: none; transition: opacity 0.7s ease, transform 0.7s ease; }
+
+  /* Révélation directionnelle lente (cartes bénéfices) — chaque carte entre d'un sens différent */
+  .reveal-dir { opacity: 0; transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+  .reveal-dir.in { opacity: 1; transform: none; }
+  .reveal-from-left:not(.in)  { transform: translateX(-80px); }
+  .reveal-from-right:not(.in) { transform: translateX(80px); }
+  .reveal-from-up:not(.in)    { transform: translateY(-70px); }
+  .reveal-from-down:not(.in)  { transform: translateY(70px); }
+}
+
+@utility bien-shadow {
+  box-shadow: 0 20px 50px -25px color-mix(in oklab, #20302a 35%, transparent);
+}
+@utility bien-shadow-sm {
+  box-shadow: 0 8px 24px -12px color-mix(in oklab, #20302a 25%, transparent);
+}
+@utility hero-gradient {
+  background: linear-gradient(135deg, #356049 0%, #20302a 60%, #1b2a23 100%);
+}
+@utility press-gradient {
+  /* Dégradé magazine : halo rose/orange chaud sur base bleu-lavande (comme bien.health/pages/presse) */
+  background:
+    radial-gradient(120% 90% at 50% 42%, #f4a98f 0%, #e195b0 34%, #b7a6d6 62%, #9aa8d6 100%);
 }
