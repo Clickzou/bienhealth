@@ -22,13 +22,17 @@ export default function AddToCart({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const en = lang === "en";
+  const t = en
+    ? { added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart", aria: "Item added to cart" }
+    : { added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier", aria: "Article ajouté au panier" };
 
   function add() {
     addToCart(item);
     setOpen(true);
   }
 
-  const price = new Intl.NumberFormat("fr-FR", { style: "currency", currency: item.currency || "EUR" }).format(item.price);
+  const price = new Intl.NumberFormat(en ? "en-IE" : "fr-FR", { style: "currency", currency: item.currency || "EUR" }).format(item.price);
 
   return (
     <>
@@ -37,17 +41,17 @@ export default function AddToCart({
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Article ajouté au panier">
-          <button aria-label="Fermer" onClick={() => setOpen(false)} className="absolute inset-0 bg-bien-forest/45 backdrop-blur-sm" />
+        <div className="fixed inset-0 z-[110] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t.aria}>
+          <button aria-label={t.close} onClick={() => setOpen(false)} className="absolute inset-0 bg-bien-forest/45 backdrop-blur-sm" />
 
           <div className="relative w-full max-w-md rounded-[1.75rem] bg-white ring-1 ring-border bien-shadow p-6 sm:p-8 animate-[bien-fade-up_0.3s_ease]">
-            <button onClick={() => setOpen(false)} aria-label="Fermer" className="absolute top-4 right-4 grid place-items-center h-8 w-8 rounded-full text-black/60 hover:bg-bien-cream transition-colors">
+            <button onClick={() => setOpen(false)} aria-label={t.close} className="absolute top-4 right-4 grid place-items-center h-8 w-8 rounded-full text-black/60 hover:bg-bien-cream transition-colors">
               <X className="h-5 w-5" />
             </button>
 
             <div className="flex items-center gap-2 text-bien-leaf font-semibold">
               <span className="grid place-items-center h-7 w-7 rounded-full bg-bien-leaf text-bien-cream"><Check className="h-4 w-4" /></span>
-              Votre article a été ajouté au panier
+              {t.added}
             </div>
 
             <div className="mt-5 flex items-center gap-4 rounded-2xl bg-bien-cream/60 ring-1 ring-border p-3">
@@ -70,13 +74,13 @@ export default function AddToCart({
                 onClick={() => setOpen(false)}
                 className="inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-bien-forest/25 text-black px-5 py-3 text-sm font-semibold hover:bg-bien-cream transition-colors"
               >
-                Continuer mes achats
+                {t.cont}
               </button>
               <Link
                 href={`/${lang}/cart`}
                 className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-5 py-3 text-sm font-semibold hover:bg-bien-leaf transition-colors"
               >
-                Voir le panier <ArrowRight className="h-4 w-4" />
+                {t.view} <ArrowRight className="h-4 w-4" />
               </Link>
             </div>
           </div>

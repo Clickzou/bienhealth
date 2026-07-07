@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
 
-export const metadata: Metadata = {
-  title: "Politique de confidentialité · BIEN",
-  description: "Comment Bien Health collecte, utilise et divulgue vos informations personnelles sur bien.health.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Privacy policy · BIEN", description: "How Bien Health collects, uses and discloses your personal information on bien.health." }
+    : { title: "Politique de confidentialité · BIEN", description: "Comment Bien Health collecte, utilise et divulgue vos informations personnelles sur bien.health." };
+}
 
 export default async function ConfidentialitePage({
   params,
@@ -15,6 +17,149 @@ export default async function ConfidentialitePage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+
+  if (lang === "en") {
+    return (
+      <LegalLayout lang={lang} title="Privacy policy" updated="1 April 2026">
+        <p>
+          This privacy policy explains how Bien Health (the “Site”, “we”, “our” or “us”) collects, uses and discloses your
+          personal information when you visit, use our services or make a purchase on bien.health (the “Site”) or otherwise
+          communicate with us about the Site (together, the “Services”). For the purposes of this privacy policy, “you”
+          and “your” refer to you as a user of the Services, whether you are a customer, a website visitor or another
+          person whose information we have collected in accordance with this privacy policy.
+        </p>
+        <p>Please read this privacy policy carefully.</p>
+
+        <h2>Changes to this privacy policy</h2>
+        <p>
+          We may update this privacy policy from time to time, including to reflect changes to our practices or for other
+          operational, legal or regulatory reasons. We will post the revised privacy policy on the Site, update the “Last
+          updated” date and take any other steps required by applicable law.
+        </p>
+
+        <h2>How we collect and use your personal information</h2>
+        <p>
+          To provide the Services, we collect personal information about you from various sources, as set out below. The
+          information we collect and use varies depending on how you interact with us.
+        </p>
+        <p>
+          In addition to the specific uses set out below, we may use the information we collect about you to communicate
+          with you, provide or improve the Services, comply with any applicable legal obligation, enforce applicable terms
+          of service and protect or defend the Services, our rights and the rights of our users or others.
+        </p>
+
+        <h2>Personal information we collect</h2>
+        <p>
+          The types of personal information we obtain about you depend on how you interact with our Site and use our
+          Services. When we use the term “personal information”, we refer to information that identifies, relates to,
+          describes or can be associated with you.
+        </p>
+        <h3>Information we collect directly from you</h3>
+        <ul>
+          <li>Contact details, including your name, address, phone number and email.</li>
+          <li>Order information, including your name, billing address, shipping address, payment confirmation, email and phone number.</li>
+          <li>Account information, including your username, password, security questions and other information used for account security.</li>
+          <li>Customer service information, including the information you choose to include in your communications with us.</li>
+        </ul>
+        <h3>Information we collect about your use</h3>
+        <p>
+          We may also automatically collect certain information about your interaction with the Services (“Usage Data”)
+          using cookies, pixels and similar technologies. This data may include information about your device, browser,
+          network connection, IP address and interaction with the Services.
+        </p>
+        <h3>Information we obtain from third parties</h3>
+        <p>
+          We may obtain information about you from third parties, including suppliers and providers who collect information
+          on our behalf, such as the companies that support our Site (like Shopify) and our payment processors. Any
+          information obtained from third parties will be handled in accordance with this privacy policy.
+        </p>
+
+        <h2>How we use your personal information</h2>
+        <ul>
+          <li><strong>Providing Products and Services</strong> — process your payments, fulfil your orders, manage your account, arrange shipping and facilitate returns and exchanges.</li>
+          <li><strong>Marketing and advertising</strong> — send you marketing communications by email, SMS or post and show you relevant ads (art. 6 (1) (f) GDPR in the EEA).</li>
+          <li><strong>Security and fraud prevention</strong> — detect and prevent fraudulent, illegal or malicious activity.</li>
+          <li><strong>Communicating and improving the Services</strong> — provide you with customer service and improve our Services.</li>
+        </ul>
+
+        <h2>Cookies</h2>
+        <p>
+          Like many websites, we use cookies on our Site. For more information about the cookies used with Shopify, see{" "}
+          <a href="https://www.shopify.com/legal/cookies" target="_blank" rel="noopener noreferrer">shopify.com/legal/cookies</a>.
+          We use them to operate and improve our Site, remember your preferences and carry out analytics. Most browsers
+          accept cookies by default, but you can delete or reject them via your browser settings.
+        </p>
+
+        <h2>How we disclose personal information</h2>
+        <ul>
+          <li>Suppliers and third parties who perform services on our behalf (IT, payment, analytics, customer service, cloud, order processing and shipping).</li>
+          <li>Business and marketing partners.</li>
+          <li>With your consent, when you ask us to disclose certain information.</li>
+          <li>With our affiliates or within our group of companies.</li>
+          <li>As part of a business transaction or to comply with our legal obligations.</li>
+        </ul>
+        <p>
+          We do not use or disclose sensitive personal information without your consent or for the purpose of inferring
+          characteristics about you.
+        </p>
+
+        <h2>User-generated content</h2>
+        <p>
+          The Services may allow you to post reviews. Any content submitted in a public area will be accessible to all. We
+          are not responsible for the privacy or security of information you make public.
+        </p>
+
+        <h2>Third-party websites and links</h2>
+        <p>
+          Our Site may provide links to sites operated by third parties. We do not guarantee and are not responsible for
+          the privacy or security of those sites. Please review their own policies.
+        </p>
+
+        <h2>Children's data</h2>
+        <p>
+          The Services are not intended for children and we do not knowingly collect their information. A parent or
+          guardian may contact us to request the deletion of a child's information.
+        </p>
+
+        <h2>Security and retention of your information</h2>
+        <p>
+          No security measure is perfect: we cannot guarantee absolute security. How long we keep your information depends
+          on the need to maintain your account, provide the Services, meet our legal obligations and resolve any disputes.
+        </p>
+
+        <h2>Your rights</h2>
+        <ul>
+          <li><strong>Right to access / to know</strong>, <strong>to delete</strong>, <strong>to correct</strong> and <strong>to portability</strong> of your personal information.</li>
+          <li><strong>Right to opt out</strong> of the sale, sharing or targeted advertising.</li>
+          <li><strong>Restriction of processing</strong> and <strong>withdrawal of consent</strong>.</li>
+          <li><strong>Appeal</strong> our decision and <strong>manage communication preferences</strong> (unsubscribe).</li>
+        </ul>
+        <p>
+          You can exercise these rights by contacting us using the details below. We will not discriminate against you for
+          exercising these rights.
+        </p>
+
+        <h2>Complaints</h2>
+        <p>
+          For any complaint, contact us using the details below. Depending on where you live, you may appeal our decision
+          or file a complaint with your local data protection authority.
+        </p>
+
+        <h2>International users</h2>
+        <p>
+          We may transfer, store and process your information outside your country. Where information is transferred
+          outside Europe, we use recognised mechanisms (standard contractual clauses).
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For any question or to exercise your rights, email us at <a href="mailto:info@bien.health">info@bien.health</a>{" "}
+          or contact us at 100 Rue du Verbial, Albi, 81000, France. Unless stated otherwise, we are the controller of your
+          personal information.
+        </p>
+      </LegalLayout>
+    );
+  }
 
   return (
     <LegalLayout lang={lang} title="Politique de confidentialité" updated="1 avril 2026">

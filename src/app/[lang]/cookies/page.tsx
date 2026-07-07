@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
 
-export const metadata: Metadata = {
-  title: "Politique de cookies · BIEN",
-  description: "Comment et pourquoi le site bien.health utilise des cookies, et comment les gérer.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Cookie policy · BIEN", description: "How and why bien.health uses cookies, and how to manage them." }
+    : { title: "Politique de cookies · BIEN", description: "Comment et pourquoi le site bien.health utilise des cookies, et comment les gérer." };
+}
 
 export default async function CookiesPage({
   params,
@@ -15,6 +17,51 @@ export default async function CookiesPage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+
+  if (lang === "en") {
+    return (
+      <LegalLayout lang={lang} title="Cookie policy">
+        <p>
+          This policy explains what cookies are, how bien.health uses them and how you can manage them. It complements our{" "}
+          <a href={`/${lang}/confidentialite`}>Privacy policy</a>.
+        </p>
+
+        <h2>What is a cookie?</h2>
+        <p>
+          A cookie is a small text file placed on your device when you visit a website. It helps remember your actions and
+          preferences, enables certain features and measures audience.
+        </p>
+
+        <h2>The cookies we use</h2>
+        <ul>
+          <li><strong>Essential cookies</strong> — necessary for the site to work (cart, security, language preferences). They cannot be disabled.</li>
+          <li><strong>Analytics cookies</strong> — help us understand how the site is used so we can improve it.</li>
+          <li><strong>Marketing cookies</strong> — let us show you relevant content and ads, on our site and on others.</li>
+        </ul>
+        <p>
+          Our shop runs on Shopify. For details of the cookies set by Shopify, see{" "}
+          <a href="https://www.shopify.com/legal/cookies" target="_blank" rel="noopener noreferrer">shopify.com/legal/cookies</a>.
+        </p>
+
+        <h2>Your consent</h2>
+        <p>
+          On your first visit, a banner lets you accept or decline non-essential cookies. Your choice is stored on your
+          device. Essential cookies remain active as they are indispensable to the site's operation.
+        </p>
+
+        <h2>Managing cookies</h2>
+        <p>
+          You can delete or block cookies at any time via your browser settings. Blocking some cookies may however degrade
+          your experience and make certain features unavailable.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          For any question about cookies, email us at <a href="mailto:info@bien.health">info@bien.health</a>.
+        </p>
+      </LegalLayout>
+    );
+  }
 
   return (
     <LegalLayout lang={lang} title="Politique de cookies">

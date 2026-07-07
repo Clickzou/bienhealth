@@ -10,19 +10,27 @@ import ProductCard from "@/components/product-card";
 import ReassuranceBand from "@/components/reassurance-band";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 
-export const metadata: Metadata = {
-  title: "Boutique — Nos compléments naturels · BIEN",
-  description:
-    "Découvrez la gamme BIEN : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Shop — Our natural supplements · BIEN", description: "Discover the BIEN range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." }
+    : { title: "Boutique — Nos compléments naturels · BIEN", description: "Découvrez la gamme BIEN : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France." };
+}
 
-/** Chips « par besoin » → collections dédiées (URLs SEO). */
-const NEEDS = [
-  { label: "Sommeil & Sérénité", slug: "serenite" },
-  { label: "Concentration", slug: "concentration" },
-  { label: "Énergie", slug: "performance-et-vitalite" },
-  { label: "Beauté & Équilibre", slug: "beaute-et-bien-etre" },
-];
+const T = {
+  fr: {
+    eyebrow: "La gamme BIEN", h1: "Nos produits.",
+    intro: "3 gummies naturels et une poudre tout-en-un. Adaptogènes et champignons fonctionnels, dosés selon la science — vegan, sans sucre, fabriqués en France.",
+    needs: [{ label: "Sommeil & Sérénité", slug: "serenite" }, { label: "Concentration", slug: "concentration" }, { label: "Énergie", slug: "performance-et-vitalite" }, { label: "Beauté & Équilibre", slug: "beaute-et-bien-etre" }],
+    product: "produit", products: "produits", findFormula: "Trouver ma formule",
+  },
+  en: {
+    eyebrow: "The BIEN range", h1: "Our products.",
+    intro: "3 natural gummies and one all-in-one powder. Adaptogens and functional mushrooms, dosed according to science — vegan, sugar-free, made in France.",
+    needs: [{ label: "Sleep & Calm", slug: "serenite" }, { label: "Focus", slug: "concentration" }, { label: "Energy", slug: "performance-et-vitalite" }, { label: "Beauty & Balance", slug: "beaute-et-bien-etre" }],
+    product: "product", products: "products", findFormula: "Find my formula",
+  },
+} as const;
 
 export default async function BoutiquePage({
   params,
@@ -31,6 +39,7 @@ export default async function BoutiquePage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+  const t = T[lang === "en" ? "en" : "fr"];
 
   // Landing boutique : toute la gamme sauf les accessoires.
   const products = (await getProducts(24)).filter((p) => typeOf(p) !== "accessoires");
@@ -42,16 +51,15 @@ export default async function BoutiquePage({
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
         <div className="relative hero-gradient rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
-          <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">La gamme BIEN</p>
+          <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
           <h1 className="mt-3 font-display font-black tracking-tighter text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
-            Nos produits.
+            {t.h1}
           </h1>
           <p className="mt-4 max-w-xl text-base sm:text-lg text-bien-cream/85 leading-relaxed">
-            3 gummies naturels et une poudre tout-en-un. Adaptogènes et champignons fonctionnels,
-            dosés selon la science — vegan, sans sucre, fabriqués en France.
+            {t.intro}
           </p>
           <div className="mt-7 flex flex-wrap gap-2.5">
-            {NEEDS.map((n) => (
+            {t.needs.map((n) => (
               <Link
                 key={n.slug}
                 href={`/${lang}/collections/${n.slug}`}
@@ -68,10 +76,10 @@ export default async function BoutiquePage({
       <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
         <div className="flex items-end justify-between gap-4 mb-6">
           <h2 className="font-display font-black tracking-tight text-2xl text-black">
-            {products.length} produit{products.length > 1 ? "s" : ""}
+            {products.length} {products.length > 1 ? t.products : t.product}
           </h2>
           <Link href={`/${lang}/diagnostic`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
-            <Sparkles className="h-4 w-4" /> Trouver ma formule
+            <Sparkles className="h-4 w-4" /> {t.findFormula}
           </Link>
         </div>
 
@@ -84,7 +92,7 @@ export default async function BoutiquePage({
       <DiagnosticCTA lang={lang} />
 
       {/* Réassurance (bas de page) */}
-      <ReassuranceBand />
+      <ReassuranceBand lang={lang} />
     </div>
   );
 }

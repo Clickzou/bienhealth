@@ -3,16 +3,33 @@
 import { useState } from "react";
 import { Check, Handshake } from "lucide-react";
 
-const TYPES = [
-  "Café / Restaurant",
-  "Studio / Salle de sport",
-  "Pharmacie / Parapharmacie",
-  "Concept-store / Boutique",
-  "Spa / Institut",
-  "Autre",
-];
+const COPY = {
+  fr: {
+    types: ["Café / Restaurant", "Studio / Salle de sport", "Pharmacie / Parapharmacie", "Concept-store / Boutique", "Spa / Institut", "Autre"],
+    sentTitle: "Demande envoyée !",
+    sentText: "Merci pour votre intérêt. Notre équipe revendeurs revient vers vous sous 48 h ouvrées pour étudier votre demande.",
+    establishmentType: "Type d'établissement", select: "Sélectionnez…",
+    companyName: "Nom de l'établissement", contactName: "Nom & prénom du contact", email: "Email", phone: "Téléphone",
+    cityCountry: "Ville / Pays", cityCountryPh: "Paris, France", web: "Site web / Instagram", optional: "(optionnel)",
+    message: "Votre message", messagePh: "Parlez-nous de votre établissement et de votre projet…",
+    sending: "Envoi…", send: "Envoyer ma demande",
+    note: "Ce formulaire est réservé aux demandes professionnelles pour devenir revendeur BIEN.",
+  },
+  en: {
+    types: ["Café / Restaurant", "Studio / Gym", "Pharmacy / Parapharmacy", "Concept store / Shop", "Spa / Salon", "Other"],
+    sentTitle: "Enquiry sent!",
+    sentText: "Thank you for your interest. Our reseller team will get back to you within 48 business hours to review your enquiry.",
+    establishmentType: "Type of business", select: "Select…",
+    companyName: "Business name", contactName: "Contact full name", email: "Email", phone: "Phone",
+    cityCountry: "City / Country", cityCountryPh: "Paris, France", web: "Website / Instagram", optional: "(optional)",
+    message: "Your message", messagePh: "Tell us about your business and your project…",
+    sending: "Sending…", send: "Send my enquiry",
+    note: "This form is for trade enquiries to become a BIEN reseller only.",
+  },
+} as const;
 
 export default function ResellerForm({ lang }: { lang: string }) {
+  const c = COPY[lang === "en" ? "en" : "fr"];
   const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
   const [form, setForm] = useState({
     type: "",
@@ -50,9 +67,9 @@ export default function ResellerForm({ lang }: { lang: string }) {
     return (
       <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-8 sm:p-12 text-center">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-leaf text-bien-cream"><Check className="h-8 w-8" /></span>
-        <h2 className="mt-5 font-display font-black tracking-tight text-2xl text-black">Demande envoyée !</h2>
+        <h2 className="mt-5 font-display font-black tracking-tight text-2xl text-black">{c.sentTitle}</h2>
         <p className="mt-2 text-black/70 max-w-md mx-auto leading-relaxed">
-          Merci pour votre intérêt. Notre équipe revendeurs revient vers vous sous 48&nbsp;h ouvrées pour étudier votre demande.
+          {c.sentText}
         </p>
       </div>
     );
@@ -65,39 +82,39 @@ export default function ResellerForm({ lang }: { lang: string }) {
     <form onSubmit={submit} className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6 sm:p-8">
       <div className="grid sm:grid-cols-2 gap-4">
         <label className="block sm:col-span-2">
-          <span className="text-sm font-semibold text-black">Type d&apos;établissement</span>
+          <span className="text-sm font-semibold text-black">{c.establishmentType}</span>
           <select value={form.type} onChange={set("type")} className={`mt-1.5 ${inputCls}`}>
-            <option value="">Sélectionnez…</option>
-            {TYPES.map((t) => <option key={t} value={t}>{t}</option>)}
+            <option value="">{c.select}</option>
+            {c.types.map((ty) => <option key={ty} value={ty}>{ty}</option>)}
           </select>
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Nom de l&apos;établissement <span className="text-red-500">*</span></span>
+          <span className="text-sm font-semibold text-black">{c.companyName} <span className="text-red-500">*</span></span>
           <input required value={form.company} onChange={set("company")} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Nom &amp; prénom du contact <span className="text-red-500">*</span></span>
+          <span className="text-sm font-semibold text-black">{c.contactName} <span className="text-red-500">*</span></span>
           <input required value={form.contact} onChange={set("contact")} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Email <span className="text-red-500">*</span></span>
+          <span className="text-sm font-semibold text-black">{c.email} <span className="text-red-500">*</span></span>
           <input required type="email" autoComplete="email" value={form.email} onChange={set("email")} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Téléphone <span className="text-red-500">*</span></span>
+          <span className="text-sm font-semibold text-black">{c.phone} <span className="text-red-500">*</span></span>
           <input required type="tel" value={form.phone} onChange={set("phone")} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Ville / Pays <span className="text-red-500">*</span></span>
-          <input required value={form.location} onChange={set("location")} placeholder="Paris, France" className={`mt-1.5 ${inputCls}`} />
+          <span className="text-sm font-semibold text-black">{c.cityCountry} <span className="text-red-500">*</span></span>
+          <input required value={form.location} onChange={set("location")} placeholder={c.cityCountryPh} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block">
-          <span className="text-sm font-semibold text-black">Site web / Instagram <span className="text-black/40 font-normal">(optionnel)</span></span>
+          <span className="text-sm font-semibold text-black">{c.web} <span className="text-black/40 font-normal">{c.optional}</span></span>
           <input value={form.web} onChange={set("web")} className={`mt-1.5 ${inputCls}`} />
         </label>
         <label className="block sm:col-span-2">
-          <span className="text-sm font-semibold text-black">Votre message <span className="text-black/40 font-normal">(optionnel)</span></span>
-          <textarea value={form.message} onChange={set("message")} rows={4} placeholder="Parlez-nous de votre établissement et de votre projet…" className={`mt-1.5 ${inputCls} resize-none`} />
+          <span className="text-sm font-semibold text-black">{c.message} <span className="text-black/40 font-normal">{c.optional}</span></span>
+          <textarea value={form.message} onChange={set("message")} rows={4} placeholder={c.messagePh} className={`mt-1.5 ${inputCls} resize-none`} />
         </label>
       </div>
 
@@ -106,10 +123,10 @@ export default function ResellerForm({ lang }: { lang: string }) {
         disabled={!valid || status === "sending"}
         className="mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-8 py-3.5 font-bold hover:bg-bien-leaf transition-colors disabled:opacity-50 bien-shadow-sm"
       >
-        <Handshake className="h-4 w-4" /> {status === "sending" ? "Envoi…" : "Envoyer ma demande"}
+        <Handshake className="h-4 w-4" /> {status === "sending" ? c.sending : c.send}
       </button>
       <p className="mt-3 text-xs text-black/50">
-        Ce formulaire est réservé aux demandes professionnelles pour devenir revendeur BIEN.
+        {c.note}
       </p>
     </form>
   );

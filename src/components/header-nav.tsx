@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ChevronDown, ArrowRight, Truck, ShieldCheck, Star, RefreshCw } from "lucide-react";
+import { ui } from "@/lib/i18n";
 
 /**
  * Navigation principale (desktop) avec deux méga-menus : « Nos produits »
@@ -12,55 +13,53 @@ import { ChevronDown, ArrowRight, Truck, ShieldCheck, Star, RefreshCw } from "lu
  * la refonte.
  */
 
-const REASSURANCE = [
-  { icon: Truck, title: "Livraison offerte", sub: "dès 49 € d'achat" },
-  { icon: ShieldCheck, title: "Paiement sécurisé", sub: "Visa, Mastercard" },
-  { icon: Star, title: "+1000 clients", sub: "satisfaits" },
-  { icon: RefreshCw, title: "Satisfait ou remboursé", sub: "sous 30 jours" },
-];
+const REASSURANCE_ICONS = [Truck, ShieldCheck, Star, RefreshCw];
 
 type MenuKey = "shop" | "about" | null;
 
 export default function HeaderNav({ lang }: { lang: string }) {
+  const t = ui(lang).chrome;
   const [openMenu, setOpenMenu] = useState<MenuKey>(null);
   const closeTimer = useRef<number | null>(null);
 
+  const REASSURANCE = REASSURANCE_ICONS.map((icon, i) => ({ icon, ...t.reassurance[i] }));
+
   const BY_TYPE = [
-    { label: "Gummies", href: `/${lang}/collections/gummies` },
-    { label: "Poudres", href: `/${lang}/collections/nos-poudres` },
-    { label: "Accessoires", href: `/${lang}/collections/nos-accessoires` },
-    { label: "Tous les produits", href: `/${lang}/collections/accessories` },
+    { label: t.gummies, href: `/${lang}/collections/gummies` },
+    { label: t.powders, href: `/${lang}/collections/nos-poudres` },
+    { label: t.accessories, href: `/${lang}/collections/nos-accessoires` },
+    { label: t.allProducts, href: `/${lang}/collections/accessories` },
   ];
 
   const BY_NEED = [
-    { label: "Performance & Vitalité", href: `/${lang}/collections/performance-et-vitalite` },
-    { label: "Sommeil & Gestion du stress", href: `/${lang}/collections/serenite` },
-    { label: "Concentration & Clarté Mentale", href: `/${lang}/collections/concentration` },
-    { label: "Beauté & Régulation Hormonale", href: `/${lang}/collections/beaute-et-bien-etre` },
+    { label: t.needPerformance, href: `/${lang}/collections/performance-et-vitalite` },
+    { label: t.needSleep, href: `/${lang}/collections/serenite` },
+    { label: t.needFocus, href: `/${lang}/collections/concentration` },
+    { label: t.needBeauty, href: `/${lang}/collections/beaute-et-bien-etre` },
   ];
 
   const SHOP_FEATURED = [
-    { label: "FOCUS", cta: "Découvrir", href: `/${lang}/products/focus`, img: "/brand/focus.png" },
-    { label: "POWER", cta: "Découvrir", href: `/${lang}/products/power`, img: "/brand/power.jpg" },
+    { label: "FOCUS", cta: t.discover, href: `/${lang}/products/focus`, img: "/brand/focus.png" },
+    { label: "POWER", cta: t.discover, href: `/${lang}/products/power`, img: "/brand/power.jpg" },
   ];
 
   const ABOUT_LINKS = [
-    { label: "Notre histoire", href: `/${lang}/histoire` },
-    { label: "La presse en parle", href: `/${lang}/presse` },
-    { label: "Nos revendeurs", href: `/${lang}/revendeurs` },
+    { label: t.story, href: `/${lang}/histoire` },
+    { label: t.press, href: `/${lang}/presse` },
+    { label: t.resellers, href: `/${lang}/revendeurs` },
   ];
 
   const ABOUT_FEATURED = [
-    { label: "La presse en parle", cta: "Découvrir", href: `/${lang}/presse`, img: "/brand/calm.jpg" },
-    { label: "Nos revendeurs", cta: "Découvrir", href: `/${lang}/revendeurs`, img: "/brand/produits-bien-health.png" },
+    { label: t.press, cta: t.discover, href: `/${lang}/presse`, img: "/brand/calm.jpg" },
+    { label: t.resellers, cta: t.discover, href: `/${lang}/revendeurs`, img: "/brand/produits-bien-health.png" },
   ];
 
   const LINKS = [
-    { label: "Ingrédients", href: `/${lang}/ingredients` },
-    { label: "Conformité", href: `/${lang}/certifications` },
-    { label: "Diagnostic", href: `/${lang}/diagnostic` },
-    { label: "Avis", href: `/${lang}/avis` },
-    { label: "Blog", href: `/${lang}/blog` },
+    { label: t.ingredients, href: `/${lang}/ingredients` },
+    { label: t.compliance, href: `/${lang}/certifications` },
+    { label: t.diagnostic, href: `/${lang}/diagnostic` },
+    { label: t.reviews, href: `/${lang}/avis` },
+    { label: t.blog, href: `/${lang}/blog` },
   ];
 
   function open(key: Exclude<MenuKey, null>) {
@@ -83,7 +82,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
           onClick={() => setOpenMenu((v) => (v === "shop" ? null : "shop"))}
           className="flex items-center gap-1 text-sm font-medium text-black/80 hover:text-black transition-colors"
         >
-          Nos produits
+          {t.products}
           <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "shop" ? "rotate-180" : ""}`} />
         </button>
 
@@ -93,7 +92,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr_1.4fr] gap-7">
                 {/* Par type de produits */}
                 <div>
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">Par type de produits</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">{t.byType}</p>
                   <ul className="mt-4 space-y-2.5">
                     {BY_TYPE.map((item) => (
                       <li key={item.label}>
@@ -108,7 +107,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
                 {/* Par besoin */}
                 <div className="lg:border-l lg:border-border lg:pl-7">
-                  <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">Par besoin</p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">{t.byNeed}</p>
                   <ul className="mt-4 space-y-2.5">
                     {BY_NEED.map((item) => (
                       <li key={item.label}>
@@ -162,7 +161,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
           onClick={() => setOpenMenu((v) => (v === "about" ? null : "about"))}
           className="flex items-center gap-1 text-sm font-medium text-black/80 hover:text-black transition-colors"
         >
-          À propos
+          {t.about}
           <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "about" ? "rotate-180" : ""}`} />
         </button>
 
@@ -171,7 +170,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
             <div className="w-[min(880px,92vw)] rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 grid grid-cols-1 lg:grid-cols-[1fr_1.7fr] gap-7 animate-[bien-fade-up_0.25s_ease]">
               {/* Liens */}
               <div>
-                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">La marque</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">{t.brand}</p>
                 <ul className="mt-4 space-y-2.5">
                   {ABOUT_LINKS.map((item) => (
                     <li key={item.label}>

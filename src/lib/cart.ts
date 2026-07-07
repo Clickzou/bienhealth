@@ -19,7 +19,14 @@ export type CartItem = {
 
 const KEY = "bien-cart";
 export const CART_EVENT = "bien-cart-change";
-export const SHOPIFY_STORE = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://bien.health").replace(/\/$/, "");
+// Domaine du checkout Shopify : on privilégie le domaine myshopify (toujours
+// joignable) pour que le paiement fonctionne même si le front headless occupe
+// le domaine bien.health.
+export const SHOPIFY_STORE = (
+  process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN
+    ? `https://${process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN}`
+    : process.env.NEXT_PUBLIC_SITE_URL ?? "https://bien.health"
+).replace(/\/$/, "");
 
 export function getCart(): CartItem[] {
   if (typeof window === "undefined") return [];

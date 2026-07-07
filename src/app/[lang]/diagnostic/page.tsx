@@ -6,11 +6,24 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import DiagnosticQuiz from "@/components/diagnostic-quiz";
 
-export const metadata: Metadata = {
-  title: "Diagnostic BIEN — trouve ta formule en 1 minute",
-  description:
-    "Réponds à quelques questions sur tes besoins (sommeil, concentration, énergie, peau) et découvre la formule BIEN faite pour toi. Diagnostic gratuit, moins d'une minute.",
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? {
+        title: "BIEN Diagnostic — find your formula in 1 minute",
+        description:
+          "Answer a few questions about your needs (sleep, focus, energy, skin) and discover the BIEN formula made for you. Free quiz, under a minute.",
+      }
+    : {
+        title: "Diagnostic BIEN — trouve ta formule en 1 minute",
+        description:
+          "Réponds à quelques questions sur tes besoins (sommeil, concentration, énergie, peau) et découvre la formule BIEN faite pour toi. Diagnostic gratuit, moins d'une minute.",
+      };
+}
 
 export default async function DiagnosticPage({
   params,
@@ -31,7 +44,7 @@ export default async function DiagnosticPage({
           href={`/${lang}/avis`}
           className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-white px-8 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm"
         >
-          <ShieldCheck className="h-5 w-5" /> Voir les avis certifiés
+          <ShieldCheck className="h-5 w-5" /> {lang === "en" ? "See certified reviews" : "Voir les avis certifiés"}
         </Link>
       </section>
     </div>

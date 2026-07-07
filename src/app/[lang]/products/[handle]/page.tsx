@@ -16,15 +16,18 @@ import ProductStickyBar from "@/components/product-sticky-bar";
 import ReviewsSwitch from "@/components/reviews-switch";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 import AddToCart from "@/components/add-to-cart";
+import JsonLd from "@/components/json-ld";
+import { SITE_URL } from "@/lib/seo";
+import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
 
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ lang: string; handle: string }>;
 }): Promise<Metadata> {
-  const { handle } = await params;
+  const { lang, handle } = await params;
   const product = await getProduct(handle);
-  if (!product) return { title: "Produit introuvable — BIEN" };
+  if (!product) return { title: lang === "en" ? "Product not found — BIEN" : "Produit introuvable — BIEN" };
   return {
     title: `${product.title} — BIEN`,
     description: product.description.slice(0, 160),
@@ -93,6 +96,53 @@ const DEFAULT_INFO: ProductInfo = {
   ],
 };
 
+const HIGHLIGHTS_EN: Record<string, ProductInfo> = {
+  CALM: {
+    category: "CALM & SLEEP 🌙", reviews: 19,
+    rows: [
+      { icon: HeartPulse, text: "Ashwagandha, Reishi and Saffron at clinically effective doses." },
+      { icon: Zap, text: "Promote relaxation, reduce stress and improve sleep quality." },
+      { icon: Leaf, text: "A natural, clean formula — no sugar or additives, vegan and gluten-free." },
+      { icon: RefreshCw, text: "2 gummies to chew in the evening, to calm the mind and prepare for restorative sleep." },
+    ],
+  },
+  FOCUS: {
+    category: "FOCUS & MEMORY 🧠", reviews: 19,
+    rows: [
+      { icon: HeartPulse, text: "Lion's Mane, Rhodiola Rosea and L-Theanine at clinically effective doses." },
+      { icon: Zap, text: "Support focus, memory and mental clarity, without jitters or crashes." },
+      { icon: Leaf, text: "A natural, clean formula — no sugar or additives, vegan and gluten-free." },
+      { icon: RefreshCw, text: "2 gummies to chew in the morning, to stay focused and productive all day." },
+    ],
+  },
+  POWER: {
+    category: "ENERGY & PERFORMANCE ⚡", reviews: 17,
+    rows: [
+      { icon: HeartPulse, text: "Cordyceps, Rhodiola Rosea and Panax Ginseng extracts at clinically effective doses." },
+      { icon: Zap, text: "Support natural energy, optimise physical performance and boost stamina, without any jittery feeling." },
+      { icon: Leaf, text: "A natural, clean formula — no added sugar or additives, for healthy, lasting vitality." },
+      { icon: RefreshCw, text: "2 passion-fruit gummies to chew in the morning, to start the day with pleasure and energy." },
+    ],
+  },
+  MUSHGLOW: {
+    category: "OVERALL BALANCE ✨", reviews: 23,
+    rows: [
+      { icon: HeartPulse, text: "Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine and Collagen at clinically effective doses." },
+      { icon: Zap, text: "Support energy, focus, stress resilience, immunity and radiant skin." },
+      { icon: Leaf, text: "A 100% natural formula — no sugar, gluten, lactose, additives or caffeine, and veggie." },
+      { icon: RefreshCw, text: "1 level tablespoon, ideally in the morning, for a complete ritual that supports the body's balance." },
+    ],
+  },
+};
+
+const DEFAULT_INFO_EN: ProductInfo = {
+  category: "WELLBEING ✨", reviews: 100,
+  rows: [
+    { icon: Leaf, text: "Adaptogens and functional mushrooms dosed according to science." },
+    { icon: ShieldCheck, text: "A natural, clean formula, made in France." },
+  ],
+};
+
 /** Vidéos produit (récupérées de la fiche Shopify). `at` = instant (s) de la vignette. */
 const VIDEOS: Record<string, { url: string; at: number }[]> = {
   MUSHGLOW: [
@@ -120,6 +170,16 @@ France 🇫🇷
 
 Europe 🌍
 Les options et tarifs de livraison sont affichés à l'étape de validation de commande.`;
+
+const LIVRAISON_EN = `Free Point Relais delivery on orders over €69, shipped the same day (for orders placed before 1 pm).
+
+France 🇫🇷
+• Point Relais pick-up (3 to 5 business days) — €4
+• Standard home delivery (2 to 4 business days) — €5.90
+• Express home delivery (1 to 2 business days) — €11.50
+
+Europe 🌍
+Delivery options and rates are shown at checkout.`;
 
 type Accordion = { q: string; a: string };
 
@@ -345,23 +405,297 @@ RHODIOLA ROSEA
   { q: "Livraison", a: LIVRAISON },
 ];
 
-function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolean): Accordion[] {
-  if (key === "MUSHGLOW") return MUSHGLOW_ACCORDIONS;
-  if (key === "CALM") return CALM_ACCORDIONS;
-  if (key === "FOCUS") return FOCUS_ACCORDIONS;
-  if (key === "POWER") return POWER_ACCORDIONS;
-  return [
-    { q: "Ingrédients, Bienfaits et Posologie", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
-    { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher — sans sucre ajouté." },
-    { q: "Comment le préparer ?", a: info.rows[info.rows.length - 1]?.text ?? "" },
-    { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM) — numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
-    { q: "Livraison", a: LIVRAISON },
-  ];
+const MUSHGLOW_ACCORDIONS_EN: Accordion[] = [
+  {
+    q: "Ingredients, Benefits and Dosage",
+    a: `☕ Your coffee's best ally — a supermix of mushrooms, adaptogens and collagen to boost focus, energy and glow, in one spoon a day.
+
+🌿 Clean & powerful formula — Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine, eggshell-membrane collagen. Clinically dosed actives, 100% natural.
+
+🚫 No sugar. No additives.
+
+📆 A daily ritual, lasting effects — resilience, mental clarity and glowing skin, visible with regular use.`,
+  },
+  {
+    q: "What does it taste like?",
+    a: `🥄 Neutral taste & ultra-easy to use — blends perfectly into your coffee, matcha, smoothie or any other hot or cold drink. A subtle, natural hint of mushrooms.`,
+  },
+  {
+    q: "How do I prepare it?",
+    a: `1. Simply add 1 dose (spoon included) to the drink of your choice — hot or cold.
+2. Stir.
+3. Enjoy.
+4. Feel the effects.
+
+💡 Tip: use a small frother or whisk for an ultra-smooth texture.`,
+  },
+  {
+    q: "Traceability and Quality",
+    a: `Formulated based on research published in international scientific journals 👇
+
+• Lion's Mane: improves cognition and mood in healthy adults (Surendran et al., 2025).
+• Cordyceps: improves exercise tolerance and physical performance (Hirsch et al., 2017).
+• Chaga: protects skin cells from oxidative and inflammatory stress (Park et al., 2023).
+• Maca: acts on mood, energy and hormonal balance (Zhang et al., 2023).
+• L-Theanine: effectively reduces perceived stress (Moulin et al., 2024).
+• Collagen (Ovolux™): visibly improves skin, hair and nails (Ruff et al., 2024).`,
+  },
+  {
+    q: "Ingredients & Benefits",
+    a: `Lion's Mane — 750 mg: supports memory, focus and cognitive function.
+Cordyceps — 500 mg: boosts energy, vitality and physical stamina.
+Chaga — 500 mg: powerful antioxidant, protects cells and supports immunity.
+L-Theanine — 200 mg: calms without drowsiness, improves mental clarity and focus.
+Maca — 750 mg: hormonal balance and emotional wellbeing, improves mood.
+Collagen — 450 mg: improves skin hydration, elasticity and radiance.`,
+  },
+  { q: "Shipping", a: LIVRAISON_EN },
+];
+
+const CALM_ACCORDIONS_EN: Accordion[] = [
+  {
+    q: "Ingredients, Benefits and Dosage",
+    a: `Thanks to Reishi, Ashwagandha and Saffron, CALM helps release pressure, restore serenity and ease tension while contributing to restorative sleep.
+
+CALM fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its natural variations — to support moments of stress or wind-down before sleep.
+
+Regular use for 30 days lets you notice the difference and regain lasting serenity day to day.`,
+  },
+  {
+    q: "What does it taste like?",
+    a: `Soft, fruity and delicious gummies, pleasant to chew — with no added sugar.`,
+  },
+  {
+    q: "How do I take it?",
+    a: `2 gummies a day, to chew. Adapt to the rhythm of your day: to support moments of stress, or as a wind-down before sleep in the evening.`,
+  },
+  {
+    q: "Traceability and Quality",
+    a: `REISHI (GANODERMA LUCIDUM)
+• Dose: 80 mg per daily serving
+• Concentration: 10:1 concentrated extract (equivalent to 800 mg of dried mushroom)
+• Extraction process: hydroalcoholic extraction
+• Part used: reishi fruiting body (origin: China)
+• Quality & purity: tested (heavy metals, microbiology, pesticides, polycyclic aromatic hydrocarbons, solvent residues), non-irradiated, GMO-free
+• Certification & compliance: manufacturing compliant with European standards (Eur. Ph., Reg. EU 2023/915), BSE/TSE-free
+• Allergens: vegan, free from major allergens
+
+ASHWAGANDHA (WITHANIA SOMNIFERA)
+• Dose: 80 mg per daily serving
+• Standardisation: ≥ 5% withanolides
+• Concentration: 18:1 concentrated extract (equivalent to 1,440 mg of dried ashwagandha)
+• Extraction process: extract obtained via purified water and food-grade ethanol
+• Part used: ashwagandha root (origin: India)
+• Quality & purity: tested (heavy metals, microbiology, pesticides, solvent residues)
+• Certification & compliance: manufacturing compliant with European standards (French Plant Order Annex II, USP), BSE/TSE-free
+• Allergens: vegan, free from major allergens
+
+SAFFRON (CROCUS SATIVUS)
+• Dose: 16 mg per daily serving
+• Standardisation: ≥ 2% safranal + ≥ 2% crocin
+• Extraction process: standardised UV extraction
+• Part used: saffron flower (origin: China)
+• Quality & purity: tested (heavy metals, microbiology, pesticides, PAH), non-irradiated, GMO-free
+• Certification & compliance: manufacturing compliant with European standards (Eur. Ph., Reg. EU 2023/915), BSE/TSE-free
+• Allergens: vegan, free from major allergens`,
+  },
+  {
+    q: "How long before you feel the effects?",
+    a: `The first calming effects can be felt within the first few days. For lasting serenity and better sleep quality, a regular programme of at least 30 days is recommended.`,
+  },
+  {
+    q: "Are there any contraindications?",
+    a: `Not recommended for pregnant or breastfeeding women or people on medical treatment (particularly sedatives or anxiolytics) without medical advice. Do not exceed the recommended daily dose. Keep out of reach of children. Does not replace a varied and balanced diet.`,
+  },
+  { q: "Shipping", a: LIVRAISON_EN },
+];
+
+const FOCUS_ACCORDIONS_EN: Accordion[] = [
+  {
+    q: "Ingredients, Benefits and Dosage",
+    a: `Thanks to Lion's Mane, green tea rich in L-Theanine and Rhodiola, FOCUS supports intellectual performance, promotes mental clarity and helps you feel light-headed clarity.
+
+FOCUS fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your attention and focus needs: in the morning, after lunch or in the afternoon.
+
+Regular use for 30 days lets you notice the difference and enjoy a clearer, fully focused mind every day.`,
+  },
+  {
+    q: "What does it taste like?",
+    a: `Soft, fruity and delicious gummies, pleasant to chew — with no added sugar.`,
+  },
+  {
+    q: "How do I take it?",
+    a: `2 gummies a day, to chew. Adapt to the rhythm of your day, according to your attention and focus needs: in the morning, after lunch or in the afternoon.`,
+  },
+  {
+    q: "Traceability and Quality",
+    a: `LION'S MANE (HERICIUM ERINACEUS)
+• Dose: 120 mg per daily serving
+• Standardisation: ≥ 30% polysaccharides
+• Concentration: concentrated extract between 8:1 and 12:1 (equivalent to about 1,200 mg of dried mushroom)
+• Extraction process: gentle aqueous extraction, without harsh chemical solvents
+• Part used: (young) fruiting body of Hericium erinaceus (origin: China)
+• Quality & purity: tested (heavy metals, microbiology), GMO-free, non-irradiated
+• Certification & compliance: certified organic ingredient, compliant with European regulations (pesticides, mycotoxins, contaminants), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens
+
+L-THEANINE (GREEN TEA)
+• Dose: 80 mg per daily serving
+• Standardisation: 40% L-theanine
+• Concentration: 25:1 concentrated extract
+• Extraction process: green tea extract obtained via purified water
+• Part used: Camellia sinensis leaf
+• Quality & purity: tested (heavy metals, microbiology, solvent residues), GMO-free, non-irradiated
+• Certification & compliance: manufacturing compliant with European standards (GMP, HACCP, ISO 9001, ISO 22000), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens
+
+RHODIOLA ROSEA
+• Dose: 30 mg per daily serving
+• Standardisation: 3% rosavins and 1% salidroside (clinical standard)
+• Extraction process: purified water and food-grade ethanol
+• Part used: root (origin: Siberia, sustainable harvest)
+• Quality & purity: verified identity (DNA + phytochemical profile), tested (heavy metals, pesticides, microbiology), non-irradiated, GMO-free
+• Certification & compliance: manufacturing compliant with European standards (GMP, FSSC 22000), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens`,
+  },
+  {
+    q: "How long before you feel the effects?",
+    a: `The first effects on focus and mental clarity can be felt over the first few days. For a lastingly clear and focused mind, a regular programme of at least 30 days is recommended.`,
+  },
+  {
+    q: "Are there any contraindications?",
+    a: `Not recommended for pregnant or breastfeeding women or people on medical treatment without medical advice. Do not exceed the recommended daily dose. Keep out of reach of children. Does not replace a varied and balanced diet.`,
+  },
+  { q: "Shipping", a: LIVRAISON_EN },
+];
+
+const POWER_ACCORDIONS_EN: Accordion[] = [
+  {
+    q: "Ingredients, Benefits and Dosage",
+    a: `Thanks to Cordyceps, Panax Ginseng and Rhodiola Rosea, POWER promotes vitality, stamina and recovery while reducing fatigue.
+
+POWER fits naturally into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its energy variations: in the morning, after lunch or before physical activity.
+
+Regular use for 30 days lets you notice the difference and enjoy natural, lasting daily vitality.`,
+  },
+  {
+    q: "What does it taste like?",
+    a: `Soft gummies with a fruity passion-fruit taste, pleasant to chew — with no added sugar.`,
+  },
+  {
+    q: "How do I take it?",
+    a: `2 gummies a day, to chew. Adapt to the rhythm of your day and your energy variations: in the morning, after lunch or before physical activity.`,
+  },
+  {
+    q: "Traceability and Quality",
+    a: `CORDYCEPS
+• Dose: 200 mg per daily serving
+• Concentration: 4:1 concentrated extract (equivalent to 800 mg of dried mushroom)
+• Extraction process: gentle aqueous extraction, without harsh chemical solvents
+• Part used: cordyceps fruiting body (Cordyceps sinensis Berkeley)
+• Quality & purity: tested (heavy metals, microbiology), non-irradiated
+• Certification & compliance: manufacturing compliant with European standards (GMP, ISO 9001, ISO 22000, HACCP), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens
+
+PANAX GINSENG
+• Dose: 100 mg per daily serving
+• Standardisation: 4% ginsenosides
+• Concentration: 3:1 concentrated extract (equivalent to 300 mg of dried Panax ginseng)
+• Extraction process: purified water and food-grade ethanol
+• Part used: aerial parts (stems and leaves) of ginseng
+• Quality & purity: tested (heavy metals, microbiology, solvent residues), non-irradiated
+• Certification & compliance: manufacturing compliant with European standards (GMP, ISO 9001, ISO 22000, HACCP), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens
+
+RHODIOLA ROSEA
+• Dose: 30 mg per daily serving
+• Standardisation: 3% rosavins and 1% salidroside (clinical standard)
+• Extraction process: purified water and food-grade ethanol
+• Part used: root (origin: Siberia, sustainable harvest)
+• Quality & purity: verified identity (DNA + phytochemical profile), tested (heavy metals, pesticides, microbiology), non-irradiated, GMO-free
+• Certification & compliance: manufacturing compliant with European standards (GMP, FSSC 22000), BSE/TSE-free
+• Allergens: vegan, gluten-free, free from major allergens`,
+  },
+  {
+    q: "How long before you feel the effects?",
+    a: `The first effects on energy and vitality can be felt over the first few days. For lasting vitality and better recovery, a regular programme of at least 30 days is recommended.`,
+  },
+  {
+    q: "Are there any contraindications?",
+    a: `Not recommended for pregnant or breastfeeding women or people on medical treatment without medical advice. Do not exceed the recommended daily dose. Keep out of reach of children. Does not replace a varied and balanced diet.`,
+  },
+  { q: "Shipping", a: LIVRAISON_EN },
+];
+
+function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolean, lang: string): Accordion[] {
+  const en = lang === "en";
+  if (key === "MUSHGLOW") return en ? MUSHGLOW_ACCORDIONS_EN : MUSHGLOW_ACCORDIONS;
+  if (key === "CALM") return en ? CALM_ACCORDIONS_EN : CALM_ACCORDIONS;
+  if (key === "FOCUS") return en ? FOCUS_ACCORDIONS_EN : FOCUS_ACCORDIONS;
+  if (key === "POWER") return en ? POWER_ACCORDIONS_EN : POWER_ACCORDIONS;
+  return en
+    ? [
+        { q: "Ingredients, Benefits and Dosage", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
+        { q: "What does it taste like?", a: isPowder ? "Neutral taste, blends easily into any hot or cold drink." : "Fruity, delicious gummies, pleasant to chew — with no added sugar." },
+        { q: "How do I take it?", a: info.rows[info.rows.length - 1]?.text ?? "" },
+        { q: "Traceability and Quality", a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform) — publicly verifiable declaration number. Actives dosed according to scientific literature." },
+        { q: "Shipping", a: LIVRAISON_EN },
+      ]
+    : [
+        { q: "Ingrédients, Bienfaits et Posologie", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
+        { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher — sans sucre ajouté." },
+        { q: "Comment le préparer ?", a: info.rows[info.rows.length - 1]?.text ?? "" },
+        { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM) — numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
+        { q: "Livraison", a: LIVRAISON },
+      ];
 }
 
 function keyFor(title: string): string | null {
   return Object.keys(ACTIVES).find((k) => title.toUpperCase().includes(k)) ?? null;
 }
+
+const UI = {
+  fr: {
+    allProducts: "Tous les produits",
+    happyClients: (n: number) => `+${n} clients satisfaits`,
+    taxIncluded: "Taxes incluses.",
+    preorderNote: "Pré-commande — expédiée dès réception du stock",
+    lowStock: (n: number) => `Bientôt épuisé — plus que ${n} en stock`,
+    pressEyebrow: "La presse en parle",
+    pressQuote: "« Les champignons s'apprêtent à envahir vos routines bien-être, et c'est une bonne chose ! »",
+    addToCart: "Ajouter au panier",
+    preorderCta: "Précommander",
+    backSoon: "Bientôt de retour",
+    guarantee: "Satisfait ou remboursé 30 jours · Panier & paiement Shopify.",
+    reassurance: ["Livraison offerte dès 49 €", "Paiement sécurisé", "Fabriqué en France"],
+    videoTitle: "Vu en vidéo",
+    routineTitle: "Complétez votre routine",
+    add: (t: string) => `Ajouter ${t}`,
+    aboutEyebrow: "À propos",
+    backToShop: "Retour à la boutique",
+    notFound: "Produit introuvable — BIEN",
+  },
+  en: {
+    allProducts: "All products",
+    happyClients: (n: number) => `+${n} happy customers`,
+    taxIncluded: "Taxes included.",
+    preorderNote: "Pre-order — ships as soon as stock arrives",
+    lowStock: (n: number) => `Almost sold out — only ${n} left in stock`,
+    pressEyebrow: "As seen in the press",
+    pressQuote: "“Mushrooms are about to take over your wellness routines, and that's a good thing!”",
+    addToCart: "Add to cart",
+    preorderCta: "Pre-order",
+    backSoon: "Back soon",
+    guarantee: "30-day money-back guarantee · Shopify cart & checkout.",
+    reassurance: ["Free shipping over €49", "Secure payment", "Made in France"],
+    videoTitle: "Seen on video",
+    routineTitle: "Complete your routine",
+    add: (t: string) => `Add ${t}`,
+    aboutEyebrow: "About",
+    backToShop: "Back to the shop",
+    notFound: "Product not found — BIEN",
+  },
+} as const;
 
 export default async function ProductPage({
   params,
@@ -373,11 +707,13 @@ export default async function ProductPage({
   const product = await getProduct(handle);
   if (!product) notFound();
 
+  const en = lang === "en";
+  const ui = en ? UI.en : UI.fr;
   const key = keyFor(product.title);
-  const info = key ? HIGHLIGHTS[key] : DEFAULT_INFO;
+  const info = key ? (en ? HIGHLIGHTS_EN : HIGHLIGHTS)[key] : (en ? DEFAULT_INFO_EN : DEFAULT_INFO);
   const isPowder = key === "MUSHGLOW";
   const videos = key ? VIDEOS[key] ?? [] : [];
-  const accordions = buildAccordions(key, info, isPowder);
+  const accordions = buildAccordions(key, info, isPowder, lang);
 
   // Article pour le panier local (client) — le checkout Shopify est déclenché
   // depuis la page panier via un permalink multi-articles.
@@ -397,7 +733,30 @@ export default async function ProductPage({
     product.quantityAvailable != null &&
     product.quantityAvailable > 0 &&
     product.quantityAvailable <= LOW_STOCK_THRESHOLD;
-  const ctaLabel = preorder ? "Précommander" : "Ajouter au panier";
+  const ctaLabel = preorder ? ui.preorderCta : ui.addToCart;
+  const productSeo = key ? localizeProductSeo(PRODUCT_SEO[key], lang) : null;
+
+  // Données structurées produit (SEO / rich results).
+  const availability = !product.available ? "OutOfStock" : preorder ? "PreOrder" : "InStock";
+  const productLd: Record<string, unknown> = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    image: product.images.length ? product.images.map((i) => i.url) : product.featuredImage ? [product.featuredImage.url] : [],
+    description: (product.description || info.category).slice(0, 320),
+    brand: { "@type": "Brand", name: "BIEN" },
+    sku: handle,
+    offers: {
+      "@type": "Offer",
+      price: product.price.amount,
+      priceCurrency: product.price.currencyCode || "EUR",
+      availability: `https://schema.org/${availability}`,
+      url: `${SITE_URL}/${lang}/products/${handle}`,
+    },
+    ...(info.reviews
+      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: String(info.reviews) } }
+      : {}),
+  };
 
   const EXCLUDE = new Set(["mousseur-a-lait", "bien-totebag"]);
   const related = (await getProducts(12))
@@ -410,19 +769,17 @@ export default async function ProductPage({
       ? [product.featuredImage]
       : [{ url: "/brand/product-mushglow.jpg", altText: product.title }];
 
-  const reassurance = [
-    { icon: Truck, label: "Livraison offerte dès 49 €" },
-    { icon: ShieldCheck, label: "Paiement sécurisé" },
-    { icon: MapPin, label: "Fabriqué en France" },
-  ];
+  const reassuranceIcons = [Truck, ShieldCheck, MapPin];
+  const reassurance = ui.reassurance.map((label, i) => ({ icon: reassuranceIcons[i], label }));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
+      <JsonLd data={productLd} />
 
       <main className="px-4 sm:px-6 lg:px-[100px] py-10 lg:py-14">
         <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-6">
-          <ArrowLeft className="h-4 w-4" /> Tous les produits
+          <ArrowLeft className="h-4 w-4" /> {ui.allProducts}
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-start">
@@ -435,32 +792,33 @@ export default async function ProductPage({
           <div>
             <div className="flex items-center gap-2">
               <span className="inline-flex text-bien-gold">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-gold" />)}</span>
-              <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">+{info.reviews} clients satisfaits</Link>
+              <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{ui.happyClients(info.reviews)}</Link>
             </div>
             <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4vw,3rem)] leading-[1] text-black">{product.title}</h1>
 
             <div className="mt-4 flex items-baseline gap-3">
               <span className="font-display font-black text-2xl text-black">{formatPrice(product.price)}</span>
-              {product.compareAtPrice && (
-                <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
-              )}
+              {product.compareAtPrice &&
+                Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
+                  <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
+                )}
             </div>
-            <p className="mt-1 text-xs text-black/50">Taxes incluses.</p>
+            <p className="mt-1 text-xs text-black/50">{ui.taxIncluded}</p>
 
             {/* État du stock */}
             {preorder ? (
               <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-bien-gold/20 text-black px-3 py-1.5 text-sm font-semibold">
-                <span className="h-2 w-2 rounded-full bg-bien-gold" /> Pré-commande — expédiée dès réception du stock
+                <span className="h-2 w-2 rounded-full bg-bien-gold" /> {ui.preorderNote}
               </p>
             ) : lowStock ? (
               <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-red-50 text-red-600 px-3 py-1.5 text-sm font-semibold">
-                <Zap className="h-4 w-4" /> Bientôt épuisé — plus que {product.quantityAvailable} en stock
+                <Zap className="h-4 w-4" /> {ui.lowStock(product.quantityAvailable!)}
               </p>
             ) : null}
 
             {/* Infos clés produit (comme le vrai site) */}
             <div className="mt-6 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
-              <p className="font-display font-black text-bien-gold tracking-wide">{info.category}</p>
+              <h2 className="font-display font-black text-bien-gold tracking-wide">{info.category}</h2>
               <ul className="mt-4 space-y-4">
                 {info.rows.map(({ icon: Icon, text }) => (
                   <li key={text} className="flex items-center gap-3.5">
@@ -473,9 +831,9 @@ export default async function ProductPage({
 
             {/* La presse en parle — citation + logos magazines */}
             <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">La presse en parle</p>
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">{ui.pressEyebrow}</p>
               <p className="mt-2.5 text-sm text-black/85 leading-snug">
-                « Les champignons s&apos;apprêtent à envahir vos routines bien-être, et c&apos;est une bonne chose ! »
+                {ui.pressQuote}
               </p>
               <div className="mt-4 grid grid-cols-4 gap-x-3 items-center">
                 {PRESS.map((p) => (
@@ -498,10 +856,10 @@ export default async function ProductPage({
                 disabled
                 className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold opacity-50 cursor-not-allowed"
               >
-                Bientôt de retour
+                {ui.backSoon}
               </button>
             )}
-            <p className="mt-2 text-xs text-black/50 text-center">Satisfait ou remboursé 30 jours · Panier &amp; paiement Shopify.</p>
+            <p className="mt-2 text-xs text-black/50 text-center">{ui.guarantee}</p>
 
             {/* Réassurance */}
             <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
@@ -516,7 +874,7 @@ export default async function ProductPage({
             {/* Vu en vidéo */}
             {videos.length > 0 && (
               <section className="mt-12">
-                <h2 className="font-display font-black text-lg text-black">Vu en vidéo</h2>
+                <h2 className="font-display font-black text-lg text-black">{ui.videoTitle}</h2>
                 <div className={`mt-4 grid gap-4 ${videos.length > 1 ? "grid-cols-2" : "grid-cols-1 max-w-[16rem]"}`}>
                   {videos.map((v, i) => (
                     <ProductVideo
@@ -533,7 +891,7 @@ export default async function ProductPage({
             {/* Complétez votre routine */}
             {related.length > 0 && (
               <section className="mt-12">
-                <h2 className="font-display font-black text-lg text-black">Complétez votre routine</h2>
+                <h2 className="font-display font-black text-lg text-black">{ui.routineTitle}</h2>
                 <ul className="mt-4 space-y-3">
                   {related.map((p) => {
                     const href = `/${lang}/products/${p.handle}`;
@@ -546,7 +904,7 @@ export default async function ProductPage({
                           <Link href={href}><h3 className="font-display font-black text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
                           <p className="mt-0.5 font-semibold text-black">{formatPrice(p.price)}</p>
                         </div>
-                        <Link href={href} aria-label={`Ajouter ${p.title}`} className="shrink-0 grid place-items-center h-10 w-10 rounded-full bg-bien-forest text-bien-cream hover:bg-bien-leaf transition-colors">
+                        <Link href={href} aria-label={ui.add(p.title)} className="shrink-0 grid place-items-center h-10 w-10 rounded-full bg-bien-forest text-bien-cream hover:bg-bien-leaf transition-colors">
                           <Plus className="h-5 w-5" />
                         </Link>
                       </li>
@@ -560,8 +918,8 @@ export default async function ProductPage({
             <section className="mt-12 space-y-3">
               {accordions.map(({ q, a }) => (
                 <details key={q} className="group bg-card rounded-2xl ring-1 ring-border px-5 open:ring-bien-leaf/40 transition-all">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4 font-display font-black text-black">
-                    {q}
+                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
+                    <h3 className="font-display font-black text-black">{q}</h3>
                     <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform duration-300 group-open:rotate-180" />
                   </summary>
                   <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed whitespace-pre-line">{a}</p>
@@ -571,16 +929,29 @@ export default async function ProductPage({
           </div>
         </div>
 
+        {/* Intro éditoriale SEO produit */}
+        {productSeo && (
+          <section className="mt-16 sm:mt-24 rounded-3xl lg:rounded-[2.5rem] bg-bien-cream/50 ring-1 ring-border p-7 sm:p-12 lg:p-16">
+            <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{ui.aboutEyebrow}</p>
+            <h2 className="mt-3 font-display font-black tracking-tighter text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
+            <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
+              {productSeo.paragraphs.map((para, i) => (
+                <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed">{para}</p>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* Avis produit — pleine largeur.
             Sur bien.health : vrai widget Loox natif (collecte → dashboard Loox).
             En dev/preview : affichage maison en repli (Loox bloque hors domaine). */}
         <ReviewsSwitch productId={product.id.split("/").pop() ?? product.id}>
-          <ProductReviews productKey={key} productHandle={handle} productTitle={product.title} />
+          <ProductReviews productKey={key} productHandle={handle} productTitle={product.title} lang={lang} />
         </ReviewsSwitch>
 
         <div className="mt-12">
           <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-semibold text-bien-leaf hover:gap-3 transition-all">
-            <ArrowLeft className="h-4 w-4" /> Retour à la boutique
+            <ArrowLeft className="h-4 w-4" /> {ui.backToShop}
           </Link>
         </div>
       </main>

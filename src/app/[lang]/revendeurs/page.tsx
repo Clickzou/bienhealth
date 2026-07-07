@@ -7,11 +7,31 @@ import SiteHeader from "@/components/site-header";
 import ResellerMap from "@/components/reseller-map-loader";
 import type { Reseller } from "@/components/reseller-map";
 
-export const metadata: Metadata = {
-  title: "Nos revendeurs — Où trouver BIEN",
-  description:
-    "Retrouvez les compléments BIEN dans nos points de vente partenaires en France, en Suisse et au Portugal. Devenez revendeur BIEN.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Our resellers — Where to find BIEN", description: "Find BIEN supplements at our partner stores in France, Switzerland and Portugal. Become a BIEN reseller." }
+    : { title: "Nos revendeurs — Où trouver BIEN", description: "Retrouvez les compléments BIEN dans nos points de vente partenaires en France, en Suisse et au Portugal. Devenez revendeur BIEN." };
+}
+
+const T = {
+  fr: {
+    eyebrow: "Points de vente", h1: "Où trouver BIEN.",
+    intro: (n: number) => `Retrouvez nos compléments chez nos ${n} partenaires en France, en Suisse et au Portugal — ou commandez en ligne, livraison offerte dès 49 €.`,
+    note: "Liste non exhaustive — de nouveaux points de vente rejoignent BIEN régulièrement.",
+    proTitle: "Vous êtes un professionnel ?",
+    proText: "Café, studio, pharmacie, concept-store… Rejoignez le réseau de revendeurs BIEN et proposez nos compléments à vos clients.",
+    become: "Devenir revendeur", order: "Commander en ligne",
+  },
+  en: {
+    eyebrow: "Stockists", h1: "Where to find BIEN.",
+    intro: (n: number) => `Find our supplements at our ${n} partners in France, Switzerland and Portugal — or order online, free shipping over €49.`,
+    note: "Non-exhaustive list — new stockists join BIEN regularly.",
+    proTitle: "Are you a professional?",
+    proText: "Café, studio, pharmacy, concept store… Join the BIEN reseller network and offer our supplements to your customers.",
+    become: "Become a reseller", order: "Order online",
+  },
+} as const;
 
 const RESELLERS: Reseller[] = [
   { name: "48 Collagen Café", address: "48, Rue La Fayette", city: "75009 Paris", country: "France", lat: 48.8757, lng: 2.341 },
@@ -33,6 +53,7 @@ export default async function RevendeursPage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+  const t = T[lang === "en" ? "en" : "fr"];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -41,14 +62,13 @@ export default async function RevendeursPage({
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
-          <Store className="h-4 w-4" /> Points de vente
+          <Store className="h-4 w-4" /> {t.eyebrow}
         </p>
         <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
-          Où trouver BIEN.
+          {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
-          Retrouvez nos compléments chez nos {RESELLERS.length} partenaires en France, en Suisse et au Portugal —
-          ou commandez en ligne, livraison offerte dès 49 €.
+          {t.intro(RESELLERS.length)}
         </p>
       </section>
 
@@ -56,7 +76,7 @@ export default async function RevendeursPage({
       <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
         <ResellerMap resellers={RESELLERS} />
         <p className="mt-6 text-center text-sm text-black/55">
-          Liste non exhaustive — de nouveaux points de vente rejoignent BIEN régulièrement.
+          {t.note}
         </p>
       </section>
 
@@ -64,17 +84,17 @@ export default async function RevendeursPage({
       <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
           <h2 className="font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
-            Vous êtes un professionnel ?
+            {t.proTitle}
           </h2>
           <p className="mt-3 text-black/75 max-w-xl mx-auto">
-            Café, studio, pharmacie, concept-store… Rejoignez le réseau de revendeurs BIEN et proposez nos compléments à vos clients.
+            {t.proText}
           </p>
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             <Link href={`/${lang}/devenir-revendeur`} className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-8 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm">
-              <Handshake className="h-4 w-4" /> Devenir revendeur
+              <Handshake className="h-4 w-4" /> {t.become}
             </Link>
             <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 rounded-full ring-1 ring-bien-forest/25 text-black px-8 py-4 font-bold hover:bg-bien-forest hover:text-bien-cream transition-colors">
-              Commander en ligne <ArrowRight className="h-4 w-4" />
+              {t.order} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

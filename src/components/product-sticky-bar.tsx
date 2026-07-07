@@ -71,8 +71,8 @@ export default function ProductStickyBar({
           ) : (
             <button type="button" disabled className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-bien-forest px-6 sm:px-9 py-3 font-bold opacity-50 cursor-not-allowed">
               <ShoppingBag className="h-4 w-4" />
-              <span className="hidden sm:inline">Bientôt de retour</span>
-              <span className="sm:hidden">Bientôt</span>
+              <span className="hidden sm:inline">{lang === "en" ? "Back soon" : "Bientôt de retour"}</span>
+              <span className="sm:hidden">{lang === "en" ? "Soon" : "Bientôt"}</span>
             </button>
           )}
         </div>

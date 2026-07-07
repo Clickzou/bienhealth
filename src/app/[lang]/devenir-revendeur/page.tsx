@@ -6,17 +6,35 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ResellerForm from "@/components/reseller-form";
 
-export const metadata: Metadata = {
-  title: "Devenir revendeur BIEN — Demande professionnelle",
-  description:
-    "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN et proposez nos compléments naturels à vos clients.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Become a BIEN reseller — Trade enquiry", description: "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN reseller network and offer our natural supplements to your customers." }
+    : { title: "Devenir revendeur BIEN — Demande professionnelle", description: "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN et proposez nos compléments naturels à vos clients." };
+}
 
-const PERKS = [
-  { icon: Store, title: "Une marque premium", text: "Des compléments naturels, clean et fabriqués en France qui valorisent votre offre." },
-  { icon: HeartPulse, title: "Un accompagnement dédié", text: "Conseils produits, supports de vente et interlocuteur unique." },
-  { icon: Truck, title: "Conditions pros", text: "Tarifs revendeurs, réassort simple et livraison rapide." },
-];
+const PERK_ICONS = [Store, HeartPulse, Truck];
+
+const T = {
+  fr: {
+    back: "Nos revendeurs", eyebrow: "Espace professionnels", h1: "Devenez revendeur BIEN.",
+    intro: "Café, studio, pharmacie, concept-store, spa… Proposez à vos clients une gamme de compléments naturels aux adaptogènes et champignons fonctionnels, dosés selon la science.",
+    perks: [
+      { title: "Une marque premium", text: "Des compléments naturels, clean et fabriqués en France qui valorisent votre offre." },
+      { title: "Un accompagnement dédié", text: "Conseils produits, supports de vente et interlocuteur unique." },
+      { title: "Conditions pros", text: "Tarifs revendeurs, réassort simple et livraison rapide." },
+    ],
+  },
+  en: {
+    back: "Our resellers", eyebrow: "Trade area", h1: "Become a BIEN reseller.",
+    intro: "Café, studio, pharmacy, concept store, spa… Offer your customers a range of natural supplements with adaptogens and functional mushrooms, dosed according to science.",
+    perks: [
+      { title: "A premium brand", text: "Natural, clean supplements made in France that elevate your offering." },
+      { title: "Dedicated support", text: "Product advice, sales materials and a single point of contact." },
+      { title: "Trade terms", text: "Reseller pricing, easy restocking and fast delivery." },
+    ],
+  },
+} as const;
 
 export default async function DevenirRevendeurPage({
   params,
@@ -25,6 +43,8 @@ export default async function DevenirRevendeurPage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+  const t = T[lang === "en" ? "en" : "fr"];
+  const PERKS = t.perks.map((p, i) => ({ ...p, icon: PERK_ICONS[i] }));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -32,21 +52,20 @@ export default async function DevenirRevendeurPage({
 
       <main className="px-4 sm:px-6 lg:px-[100px] py-10 sm:py-14">
         <Link href={`/${lang}/revendeurs`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-8">
-          <ArrowLeft className="h-4 w-4" /> Nos revendeurs
+          <ArrowLeft className="h-4 w-4" /> {t.back}
         </Link>
 
         <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
           {/* Présentation */}
           <div>
             <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
-              <Handshake className="h-4 w-4" /> Espace professionnels
+              <Handshake className="h-4 w-4" /> {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.95] text-black">
-              Devenez revendeur BIEN.
+              {t.h1}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
-              Café, studio, pharmacie, concept-store, spa… Proposez à vos clients une gamme de compléments naturels
-              aux adaptogènes et champignons fonctionnels, dosés selon la science.
+              {t.intro}
             </p>
 
             <ul className="mt-8 space-y-5">

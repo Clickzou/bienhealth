@@ -3,10 +3,12 @@ import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
 
-export const metadata: Metadata = {
-  title: "Conditions générales de vente · BIEN",
-  description: "Conditions d'utilisation et de vente de Bien Health SAS (bien.health).",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return lang === "en"
+    ? { title: "Terms and conditions of sale · BIEN", description: "Terms of use and sale of Bien Health SAS (bien.health)." }
+    : { title: "Conditions générales de vente · BIEN", description: "Conditions d'utilisation et de vente de Bien Health SAS (bien.health)." };
+}
 
 export default async function CgvPage({
   params,
@@ -15,6 +17,72 @@ export default async function CgvPage({
 }) {
   const { lang } = await params;
   if (!hasLocale(lang)) notFound();
+
+  if (lang === "en") {
+    return (
+      <LegalLayout lang={lang} title="Terms and conditions of sale">
+        <h2>General presentation (France)</h2>
+        <p>
+          This website is operated by <strong>Bien Health SAS</strong>, registered in France under SIRET number
+          99412112700017, with its registered office at 100 Rue du Verbial, 81000 Albi, France, and VAT number
+          FR35994121127, represented by its President Carla Debard (“Bien.Health” or the “Company”). On this site, the
+          terms “we”, “our” and “us” refer to Bien.Health.
+        </p>
+        <p>
+          Bien.Health provides you with this website, including all information, tools and services available on it,
+          subject to your acceptance of all the terms, policies and notices stated here.
+        </p>
+        <p>
+          By visiting this site and/or making a purchase from us, you use our services and agree to be bound by these
+          general terms and conditions (the “Terms”), including any additional terms, policies and notices referred to.
+          These Terms apply to all users of the site (visitors, suppliers, customers, merchants and/or content
+          contributors).
+        </p>
+        <p>
+          Please read these Terms carefully before accessing or using this site. If you do not accept all the terms and
+          conditions, you will not be able to place an order on this site.
+        </p>
+
+        <h2>Applicable law and jurisdiction</h2>
+        <p>
+          These Terms are governed by and construed in accordance with French law. Any dispute relating to these Terms
+          shall be subject to the jurisdiction of the competent French courts.
+        </p>
+        <p>
+          We make no representation as to the legal compliance of the products and/or services in other countries. It is
+          the user's responsibility to comply with the local laws and regulations applicable in their country.
+        </p>
+
+        <h2>Scope</h2>
+        <p>
+          These Terms apply to any offer by the Company and to any contract concluded between the Company and the
+          consumer. Before the contract is concluded, they are made available to the consumer on{" "}
+          <a href="https://bien.health" target="_blank" rel="noopener noreferrer">bien.health</a> and must be expressly
+          accepted before any order.
+        </p>
+
+        <h2>Prices</h2>
+        <p>
+          Prices shown on this site are in euros (€) and include all applicable taxes, unless otherwise stated.
+        </p>
+
+        <h2>Complaints</h2>
+        <p>
+          Any complaint must be sent to the Company within a reasonable time by email to{" "}
+          <a href="mailto:info@bien.health">info@bien.health</a>. In accordance with French consumer law, the consumer may
+          also use a free consumer mediation service.
+        </p>
+
+        <h2>Disputes</h2>
+        <p>
+          In the event of a dispute, the consumer may first contact the Company to seek an amicable solution. Failing
+          agreement, the dispute will be brought before the competent French courts.
+        </p>
+
+        <p className="pt-4 text-black/50">© Bien Health SAS — 2026</p>
+      </LegalLayout>
+    );
+  }
 
   return (
     <LegalLayout lang={lang} title="Conditions générales de vente">
