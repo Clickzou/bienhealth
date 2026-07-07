@@ -326,7 +326,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* 3. HERO */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-6 sm:pt-10">
         <div className="relative hero-gradient rounded-3xl lg:rounded-[2.75rem] overflow-hidden bien-shadow">
-          <div className="grid lg:grid-cols-2 items-stretch">
+          <div className="grid lg:grid-cols-[calc(50%_+_100px)_1fr] items-stretch">
             <div className="anim-up text-bien-cream p-6 sm:p-10 lg:p-16 flex flex-col justify-center">
               <div className="inline-flex items-start gap-2 rounded-2xl bg-bien-cream/10 backdrop-blur px-4 py-2.5 text-xs sm:text-sm text-bien-cream/90 ring-1 ring-bien-cream/20 max-w-md">
                 <Leaf className="h-4 w-4 shrink-0 mt-0.5 text-bien-gold" />
@@ -341,12 +341,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               <p className="mt-3 text-sm sm:text-base text-bien-cream/70 max-w-xl leading-relaxed">
                 {c.hero.p2}
               </p>
-              <div className="mt-7 flex flex-col sm:flex-row sm:items-center gap-4">
-                <a href={`/${lang}/collections/accessories`} className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-7 py-4 text-base font-semibold hover:brightness-95 transition bien-shadow-sm">
+              <div className="mt-7 flex flex-col sm:flex-row sm:items-center sm:flex-nowrap gap-x-4 gap-y-3">
+                <a href={`/${lang}/collections/accessories`} className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-7 py-4 text-base font-semibold hover:brightness-95 transition bien-shadow-sm">
                   {c.hero.cta} <ArrowRight className="h-4 w-4" />
                 </a>
-                <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g1}</span>
-                <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g2}</span>
+                <span className="shrink-0 inline-flex items-center gap-2 text-sm text-bien-cream/85 whitespace-nowrap"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g1}</span>
+                <span className="shrink-0 inline-flex items-center gap-2 text-sm text-bien-cream/85 whitespace-nowrap"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g2}</span>
               </div>
             </div>
             <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[920px]">
