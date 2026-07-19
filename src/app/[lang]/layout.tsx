@@ -12,19 +12,20 @@ import GoogleAnalytics from "@/components/google-analytics";
 
 // Fontes de la charte « Brand Refresh V2 » — auto-hébergées via next/font/local.
 // Licences dans src/app/fonts/LICENSES/.
-// Dahlia Medium Condensed (H1) — fichier web woff2 fourni.
+// Dahlia Medium Condensed (H1) — source otf, next/font génère le woff2.
 const display = localFont({
-  src: "../fonts/Dahlia-MediumCondensed.woff2",
+  src: "../fonts/Dahlia-MediumCondensed.otf",
   variable: "--font-dahlia",
   weight: "500",
   display: "swap",
 });
 
-// Season Serif Regular (H2 / H3) — un seul graisse (400).
+// Season Serif Regular — police display de la marque, utilisée en poids 500
+// (hero H1, titres de section H2/H3, titres sous icônes).
 const title = localFont({
   src: "../fonts/SeasonSerif-Regular.otf",
   variable: "--font-season",
-  weight: "400",
+  weight: "500",
   display: "swap",
 });
 

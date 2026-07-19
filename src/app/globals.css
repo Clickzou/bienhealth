@@ -74,7 +74,7 @@
       font-sans    → H4, corps, boutons
   */
   --font-sans: var(--font-moderat), system-ui, sans-serif;
-  --font-hero: var(--font-dahlia), Georgia, serif;
+  --font-hero: var(--font-season), Georgia, serif;
   --font-display: var(--font-season), Georgia, serif;
 }
 

@@ -5,6 +5,7 @@ import type { ComponentType } from "react";
 import { hasLocale } from "./dictionaries";
 import { getProducts, formatPrice } from "@/lib/shopify-products";
 import IngredientsCarousel from "@/components/ingredients-carousel";
+import HeroCarousel from "@/components/hero-carousel";
 import RevealController from "@/components/reveal-controller";
 import Typewriter from "@/components/typewriter";
 import TrustpilotWidget, { TRUSTPILOT_URL } from "@/components/trustpilot";
@@ -22,12 +23,12 @@ const TP_TEMPLATE_ID = process.env.NEXT_PUBLIC_TRUSTPILOT_TEMPLATE_ID;
 /** Page d'accueil BIEN — contenu bilingue (FR / EN) co-localisé. */
 
 const PRESS = [
-  { name: "Doit in Paris", href: "https://www.doitinparis.com/fr/boissons-detox-paris-27378" },
-  { name: "Gala", href: "https://www.moncarnet-gala.fr/articles/view/BIEN" },
-  { name: "BIBA", href: "https://www.bibamagazine.fr/lifestyle/sante/adieu-le-cafe-cette-boisson-naturelle-a-base-de-champignons-est-le-secret-pour-se-reveiller-sans-doper-son-cortisol-498845.html" },
-  { name: "L'Officiel", href: "https://www.lofficiel.com/beaute/10-produits-de-beaute-a-acheter-en-janvier-2026" },
-  { name: "Beauté test", href: "https://www.beaute-test.com/mag/jai-teste-pour-vous-ces-gummies-anti-stress-sans-melatonine-qui-apaisent-vraiment.php" },
-  { name: "Snake Twist", href: "https://www.instagram.com/p/DUIVTzWjQAn/?igsh=MTU0dXNnZ2hnOTJ6cg%3D%3D" },
+  { name: "Doit in Paris", logo: "/48collagen.webp", href: "https://www.doitinparis.com/fr/boissons-detox-paris-27378" },
+  { name: "Gala", logo: "/gala.avif", href: "https://www.moncarnet-gala.fr/articles/view/BIEN" },
+  { name: "BIBA", logo: "/logobiba.webp", href: "https://www.bibamagazine.fr/lifestyle/sante/adieu-le-cafe-cette-boisson-naturelle-a-base-de-champignons-est-le-secret-pour-se-reveiller-sans-doper-son-cortisol-498845.html" },
+  { name: "L'Officiel", logo: "/Sans-titre-1.webp", href: "https://www.lofficiel.com/beaute/10-produits-de-beaute-a-acheter-en-janvier-2026" },
+  { name: "Beauté test", logo: "/beaute-test.webp", href: "https://www.beaute-test.com/mag/jai-teste-pour-vous-ces-gummies-anti-stress-sans-melatonine-qui-apaisent-vraiment.php" },
+  { name: "Snake Twist", logo: "/Sans-titre-1_2e2ae90a-cb66-4551-9b39-528991293895.webp", href: "https://www.instagram.com/p/DUIVTzWjQAn/?igsh=MTU0dXNnZ2hnOTJ6cg%3D%3D" },
 ];
 
 const RITUAL_ICONS = [Moon, Brain, Zap, Sparkles];
@@ -291,6 +292,9 @@ function Bubble({ item, side, note, anim, delay = 0, lang }: {
           {item.title}<sup className="text-bien-pink text-xs ml-0.5">{note}</sup>
         </h3>
         <p className="mt-2 text-sm text-black/70 leading-relaxed">{item.desc}</p>
+        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
+          {lang === "en" ? "Discover" : "Découvrir"} <ArrowRight className="h-4 w-4" />
+        </span>
       </a>
     </div>
   );
@@ -332,7 +336,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <Leaf className="h-4 w-4 shrink-0 mt-0.5 text-bien-gold" />
                 <span className="leading-snug">{c.hero.badge}</span>
               </div>
-              <h1 className="mt-5 font-hero leading-[0.95] text-[clamp(2.5rem,7vw,5.25rem)]">
+              <h1 className="mt-5 font-display font-medium leading-[0.95] text-[clamp(2.5rem,7vw,5.25rem)]">
                 {c.hero.title1}<br /><span className="text-bien-gold">{c.hero.title2}</span>
               </h1>
               <p className="mt-5 text-base sm:text-lg text-bien-cream/90 max-w-xl leading-relaxed">
@@ -350,29 +354,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </div>
             </div>
             <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[920px]">
-              <Image src="/bien-health-bien-etre.jpg" alt="Produits BIEN — compléments naturels" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
-              {/* Carte points clés flottante par-dessus la photo */}
-              <div className="absolute bottom-20 left-4 right-4 sm:bottom-24 sm:left-6 sm:right-6 lg:bottom-28">
-                <div className="rounded-[1.75rem] bg-card/70 backdrop-blur-2xl ring-1 ring-white/60 shadow-2xl shadow-bien-forest/20 p-3.5 sm:p-4">
-                  <div className="flex items-center gap-2 px-1.5 pb-2.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-bien-gold" />
-                    <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-bien-leaf">{c.hero.keyPointsTitle}</p>
-                  </div>
-                  <ul className="space-y-0.5">
-                    {c.hero.keyPoints.map((line, i) => {
-                      const Icon = KEYPOINT_ICONS[i];
-                      return (
-                        <li key={line} className="group flex items-center gap-3 rounded-2xl px-1.5 py-1.5 hover:bg-bien-cream/70 transition-colors">
-                          <span className={`shrink-0 grid place-items-center h-8 w-8 rounded-xl ${KEYPOINT_TINTS[i]} group-hover:scale-105 transition-transform`}>
-                            <Icon className="h-4 w-4" />
-                          </span>
-                          <span className="text-[13px] sm:text-sm text-black font-semibold leading-snug">{line}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              </div>
+              <HeroCarousel
+                images={[
+                  { src: "/bien-health-bien-etre.jpg", alt: "Produits BIEN — compléments naturels" },
+                  { src: "/ArcParis-2.jpg", alt: "BIEN — bien-être naturel" },
+                  { src: "/ArcParis-4.jpg", alt: "BIEN — bien-être naturel", pos: "object-bottom" },
+                ]}
+              />
             </div>
           </div>
         </div>
@@ -433,7 +421,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <Typewriter text={c.press.featured} />
         </p>
         <p className="text-center text-[13px] font-bold text-black/60">{c.press.clickHint}</p>
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-x-8 gap-y-4">
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-6">
           {PRESS.map((p) => (
             <a
               key={p.name}
@@ -441,10 +429,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               target="_blank"
               rel="noopener noreferrer"
               title={c.press.readArticle(p.name)}
-              className="group inline-flex items-center gap-1.5 font-display text-3xl sm:text-4xl text-black hover:text-bien-leaf transition-colors tracking-tight underline-offset-[8px] decoration-2 decoration-bien-gold hover:underline"
+              className="inline-flex items-center opacity-60 hover:opacity-100 transition-opacity"
             >
-              {p.name}
-              <ArrowUpRight className="h-6 w-6 text-bien-gold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
+              <Image src={p.logo} alt={p.name} width={160} height={48} className="h-[108px] sm:h-[132px] w-auto object-contain" />
             </a>
           ))}
         </div>
@@ -468,6 +455,27 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           <p className="mt-4 text-base sm:text-lg text-black/70">
             {c.benefits.sub}
           </p>
+        </div>
+
+        {/* L'essentiel — points clés (déplacé depuis le hero) */}
+        <div className="mt-10 max-w-[1268px] mx-auto rounded-[1.75rem] bg-card ring-1 ring-border bien-shadow-sm p-5 sm:p-6">
+          <div className="flex items-center justify-center gap-2 pb-3">
+            <span className="h-1.5 w-1.5 rounded-full bg-bien-leaf" />
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-bien-leaf">{c.hero.keyPointsTitle}</p>
+          </div>
+          <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">
+            {c.hero.keyPoints.map((line, i) => {
+              const Icon = KEYPOINT_ICONS[i];
+              return (
+                <li key={line} className="flex items-center gap-3 rounded-2xl px-2 py-2">
+                  <span className={`shrink-0 grid place-items-center h-9 w-9 rounded-xl ${KEYPOINT_TINTS[i]}`}>
+                    <Icon className="h-4 w-4" />
+                  </span>
+                  <span className="text-sm text-black font-semibold leading-snug text-left">{line}</span>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
         <div className="mt-16 relative grid lg:grid-cols-[1fr_minmax(360px,560px)_1fr] gap-y-14 lg:gap-x-8 items-center">

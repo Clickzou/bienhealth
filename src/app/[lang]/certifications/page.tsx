@@ -28,7 +28,7 @@ const ATTESTATIONS: Attestation[] = [
   {
     name: "MUSHGLOW",
     form: { fr: "Poudre", en: "Powder" },
-    img: "/brand/product-mushglow.jpg",
+    img: "/mushglow.jpg",
     declaredOn: { fr: "4 avril 2025", en: "4 April 2025" },
     number: "260541",
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/260541",
@@ -41,7 +41,7 @@ const ATTESTATIONS: Attestation[] = [
   {
     name: "CALM",
     form: { fr: "Gomme", en: "Gummy" },
-    img: "/brand/product-calm.jpg",
+    img: "/calm.jpg",
     declaredOn: { fr: "19 mars 2025", en: "19 March 2025" },
     number: "257758",
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257758",
@@ -54,7 +54,7 @@ const ATTESTATIONS: Attestation[] = [
   {
     name: "FOCUS",
     form: { fr: "Gomme", en: "Gummy" },
-    img: "/brand/product-focus.jpg",
+    img: "/focus.jpg",
     declaredOn: { fr: "19 mars 2025", en: "19 March 2025" },
     number: "257824",
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257824",
@@ -67,7 +67,7 @@ const ATTESTATIONS: Attestation[] = [
   {
     name: "POWER",
     form: { fr: "Gomme", en: "Gummy" },
-    img: "/brand/product-power.jpg",
+    img: "/power.jpg",
     declaredOn: { fr: "19 mars 2025", en: "19 March 2025" },
     number: "257810",
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257810",
@@ -117,7 +117,7 @@ export default async function CertificationsPage({
     <div className="min-h-screen bg-background text-foreground bg-[url('/brand/certif-bg.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
       <SiteHeader lang={lang} />
 
-      <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-[100px] py-12 lg:py-20">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-[100px] py-12 lg:py-20">
         {/* Intro */}
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}
@@ -143,18 +143,16 @@ export default async function CertificationsPage({
         {/* Cartes attestations */}
         <div className="mt-12 grid md:grid-cols-2 gap-6">
           {ATTESTATIONS.map((a) => (
-            <article key={a.name} className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col">
-              <div className="flex items-center gap-4 p-5 sm:p-6 border-b border-border">
-                <div className="relative h-16 w-16 rounded-2xl overflow-hidden bg-bien-cream ring-1 ring-border shrink-0">
-                  <Image src={a.img} alt={a.name} fill sizes="64px" className="object-cover" />
-                </div>
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h2 className="font-display text-2xl text-black leading-none">{a.name}</h2>
-                    <span className="text-[11px] uppercase tracking-wider font-semibold text-bien-leaf bg-bien-leaf/10 rounded-full px-2 py-0.5">{a.form[en ? "en" : "fr"]}</span>
-                  </div>
-                  <p className="mt-1.5 text-xs text-black/55">
-                    {t.declaration} <span className="font-semibold text-black">{a.number}</span> · {a.declaredOn[en ? "en" : "fr"]}
+            <article key={a.name} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col">
+              {/* Grande photo produit en bannière */}
+              <div className="relative aspect-[16/10] bg-bien-cream overflow-hidden">
+                <Image src={a.img} alt={a.name} fill sizes="(max-width:768px) 100vw, 45vw" className="object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+                <span className="absolute top-4 right-4 text-[11px] uppercase tracking-wider font-semibold text-bien-navy bg-white/90 backdrop-blur rounded-full px-3 py-1">{a.form[en ? "en" : "fr"]}</span>
+                <div className="absolute inset-x-5 sm:inset-x-6 bottom-4 sm:bottom-5">
+                  <h2 className="font-display text-3xl sm:text-4xl text-white leading-none drop-shadow-sm">{a.name}</h2>
+                  <p className="mt-2 text-xs text-white/85">
+                    {t.declaration} <span className="font-semibold text-white">{a.number}</span> · {a.declaredOn[en ? "en" : "fr"]}
                   </p>
                 </div>
               </div>

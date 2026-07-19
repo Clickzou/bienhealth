@@ -51,7 +51,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
   const ABOUT_FEATURED = [
     { label: t.press, cta: t.discover, href: `/${lang}/presse`, img: "/brand/calm.jpg" },
-    { label: t.resellers, cta: t.discover, href: `/${lang}/revendeurs`, img: "/brand/produits-bien-health.png" },
+    { label: t.resellers, cta: t.discover, href: `/${lang}/revendeurs`, img: "/revendeurs.jpg" },
   ];
 
   const LINKS = [
