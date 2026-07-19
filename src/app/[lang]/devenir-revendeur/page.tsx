@@ -61,7 +61,7 @@ export default async function DevenirRevendeurPage({
             <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
               <Handshake className="h-4 w-4" /> {t.eyebrow}
             </p>
-            <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.95] text-black">
+            <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.95] text-black">
               {t.h1}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -73,7 +73,7 @@ export default async function DevenirRevendeurPage({
                 <li key={title} className="flex gap-4">
                   <span className="shrink-0 grid place-items-center h-11 w-11 rounded-2xl bg-bien-gold text-bien-forest"><Icon className="h-5 w-5" /></span>
                   <div>
-                    <h2 className="font-display font-black text-black leading-tight">{title}</h2>
+                    <h2 className="font-display text-black leading-tight">{title}</h2>
                     <p className="mt-1 text-sm text-black/70 leading-relaxed">{text}</p>
                   </div>
                 </li>

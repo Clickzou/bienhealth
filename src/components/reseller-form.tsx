@@ -67,7 +67,7 @@ export default function ResellerForm({ lang }: { lang: string }) {
     return (
       <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-8 sm:p-12 text-center">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-leaf text-bien-cream"><Check className="h-8 w-8" /></span>
-        <h2 className="mt-5 font-display font-black tracking-tight text-2xl text-black">{c.sentTitle}</h2>
+        <h2 className="mt-5 font-display tracking-tight text-2xl text-black">{c.sentTitle}</h2>
         <p className="mt-2 text-black/70 max-w-md mx-auto leading-relaxed">
           {c.sentText}
         </p>

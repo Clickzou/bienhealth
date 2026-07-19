@@ -50,9 +50,9 @@ export default async function BoutiquePage({
 
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
-        <div className="relative hero-gradient rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-          <h1 className="mt-3 font-display font-black tracking-tighter text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
+          <h1 className="mt-3 font-hero text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
             {t.h1}
           </h1>
           <p className="mt-4 max-w-xl text-base sm:text-lg text-bien-cream/85 leading-relaxed">
@@ -75,7 +75,7 @@ export default async function BoutiquePage({
       {/* Grille produits */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
         <div className="flex items-end justify-between gap-4 mb-6">
-          <h2 className="font-display font-black tracking-tight text-2xl text-black">
+          <h2 className="font-display tracking-tight text-2xl text-black">
             {products.length} {products.length > 1 ? t.products : t.product}
           </h2>
           <Link href={`/${lang}/diagnostic`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">

@@ -219,7 +219,7 @@ function StarRow({ value }: { value: number }) {
   return (
     <div className="flex gap-0.5" aria-label={`${value} sur 5`}>
       {[0, 1, 2, 3, 4].map((i) => (
-        <Star key={i} className={`h-4 w-4 ${i < value ? "fill-bien-gold text-bien-gold" : "fill-bien-forest/15 text-black/15"}`} />
+        <Star key={i} className={`h-4 w-4 ${i < value ? "fill-bien-star text-bien-star" : "fill-bien-forest/15 text-black/15"}`} />
       ))}
     </div>
   );
@@ -243,11 +243,11 @@ export default async function AvisPage({
       <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.eyebrow}</p>
-          <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.25rem,5vw,3.75rem)] leading-[1] text-black">
+          <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.75rem)] leading-[1] text-black">
             {t.h1}
           </h1>
           <div className="mt-6 inline-flex items-center gap-4 rounded-2xl bg-card ring-1 ring-border bien-shadow-sm px-6 py-4">
-            <span className="font-display font-black text-4xl text-black leading-none">{lang === "en" ? "4.4" : "4,4"}</span>
+            <span className="font-display text-4xl text-black leading-none">{lang === "en" ? "4.4" : "4,4"}</span>
             <span className="h-10 w-px bg-border" />
             <span className="text-left">
               <StarRow value={4} />
@@ -280,7 +280,7 @@ export default async function AvisPage({
                   </span>
                 )}
               </div>
-              <h2 className="mt-3 font-display font-black text-black leading-tight">{en ? r.titleEn : r.title}</h2>
+              <h2 className="mt-3 font-display text-black leading-tight">{en ? r.titleEn : r.title}</h2>
               <p className="mt-2 text-sm text-black/80 leading-relaxed">{en ? r.textEn : r.text}</p>
 
               {r.reply && (

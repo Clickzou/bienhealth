@@ -1,30 +1,81 @@
 @import "tailwindcss";
 
 /*
-  Design system BIEN — porté depuis la maquette Lovable validée.
-  Palette vert/crème/or, typo Bricolage Grotesque, ombres & dégradé sur-mesure.
+  Design system BIEN — charte « Brand Refresh V2 » (French Bre(a)d, 13 mars 2025).
+
+  Répartition voulue : sky 30 %, green 25 %, navy 15 %, off-white 15 %,
+  citrus 5 %, pink 5 %, black 5 %.
+
+  Associations autorisées (p. 24) et interdites (p. 25) — à respecter sur tout
+  bloc de marque (fond plein + texte) :
+    fond sky   → green | off-white | citrus | navy
+    fond green → sky | off-white | citrus | pink
+    fond navy  → sky | off-white | citrus | pink | green
+    fond pink  → green UNIQUEMENT
+    fond citrus→ sky UNIQUEMENT
+    fond off-white → green | sky | pink   (navy et citrus sont des NO-GO)
 */
 @theme {
   /* Palette de marque */
-  --color-bien-forest: #20302a;
-  --color-bien-leaf: #3f6b4f;
-  --color-bien-sage: #6b7f6e;
-  --color-bien-cream: #f5f2ea;
-  --color-bien-gold: #f5b301;
-  --color-bien-bg: #fffdf9;
+  --color-bien-sky: #7ccdf4;
+  --color-bien-green: #238f5e;
+  --color-bien-navy: #00112b;
+  --color-bien-offwhite: #f9f8f6;
+  --color-bien-citrus: #fff151;
+  --color-bien-pink: #ffb2ce;
+
+  /*
+    Bleu d'aplat validé client — variante légèrement plus claire du Deep Blue.
+    Sert de fond aux zones sombres (barre d'offre, hero, sections pleines).
+    Le Deep Blue #00112b de la charte reste la référence pour le texte et le logo.
+  */
+  --color-bien-ink: #021b39;
+
+  /*
+    Jaune des étoiles d'avis — conservé hors charte à la demande du client.
+    Le Citrus #fff151 serait trop clair pour rester lisible sur fond blanc.
+    Réservé aux étoiles : les CTA et accents utilisent le sky.
+  */
+  --color-bien-star: #f5b301;
+
+  /*
+    Alias de l'ancienne palette vert/crème/or, remappés sur la nouvelle charte.
+    Ils restent en place le temps de migrer les ~570 usages vers les noms
+    ci-dessus ; ne pas les utiliser dans du code neuf.
+  */
+  --color-bien-forest: var(--color-bien-ink);
+  --color-bien-leaf: var(--color-bien-green);
+  --color-bien-sage: #5a6472;
+  --color-bien-cream: var(--color-bien-offwhite);
+  --color-bien-gold: var(--color-bien-sky);
+  --color-bien-bg: #ffffff;
 
   /* Tokens sémantiques */
-  --color-background: #fffdf9;
+  --color-background: #ffffff;
   --color-foreground: #0a0a0a;
   --color-card: #ffffff;
-  --color-card-foreground: #20302a;
-  --color-muted: #f1eee6;
-  --color-muted-foreground: #6b7f6e;
-  --color-border: #e7e1d3;
+  --color-card-foreground: #00112b;
+  --color-muted: #f2f1ee;
+  --color-muted-foreground: #5a6472;
+  --color-border: #e6e4df;
 
-  /* Typographies (variables injectées par next/font dans layout.tsx) */
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-bricolage), system-ui, sans-serif;
+  /*
+    Typographies (variables injectées par next/font dans layout.tsx).
+
+    Les fontes officielles de la charte, auto-hébergées via next/font/local
+    (fichiers dans src/app/fonts/, licences dans src/app/fonts/LICENSES/) :
+      Dahlia Medium Condensed → --font-dahlia (H1, display condensé)
+      Season Serif Regular    → --font-season (serif éditoriale, H2/H3)
+      Moderat                 → --font-moderat (grotesque neutre, corps/boutons)
+
+    Correspondance des utilitaires :
+      font-hero    → H1 uniquement, grande échelle, 5-6 mots max
+      font-display → titres de section (H2 / H3)
+      font-sans    → H4, corps, boutons
+  */
+  --font-sans: var(--font-moderat), system-ui, sans-serif;
+  --font-hero: var(--font-dahlia), Georgia, serif;
+  --font-display: var(--font-season), Georgia, serif;
 }
 
 @layer base {
@@ -39,10 +90,26 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
-  h1, h2, h3, h4 {
+  /* H1 — Dahlia : grande échelle, 5-6 mots max, interlignage 100 % */
+  h1 {
+    font-family: var(--font-hero);
+    font-weight: 400;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  /* H2 / H3 — Season Serif : interlignage 120 % */
+  h2, h3 {
     font-family: var(--font-display);
-    font-weight: 800;
-    letter-spacing: -0.025em;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+  /* H4 — Moderat Bold : capitales, interlettrage 5 % */
+  h4 {
+    font-family: var(--font-sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
@@ -75,16 +142,28 @@
 }
 
 @utility bien-shadow {
-  box-shadow: 0 20px 50px -25px color-mix(in oklab, #20302a 35%, transparent);
+  box-shadow: 0 20px 50px -25px color-mix(in oklab, #00112b 35%, transparent);
 }
 @utility bien-shadow-sm {
-  box-shadow: 0 8px 24px -12px color-mix(in oklab, #20302a 25%, transparent);
+  box-shadow: 0 8px 24px -12px color-mix(in oklab, #00112b 25%, transparent);
 }
-@utility hero-gradient {
-  background: linear-gradient(135deg, #356049 0%, #20302a 60%, #1b2a23 100%);
+
+/* Fond des héros : aplat bleu foncé, sans dégradé. Texte off-white ou sky. */
+@utility hero-surface {
+  background-color: var(--color-bien-ink);
 }
+
+/* --- Dégradés de marque (charte p. 26) --- */
 @utility press-gradient {
-  /* Dégradé magazine : halo rose/orange chaud sur base bleu-lavande (comme bien.health/pages/presse) */
-  background:
-    radial-gradient(120% 90% at 50% 42%, #f4a98f 0%, #e195b0 34%, #b7a6d6 62%, #9aa8d6 100%);
+  /* Sky → green */
+  background: linear-gradient(180deg, #7ccdf4 0%, #238f5e 100%);
+}
+@utility bien-gradient-pink-sky {
+  background: linear-gradient(180deg, #ffb2ce 0%, #7ccdf4 100%);
+}
+@utility bien-gradient-green-pink {
+  background: linear-gradient(180deg, #238f5e 0%, #ffb2ce 100%);
+}
+@utility bien-gradient-sky-citrus {
+  background: linear-gradient(180deg, #7ccdf4 0%, #fff151 100%);
 }

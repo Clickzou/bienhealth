@@ -122,7 +122,7 @@ export default async function CertificationsPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/75 leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{ __html: t.intro }} />
@@ -150,7 +150,7 @@ export default async function CertificationsPage({
                 </div>
                 <div>
                   <div className="flex items-center gap-2">
-                    <h2 className="font-display font-black text-2xl text-black leading-none">{a.name}</h2>
+                    <h2 className="font-display text-2xl text-black leading-none">{a.name}</h2>
                     <span className="text-[11px] uppercase tracking-wider font-semibold text-bien-leaf bg-bien-leaf/10 rounded-full px-2 py-0.5">{a.form[en ? "en" : "fr"]}</span>
                   </div>
                   <p className="mt-1.5 text-xs text-black/55">

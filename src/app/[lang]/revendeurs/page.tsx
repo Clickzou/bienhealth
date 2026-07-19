@@ -64,7 +64,7 @@ export default async function RevendeursPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Store className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -83,7 +83,7 @@ export default async function RevendeursPage({
       {/* Devenir revendeur */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
-          <h2 className="font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+          <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
             {t.proTitle}
           </h2>
           <p className="mt-3 text-black/75 max-w-xl mx-auto">

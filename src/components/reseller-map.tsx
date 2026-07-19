@@ -98,7 +98,7 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
               <MapPin className="h-4.5 w-4.5" />
             </span>
             <span className="min-w-0">
-              <span className="block font-display font-black text-black leading-tight">{r.name}</span>
+              <span className="block font-display text-black leading-tight">{r.name}</span>
               <span className="mt-1 block text-sm text-black/65 leading-snug">{r.address}<br />{r.city} — {r.country}</span>
               {i === active && (
                 <a

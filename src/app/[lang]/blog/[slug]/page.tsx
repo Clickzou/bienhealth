@@ -118,7 +118,7 @@ export default async function ArticlePage({
 
           {/* En-tête */}
           <p className="mt-6 inline-flex items-center rounded-full bg-bien-cream px-3 py-1 text-xs font-semibold text-black">{a.category}</p>
-          <h1 className="mt-4 font-display font-black tracking-tighter text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] text-black">{a.title}</h1>
+          <h1 className="mt-4 font-hero text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] text-black">{a.title}</h1>
           <div className="mt-4 flex items-center gap-3 text-sm text-black/55">
             <span>{fmtDate(a.date, lang)}</span>
             <span>·</span>
@@ -135,8 +135,8 @@ export default async function ArticlePage({
             <p className="text-lg text-black/80 leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: a.intro }} />
 
             {a.blocks.map((b, i) => {
-              if ("h2" in b) return <h2 key={i} className="mt-10 font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{b.h2}</h2>;
-              if ("h3" in b) return <h3 key={i} className="mt-7 font-display font-black text-lg sm:text-xl text-black">{b.h3}</h3>;
+              if ("h2" in b) return <h2 key={i} className="mt-10 font-display tracking-tight text-2xl sm:text-3xl text-black">{b.h2}</h2>;
+              if ("h3" in b) return <h3 key={i} className="mt-7 font-display text-lg sm:text-xl text-black">{b.h3}</h3>;
               if ("ul" in b)
                 return (
                   <ul key={i} className="mt-4 space-y-2 list-disc pl-5 text-[15px] sm:text-base text-black/75 leading-relaxed">
@@ -150,12 +150,12 @@ export default async function ArticlePage({
           {/* FAQ */}
           {a.faq.length > 0 && (
             <section className="mt-12 pt-10 border-t border-border">
-              <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{ui.faqTitle}</h2>
+              <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{ui.faqTitle}</h2>
               <div className="mt-5 space-y-3">
                 {a.faq.map((f) => (
                   <details key={f.q} className="group bg-card rounded-2xl ring-1 ring-border px-5">
                     <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
-                      <h3 className="font-display font-black text-black">{f.q}</h3>
+                      <h3 className="font-display text-black">{f.q}</h3>
                       <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform group-open:rotate-180" />
                     </summary>
                     <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed">{f.a}</p>

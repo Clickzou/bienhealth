@@ -142,7 +142,7 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
               </Link>
               <div className="p-5 sm:p-6 flex flex-col flex-1">
                 <Link href={`/${lang}/blog/${a.slug}`}>
-                  <h2 className="font-display font-black text-lg sm:text-xl text-black leading-tight hover:text-bien-leaf transition-colors">{a.title}</h2>
+                  <h2 className="font-display text-lg sm:text-xl text-black leading-tight hover:text-bien-leaf transition-colors">{a.title}</h2>
                 </Link>
                 <p className="mt-2 text-sm text-black/70 leading-relaxed flex-1">{a.excerpt}</p>
                 <div className="mt-4 flex items-center justify-between text-xs text-black/50">

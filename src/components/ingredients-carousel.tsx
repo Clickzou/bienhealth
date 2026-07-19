@@ -59,9 +59,9 @@ export default function IngredientsCarousel() {
             <div className="relative aspect-square w-1/2 mx-auto max-w-[150px] rounded-full overflow-hidden ring-1 ring-bien-cream/15 bg-bien-forest/40 group">
               <Image src={ing.img} alt={`${ing.name} (${ing.latin})`} fill loading="lazy" sizes="150px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
             </div>
-            <h3 className="mt-5 font-display font-black text-xl text-bien-cream">{ing.name}</h3>
+            <h3 className="mt-5 font-display text-xl text-bien-cream">{ing.name}</h3>
             <p className="italic text-sm text-bien-cream/55">{ing.latin}</p>
-            <span className="mt-3 inline-block rounded-full bg-bien-gold/15 text-bien-gold px-3 py-1 text-xs font-bold uppercase tracking-wider">
+            <span className="mt-3 inline-block rounded-full bg-bien-citrus/15 text-bien-citrus px-3 py-1 text-xs font-bold uppercase tracking-wider">
               {ing.virtue}
             </span>
             <p className="mt-2 text-sm text-bien-cream/70 leading-relaxed px-2">{ing.text}</p>

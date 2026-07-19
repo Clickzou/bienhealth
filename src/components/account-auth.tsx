@@ -60,7 +60,7 @@ export default function AccountAuth({ lang = "fr" }: { lang?: string }) {
     <div className="max-w-md mx-auto">
       <div className="text-center">
         <span className="mx-auto grid place-items-center h-14 w-14 rounded-full bg-bien-cream text-black"><User className="h-6 w-6" /></span>
-        <h1 className="mt-4 font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,2.5rem)] leading-[1] text-black">{t.title}</h1>
+        <h1 className="mt-4 font-hero text-[clamp(1.75rem,4vw,2.5rem)] leading-[1] text-black">{t.title}</h1>
         <p className="mt-2 text-black/65">{t.sub}</p>
       </div>
 

@@ -92,13 +92,13 @@ export default async function PlanDuSitePage({
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-        <h1 className="font-display font-black tracking-tighter text-[clamp(2rem,5vw,3.25rem)] leading-[1] text-black">{t.h1}</h1>
+        <h1 className="font-hero text-[clamp(2rem,5vw,3.25rem)] leading-[1] text-black">{t.h1}</h1>
         <p className="mt-3 text-black/65">{t.intro}</p>
 
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">
           {groups.map((g) => (
             <section key={g.title}>
-              <h2 className="font-display font-black text-lg text-black border-b border-border pb-2">{g.title}</h2>
+              <h2 className="font-display text-lg text-black border-b border-border pb-2">{g.title}</h2>
               <ul className="mt-4 space-y-2.5">
                 {g.links.map((l) => (
                   <li key={l.href + l.label}>

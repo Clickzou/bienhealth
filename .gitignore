@@ -39,6 +39,9 @@ yarn-error.log*
 *credentials*
 *.key
 
+# doc de charte (asset lourd, hors code du site)
+/BIEN_BRAND REFRESH_V2.pdf
+
 # vercel
 .vercel
 

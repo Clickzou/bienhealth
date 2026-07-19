@@ -131,7 +131,7 @@ export default function NewsletterPopup() {
               </span>
               <h2
                 id="newsletter-title"
-                className="mt-4 font-display font-black tracking-tighter text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.05] text-black"
+                className="mt-4 font-display tracking-tighter text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.05] text-black"
               >
                 −10 % offerts sur ta première commande
               </h2>
@@ -167,7 +167,7 @@ export default function NewsletterPopup() {
               <span className="mx-auto grid place-items-center h-14 w-14 rounded-full bg-bien-leaf text-bien-cream">
                 <Check className="h-7 w-7" />
               </span>
-              <h2 className="mt-4 font-display font-black tracking-tighter text-[clamp(1.5rem,3vw,2rem)] leading-[1.05] text-black">
+              <h2 className="mt-4 font-display tracking-tighter text-[clamp(1.5rem,3vw,2rem)] leading-[1.05] text-black">
                 C&apos;est tout bon !
               </h2>
               <p className="mt-2 text-sm text-black/70 leading-relaxed">
@@ -178,7 +178,7 @@ export default function NewsletterPopup() {
                 onClick={copyCode}
                 className="group mt-5 mx-auto inline-flex items-center gap-3 rounded-2xl border-2 border-dashed border-bien-gold bg-bien-gold/10 px-6 py-3.5 transition hover:bg-bien-gold/20"
               >
-                <span className="font-display font-black text-xl tracking-wider text-black">
+                <span className="font-display text-xl tracking-wider text-black">
                   {PROMO_CODE}
                 </span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-bien-leaf">
@@ -196,7 +196,7 @@ export default function NewsletterPopup() {
           )}
         </div>
 
-        {/* Panneau image */}
+        {/* Panneau image — voile dégradé pink→sky (accent doux « bienvenue », charte V2) */}
         <div className="order-1 sm:order-2 relative h-40 sm:h-auto sm:min-h-[420px]">
           <Image
             src="/brand/hero-lifestyle.jpg"
@@ -205,6 +205,7 @@ export default function NewsletterPopup() {
             sizes="(max-width:640px) 100vw, 384px"
             className="object-cover"
           />
+          <div className="absolute inset-0 bien-gradient-pink-sky opacity-30 mix-blend-soft-light" aria-hidden />
         </div>
       </div>
     </div>

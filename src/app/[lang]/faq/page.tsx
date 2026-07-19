@@ -153,7 +153,7 @@ export default async function FaqPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <HelpCircle className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -165,12 +165,12 @@ export default async function FaqPage({
       <div className="px-4 sm:px-6 lg:px-[100px] mt-12 sm:mt-16 space-y-12">
         {SECTIONS.map((section) => (
           <section key={section.title}>
-            <h2 className="font-display font-black tracking-tight text-2xl text-black mb-4">{section.title}</h2>
+            <h2 className="font-display tracking-tight text-2xl text-black mb-4">{section.title}</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 items-start">
               {section.items.map((qa) => (
                 <details key={qa.q} className="group bg-card rounded-2xl ring-1 ring-border bien-shadow-sm overflow-hidden">
                   <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4">
-                    <span className="font-display font-black text-black">{qa.q}</span>
+                    <span className="font-display text-black">{qa.q}</span>
                     <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform group-open:rotate-180" />
                   </summary>
                   <p className="px-5 pb-5 -mt-0.5 text-sm sm:text-[15px] text-black/75 leading-relaxed whitespace-pre-line">{qa.a}</p>
@@ -182,7 +182,7 @@ export default async function FaqPage({
 
         {/* CTA diagnostic */}
         <div className="rounded-3xl bg-bien-cream p-8 sm:p-10 text-center">
-          <h2 className="font-display font-black tracking-tighter text-2xl sm:text-3xl text-black">{t.ctaTitle}</h2>
+          <h2 className="font-display tracking-tighter text-2xl sm:text-3xl text-black">{t.ctaTitle}</h2>
           <p className="mt-2 text-black/70">{t.ctaText}</p>
           <Link href={`/${lang}/diagnostic`} className="mt-5 inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-7 py-3.5 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm">
             {t.cta} <ArrowRight className="h-4 w-4" />

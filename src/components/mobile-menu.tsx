@@ -64,7 +64,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
 
           <div className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-background shadow-xl flex flex-col animate-[bien-fade-up_0.25s_ease]">
             <div className="flex items-center justify-between px-5 h-16 border-b border-border">
-              <span className="font-display font-black text-black">{t.menu}</span>
+              <span className="font-display text-black">{t.menu}</span>
               <button aria-label={t.closeMenu} onClick={() => setOpen(false)} className="p-2 rounded-full hover:bg-bien-cream">
                 <X className="h-5 w-5 text-black" />
               </button>
@@ -88,7 +88,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
 
               <div className="mt-2 border-t border-border pt-2">
                 {SIMPLE.map((i) => (
-                  <a key={i.href} href={i.href} className="block py-3 font-display font-black text-black">{i.label}</a>
+                  <a key={i.href} href={i.href} className="block py-3 font-display text-black">{i.label}</a>
                 ))}
               </div>
 
@@ -112,7 +112,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
 function MobileGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <details className="group border-b border-border">
-      <summary className="flex items-center justify-between gap-2 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-3.5 font-display font-black text-black">
+      <summary className="flex items-center justify-between gap-2 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-3.5 font-display text-black">
         {title}
         <ChevronDown className="h-5 w-5 text-bien-leaf transition-transform group-open:rotate-180" />
       </summary>

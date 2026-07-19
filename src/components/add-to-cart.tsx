@@ -63,7 +63,7 @@ export default function AddToCart({
                 )}
               </div>
               <div className="min-w-0">
-                <p className="font-display font-black text-black leading-tight truncate">{item.title}</p>
+                <p className="font-display text-black leading-tight truncate">{item.title}</p>
                 <p className="text-sm text-black/60">{price}</p>
               </div>
             </div>

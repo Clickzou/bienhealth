@@ -25,7 +25,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
         {/* Bandeau newsletter */}
         <div className="pb-12 mb-12 border-b border-bien-cream/15 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="max-w-md">
-            <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-bien-cream">{t.newsletterTitle}</h2>
+            <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-bien-cream">{t.newsletterTitle}</h2>
             <p className="mt-2 text-sm text-bien-cream/70 leading-relaxed">{t.newsletterText}</p>
           </div>
           <div className="lg:flex-1 lg:max-w-md">
@@ -45,7 +45,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </div>
           </div>
           <div>
-            <h3 className="font-display font-black text-sm uppercase tracking-wider text-bien-gold">{t.helpTitle}</h3>
+            <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.helpTitle}</h3>
             <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
               <li><a href={`/${lang}/contact`} className="hover:text-bien-gold">{t.contact}</a></li>
               <li><a href={`/${lang}/livraison`} className="hover:text-bien-gold">{t.shipping}</a></li>
@@ -54,7 +54,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </ul>
           </div>
           <div>
-            <h3 className="font-display font-black text-sm uppercase tracking-wider text-bien-gold">{t.legalTitle}</h3>
+            <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.legalTitle}</h3>
             <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
               <li><a href={`/${lang}/certifications`} className="hover:text-bien-gold">{t.compliance}</a></li>
               <li><a href={`/${lang}/mentions-legales`} className="hover:text-bien-gold">{t.legalNotice}</a></li>
@@ -65,13 +65,13 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </ul>
           </div>
           <div>
-            <h3 className="font-display font-black text-sm uppercase tracking-wider text-bien-gold">{t.languageTitle}</h3>
+            <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.languageTitle}</h3>
             <div className="mt-5 inline-flex rounded-full bg-bien-cream/10 p-1 text-sm">
               <a href="/fr" className={`rounded-full px-3.5 py-1.5 ${lang === "fr" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>FR</a>
               <a href="/en" className={`rounded-full px-3.5 py-1.5 ${lang === "en" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>EN</a>
             </div>
 
-            <h3 className="mt-8 font-display font-black text-sm uppercase tracking-wider text-bien-gold">{t.socialTitle}</h3>
+            <h3 className="mt-8 font-display text-sm uppercase tracking-wider text-bien-gold">{t.socialTitle}</h3>
             <a
               href="https://www.instagram.com/bien.health/"
               target="_blank"

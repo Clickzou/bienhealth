@@ -176,7 +176,7 @@ export default function ReviewForm({
               <div className="flex-1 grid place-items-center text-center px-8 py-12">
                 <div>
                   <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-leaf text-bien-cream"><Check className="h-8 w-8" /></span>
-                  <h2 className="mt-5 font-display font-black tracking-tight text-2xl text-black">{t.thanksTitle}</h2>
+                  <h2 className="mt-5 font-display tracking-tight text-2xl text-black">{t.thanksTitle}</h2>
                   <p className="mt-2 text-sm text-black/65 leading-relaxed max-w-xs mx-auto">
                     {t.thanksText}
                   </p>
@@ -192,7 +192,7 @@ export default function ReviewForm({
                   {/* Étape 1 — Note */}
                   {step === 0 && (
                     <div className="text-center">
-                      <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{t.step1Title}</h2>
+                      <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.step1Title}</h2>
                       <div className="mt-8 flex items-center justify-center gap-3 sm:gap-4" onMouseLeave={() => setHover(0)}>
                         {[1, 2, 3, 4, 5].map((n) => (
                           <button
@@ -202,7 +202,7 @@ export default function ReviewForm({
                             onMouseEnter={() => setHover(n)}
                             aria-label={t.star(n)}
                           >
-                            <Star className={`h-11 w-11 sm:h-12 sm:w-12 transition-colors ${n <= shown ? "fill-bien-gold text-bien-gold" : "fill-transparent text-black/25"}`} />
+                            <Star className={`h-11 w-11 sm:h-12 sm:w-12 transition-colors ${n <= shown ? "fill-bien-star text-bien-star" : "fill-transparent text-black/25"}`} />
                           </button>
                         ))}
                       </div>
@@ -217,11 +217,11 @@ export default function ReviewForm({
                   {/* Étape 2 — Média */}
                   {step === 1 && (
                     <div className="text-center">
-                      <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{t.step2Title}</h2>
+                      <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.step2Title}</h2>
                       <p className="mt-1.5 text-black/60">{t.step2Sub}</p>
 
                       <div className="mt-7 rounded-2xl ring-1 ring-border p-4">
-                        <p className="font-display font-black text-lg text-black">{t.offer15}</p>
+                        <p className="font-display text-lg text-black">{t.offer15}</p>
                         <button
                           type="button"
                           onClick={() => photoInput.current?.click()}
@@ -233,7 +233,7 @@ export default function ReviewForm({
                       </div>
 
                       <div className="mt-4 rounded-2xl ring-1 ring-border p-4">
-                        <p className="font-display font-black text-lg text-black">{t.offer20}</p>
+                        <p className="font-display text-lg text-black">{t.offer20}</p>
                         <button
                           type="button"
                           onClick={() => videoInput.current?.click()}
@@ -249,7 +249,7 @@ export default function ReviewForm({
                   {/* Étape 3 — Texte */}
                   {step === 2 && (
                     <div className="text-center">
-                      <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{t.step3Title}</h2>
+                      <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.step3Title}</h2>
                       <textarea
                         value={text}
                         onChange={(e) => setText(e.target.value)}
@@ -264,7 +264,7 @@ export default function ReviewForm({
                   {/* Étape 4 — Coordonnées */}
                   {step === 3 && (
                     <div className="text-center">
-                      <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{t.step4Title}</h2>
+                      <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.step4Title}</h2>
                       <div className="mt-7 grid sm:grid-cols-2 gap-4 text-left">
                         <label className="block">
                           <span className="text-sm font-semibold text-black">{t.firstName} <span className="text-red-500">*</span></span>

@@ -47,7 +47,7 @@ export default async function ContactPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MessageCircle className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.25rem,5vw,3.5rem)] leading-[1] text-black">{t.h1}</h1>
+        <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.5rem)] leading-[1] text-black">{t.h1}</h1>
         <p className="mt-4 text-base sm:text-lg text-black/70 leading-relaxed max-w-2xl">
           {t.intro}
         </p>
@@ -55,27 +55,27 @@ export default async function ContactPage({
         <div className="mt-10 grid sm:grid-cols-2 gap-5">
           <a href="mailto:info@bien.health" className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6 hover:ring-bien-leaf/40 transition-all">
             <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-gold text-bien-forest"><Mail className="h-6 w-6" /></span>
-            <h2 className="mt-4 font-display font-black text-black">{t.emailTitle}</h2>
+            <h2 className="mt-4 font-display text-black">{t.emailTitle}</h2>
             <p className="mt-1 text-sm text-black/65">{t.emailSub}</p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-bien-leaf">info@bien.health <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" /></span>
           </a>
 
           <a href="tel:+33638621213" className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6 hover:ring-bien-leaf/40 transition-all">
             <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-leaf/15 text-bien-leaf"><Phone className="h-6 w-6" /></span>
-            <h2 className="mt-4 font-display font-black text-black">{t.phoneTitle}</h2>
+            <h2 className="mt-4 font-display text-black">{t.phoneTitle}</h2>
             <p className="mt-1 text-sm text-black/65">{t.phoneSub}</p>
             <span className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-bien-leaf">+33 6 38 62 12 13</span>
           </a>
 
           <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">
             <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-leaf/15 text-bien-leaf"><MapPin className="h-6 w-6" /></span>
-            <h2 className="mt-4 font-display font-black text-black">{t.addressTitle}</h2>
+            <h2 className="mt-4 font-display text-black">{t.addressTitle}</h2>
             <p className="mt-1 text-sm text-black/65 leading-relaxed">SAS BIEN Health France<br />100 Rue du Verbial<br />81000 Albi, France</p>
           </div>
 
           <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">
             <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-leaf/15 text-bien-leaf"><Clock className="h-6 w-6" /></span>
-            <h2 className="mt-4 font-display font-black text-black">{t.trackTitle}</h2>
+            <h2 className="mt-4 font-display text-black">{t.trackTitle}</h2>
             <p className="mt-1 text-sm text-black/65 leading-relaxed">{t.trackPre}
               <Link href={`/${lang}/compte`} className="text-bien-leaf underline">{t.account}</Link>{t.trackMid}
               <Link href={`/${lang}/faq`} className="text-bien-leaf underline">{t.faq}</Link>.

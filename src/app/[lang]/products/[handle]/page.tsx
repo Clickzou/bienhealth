@@ -791,13 +791,13 @@ export default async function ProductPage({
           {/* Colonne droite — défile */}
           <div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex text-bien-gold">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-gold" />)}</span>
+              <span className="inline-flex text-bien-star">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-star" />)}</span>
               <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{ui.happyClients(info.reviews)}</Link>
             </div>
-            <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4vw,3rem)] leading-[1] text-black">{product.title}</h1>
+            <h1 className="mt-3 font-hero text-[clamp(2rem,4vw,3rem)] leading-[1] text-black">{product.title}</h1>
 
             <div className="mt-4 flex items-baseline gap-3">
-              <span className="font-display font-black text-2xl text-black">{formatPrice(product.price)}</span>
+              <span className="font-display text-2xl text-black">{formatPrice(product.price)}</span>
               {product.compareAtPrice &&
                 Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
                   <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
@@ -818,7 +818,7 @@ export default async function ProductPage({
 
             {/* Infos clés produit (comme le vrai site) */}
             <div className="mt-6 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
-              <h2 className="font-display font-black text-bien-gold tracking-wide">{info.category}</h2>
+              <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
               <ul className="mt-4 space-y-4">
                 {info.rows.map(({ icon: Icon, text }) => (
                   <li key={text} className="flex items-center gap-3.5">
@@ -837,7 +837,7 @@ export default async function ProductPage({
               </p>
               <div className="mt-4 grid grid-cols-4 gap-x-3 items-center">
                 {PRESS.map((p) => (
-                  <span key={p} className="text-center font-display font-black text-lg sm:text-2xl tracking-wide text-black">{p}</span>
+                  <span key={p} className="text-center font-display text-lg sm:text-2xl tracking-wide text-black">{p}</span>
                 ))}
               </div>
             </div>
@@ -874,7 +874,7 @@ export default async function ProductPage({
             {/* Vu en vidéo */}
             {videos.length > 0 && (
               <section className="mt-12">
-                <h2 className="font-display font-black text-lg text-black">{ui.videoTitle}</h2>
+                <h2 className="font-display text-lg text-black">{ui.videoTitle}</h2>
                 <div className={`mt-4 grid gap-4 ${videos.length > 1 ? "grid-cols-2" : "grid-cols-1 max-w-[16rem]"}`}>
                   {videos.map((v, i) => (
                     <ProductVideo
@@ -891,7 +891,7 @@ export default async function ProductPage({
             {/* Complétez votre routine */}
             {related.length > 0 && (
               <section className="mt-12">
-                <h2 className="font-display font-black text-lg text-black">{ui.routineTitle}</h2>
+                <h2 className="font-display text-lg text-black">{ui.routineTitle}</h2>
                 <ul className="mt-4 space-y-3">
                   {related.map((p) => {
                     const href = `/${lang}/products/${p.handle}`;
@@ -901,7 +901,7 @@ export default async function ProductPage({
                           <Image src={p.featuredImage?.url ?? "/brand/product-mushglow.jpg"} alt={p.title} fill sizes="64px" className="object-cover" />
                         </Link>
                         <div className="min-w-0 flex-1">
-                          <Link href={href}><h3 className="font-display font-black text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
+                          <Link href={href}><h3 className="font-display text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
                           <p className="mt-0.5 font-semibold text-black">{formatPrice(p.price)}</p>
                         </div>
                         <Link href={href} aria-label={ui.add(p.title)} className="shrink-0 grid place-items-center h-10 w-10 rounded-full bg-bien-forest text-bien-cream hover:bg-bien-leaf transition-colors">
@@ -919,7 +919,7 @@ export default async function ProductPage({
               {accordions.map(({ q, a }) => (
                 <details key={q} className="group bg-card rounded-2xl ring-1 ring-border px-5 open:ring-bien-leaf/40 transition-all">
                   <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
-                    <h3 className="font-display font-black text-black">{q}</h3>
+                    <h3 className="font-display text-black">{q}</h3>
                     <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform duration-300 group-open:rotate-180" />
                   </summary>
                   <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed whitespace-pre-line">{a}</p>
@@ -933,7 +933,7 @@ export default async function ProductPage({
         {productSeo && (
           <section className="mt-16 sm:mt-24 rounded-3xl lg:rounded-[2.5rem] bg-bien-cream/50 ring-1 ring-border p-7 sm:p-12 lg:p-16">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{ui.aboutEyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
             <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
               {productSeo.paragraphs.map((para, i) => (
                 <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed">{para}</p>

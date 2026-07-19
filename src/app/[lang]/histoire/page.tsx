@@ -86,10 +86,10 @@ export default async function HistoirePage({
 
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
-        <div className="relative hero-gradient rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow grid lg:grid-cols-2 items-stretch">
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow grid lg:grid-cols-2 items-stretch">
           <div className="text-bien-cream p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-            <h1 className="mt-4 font-display font-black tracking-tighter text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.98]">
+            <h1 className="mt-4 font-hero text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.98]">
               {t.h1}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-bien-cream/85 leading-relaxed">
@@ -110,13 +110,13 @@ export default async function HistoirePage({
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.fromEyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
               {t.fromTitle}
             </h2>
             {t.story.map((para, i) => (
               <p key={i} className={`${i === 0 ? "mt-5" : "mt-4"} text-base sm:text-lg text-black/75 leading-relaxed`}>{para}</p>
             ))}
-            <p className="mt-5 font-display font-black text-black">{t.ceo}</p>
+            <p className="mt-5 font-display text-black">{t.ceo}</p>
             <ul className="mt-7 space-y-3">
               {t.list.map((line) => (
                 <li key={line} className="flex items-start gap-3 text-black">
@@ -135,7 +135,7 @@ export default async function HistoirePage({
           {VALUES.map(({ icon: Icon, title, text }) => (
             <article key={title} className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">
               <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-gold text-black"><Icon className="h-6 w-6" /></span>
-              <h3 className="mt-4 font-display font-black text-lg text-black leading-tight">{title}</h3>
+              <h3 className="mt-4 font-display text-lg text-black leading-tight">{title}</h3>
               <p className="mt-2 text-sm text-black/70 leading-relaxed">{text}</p>
             </article>
           ))}
@@ -144,7 +144,7 @@ export default async function HistoirePage({
 
       {/* CTA */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24 text-center">
-        <h2 className="font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+        <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
           {t.ctaTitle}
         </h2>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

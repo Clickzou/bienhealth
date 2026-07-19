@@ -40,10 +40,10 @@ const RITUAL_TINTS = [
 const REASSURANCE_ICONS = [Truck, ShieldCheck, MapPin, RefreshCw];
 const KEYPOINT_ICONS = [ShoppingBag, Leaf, HeartPulse, Sparkles];
 const KEYPOINT_TINTS = [
-  "bg-bien-leaf/15 text-bien-leaf",
-  "bg-bien-gold/20 text-[oklch(0.55_0.13_75)]",
-  "bg-bien-forest/10 text-bien-forest",
-  "bg-bien-sage/25 text-bien-sage",
+  "bg-bien-leaf text-bien-cream",
+  "bg-bien-leaf text-bien-cream",
+  "bg-bien-leaf text-bien-cream",
+  "bg-bien-leaf text-bien-cream",
 ];
 
 const FALLBACK_PRODUCTS = [
@@ -257,11 +257,11 @@ function StarRating({ value, className = "h-5 w-5" }: { value: number; className
   const pct = Math.max(0, Math.min(100, (value / 5) * 100));
   return (
     <span className="relative inline-flex align-middle" aria-label={`${value} / 5`}>
-      <span className="flex text-bien-gold/25">
+      <span className="flex text-bien-star/25">
         {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-current`} />)}
       </span>
       <span className="absolute inset-0 overflow-hidden" style={{ width: `${pct}%` }}>
-        <span className="inline-flex text-bien-gold">
+        <span className="inline-flex text-bien-star">
           {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-current shrink-0`} />)}
         </span>
       </span>
@@ -284,11 +284,11 @@ function Bubble({ item, side, note, anim, delay = 0, lang }: {
       className={`group relative z-10 w-full max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"}`}
     >
       <a href={`/${lang}/collections/accessories`} className="block bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
-        <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-leaf text-bien-cream group-hover:scale-110 group-hover:rotate-6 transition-transform">
+        <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
-        <h3 className="mt-4 font-display font-black text-xl text-black leading-tight">
-          {item.title}<sup className="text-bien-leaf text-xs ml-0.5">{note}</sup>
+        <h3 className="mt-4 font-display text-xl text-black leading-tight">
+          {item.title}<sup className="text-bien-pink text-xs ml-0.5">{note}</sup>
         </h3>
         <p className="mt-2 text-sm text-black/70 leading-relaxed">{item.desc}</p>
       </a>
@@ -325,14 +325,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* 3. HERO */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-6 sm:pt-10">
-        <div className="relative hero-gradient rounded-3xl lg:rounded-[2.75rem] overflow-hidden bien-shadow">
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.75rem] overflow-hidden bien-shadow">
           <div className="grid lg:grid-cols-[calc(50%_+_100px)_1fr] items-stretch">
             <div className="anim-up text-bien-cream p-6 sm:p-10 lg:p-16 flex flex-col justify-center">
               <div className="inline-flex items-start gap-2 rounded-2xl bg-bien-cream/10 backdrop-blur px-4 py-2.5 text-xs sm:text-sm text-bien-cream/90 ring-1 ring-bien-cream/20 max-w-md">
                 <Leaf className="h-4 w-4 shrink-0 mt-0.5 text-bien-gold" />
                 <span className="leading-snug">{c.hero.badge}</span>
               </div>
-              <h1 className="mt-5 font-display font-black tracking-tighter leading-[0.95] text-[clamp(2.5rem,7vw,5.25rem)]">
+              <h1 className="mt-5 font-hero leading-[0.95] text-[clamp(2.5rem,7vw,5.25rem)]">
                 {c.hero.title1}<br /><span className="text-bien-gold">{c.hero.title2}</span>
               </h1>
               <p className="mt-5 text-base sm:text-lg text-bien-cream/90 max-w-xl leading-relaxed">
@@ -350,7 +350,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               </div>
             </div>
             <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[920px]">
-              <Image src="/brand/bien-health.png" alt="Produits BIEN — compléments naturels" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+              <Image src="/bien-health-bien-etre.jpg" alt="Produits BIEN — compléments naturels" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
               {/* Carte points clés flottante par-dessus la photo */}
               <div className="absolute bottom-20 left-4 right-4 sm:bottom-24 sm:left-6 sm:right-6 lg:bottom-28">
                 <div className="rounded-[1.75rem] bg-card/70 backdrop-blur-2xl ring-1 ring-white/60 shadow-2xl shadow-bien-forest/20 p-3.5 sm:p-4">
@@ -423,13 +423,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             className="group inline-flex items-center gap-3 sm:gap-4 rounded-full bg-card ring-1 ring-border bien-shadow px-5 sm:px-7 py-3 hover:ring-bien-gold/60 hover:-translate-y-0.5 transition-all"
           >
             <StarRating value={4.4} className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="font-display font-black text-xl sm:text-2xl text-black leading-none">4,4/5</span>
+            <span className="font-display text-xl sm:text-2xl text-black leading-none">4,4/5</span>
             <span className="h-5 w-px bg-border" />
             <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">+100</span> {c.press.reviews}</span>
             <ArrowUpRight className="h-4 w-4 text-bien-leaf opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
           </a>
         </div>
-        <p className="mt-10 mb-[30px] text-center text-xs uppercase tracking-[0.2em] text-bien-sage font-semibold">
+        <p className="mt-10 mb-[30px] text-center text-xs uppercase tracking-[0.2em] text-bien-sage font-semibold underline decoration-bien-sky decoration-2 underline-offset-4">
           <Typewriter text={c.press.featured} />
         </p>
         <p className="text-center text-[13px] font-bold text-black/60">{c.press.clickHint}</p>
@@ -441,7 +441,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               target="_blank"
               rel="noopener noreferrer"
               title={c.press.readArticle(p.name)}
-              className="group inline-flex items-center gap-1.5 font-display font-black text-3xl sm:text-4xl text-black hover:text-bien-leaf transition-colors tracking-tight underline-offset-[8px] decoration-2 decoration-bien-gold hover:underline"
+              className="group inline-flex items-center gap-1.5 font-display text-3xl sm:text-4xl text-black hover:text-bien-leaf transition-colors tracking-tight underline-offset-[8px] decoration-2 decoration-bien-gold hover:underline"
             >
               {p.name}
               <ArrowUpRight className="h-6 w-6 text-bien-gold opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
@@ -464,7 +464,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section id="diagnostic" className="reveal bg-bien-cream mt-20 sm:mt-28 px-4 sm:px-6 lg:px-[200px] py-16 lg:py-24">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.benefits.eyebrow}</p>
-          <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.benefits.title}</h2>
+          <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.benefits.title}</h2>
           <p className="mt-4 text-base sm:text-lg text-black/70">
             {c.benefits.sub}
           </p>
@@ -475,14 +475,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             aria-hidden
             viewBox="0 0 1000 680"
             preserveAspectRatio="xMidYMid meet"
-            className="hidden lg:block absolute inset-0 m-auto w-full max-w-[1180px] h-auto text-bien-leaf/45 pointer-events-none z-0"
+            className="hidden lg:block absolute inset-0 m-auto w-full max-w-[1180px] h-auto text-bien-pink/70 pointer-events-none z-0"
             fill="none"
           >
             <ellipse cx="500" cy="340" rx="478" ry="300" stroke="currentColor" strokeWidth="2.5" strokeDasharray="2 11" strokeLinecap="round" />
             {[
               [118, 168], [882, 168], [118, 512], [882, 512],
             ].map(([cx, cy]) => (
-              <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6.5" fill="currentColor" className="text-bien-leaf" />
+              <circle key={`${cx}-${cy}`} cx={cx} cy={cy} r="6.5" fill="currentColor" className="text-bien-pink" />
             ))}
           </svg>
 
@@ -494,7 +494,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
           {/* Image centrale */}
           <div className="order-1 lg:order-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
-            <Image src="/brand/produit-benefices.png" alt="Produits BIEN — bénéfices" fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
+            <Image src="/prelude-bien-health.jpg" alt="Produits BIEN — bénéfices" fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
           </div>
 
           {/* Colonne droite */}
@@ -520,7 +520,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-6 sm:p-10 lg:p-14">
           <div className="grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-14 items-center">
             <div className="text-center lg:text-left lg:border-r lg:border-bien-forest/10 lg:pr-12 shrink-0">
-              <div className="font-display font-black text-7xl lg:text-8xl text-black leading-none">4,4</div>
+              <div className="font-display text-7xl lg:text-8xl text-black leading-none">4,4</div>
               <div className="mt-3 flex items-center justify-center lg:justify-start">
                 <StarRating value={4.4} className="h-5 w-5" />
               </div>
@@ -545,7 +545,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <div className="grid md:grid-cols-3 gap-4">
               {c.reviews.items.map((r) => (
                 <article key={r.name} className="bg-card rounded-2xl p-5 bien-shadow-sm flex flex-col">
-                  <div className="flex gap-1">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-gold text-bien-gold" />)}</div>
+                  <div className="flex gap-1">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-star text-bien-star" />)}</div>
                   <p className="mt-3 text-sm text-black/85 leading-relaxed flex-1">« {r.text} »</p>
                   <div className="mt-4 flex items-center justify-between text-xs">
                     <span><span className="font-semibold text-black">{r.name}</span><span className="ml-2 text-black/45">{r.date}</span></span>
@@ -586,11 +586,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* 8. Ingredients */}
       <section id="ingredients" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
-        <div className="bg-bien-forest text-bien-cream rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16">
+        <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16">
           <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{c.ingredients.eyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1]">
-              {c.ingredients.titleA} <br className="hidden sm:block" /><span className="text-bien-gold">{c.ingredients.titleB}</span>
+            <p className="text-xs uppercase tracking-[0.2em] text-bien-citrus font-semibold">{c.ingredients.eyebrow}</p>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1]">
+              {c.ingredients.titleA} <br className="hidden sm:block" /><span className="text-bien-citrus">{c.ingredients.titleB}</span>
             </h2>
           </div>
           <IngredientsCarousel />
@@ -602,7 +602,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.best.eyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.best.title}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.best.title}</h2>
           </div>
           <Link href={`/${lang}/collections/accessories`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">{c.best.seeAll} <ArrowRight className="h-4 w-4" /></Link>
         </div>
@@ -614,19 +614,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="bg-bien-gold rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16 text-black">
           <div className="max-w-3xl">
             <p className="text-xs uppercase tracking-[0.2em] font-bold opacity-70">{c.diagBlock.eyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,5vw,4rem)] leading-[1]">{c.diagBlock.title}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,5vw,4rem)] leading-[1]">{c.diagBlock.title}</h2>
             <p className="mt-4 text-base sm:text-lg opacity-85 max-w-xl">{c.diagBlock.text}</p>
           </div>
           <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {rituals.map(({ title, icon: Icon }) => (
               <a key={title} href={`/${lang}/diagnostic`} className="group bg-bien-forest text-bien-cream rounded-2xl px-5 py-5 text-left hover:bg-bien-leaf transition-colors flex items-center gap-3">
                 <span className="grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/10 shrink-0"><Icon className="h-5 w-5" /></span>
-                <span className="font-display font-black text-base leading-tight">{title}</span>
+                <span className="font-display text-base leading-tight">{title}</span>
               </a>
             ))}
           </div>
           <p className="mt-7 text-sm font-semibold inline-flex items-center gap-2 bg-bien-forest text-bien-cream rounded-full px-4 py-2">
-            <Sparkles className="h-4 w-4 text-bien-gold" /> {c.diagBlock.promo}
+            <Sparkles className="h-4 w-4 text-bien-citrus" /> {c.diagBlock.promo}
           </p>
         </div>
       </section>
@@ -635,11 +635,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section id="mission" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[710px] bien-shadow lg:sticky lg:top-28">
-            <Image src="/brand/mission-homme.png" alt="BIEN — compléments naturels fabriqués en France" fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+            <Image src="/athletes-bien-health.jpg" alt="BIEN — compléments naturels fabriqués en France" fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.mission.eyebrow}</p>
-            <h2 className="mt-3 font-display font-black tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.mission.title}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.mission.title}</h2>
             <p className="mt-5 text-base sm:text-lg text-black/75 leading-relaxed">
               {c.mission.p1}
             </p>
@@ -659,7 +659,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <div className="mt-10 grid sm:grid-cols-2 gap-5">
               {c.mission.cards.map((card, i) => {
                 const Icon = i === 0 ? Leaf : HeartPulse;
-                const img = i === 0 ? "/brand/bien-gamme.png" : "/brand/produits-bien-health.png";
+                const img = i === 0 ? "/gamme-courte-ciblee.jpg" : "/approch-globale-sante.jpg";
                 return (
                   <article key={card.title} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col hover:-translate-y-1 hover:shadow-xl transition-all">
                     <div className="relative aspect-[16/10] overflow-hidden">
@@ -669,7 +669,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                       <span className="relative -mt-7 grid place-items-center h-14 w-14 rounded-2xl bg-bien-gold text-black ring-4 ring-card shadow">
                         <Icon className="h-7 w-7" />
                       </span>
-                      <h3 className="mt-4 font-display font-black text-lg text-black leading-tight">{card.title}</h3>
+                      <h3 className="mt-4 font-display text-lg text-black leading-tight">{card.title}</h3>
                       <p className="mt-2 text-sm text-black/75 leading-relaxed">{card.text}</p>
                     </div>
                   </article>
@@ -683,13 +683,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         <div className="mt-16 sm:mt-24 max-w-3xl mx-auto">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.faq.eyebrow}</p>
-            <h3 className="mt-3 font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.05] text-black">{c.faq.title}</h3>
+            <h3 className="mt-3 font-display tracking-tighter text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.05] text-black">{c.faq.title}</h3>
             <p className="mt-3 text-black/70">{c.faq.sub}</p>
           </div>
           <div className="mt-8 space-y-3">
             {c.faq.items.map(({ q, a }) => (
               <details key={q} className="group bg-card rounded-2xl ring-1 ring-border bien-shadow-sm px-5 sm:px-6 open:ring-bien-leaf/40 transition-all">
-                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4 sm:py-5 font-display font-black text-base sm:text-lg text-black">
+                <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4 sm:py-5 font-display text-base sm:text-lg text-black">
                   {q}
                   <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform duration-300 group-open:rotate-180" />
                 </summary>

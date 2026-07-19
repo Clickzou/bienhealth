@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Inter } from "next/font/google";
+import localFont from "next/font/local";
 import { notFound } from "next/navigation";
 import "../globals.css";
 import { getDictionary, hasLocale, locales } from "./dictionaries";
@@ -10,15 +10,33 @@ import CookieBanner from "@/components/cookie-banner";
 import JsonLd from "@/components/json-ld";
 import GoogleAnalytics from "@/components/google-analytics";
 
-const display = Bricolage_Grotesque({
-  variable: "--font-bricolage",
-  subsets: ["latin"],
-  weight: ["500", "600", "700", "800"],
+// Fontes de la charte « Brand Refresh V2 » — auto-hébergées via next/font/local.
+// Licences dans src/app/fonts/LICENSES/.
+// Dahlia Medium Condensed (H1) — fichier web woff2 fourni.
+const display = localFont({
+  src: "../fonts/Dahlia-MediumCondensed.woff2",
+  variable: "--font-dahlia",
+  weight: "500",
+  display: "swap",
 });
 
-const body = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
+// Season Serif Regular (H2 / H3) — un seul graisse (400).
+const title = localFont({
+  src: "../fonts/SeasonSerif-Regular.otf",
+  variable: "--font-season",
+  weight: "400",
+  display: "swap",
+});
+
+// Moderat (H4, corps de texte, boutons) — Regular / Italic / Bold.
+const body = localFont({
+  src: [
+    { path: "../fonts/Moderat-Regular.otf", weight: "400", style: "normal" },
+    { path: "../fonts/Moderat-Regular-Italic.otf", weight: "400", style: "italic" },
+    { path: "../fonts/Moderat-Bold.otf", weight: "700", style: "normal" },
+  ],
+  variable: "--font-moderat",
+  display: "swap",
 });
 
 export async function generateStaticParams() {
@@ -72,7 +90,7 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${display.variable} ${body.variable} h-full`}>
+    <html lang={lang} className={`${display.variable} ${title.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <JsonLd
           data={{

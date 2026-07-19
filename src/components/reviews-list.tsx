@@ -16,8 +16,8 @@ const INITIAL = 6;
 
 function Stars({ className = "h-3.5 w-3.5" }: { className?: string }) {
   return (
-    <span className="inline-flex text-bien-gold">
-      {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-bien-gold`} />)}
+    <span className="inline-flex text-bien-star">
+      {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-bien-star`} />)}
     </span>
   );
 }
@@ -25,7 +25,7 @@ function Stars({ className = "h-3.5 w-3.5" }: { className?: string }) {
 function Header({ r, verifiedLabel }: { r: Review; verifiedLabel: string }) {
   return (
     <div className="flex items-center justify-between gap-2">
-      <span className="font-display font-black text-black">{r.name}</span>
+      <span className="font-display text-black">{r.name}</span>
       {r.verified && (
         <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-bien-leaf shrink-0">
           <Check className="h-3.5 w-3.5" /> {verifiedLabel}

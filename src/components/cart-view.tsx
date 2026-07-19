@@ -52,7 +52,7 @@ export default function CartView({ lang }: { lang: string }) {
     return (
       <div className="text-center py-8">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-cream text-black"><ShoppingBag className="h-7 w-7" /></span>
-        <h1 className="mt-5 font-display font-black tracking-tighter text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.cart}</h1>
+        <h1 className="mt-5 font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.cart}</h1>
         <p className="mt-3 text-black/70">{t.empty}</p>
         <Link href={`/${lang}/collections/accessories`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold hover:brightness-105 transition bien-shadow-sm">
           {t.discover} <ArrowRight className="h-4 w-4" />
@@ -65,7 +65,7 @@ export default function CartView({ lang }: { lang: string }) {
 
   return (
     <div>
-      <h1 className="font-display font-black tracking-tighter text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.yourCart}</h1>
+      <h1 className="font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.yourCart}</h1>
 
       <div className="mt-8 grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-12 items-start">
         {/* Lignes */}
@@ -76,7 +76,7 @@ export default function CartView({ lang }: { lang: string }) {
                 {it.image ? <Image src={it.image} alt={it.title} fill sizes="80px" className="object-cover" /> : null}
               </Link>
               <div className="min-w-0 flex-1">
-                <Link href={`/${lang}/products/${it.handle}`}><h3 className="font-display font-black text-black leading-tight hover:text-bien-leaf transition-colors">{it.title}</h3></Link>
+                <Link href={`/${lang}/products/${it.handle}`}><h3 className="font-display text-black leading-tight hover:text-bien-leaf transition-colors">{it.title}</h3></Link>
                 <p className="mt-0.5 text-sm text-black/60">{fmt(it.price, it.currency)}</p>
                 <div className="mt-2 inline-flex items-center rounded-full ring-1 ring-border">
                   <button aria-label={t.removeOne} onClick={() => setQty(it.variantId, it.qty - 1)} className="grid place-items-center h-8 w-8 text-black hover:bg-bien-cream rounded-l-full transition-colors"><Minus className="h-3.5 w-3.5" /></button>
@@ -85,7 +85,7 @@ export default function CartView({ lang }: { lang: string }) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-display font-black text-black">{fmt(it.price * it.qty, it.currency)}</p>
+                <p className="font-display text-black">{fmt(it.price * it.qty, it.currency)}</p>
                 <button onClick={() => removeItem(it.variantId)} className="mt-2 inline-flex items-center gap-1 text-xs text-black/50 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /> {t.remove}</button>
               </div>
             </li>
@@ -94,7 +94,7 @@ export default function CartView({ lang }: { lang: string }) {
 
         {/* Récap */}
         <aside className="rounded-3xl ring-1 ring-border bg-card p-6 bien-shadow-sm lg:sticky lg:top-24">
-          <h2 className="font-display font-black text-lg text-black">{t.summary}</h2>
+          <h2 className="font-display text-lg text-black">{t.summary}</h2>
           <div className="mt-4 flex items-center justify-between text-sm">
             <span className="text-black/60">{t.subtotal}</span>
             <span className="font-semibold text-black">{fmt(total, currency)}</span>
@@ -104,8 +104,8 @@ export default function CartView({ lang }: { lang: string }) {
             <span className="text-black/60">{t.shippingCalc}</span>
           </div>
           <div className="mt-4 pt-4 border-t border-border flex items-center justify-between">
-            <span className="font-display font-black text-black">{t.total}</span>
-            <span className="font-display font-black text-xl text-black">{fmt(total, currency)}</span>
+            <span className="font-display text-black">{t.total}</span>
+            <span className="font-display text-xl text-black">{fmt(total, currency)}</span>
           </div>
           <a href={checkoutUrl(items)} className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm">
             {t.checkout} <ArrowRight className="h-4 w-4" />

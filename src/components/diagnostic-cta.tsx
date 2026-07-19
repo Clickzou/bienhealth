@@ -23,7 +23,7 @@ export default function DiagnosticCTA({ lang }: { lang: string }) {
   return (
     <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
       <div className="bg-bien-gold rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-black text-center">
-        <h3 className="font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1]">
+        <h3 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1]">
           {t.title}
         </h3>
         <p className="mt-3 text-base sm:text-lg opacity-85 max-w-xl mx-auto">

@@ -127,7 +127,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
                       <Image src={card.img} alt={card.label} fill sizes="200px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       <span className="absolute inset-0 bg-gradient-to-t from-bien-forest/70 via-bien-forest/10 to-transparent" />
                       <span className="absolute bottom-3 left-3 right-3 text-bien-cream">
-                        <span className="block font-display font-black text-base leading-none">{card.label}</span>
+                        <span className="block font-display text-base leading-none">{card.label}</span>
                         <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-bien-cream/90">{card.cta} <ArrowRight className="h-3 w-3" /></span>
                       </span>
                     </a>
@@ -190,7 +190,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
                     <Image src={card.img} alt={card.label} fill sizes="260px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     <span className="absolute inset-0 bg-gradient-to-t from-bien-forest/70 via-bien-forest/10 to-transparent" />
                     <span className="absolute bottom-3 left-3 right-3 text-bien-cream">
-                      <span className="block font-display font-black text-sm leading-tight">{card.label}</span>
+                      <span className="block font-display text-sm leading-tight">{card.label}</span>
                       <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-bien-cream/90">{card.cta} <ArrowRight className="h-3 w-3" /></span>
                     </span>
                   </a>

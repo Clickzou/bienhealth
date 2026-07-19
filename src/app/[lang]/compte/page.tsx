@@ -71,7 +71,7 @@ export default async function ComptePage({
             {/* En-tête */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="font-display font-black tracking-tighter text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">
+                <h1 className="font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">
                   {t.hello}{customer.firstName ? `, ${customer.firstName}` : ""} 👋
                 </h1>
                 <p className="mt-2 text-black/65">{t.welcome}</p>
@@ -82,7 +82,7 @@ export default async function ComptePage({
             <div className="mt-10 grid lg:grid-cols-[1fr_300px] gap-8 items-start">
               {/* Commandes */}
               <section>
-                <h2 className="font-display font-black text-xl text-black flex items-center gap-2"><Package className="h-5 w-5 text-bien-leaf" /> {t.myOrders}</h2>
+                <h2 className="font-display text-xl text-black flex items-center gap-2"><Package className="h-5 w-5 text-bien-leaf" /> {t.myOrders}</h2>
                 {customer.orders.length === 0 ? (
                   <p className="mt-4 text-black/60">{t.noOrders}{" "}
                     <Link href={`/${lang}/collections/accessories`} className="text-bien-leaf underline">{t.discoverShop}</Link>.
@@ -92,7 +92,7 @@ export default async function ComptePage({
                     {customer.orders.map((o) => (
                       <li key={o.orderNumber} className="bg-card rounded-2xl ring-1 ring-border bien-shadow-sm p-5">
                         <div className="flex items-center justify-between gap-3 flex-wrap">
-                          <span className="font-display font-black text-black">{t.order} #{o.orderNumber}</span>
+                          <span className="font-display text-black">{t.order} #{o.orderNumber}</span>
                           <span className="text-sm text-black/55">{fmtDate(o.processedAt, lang)}</span>
                         </div>
                         <div className="mt-1.5 flex items-center gap-2 flex-wrap text-sm">
@@ -114,7 +114,7 @@ export default async function ComptePage({
 
               {/* Infos */}
               <aside className="bg-card rounded-2xl ring-1 ring-border bien-shadow-sm p-5 space-y-4">
-                <h2 className="font-display font-black text-lg text-black">{t.myInfo}</h2>
+                <h2 className="font-display text-lg text-black">{t.myInfo}</h2>
                 <p className="text-sm text-black/75 flex items-start gap-2"><Mail className="h-4 w-4 mt-0.5 text-bien-leaf shrink-0" /> {customer.email}</p>
                 {customer.phone && <p className="text-sm text-black/75 flex items-start gap-2"><Phone className="h-4 w-4 mt-0.5 text-bien-leaf shrink-0" /> {customer.phone}</p>}
                 {customer.defaultAddress && (

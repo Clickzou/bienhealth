@@ -147,7 +147,7 @@ export default async function PressePage({
           <Image src="/brand/presse-hero.webp" alt="BIEN — Mushglow" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
         </div>
         <div className="px-6 sm:px-10 lg:px-16 py-12 lg:py-20">
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-black">
+          <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-black">
             {h.h1}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-black/75 leading-relaxed max-w-xl">

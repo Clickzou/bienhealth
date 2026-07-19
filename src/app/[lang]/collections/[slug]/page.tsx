@@ -63,9 +63,9 @@ export default async function CollectionPage({
 
       {/* Hero collection */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
-        <div className="relative hero-gradient rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{c.eyebrow}</p>
-          <h1 className="mt-3 font-display font-black tracking-tighter text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
+          <h1 className="mt-3 font-hero text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
             {c.label}
           </h1>
           <p className="mt-4 max-w-2xl text-base sm:text-lg text-bien-cream/85 leading-relaxed">{c.desc}</p>
@@ -76,7 +76,7 @@ export default async function CollectionPage({
       <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
         <div className="flex items-end justify-between gap-4 mb-6">
           <div className="flex items-baseline gap-3 flex-wrap">
-            <h2 className="font-display font-black tracking-tight text-2xl text-black">{c.label}</h2>
+            <h2 className="font-display tracking-tight text-2xl text-black">{c.label}</h2>
             <span className="text-sm text-black/50">{products.length} {products.length > 1 ? t.products : t.product}</span>
             <Link href={`/${lang}/collections/accessories`} className="text-sm font-semibold text-bien-leaf hover:underline">{t.seeAll}</Link>
           </div>
@@ -94,7 +94,7 @@ export default async function CollectionPage({
       {others.length > 0 && (
         <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24">
           <div className="flex items-end justify-between gap-4 mb-6">
-            <h2 className="font-display font-black tracking-tight text-2xl sm:text-3xl text-black">{t.alsoDiscover}</h2>
+            <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.alsoDiscover}</h2>
             <Link href={`/${lang}/collections/accessories`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
               {t.fullRange} <ArrowRight className="h-4 w-4" />
             </Link>
@@ -119,7 +119,7 @@ export default async function CollectionPage({
             <div className="mt-10 sm:mt-12 grid md:grid-cols-2 gap-x-12 gap-y-9">
               {seo.blocks.map((b) => (
                 <article key={b.h}>
-                  <h2 className="font-display font-black tracking-tight text-lg sm:text-xl text-black flex items-start gap-3">
+                  <h2 className="font-display tracking-tight text-lg sm:text-xl text-black flex items-start gap-3">
                     <span className="mt-1.5 h-4 w-1 rounded-full bg-bien-gold shrink-0" />
                     {b.h}
                   </h2>

@@ -68,7 +68,7 @@ export default function AccountEdit({ customer, lang = "fr" }: { customer: Custo
       <button aria-label={t.close} onClick={() => setOpen(false)} className="absolute inset-0 bg-bien-forest/45 backdrop-blur-sm" />
       <form onSubmit={submit} className="relative w-full max-w-lg rounded-[1.5rem] bg-white ring-1 ring-border bien-shadow p-6 sm:p-7 max-h-[92vh] overflow-y-auto">
         <button type="button" onClick={() => setOpen(false)} aria-label={t.close} className="absolute top-4 right-4 grid place-items-center h-8 w-8 rounded-full text-black/60 hover:bg-bien-cream transition-colors"><X className="h-5 w-5" /></button>
-        <h2 className="font-display font-black text-xl text-black">{t.title}</h2>
+        <h2 className="font-display text-xl text-black">{t.title}</h2>
 
         {error && <p className="mt-3 rounded-xl bg-red-50 text-red-600 px-4 py-2.5 text-sm">{error}</p>}
 
@@ -78,7 +78,7 @@ export default function AccountEdit({ customer, lang = "fr" }: { customer: Custo
         </div>
         <label className="block mt-4"><span className="text-sm font-semibold text-black">{t.phone}</span><input name="phone" type="tel" defaultValue={customer.phone ?? ""} className={inputCls} /></label>
 
-        <h3 className="mt-6 font-display font-black text-black">{t.defaultAddress}</h3>
+        <h3 className="mt-6 font-display text-black">{t.defaultAddress}</h3>
         <input type="hidden" name="addressId" value={a?.id ?? ""} />
         <label className="block mt-3"><span className="text-sm font-semibold text-black">{t.address}</span><input name="address1" defaultValue={a?.address1 ?? ""} placeholder={t.addressPh} className={inputCls} /></label>
         <label className="block mt-3"><span className="text-sm font-semibold text-black">{t.complement} <span className="text-black/40 font-normal">{t.optional}</span></span><input name="address2" defaultValue={a?.address2 ?? ""} className={inputCls} /></label>

@@ -367,13 +367,13 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
     const p = PRODUCTS[result];
     const loc = en ? p.en : p.fr;
     return (
-      <section className="hero-gradient min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 sm:py-16 flex items-center">
+      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 sm:py-16 flex items-center">
         <div className="mx-auto w-full max-w-4xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="text-bien-cream order-2 lg:order-1">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
               <Sparkles className="h-3.5 w-3.5 text-bien-gold" /> {s.idealFormula}
             </span>
-            <h1 className="mt-4 font-display font-black tracking-tighter text-[clamp(2.5rem,6vw,4rem)] leading-[0.95]">
+            <h1 className="mt-4 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95]">
               {p.name}
             </h1>
             <p className="mt-1 text-bien-gold font-semibold">{loc.tagline}</p>
@@ -392,7 +392,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
                 {s.discover(p.name)} <ArrowRight className="h-4 w-4" />
               </a>
               <button onClick={copyCode} className="group inline-flex items-center gap-2 rounded-full border-2 border-dashed border-bien-gold/70 px-4 py-3 hover:bg-bien-cream/5 transition">
-                <span className="font-display font-black tracking-wider text-bien-cream">{PROMO_CODE}</span>
+                <span className="font-display tracking-wider text-bien-cream">{PROMO_CODE}</span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-bien-gold">
                   {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />} {copied ? s.copied : s.promo}
                 </span>
@@ -412,12 +412,12 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
   // --- Écran intro ---
   if (!started) {
     return (
-      <section className="hero-gradient min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 flex items-center">
+      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 flex items-center">
         <div className="mx-auto max-w-2xl text-center text-bien-cream">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
             <Sparkles className="h-3.5 w-3.5 text-bien-gold" /> {s.introBadge}
           </span>
-          <h1 className="mt-5 font-display font-black tracking-tighter text-[clamp(2.25rem,6vw,4rem)] leading-[0.98]">
+          <h1 className="mt-5 font-hero text-[clamp(2.25rem,6vw,4rem)] leading-[0.98]">
             {s.introH1Pre}<span className="text-bien-gold">BIEN</span>{s.introH1Post}
           </h1>
           <p className="mt-5 text-base sm:text-lg text-bien-cream/85 leading-relaxed">
@@ -433,7 +433,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
 
   // --- Écran question ---
   return (
-    <section className="hero-gradient min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-10 flex flex-col">
+    <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-10 flex flex-col">
       {/* Progression */}
       <div className="mx-auto w-full max-w-2xl">
         <div className="h-1.5 w-full rounded-full bg-bien-cream/15 overflow-hidden">
@@ -449,9 +449,9 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
 
       <div className="mx-auto w-full max-w-2xl flex-1 flex flex-col justify-center py-8">
         <div className="flex items-start gap-3">
-          <span className="mt-1 shrink-0 grid place-items-center h-7 w-7 rounded-lg bg-bien-gold text-black font-display font-black text-sm">{step + 1}</span>
+          <span className="mt-1 shrink-0 grid place-items-center h-7 w-7 rounded-lg bg-bien-gold text-black font-display text-sm">{step + 1}</span>
           <div>
-            <h2 className="font-display font-black tracking-tight text-bien-cream text-[clamp(1.4rem,3.5vw,2rem)] leading-[1.1]">{q.title}</h2>
+            <h2 className="font-display tracking-tight text-bien-cream text-[clamp(1.4rem,3.5vw,2rem)] leading-[1.1]">{q.title}</h2>
             {"subtitle" in q && q.subtitle && <p className="mt-1.5 text-sm text-bien-cream/60">{q.subtitle}</p>}
           </div>
         </div>

@@ -88,7 +88,7 @@ export default async function IngredientsPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Leaf className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-display font-black tracking-tighter text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
           {t.h1a}<span className="text-bien-leaf">{t.h1b}</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -107,7 +107,7 @@ export default async function IngredientsPage({
                 <Image src={ing.img} alt={ing.name} fill sizes="128px" className="object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
               <span className="text-[10px] font-semibold uppercase tracking-wider text-bien-sage">{loc.family}</span>
-              <h2 className="mt-1 font-display font-black text-xl text-black">{ing.name}</h2>
+              <h2 className="mt-1 font-display text-xl text-black">{ing.name}</h2>
               <p className="mt-1.5 text-sm font-semibold text-bien-leaf">{loc.hook}</p>
               <p className="mt-2.5 text-sm text-black/70 leading-relaxed">{loc.desc}</p>
             </article>
@@ -118,8 +118,8 @@ export default async function IngredientsPage({
 
       {/* CTA */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
-        <div className="bg-bien-forest text-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
-          <h2 className="font-display font-black tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1]">
+        <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
+          <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1]">
             {t.ctaTitle}
           </h2>
           <p className="mt-3 text-bien-cream/80 max-w-xl mx-auto">

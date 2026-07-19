@@ -59,7 +59,7 @@ export default async function CartPage({
                     </Link>
                     <div className="min-w-0 flex-1">
                       <Link href={href}>
-                        <h3 className="font-display font-black text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3>
+                        <h3 className="font-display text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3>
                       </Link>
                       <p className="mt-0.5 text-sm text-black/60">{p.tags[0] ?? "Complément naturel"}</p>
                       <p className="mt-1 font-semibold text-black">{formatPrice(p.price)}</p>

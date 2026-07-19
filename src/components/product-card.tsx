@@ -39,11 +39,11 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
         />
       </Link>
       <div className="p-4 sm:p-5 flex flex-col flex-1">
-        <div className="flex gap-0.5">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-3.5 w-3.5 fill-bien-gold text-bien-gold" />)}</div>
-        <Link href={href}><h3 className="mt-2 font-display font-black text-xl text-black hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
+        <div className="flex gap-0.5">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-3.5 w-3.5 fill-bien-star text-bien-star" />)}</div>
+        <Link href={href}><h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
         <p className="mt-1 text-sm text-black/65 leading-snug flex-1">{benefitFor(p.title, p.tags[0] ?? t.fallbackTag, lang)}</p>
         <div className="mt-4 flex items-center justify-between gap-3">
-          <span className="font-display font-black text-lg text-black">{formatPrice(p.price)}</span>
+          <span className="font-display text-lg text-black">{formatPrice(p.price)}</span>
           <Link href={href} className="inline-flex items-center gap-1.5 rounded-full bg-bien-forest text-bien-cream px-3.5 py-2 text-xs font-semibold hover:bg-bien-leaf transition-colors">
             <ShoppingBag className="h-3.5 w-3.5" /> {p.available ? t.see : t.preorderCta}
           </Link>

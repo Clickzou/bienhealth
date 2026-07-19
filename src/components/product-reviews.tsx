@@ -116,15 +116,15 @@ export default function ProductReviews({
 
   return (
     <section className="mt-16 sm:mt-24 border-t border-border pt-12 sm:pt-16">
-      <h3 className="font-display font-black tracking-tighter text-2xl sm:text-3xl text-black mb-6">
+      <h3 className="font-display tracking-tighter text-2xl sm:text-3xl text-black mb-6">
         {t.title}
       </h3>
       {/* En-tête : note globale + CTA */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
         <div className="flex items-center gap-4">
-          <span className="font-display font-black text-5xl text-black leading-none">{en ? "5.0" : "5,0"}</span>
+          <span className="font-display text-5xl text-black leading-none">{en ? "5.0" : "5,0"}</span>
           <span>
-            <span className="inline-flex text-bien-gold">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5 fill-bien-gold" />)}</span>
+            <span className="inline-flex text-bien-star">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5 fill-bien-star" />)}</span>
             <span className="mt-1 block text-sm text-black/60">{t.basedPre}<span className="font-semibold text-black">{reviews.length} {t.reviewsWord}</span>{t.basedSuf}</span>
           </span>
         </div>
