@@ -5,12 +5,16 @@ import type { Metadata } from "next";
 import { ArrowRight, Check, Leaf, HeartPulse, MapPin } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Our story — BIEN", description: "BIEN HEALTH, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." }
-    : { title: "Notre histoire — BIEN", description: "BIEN HEALTH, marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels pour les athlètes de la vie." };
+  return pageMetadata({
+    lang,
+    path: "histoire",
+    title: lang === "en" ? "Our story — BIEN" : "Notre histoire — BIEN",
+    description: lang === "en" ? "BIEN HEALTH, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." : "BIEN HEALTH, marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels pour les athlètes de la vie.",
+  });
 }
 
 const VALUE_ICONS = [Leaf, MapPin, HeartPulse];
@@ -89,7 +93,7 @@ export default async function HistoirePage({
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow grid lg:grid-cols-2 items-stretch">
           <div className="text-bien-cream p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-            <h1 className="mt-4 font-hero text-[clamp(2.25rem,5.5vw,4rem)] leading-[0.98]">
+            <h1 className="mt-4 font-hero text-[clamp(1.98rem,4.84vw,3.52rem)] leading-[0.98]">
               {t.h1}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-bien-cream/85 leading-relaxed">
@@ -110,7 +114,7 @@ export default async function HistoirePage({
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.fromEyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
               {t.fromTitle}
             </h2>
             {t.story.map((para, i) => (
@@ -144,7 +148,7 @@ export default async function HistoirePage({
 
       {/* CTA */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24 text-center">
-        <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+        <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
           {t.ctaTitle}
         </h2>
         <div className="mt-6 flex flex-wrap items-center justify-center gap-3">

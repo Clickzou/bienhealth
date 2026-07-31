@@ -5,12 +5,16 @@ import { hasLocale } from "../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
 import { COLLECTIONS, localizeCollection } from "@/lib/shop";
 import SiteHeader from "@/components/site-header";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Sitemap · BIEN", description: "All the pages of the BIEN site: shop, collections, products, about, help and legal notices." }
-    : { title: "Plan du site · BIEN", description: "Toutes les pages du site BIEN : boutique, collections, produits, à propos, aide et mentions légales." };
+  return pageMetadata({
+    lang,
+    path: "plan-du-site",
+    title: lang === "en" ? "Sitemap · BIEN" : "Plan du site · BIEN",
+    description: lang === "en" ? "All the pages of the BIEN site: shop, collections, products, about, help and legal notices." : "Toutes les pages du site BIEN : boutique, collections, produits, à propos, aide et mentions légales.",
+  });
 }
 
 const T = {
@@ -92,7 +96,7 @@ export default async function PlanDuSitePage({
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
       <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-14 sm:py-20">
-        <h1 className="font-hero text-[clamp(2rem,5vw,3.25rem)] leading-[1] text-black">{t.h1}</h1>
+        <h1 className="font-hero text-[clamp(1.76rem,4.4vw,2.86rem)] leading-[1] text-black">{t.h1}</h1>
         <p className="mt-3 text-black/65">{t.intro}</p>
 
         <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10">

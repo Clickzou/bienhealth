@@ -33,12 +33,12 @@ const PRODUCTS: Record<Product, {
   },
   POWER: {
     name: "POWER", handle: "power", price: "39 €", img: "/brand/power.jpg",
-    fr: { tagline: "Énergie & Performance", bullets: ["Booste ton énergie physique naturellement", "Endurance et tonus durables", "Fini les coups de mou de 11 h et 15 h"] },
+    fr: { tagline: "Énergie & Performance", bullets: ["Booste votre énergie physique naturellement", "Endurance et tonus durables", "Fini les coups de mou de 11 h et 15 h"] },
     en: { tagline: "Energy & Performance", bullets: ["Naturally boosts your physical energy", "Lasting stamina and vitality", "No more 11 am and 3 pm slumps"] },
   },
   MUSHGLOW: {
     name: "MUSHGLOW", handle: "mushglow", price: "49 €", img: "/brand/mushglow.jpg",
-    fr: { tagline: "6-en-1 · Beauté & Vitalité", bullets: ["Soutient ton énergie et ta clarté mentale sans excitation", "Renforce ta résilience au stress chronique", "Illumine ta peau de l'intérieur, naturellement"] },
+    fr: { tagline: "6-en-1 · Beauté & Vitalité", bullets: ["Soutient votre énergie et votre clarté mentale sans excitation", "Renforce votre résilience au stress chronique", "Illumine votre peau de l'intérieur, naturellement"] },
     en: { tagline: "6-in-1 · Beauty & Vitality", bullets: ["Supports your energy and mental clarity without overstimulation", "Strengthens your resilience to chronic stress", "Brightens your skin from within, naturally"] },
   },
 };
@@ -52,9 +52,9 @@ type Question =
   | { id: string; kind: "email"; title: string; subtitle: string };
 
 const QUESTIONS_FR: Question[] = [
-  { id: "age", kind: "number", title: "Quel est ton âge ?", placeholder: "Ton âge" },
+  { id: "age", kind: "number", title: "Quel est votre âge ?", placeholder: "Votre âge" },
   {
-    id: "genre", kind: "single", title: "Avec quel genre t'identifies-tu ?", subtitle: "Choix unique",
+    id: "genre", kind: "single", title: "Avec quel genre vous identifiez-vous ?", subtitle: "Choix unique",
     options: [
       { id: "femme", label: "Femme" },
       { id: "homme", label: "Homme" },
@@ -64,7 +64,7 @@ const QUESTIONS_FR: Question[] = [
   },
   {
     id: "concentration", kind: "single",
-    title: "Sur les 7 derniers jours, à quelle fréquence as-tu ressenti des difficultés de concentration ?",
+    title: "Sur les 7 derniers jours, à quelle fréquence avez-vous ressenti des difficultés de concentration ?",
     subtitle: "Choix unique",
     options: [
       { id: "jamais", label: "Jamais" },
@@ -75,7 +75,7 @@ const QUESTIONS_FR: Question[] = [
     ],
   },
   {
-    id: "energie", kind: "single", title: "Ton niveau d'énergie au réveil est généralement…", subtitle: "Choix unique",
+    id: "energie", kind: "single", title: "Votre niveau d'énergie au réveil est généralement…", subtitle: "Choix unique",
     options: [
       { id: "excellent", label: "Excellent, je me lève sans souci" },
       { id: "correct", label: "Correct mais fluctuant", score: { POWER: 1 } },
@@ -85,7 +85,7 @@ const QUESTIONS_FR: Question[] = [
   },
   {
     id: "sommeil", kind: "multi",
-    title: "As-tu actuellement des troubles du sommeil ou une sensation de surcharge mentale ?",
+    title: "Avez-vous actuellement des troubles du sommeil ou une sensation de surcharge mentale ?",
     subtitle: "Choix multiple",
     options: [
       { id: "endormir", label: "Je mets du temps à m'endormir", score: { CALM: 2 } },
@@ -95,7 +95,7 @@ const QUESTIONS_FR: Question[] = [
     ],
   },
   {
-    id: "peau", kind: "multi", title: "Ta peau te semble…", subtitle: "Choix multiple",
+    id: "peau", kind: "multi", title: "Votre peau vous semble…", subtitle: "Choix multiple",
     options: [
       { id: "lisse", label: "Lisse et lumineuse" },
       { id: "terne", label: "Un peu terne, fatiguée", score: { MUSHGLOW: 2 } },
@@ -104,7 +104,7 @@ const QUESTIONS_FR: Question[] = [
     ],
   },
   {
-    id: "journee", kind: "multi", title: "En journée, tu as tendance à :", subtitle: "Choix multiple",
+    id: "journee", kind: "multi", title: "En journée, vous avez tendance à :", subtitle: "Choix multiple",
     options: [
       { id: "mou", label: "Avoir des coups de mou vers 11 h ou 15 h", score: { POWER: 2 } },
       { id: "focus", label: "Avoir du mal à rester focus longtemps", score: { FOCUS: 2 } },
@@ -113,7 +113,7 @@ const QUESTIONS_FR: Question[] = [
     ],
   },
   {
-    id: "routine", kind: "single", title: "As-tu l'habitude de prendre soin de ta santé ?", subtitle: "Choix unique",
+    id: "routine", kind: "single", title: "Avez-vous l'habitude de prendre soin de votre santé ?", subtitle: "Choix unique",
     options: [
       { id: "oui", label: "Oui, j'ai une routine bien-être installée" },
       { id: "essaie", label: "J'essaie mais je manque de constance" },
@@ -121,7 +121,7 @@ const QUESTIONS_FR: Question[] = [
     ],
   },
   {
-    id: "objectifs", kind: "multi", title: "As-tu actuellement un ou plusieurs de ces objectifs ?", subtitle: "Choix multiple",
+    id: "objectifs", kind: "multi", title: "Avez-vous actuellement un ou plusieurs de ces objectifs ?", subtitle: "Choix multiple",
     options: [
       { id: "cognitif", label: "Optimiser mes performances cognitives", score: { FOCUS: 3 } },
       { id: "emotionnel", label: "Retrouver un équilibre émotionnel", score: { CALM: 3 } },
@@ -131,8 +131,8 @@ const QUESTIONS_FR: Question[] = [
   },
   {
     id: "email", kind: "email",
-    title: "−10 % sur ta première commande si tu t'inscris à notre newsletter 🍄",
-    subtitle: "Promis, que du mush love dans ta boîte mail — reçois aussi ton résultat par email.",
+    title: "−10 % sur votre première commande si vous vous inscrivez à notre newsletter 🍄",
+    subtitle: "Promis, que du mush love dans votre boîte mail — recevez aussi votre résultat par email.",
   },
 ];
 
@@ -225,23 +225,23 @@ const getQuestions = (lang: string) => (lang === "en" ? QUESTIONS_EN : QUESTIONS
 
 const SCREEN = {
   fr: {
-    idealFormula: "Ta formule idéale",
+    idealFormula: "Votre formule idéale",
     discover: (n: string) => `Découvrir ${n}`,
     copied: "Copié",
     promo: "−10 %",
-    emailedResult: "Ton résultat et ton code viennent aussi de t'être envoyés par email.",
+    emailedResult: "Votre résultat et votre code viennent aussi de vous être envoyés par email.",
     introBadge: "Diagnostic gratuit · moins d'une minute",
-    introH1Pre: "Tu ne sais pas quel produit ",
-    introH1Post: " est fait pour toi ?",
-    introText: "Ce diagnostic personnalisé analyse tes besoins et symptômes pour t'orienter vers la routine idéale — naturelle, ciblée, efficace.",
+    introH1Pre: "Vous ne savez pas quel produit ",
+    introH1Post: " est fait pour vous ?",
+    introText: "Ce diagnostic personnalisé analyse vos besoins et symptômes pour vous orienter vers la routine idéale — naturelle, ciblée, efficace.",
     start: "Commencer le diagnostic",
     previous: "Précédent",
     ok: "OK",
     continue: "Continuer",
     calculating: "Calcul en cours…",
     seeResult: "Voir mon résultat",
-    emailPlaceholder: "ton@email.com",
-    emailConsent: "En continuant, tu acceptes de recevoir nos emails. Désinscription à tout moment.",
+    emailPlaceholder: "votre@email.com",
+    emailConsent: "En continuant, vous acceptez de recevoir nos emails. Désinscription à tout moment.",
   },
   en: {
     idealFormula: "Your ideal formula",
@@ -373,7 +373,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
             <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
               <Sparkles className="h-3.5 w-3.5 text-bien-gold" /> {s.idealFormula}
             </span>
-            <h1 className="mt-4 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95]">
+            <h1 className="mt-4 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95]">
               {p.name}
             </h1>
             <p className="mt-1 text-bien-gold font-semibold">{loc.tagline}</p>
@@ -417,7 +417,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
           <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
             <Sparkles className="h-3.5 w-3.5 text-bien-gold" /> {s.introBadge}
           </span>
-          <h1 className="mt-5 font-hero text-[clamp(2.25rem,6vw,4rem)] leading-[0.98]">
+          <h1 className="mt-5 font-hero text-[clamp(1.98rem,5.28vw,3.52rem)] leading-[0.98]">
             {s.introH1Pre}<span className="text-bien-gold">BIEN</span>{s.introH1Post}
           </h1>
           <p className="mt-5 text-base sm:text-lg text-bien-cream/85 leading-relaxed">
@@ -451,7 +451,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
         <div className="flex items-start gap-3">
           <span className="mt-1 shrink-0 grid place-items-center h-7 w-7 rounded-lg bg-bien-gold text-black font-display text-sm">{step + 1}</span>
           <div>
-            <h2 className="font-display tracking-tight text-bien-cream text-[clamp(1.4rem,3.5vw,2rem)] leading-[1.1]">{q.title}</h2>
+            <h2 className="font-display tracking-tight text-bien-cream text-[clamp(1.232rem,3.08vw,1.76rem)] leading-[1.1]">{q.title}</h2>
             {"subtitle" in q && q.subtitle && <p className="mt-1.5 text-sm text-bien-cream/60">{q.subtitle}</p>}
           </div>
         </div>

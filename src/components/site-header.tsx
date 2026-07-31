@@ -5,6 +5,7 @@ import LanguageToggle from "./language-toggle";
 import CartBadge from "./cart-badge";
 import MobileMenu from "./mobile-menu";
 import { ui } from "@/lib/i18n";
+import { TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
 
 /**
  * En-tête global du site (barre d'offre + header sticky avec méga-menu).
@@ -52,10 +53,16 @@ export default function SiteHeader({ lang }: { lang: string }) {
       </div>
 
       {/* Header */}
-      <header className="sticky top-0 z-40 w-full bg-background/85 backdrop-blur-md border-b border-border/60">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
-          <a href={`/${lang}`} className="flex items-center" aria-label="BIEN — accueil">
+      {/* Fond opaque : en translucide, le titre du hero restait visible « au
+          travers » du header et donnait l'impression d'être coupé en deux. */}
+      <header className="sticky top-0 z-40 w-full bg-background border-b border-border/60">
+        {/* `relative` sert d'ancre aux méga-menus : ils sont centrés sur ce
+            conteneur (donc sur l'écran) et non sur leur bouton, sinon le
+            panneau déborde hors de l'écran sur les résolutions < 1600px. */}
+        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+          <a href={`/${lang}`} className="flex items-center">
             <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
+            <span className="sr-only">{t.home}</span>
           </a>
           <div className="flex items-center justify-center">
             <HeaderNav lang={lang} />
@@ -64,13 +71,22 @@ export default function SiteHeader({ lang }: { lang: string }) {
           <div className="flex items-center gap-1 sm:gap-2">
             <div className="hidden xl:flex items-center gap-2 rounded-full bg-bien-cream px-3 py-1.5 mr-1">
               <Star className="h-4 w-4 fill-bien-star text-bien-star" />
-              <span className="text-xs font-semibold text-black">4,4/5 · <span className="font-normal opacity-70">+100 {t.reviewsBadge}</span></span>
+              {/* Note BOUTIQUE (Trustpilot) — les avis d'un produit donné sont
+                  affichés sur sa fiche, avec leur propre libellé. */}
+              <span className="text-xs font-semibold text-black">{ratingLabel(lang)}/5 · <span className="font-normal opacity-70">+{TRUSTPILOT_REVIEWS} {t.reviewsBadge}</span></span>
             </div>
-            <a href={`/${lang}/collections/accessories`} className="hidden lg:inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-4 lg:px-5 py-2.5 text-sm font-semibold hover:brightness-95 transition bien-shadow-sm">{t.shop}</a>
+            <a href={`/${lang}/boutique`} className="hidden lg:inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-4 lg:px-5 py-2.5 text-sm font-semibold hover:brightness-95 transition bien-shadow-sm">{t.shop}</a>
+            {/* Les liens en icône seule portent un libellé `sr-only` : sans texte
+                d'ancrage, lecteurs d'écran et crawlers affichent l'URL brute
+                (« /fr/compte ») à la place du libellé. */}
             <button aria-label={t.search} className="hidden lg:inline-flex p-2 rounded-full hover:bg-bien-cream transition-colors"><Search className="h-5 w-5 text-black" /></button>
-            <a href={`/${lang}/compte`} aria-label={t.account} className="p-2 rounded-full hover:bg-bien-cream transition-colors"><User className="h-5 w-5 text-black" /></a>
-            <a href={`/${lang}/cart`} aria-label={t.cart} className="relative p-2 rounded-full hover:bg-bien-cream transition-colors">
+            <a href={`/${lang}/compte`} className="p-2 rounded-full hover:bg-bien-cream transition-colors">
+              <User className="h-5 w-5 text-black" />
+              <span className="sr-only">{t.account}</span>
+            </a>
+            <a href={`/${lang}/cart`} className="relative p-2 rounded-full hover:bg-bien-cream transition-colors">
               <ShoppingBag className="h-5 w-5 text-black" />
+              <span className="sr-only">{t.cart}</span>
               <CartBadge />
             </a>
           </div>

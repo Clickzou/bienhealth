@@ -28,7 +28,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
     { label: t.gummies, href: `/${lang}/collections/gummies` },
     { label: t.powders, href: `/${lang}/collections/nos-poudres` },
     { label: t.accessories, href: `/${lang}/collections/nos-accessoires` },
-    { label: t.allProducts, href: `/${lang}/collections/accessories` },
+    { label: t.allProducts, href: `/${lang}/boutique` },
   ];
 
   const BY_NEED = [
@@ -73,8 +73,11 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
   return (
     <nav className="hidden lg:flex items-center justify-center gap-7">
-      {/* Nos produits — méga-menu */}
-      <div className="relative" onMouseEnter={() => open("shop")} onMouseLeave={scheduleClose}>
+      {/* Nos produits — méga-menu.
+          Le panneau n'est PAS positionné par rapport au bouton (il déborderait
+          de l'écran) mais par rapport au conteneur `relative` du header
+          (site-header.tsx) : il reste donc toujours centré et cadré. */}
+      <div onMouseEnter={() => open("shop")} onMouseLeave={scheduleClose}>
         <button
           type="button"
           aria-expanded={openMenu === "shop"}
@@ -88,7 +91,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
         {openMenu === "shop" && (
           <div onMouseEnter={() => open("shop")} onMouseLeave={scheduleClose} className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
-            <div className="w-[min(1040px,92vw)] rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 animate-[bien-fade-up_0.25s_ease]">
+            <div className="w-[min(1040px,calc(100vw-2rem))] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 animate-[bien-fade-up_0.25s_ease]">
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr_1.4fr] gap-7">
                 {/* Par type de produits */}
                 <div>
@@ -152,8 +155,8 @@ export default function HeaderNav({ lang }: { lang: string }) {
         )}
       </div>
 
-      {/* À propos — méga-menu */}
-      <div className="relative" onMouseEnter={() => open("about")} onMouseLeave={scheduleClose}>
+      {/* À propos — méga-menu (même ancrage que « Nos produits »). */}
+      <div onMouseEnter={() => open("about")} onMouseLeave={scheduleClose}>
         <button
           type="button"
           aria-expanded={openMenu === "about"}
@@ -167,7 +170,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
         {openMenu === "about" && (
           <div onMouseEnter={() => open("about")} onMouseLeave={scheduleClose} className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
-            <div className="w-[min(880px,92vw)] rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 grid grid-cols-1 lg:grid-cols-[1fr_1.7fr] gap-7 animate-[bien-fade-up_0.25s_ease]">
+            <div className="w-[min(880px,calc(100vw-2rem))] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 grid grid-cols-1 lg:grid-cols-[1fr_1.7fr] gap-7 animate-[bien-fade-up_0.25s_ease]">
               {/* Liens */}
               <div>
                 <p className="text-[11px] font-semibold uppercase tracking-[0.15em] text-bien-sage">{t.brand}</p>

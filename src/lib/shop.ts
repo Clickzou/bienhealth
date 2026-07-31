@@ -148,17 +148,8 @@ export const COLLECTIONS: Record<string, Collection> = {
     },
     match: (p) => typeOf(p) === "accessoires",
   },
-  // « Tous les produits » — collection « accessories » du live (nom historique).
-  "accessories": {
-    slug: "accessories",
-    eyebrow: "La gamme BIEN",
-    label: "Tous les produits",
-    desc: "Toute la gamme BIEN : gummies, poudres et accessoires. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
-    en: {
-      eyebrow: "The BIEN range",
-      label: "All products",
-      desc: "The full BIEN range: gummies, powders and accessories. Adaptogens and functional mushrooms, science-based dosages, made in France.",
-    },
-    match: () => true,
-  },
 };
+
+// « Tous les produits » vit désormais sur /[lang]/boutique : l'ancienne
+// collection « accessories » (nom hérité du template Shopify, mauvais pour le
+// SEO et doublon de la boutique) est redirigée en 301 dans next.config.ts.

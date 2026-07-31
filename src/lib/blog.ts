@@ -133,7 +133,7 @@ export const ARTICLES: Article[] = [
         p: "Le meilleur point de départ dépend de votre besoin : sérénité et sommeil, concentration, énergie ou beauté. Pas sûr de votre choix ? Faites notre <a href=\"" +
           l("/diagnostic") +
           "\">diagnostic gratuit en 1 minute</a> : il vous oriente vers la formule la plus adaptée à votre rythme. Vous pouvez aussi parcourir directement l'ensemble de notre <a href=\"" +
-          l("/collections/accessories") +
+          l("/boutique") +
           "\">gamme de compléments naturels</a>.",
       },
     ],
@@ -198,7 +198,7 @@ export const ARTICLES: Article[] = [
         { h2: "Are there any precautions?" },
         { p: "Adaptogenic mushrooms are generally well tolerated. As a precaution, they are <strong>not recommended for pregnant or breastfeeding women</strong> or people on medical treatment without a healthcare professional's advice. Always respect the recommended daily dose and keep products out of reach of children." },
         { h2: "Where to start with BIEN?" },
-        { p: "The best starting point depends on your need: calm and sleep, focus, energy or beauty. Not sure of your choice? Take our <a href=\"" + le("/diagnostic") + "\">free 1-minute quiz</a>: it points you to the formula best suited to your lifestyle. You can also browse our full <a href=\"" + le("/collections/accessories") + "\">range of natural supplements</a>." },
+        { p: "The best starting point depends on your need: calm and sleep, focus, energy or beauty. Not sure of your choice? Take our <a href=\"" + le("/diagnostic") + "\">free 1-minute quiz</a>: it points you to the formula best suited to your lifestyle. You can also browse our full <a href=\"" + le("/boutique") + "\">range of natural supplements</a>." },
       ],
       faq: [
         { q: "Are adaptogenic mushrooms effective?", a: "A growing number of studies support their benefits on stress, focus, energy and immunity. They're not miracle products: the effects build with regularity, over a course of at least 30 days, alongside a good lifestyle." },

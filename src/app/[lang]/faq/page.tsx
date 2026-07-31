@@ -6,12 +6,16 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ReassuranceBand from "@/components/reassurance-band";
 import JsonLd from "@/components/json-ld";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "FAQ — Your questions about BIEN", description: "All the answers about MushGlow, our gummies (CALM, FOCUS, POWER), shipping, returns and how to use BIEN supplements." }
-    : { title: "FAQ — Vos questions sur BIEN", description: "Toutes les réponses sur MushGlow, nos gummies (CALM, FOCUS, POWER), la livraison, les retours et l'utilisation des compléments BIEN." };
+  return pageMetadata({
+    lang,
+    path: "faq",
+    title: lang === "en" ? "FAQ — Your questions about BIEN" : "FAQ — Vos questions sur BIEN",
+    description: lang === "en" ? "All the answers about MushGlow, our gummies (CALM, FOCUS, POWER), shipping, returns and how to use BIEN supplements." : "Toutes les réponses sur MushGlow, nos gummies (CALM, FOCUS, POWER), la livraison, les retours et l'utilisation des compléments BIEN.",
+  });
 }
 
 type QA = { q: string; a: string };
@@ -66,7 +70,7 @@ const SECTIONS_FR: Section[] = [
   {
     title: "Livraison, retours & suivi",
     items: [
-      { q: "Offrez-vous la livraison gratuite ?", a: "Livraison offerte en Point Relais dès 69 € d'achat, expédiée le jour même pour toute commande passée avant 13h.\n\nFrance : Point Relais 4 € (3 à 5 jours), Standard à domicile 5,90 € (2 à 4 jours), Express 11,50 € (1 à 2 jours). Europe : les tarifs sont affichés à l'étape de paiement." },
+      { q: "Offrez-vous la livraison gratuite ?", a: "Livraison offerte en Point Relais dès 49 € d'achat, expédiée le jour même pour toute commande passée avant 13h.\n\nFrance : Point Relais 4 € (3 à 5 jours), Standard à domicile 5,90 € (2 à 4 jours), Express 11,50 € (1 à 2 jours). Europe : les tarifs sont affichés à l'étape de paiement." },
       { q: "Retours et remboursements", a: "Vous disposez d'un droit de rétractation de 14 jours après réception, pour les produits inutilisés et non ouverts. Contactez notre service client à info@bien.health avec votre numéro de commande pour initier un retour. Le remboursement intervient sous 7 à 10 jours ouvrables. Les frais de port de retour sont à la charge du client, sauf erreur de notre part. Pour un produit endommagé, contactez-nous sous 3 jours." },
       { q: "Livraison discrète", a: "Vos commandes sont expédiées dans une boîte simple et sans marque, afin de minimiser tout risque de vol et de préserver votre confidentialité." },
       { q: "Où puis-je suivre ma commande ?", a: "Après avoir passé commande, vous recevez des mises à jour par e-mail en temps réel à chaque étape de l'expédition." },
@@ -110,7 +114,7 @@ const SECTIONS_EN: Section[] = [
   {
     title: "Shipping, returns & tracking",
     items: [
-      { q: "Do you offer free shipping?", a: "Free Point Relais delivery on orders over €69, shipped the same day for orders placed before 1 pm.\n\nFrance: Point Relais €4 (3 to 5 days), Standard home €5.90 (2 to 4 days), Express €11.50 (1 to 2 days). Europe: rates are shown at checkout." },
+      { q: "Do you offer free shipping?", a: "Free Point Relais delivery on orders over €49, shipped the same day for orders placed before 1 pm.\n\nFrance: Point Relais €4 (3 to 5 days), Standard home €5.90 (2 to 4 days), Express €11.50 (1 to 2 days). Europe: rates are shown at checkout." },
       { q: "Returns and refunds", a: "You have a 14-day right of withdrawal after receipt, for unused and unopened products. Contact our customer service at info@bien.health with your order number to start a return. Refunds are processed within 7 to 10 business days. Return shipping costs are the customer's responsibility, except in the event of our error. For a damaged product, contact us within 3 days." },
       { q: "Discreet delivery", a: "Your orders are shipped in a plain, unbranded box, to minimise any risk of theft and protect your privacy." },
       { q: "Where can I track my order?", a: "After placing your order, you'll receive real-time email updates at every stage of shipping." },
@@ -153,7 +157,7 @@ export default async function FaqPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <HelpCircle className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">

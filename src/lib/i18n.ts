@@ -1,3 +1,5 @@
+import { HAPPY_CLIENTS } from "@/lib/social-proof";
+import { freeShippingAmount } from "@/lib/shipping";
 /**
  * Dictionnaire d'interface (UI) bilingue FR / EN.
  * Utilisable côté serveur ET client (pas de `server-only`).
@@ -14,10 +16,11 @@ const DICT = {
   fr: {
     chrome: {
       // Barre d'offre
-      offer1: "Pré-ventes MUSHGLOW ouvertes",
+      offer1: "MUSHGLOW disponible",
       offer2: "1 mousseur offert pour les 100 premières commandes",
       offerCode: "code",
       // Header / actions
+      home: "BIEN — accueil",
       shop: "Boutique",
       search: "Rechercher",
       account: "Mon compte",
@@ -55,9 +58,9 @@ const DICT = {
       resellers: "Nos revendeurs",
       // Réassurance
       reassurance: [
-        { title: "Livraison offerte", sub: "dès 49 € d'achat" },
+        { title: "Livraison offerte", sub: `dès ${freeShippingAmount("fr")} d'achat` },
         { title: "Paiement sécurisé", sub: "Visa, Mastercard" },
-        { title: "+1000 clients", sub: "satisfaits" },
+        { title: `+${HAPPY_CLIENTS} clients`, sub: "satisfaits" },
         { title: "Satisfait ou remboursé", sub: "sous 30 jours" },
       ],
     },
@@ -84,6 +87,11 @@ const DICT = {
       newsletterLoading: "Un instant…",
       newsletterDone: "Merci ! Surveillez votre boîte mail.",
       newsletterConsent: "En vous inscrivant, vous acceptez de recevoir nos emails. Désinscription à tout moment.",
+      // Engagements associatifs (mention texte — logos à intégrer quand les
+      // fichiers officiels seront fournis).
+      commitmentsTitle: "Nos engagements",
+      commitmentPlanet: "Actionnaire de Team for the Planet",
+      commitmentChildren: "Soutien à l'association Hôpital Sourire",
       disclaimer:
         "Compléments alimentaires. Ne se substituent pas à une alimentation variée et équilibrée. Ne pas dépasser la dose journalière recommandée. Allégations conformes au règlement EFSA.",
       rights: "© 2026 BIEN Health France — Tous droits réservés.",
@@ -91,9 +99,10 @@ const DICT = {
   },
   en: {
     chrome: {
-      offer1: "MUSHGLOW pre-orders now open",
+      offer1: "MUSHGLOW in stock",
       offer2: "Free milk frother for the first 100 orders",
       offerCode: "code",
+      home: "BIEN — home",
       shop: "Shop",
       search: "Search",
       account: "My account",
@@ -125,9 +134,9 @@ const DICT = {
       press: "As seen in the press",
       resellers: "Our resellers",
       reassurance: [
-        { title: "Free shipping", sub: "on orders over €49" },
+        { title: "Free shipping", sub: `on orders over ${freeShippingAmount("en")}` },
         { title: "Secure payment", sub: "Visa, Mastercard" },
-        { title: "+1000 customers", sub: "satisfied" },
+        { title: `+${HAPPY_CLIENTS} customers`, sub: "satisfied" },
         { title: "Money-back guarantee", sub: "within 30 days" },
       ],
     },
@@ -154,6 +163,9 @@ const DICT = {
       newsletterLoading: "One moment…",
       newsletterDone: "Thank you! Check your inbox.",
       newsletterConsent: "By subscribing, you agree to receive our emails. Unsubscribe anytime.",
+      commitmentsTitle: "Our commitments",
+      commitmentPlanet: "Shareholder of Team for the Planet",
+      commitmentChildren: "Supporter of the Hôpital Sourire charity",
       disclaimer:
         "Food supplements. Do not replace a varied and balanced diet. Do not exceed the recommended daily dose. Claims comply with EFSA regulation.",
       rights: "© 2026 BIEN Health France — All rights reserved.",

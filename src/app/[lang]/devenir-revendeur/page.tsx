@@ -5,12 +5,16 @@ import { Handshake, ArrowLeft, Truck, Store, HeartPulse } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ResellerForm from "@/components/reseller-form";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Become a BIEN reseller — Trade enquiry", description: "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN reseller network and offer our natural supplements to your customers." }
-    : { title: "Devenir revendeur BIEN — Demande professionnelle", description: "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN et proposez nos compléments naturels à vos clients." };
+  return pageMetadata({
+    lang,
+    path: "devenir-revendeur",
+    title: lang === "en" ? "Become a BIEN reseller — Trade enquiry" : "Devenir revendeur BIEN — Demande professionnelle",
+    description: lang === "en" ? "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN reseller network and offer our natural supplements to your customers." : "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN et proposez nos compléments naturels à vos clients.",
+  });
 }
 
 const PERK_ICONS = [Store, HeartPulse, Truck];
@@ -61,7 +65,7 @@ export default async function DevenirRevendeurPage({
             <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
               <Handshake className="h-4 w-4" /> {t.eyebrow}
             </p>
-            <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.5rem)] leading-[0.95] text-black">
+            <h1 className="mt-3 font-hero text-[clamp(1.98rem,4.4vw,3.08rem)] leading-[0.95] text-black">
               {t.h1}
             </h1>
             <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">

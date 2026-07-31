@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { addToCart, type CartItem } from "@/lib/cart";
+import { trackMeta } from "@/lib/meta-pixel";
 
 /**
  * Bouton « Ajouter au panier » : ajoute l'article au panier local et ouvre une
@@ -29,6 +30,14 @@ export default function AddToCart({
 
   function add() {
     addToCart(item);
+    // Conversion Meta (ne part que si le pixel est chargé, donc après consentement).
+    trackMeta("AddToCart", {
+      content_ids: [item.handle],
+      content_name: item.title,
+      content_type: "product",
+      value: item.price,
+      currency: item.currency || "EUR",
+    });
     setOpen(true);
   }
 

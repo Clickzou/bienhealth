@@ -5,12 +5,16 @@ import type { Metadata } from "next";
 import { ArrowRight, Leaf } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Ingredients — Adaptogens & functional mushrooms · BIEN", description: "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Saffron… Discover the premium actives of BIEN formulas, dosed according to science." }
-    : { title: "Ingrédients — Adaptogènes & champignons fonctionnels · BIEN", description: "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Safran… Découvrez les actifs nobles des formules BIEN, dosés selon la science." };
+  return pageMetadata({
+    lang,
+    path: "ingredients",
+    title: lang === "en" ? "Ingredients — Adaptogens & functional mushrooms · BIEN" : "Ingrédients — Adaptogènes & champignons fonctionnels · BIEN",
+    description: lang === "en" ? "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Saffron… Discover the premium actives of BIEN formulas, dosed according to science." : "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Safran… Découvrez les actifs nobles des formules BIEN, dosés selon la science.",
+  });
 }
 
 type Loc = { family: string; hook: string; desc: string };
@@ -88,7 +92,7 @@ export default async function IngredientsPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Leaf className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95] text-black">
           {t.h1a}<span className="text-bien-leaf">{t.h1b}</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -119,7 +123,7 @@ export default async function IngredientsPage({
       {/* CTA */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
         <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
-          <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1]">
+          <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1]">
             {t.ctaTitle}
           </h2>
           <p className="mt-3 text-bien-cream/80 max-w-xl mx-auto">

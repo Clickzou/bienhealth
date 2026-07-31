@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { Clock, ChevronDown, ArrowLeft } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { ARTICLES, getArticle, localizeArticle } from "@/lib/blog";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 import JsonLd from "@/components/json-ld";
@@ -23,18 +23,18 @@ export async function generateMetadata({
   const base = getArticle(slug);
   if (!base) return {};
   const a = localizeArticle(base, lang);
-  return {
+  const meta = pageMetadata({
+    lang,
+    path: `blog/${slug}`,
     title: a.metaTitle,
-    description: a.metaDescription,
-    alternates: { canonical: `/${lang}/blog/${slug}` },
-    openGraph: {
-      type: "article",
-      title: a.metaTitle,
-      description: a.metaDescription,
-      url: `/${lang}/blog/${slug}`,
-      publishedTime: a.date,
-      images: [{ url: a.cover }],
-    },
+    description: metaDescription(a.metaDescription),
+    image: a.cover,
+    imageAlt: a.title,
+    ogType: "article",
+  });
+  return {
+    ...meta,
+    openGraph: { ...meta.openGraph, type: "article", publishedTime: a.date },
   };
 }
 
@@ -118,7 +118,7 @@ export default async function ArticlePage({
 
           {/* En-tête */}
           <p className="mt-6 inline-flex items-center rounded-full bg-bien-cream px-3 py-1 text-xs font-semibold text-black">{a.category}</p>
-          <h1 className="mt-4 font-hero text-[clamp(2rem,5vw,3.5rem)] leading-[1.02] text-black">{a.title}</h1>
+          <h1 className="mt-4 font-hero text-[clamp(1.76rem,4.4vw,3.08rem)] leading-[1.02] text-black">{a.title}</h1>
           <div className="mt-4 flex items-center gap-3 text-sm text-black/55">
             <span>{fmtDate(a.date, lang)}</span>
             <span>·</span>

@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Privacy policy · BIEN", description: "How Bien Health collects, uses and discloses your personal information on bien.health." }
-    : { title: "Politique de confidentialité · BIEN", description: "Comment Bien Health collecte, utilise et divulgue vos informations personnelles sur bien.health." };
+  return pageMetadata({
+    lang,
+    path: "confidentialite",
+    title: lang === "en" ? "Privacy policy · BIEN" : "Politique de confidentialité · BIEN",
+    description: lang === "en" ? "How Bien Health collects, uses and discloses your personal information on bien.health." : "Comment Bien Health collecte, utilise et divulgue vos informations personnelles sur bien.health.",
+  });
 }
 
 export default async function ConfidentialitePage({

@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Legal notice · BIEN", description: "Legal notice for bien.health — Bien Health SAS, Albi, France." }
-    : { title: "Mentions légales · BIEN", description: "Mentions légales du site bien.health — Bien Health SAS, Albi." };
+  return pageMetadata({
+    lang,
+    path: "mentions-legales",
+    title: lang === "en" ? "Legal notice · BIEN" : "Mentions légales · BIEN",
+    description: lang === "en" ? "Legal notice for bien.health — Bien Health SAS, Albi, France." : "Mentions légales du site bien.health — Bien Health SAS, Albi.",
+  });
 }
 
 export default async function MentionsLegalesPage({

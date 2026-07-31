@@ -4,12 +4,16 @@ import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ReassuranceBand from "@/components/reassurance-band";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "As seen in the press · BIEN", description: "BIEN in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." }
-    : { title: "La presse en parle · BIEN", description: "BIEN dans la presse : Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Découvrez ce que les médias disent de nos compléments naturels aux adaptogènes." };
+  return pageMetadata({
+    lang,
+    path: "presse",
+    title: lang === "en" ? "As seen in the press · BIEN" : "La presse en parle · BIEN",
+    description: lang === "en" ? "BIEN in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." : "BIEN dans la presse : Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Découvrez ce que les médias disent de nos compléments naturels aux adaptogènes.",
+  });
 }
 
 const HERO = {

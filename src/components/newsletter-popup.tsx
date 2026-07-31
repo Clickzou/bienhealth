@@ -131,12 +131,12 @@ export default function NewsletterPopup() {
               </span>
               <h2
                 id="newsletter-title"
-                className="mt-4 font-display tracking-tighter text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.05] text-black"
+                className="mt-4 font-display tracking-tighter text-[clamp(1.408rem,2.64vw,1.848rem)] leading-[1.05] text-black"
               >
-                −10 % offerts sur ta première commande
+                −10 % offerts sur votre première commande
               </h2>
               <p className="mt-3 text-sm sm:text-[15px] text-black/70 leading-relaxed">
-                Reçois ton code de bienvenue par mail et suis nos actualités
+                Recevez votre code de bienvenue par mail et suivez nos actualités
                 avant tout le monde 💙
               </p>
 
@@ -159,7 +159,7 @@ export default function NewsletterPopup() {
                 </button>
               </form>
               <p className="mt-3 text-[11px] text-black/45 leading-relaxed">
-                En t&apos;inscrivant, tu acceptes de recevoir nos emails. Désinscription à tout moment.
+                En vous inscrivant, vous acceptez de recevoir nos emails. Désinscription à tout moment.
               </p>
             </>
           ) : (
@@ -167,11 +167,11 @@ export default function NewsletterPopup() {
               <span className="mx-auto grid place-items-center h-14 w-14 rounded-full bg-bien-leaf text-bien-cream">
                 <Check className="h-7 w-7" />
               </span>
-              <h2 className="mt-4 font-display tracking-tighter text-[clamp(1.5rem,3vw,2rem)] leading-[1.05] text-black">
+              <h2 className="mt-4 font-display tracking-tighter text-[clamp(1.32rem,2.64vw,1.76rem)] leading-[1.05] text-black">
                 C&apos;est tout bon !
               </h2>
               <p className="mt-2 text-sm text-black/70 leading-relaxed">
-                Voici ton code −10 %, valable sur ta première commande.
+                Voici votre code −10 %, valable sur votre première commande.
                 Il t&apos;est aussi envoyé par mail.
               </p>
               <button

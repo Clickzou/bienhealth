@@ -4,12 +4,16 @@ import type { Metadata } from "next";
 import { Mail, Phone, MapPin, Clock, MessageCircle, ArrowRight } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Contact — A question? · BIEN", description: "Contact the BIEN team: email, phone and address. We reply within 48 business hours." }
-    : { title: "Contact — Une question ? · BIEN", description: "Contactez l'équipe BIEN : email, téléphone et adresse. Nous répondons sous 48 h ouvrées." };
+  return pageMetadata({
+    lang,
+    path: "contact",
+    title: lang === "en" ? "Contact — A question? · BIEN" : "Contact — Une question ? · BIEN",
+    description: lang === "en" ? "Contact the BIEN team: email, phone and address. We reply within 48 business hours." : "Contactez l'équipe BIEN : email, téléphone et adresse. Nous répondons sous 48 h ouvrées.",
+  });
 }
 
 const T = {
@@ -47,7 +51,7 @@ export default async function ContactPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MessageCircle className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.5rem)] leading-[1] text-black">{t.h1}</h1>
+        <h1 className="mt-3 font-hero text-[clamp(1.98rem,4.4vw,3.08rem)] leading-[1] text-black">{t.h1}</h1>
         <p className="mt-4 text-base sm:text-lg text-black/70 leading-relaxed max-w-2xl">
           {t.intro}
         </p>

@@ -9,12 +9,20 @@ import AccountAuth from "@/components/account-auth";
 import AccountEdit from "@/components/account-edit";
 import LogoutButton from "@/components/logout-button";
 import { getCustomer, isCustomerAuthConfigured, CUSTOMER_COOKIE } from "@/lib/shopify-customer";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "My account — BIEN", description: "Log in to your BIEN account: orders, addresses and personal details." }
-    : { title: "Mon compte — BIEN", description: "Connectez-vous à votre compte BIEN : commandes, adresses et informations personnelles." };
+  return {
+    ...pageMetadata({
+      lang,
+      path: "compte",
+      title: lang === "en" ? "My account — BIEN" : "Mon compte — BIEN",
+      description: lang === "en" ? "Log in to your BIEN account: orders, addresses and personal details." : "Connectez-vous à votre compte BIEN : commandes, adresses et informations personnelles.",
+    }),
+    // Espace privé : jamais indexé.
+    robots: { index: false, follow: false },
+  };
 }
 
 function fmtDate(iso: string, lang: string) {
@@ -71,7 +79,7 @@ export default async function ComptePage({
             {/* En-tête */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
-                <h1 className="font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">
+                <h1 className="font-hero text-[clamp(1.76rem,4.4vw,2.64rem)] leading-[1] text-black">
                   {t.hello}{customer.firstName ? `, ${customer.firstName}` : ""} 👋
                 </h1>
                 <p className="mt-2 text-black/65">{t.welcome}</p>
@@ -85,7 +93,7 @@ export default async function ComptePage({
                 <h2 className="font-display text-xl text-black flex items-center gap-2"><Package className="h-5 w-5 text-bien-leaf" /> {t.myOrders}</h2>
                 {customer.orders.length === 0 ? (
                   <p className="mt-4 text-black/60">{t.noOrders}{" "}
-                    <Link href={`/${lang}/collections/accessories`} className="text-bien-leaf underline">{t.discoverShop}</Link>.
+                    <Link href={`/${lang}/boutique`} className="text-bien-leaf underline">{t.discoverShop}</Link>.
                   </p>
                 ) : (
                   <ul className="mt-4 space-y-4">
