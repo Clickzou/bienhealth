@@ -4,12 +4,17 @@ import { Star, Check, ArrowUpRight, Quote } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import { TRUSTPILOT_URL } from "@/components/trustpilot";
+import { TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Customer reviews — BIEN", description: "Verified customer reviews of BIEN supplements: focus, calm, energy, sleep. Rated 4.4/5 across 100+ Trustpilot reviews." }
-    : { title: "Avis clients — BIEN", description: "Les avis vérifiés de nos clients sur les compléments BIEN : concentration, sérénité, énergie, sommeil. Note 4,4/5 sur plus de 100 avis Trustpilot." };
+  return pageMetadata({
+    lang,
+    path: "avis",
+    title: lang === "en" ? "Customer reviews — BIEN" : "Avis clients — BIEN",
+    description: lang === "en" ? "Verified customer reviews of BIEN supplements: focus, calm, energy, sleep. Rated 4.4/5 across 100+ Trustpilot reviews." : "Les avis vérifiés de nos clients sur les compléments BIEN : concentration, sérénité, énergie, sommeil. Note 4,4/5 sur plus de 100 avis Trustpilot.",
+  });
 }
 
 const T = {
@@ -243,15 +248,15 @@ export default async function AvisPage({
       <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.eyebrow}</p>
-          <h1 className="mt-3 font-hero text-[clamp(2.25rem,5vw,3.75rem)] leading-[1] text-black">
+          <h1 className="mt-3 font-hero text-[clamp(1.98rem,4.4vw,3.3rem)] leading-[1] text-black">
             {t.h1}
           </h1>
           <div className="mt-6 inline-flex items-center gap-4 rounded-2xl bg-card ring-1 ring-border bien-shadow-sm px-6 py-4">
-            <span className="font-display text-4xl text-black leading-none">{lang === "en" ? "4.4" : "4,4"}</span>
+            <span className="font-display text-4xl text-black leading-none">{ratingLabel(lang)}</span>
             <span className="h-10 w-px bg-border" />
             <span className="text-left">
               <StarRow value={4} />
-              <span className="mt-1 block text-sm text-black/65"><span className="font-semibold text-black">+100</span> {t.reviewsTp}</span>
+              <span className="mt-1 block text-sm text-black/65"><span className="font-semibold text-black">+{TRUSTPILOT_REVIEWS}</span> {t.reviewsTp}</span>
             </span>
           </div>
           <div className="mt-5">

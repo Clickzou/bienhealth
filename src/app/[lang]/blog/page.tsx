@@ -5,12 +5,16 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import BlogListing from "@/components/blog-listing";
 import { ARTICLES, localizeArticle } from "@/lib/blog";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "The BIEN Journal — adaptogens & wellbeing", description: "Insights, tips and science on adaptogens and functional mushrooms by BIEN: stress, sleep, focus, energy and natural beauty." }
-    : { title: "Le Journal BIEN — adaptogènes & bien-être", description: "Décryptages, conseils et science des adaptogènes et champignons fonctionnels par BIEN : stress, sommeil, concentration, énergie et beauté au naturel." };
+  return pageMetadata({
+    lang,
+    path: "blog",
+    title: lang === "en" ? "The BIEN Journal — adaptogens & wellbeing" : "Le Journal BIEN — adaptogènes & bien-être",
+    description: lang === "en" ? "Insights, tips and science on adaptogens and functional mushrooms by BIEN: stress, sleep, focus, energy and natural beauty." : "Décryptages, conseils et science des adaptogènes et champignons fonctionnels par BIEN : stress, sommeil, concentration, énergie et beauté au naturel.",
+  });
 }
 
 export default async function BlogPage({ params }: { params: Promise<{ lang: string }> }) {
@@ -36,7 +40,7 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
         <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-gold/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[oklch(0.55_0.13_75)]">
           <Sparkles className="h-3.5 w-3.5" /> {hero.eyebrow}
         </span>
-        <h1 className="mt-5 font-hero text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95] text-black">
+        <h1 className="mt-5 font-hero text-[clamp(2.2rem,5.28vw,3.96rem)] leading-[0.95] text-black">
           {en ? "The " : "Le "}<span className="text-bien-leaf">{en ? "BIEN Journal" : "Journal BIEN"}</span>
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">

@@ -5,12 +5,16 @@ import type { Metadata } from "next";
 import { ArrowLeft, ShieldCheck, ExternalLink, FileText, BadgeCheck, MapPin } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Certifications & official declarations — BIEN", description: "All BIEN HEALTH supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." }
-    : { title: "Certifications & déclarations officielles — BIEN", description: "Tous les compléments BIEN HEALTH sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et enregistrés sur COMPL'ALIM. Numéros de déclaration vérifiables et attestations téléchargeables." };
+  return pageMetadata({
+    lang,
+    path: "certifications",
+    title: lang === "en" ? "Certifications & official declarations — BIEN" : "Certifications & déclarations officielles — BIEN",
+    description: lang === "en" ? "All BIEN HEALTH supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." : "Tous les compléments BIEN HEALTH sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et enregistrés sur COMPL'ALIM. Numéros de déclaration vérifiables et attestations téléchargeables.",
+  });
 }
 
 type Attestation = {
@@ -122,7 +126,7 @@ export default async function CertificationsPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-hero text-[clamp(2rem,5vw,3.5rem)] leading-[1] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(1.76rem,4.4vw,3.08rem)] leading-[1] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/75 leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{ __html: t.intro }} />

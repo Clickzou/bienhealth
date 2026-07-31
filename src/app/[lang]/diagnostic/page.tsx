@@ -5,6 +5,7 @@ import { ShieldCheck } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import DiagnosticQuiz from "@/components/diagnostic-quiz";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({
   params,
@@ -12,17 +13,12 @@ export async function generateMetadata({
   params: Promise<{ lang: string }>;
 }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? {
-        title: "BIEN Diagnostic — find your formula in 1 minute",
-        description:
-          "Answer a few questions about your needs (sleep, focus, energy, skin) and discover the BIEN formula made for you. Free quiz, under a minute.",
-      }
-    : {
-        title: "Diagnostic BIEN — trouve ta formule en 1 minute",
-        description:
-          "Réponds à quelques questions sur tes besoins (sommeil, concentration, énergie, peau) et découvre la formule BIEN faite pour toi. Diagnostic gratuit, moins d'une minute.",
-      };
+  return pageMetadata({
+    lang,
+    path: "diagnostic",
+    title: lang === "en" ? "BIEN Diagnostic — find your formula in 1 minute" : "Diagnostic BIEN — trouvez votre formule en 1 minute",
+    description: lang === "en" ? "Answer a few questions about your needs (sleep, focus, energy, skin) and discover the BIEN formula made for you. Free quiz, under a minute." : "Répondez à quelques questions sur vos besoins (sommeil, concentration, énergie, peau) et découvrez la formule BIEN faite pour vous. Diagnostic gratuit, moins d'une minute.",
+  });
 }
 
 export default async function DiagnosticPage({

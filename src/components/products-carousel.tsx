@@ -63,17 +63,23 @@ export default function ProductsCarousel({
         ref={trackRef}
         className="flex gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {products.map((p) => {
+        {products.map((p, i) => {
           const href = p.handle ? `/${lang}/products/${p.handle}` : "#";
+          // « Best-seller » réservé aux deux premiers : le porter sur toute la
+          // gamme vidait le label de son sens. Les produits indisponibles
+          // gardent leur propre pastille.
+          const showBadge = !p.available || i < 2;
           return (
             <article
               key={p.name}
               className="snap-start shrink-0 w-[72%] sm:w-[45%] lg:w-[calc((100%-4.5rem)/4)] group bg-card rounded-3xl ring-1 ring-border hover:ring-bien-leaf/40 hover:-translate-y-1 transition-all bien-shadow-sm overflow-hidden flex flex-col"
             >
               <a href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
-                <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-bien-gold text-black px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
-                  {p.available ? "Best-seller" : "Bientôt de retour"}
-                </span>
+                {showBadge && (
+                  <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-bien-gold text-black px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
+                    {p.available ? "Best-seller" : "Bientôt de retour"}
+                  </span>
+                )}
                 <Image src={p.img} alt={`Complément ${p.name}`} fill loading="lazy" sizes="(max-width:1024px) 72vw, 22vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
               </a>
               <div className="p-4 sm:p-5 flex flex-col flex-1">

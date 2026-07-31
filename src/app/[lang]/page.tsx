@@ -9,6 +9,8 @@ import HeroCarousel from "@/components/hero-carousel";
 import RevealController from "@/components/reveal-controller";
 import Typewriter from "@/components/typewriter";
 import TrustpilotWidget, { TRUSTPILOT_URL } from "@/components/trustpilot";
+import StarRating from "@/components/star-rating";
+import { TRUSTPILOT_RATING, TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
 import ProductsCarousel from "@/components/products-carousel";
 import SiteHeader from "@/components/site-header";
 import {
@@ -60,8 +62,10 @@ const CONTENT = {
       badge: "Adaptogènes et champignons fonctionnels, dosés selon la science. Formulés et fabriqués en France pour soutenir votre quotidien.",
       title1: "Le bien-être,",
       title2: "naturellement.",
-      p1: "BIEN HEALTH est une marque française de compléments alimentaires naturels dont la mission est d'accompagner les athlètes de la vie à mieux vivre les défis du quotidien : stress, sommeil, brouillard mental, troubles de la mémoire, manque d'énergie.",
-      p2: "Née du parcours d'une ancienne sportive de haut niveau, qui a utilisé les plantes adaptogènes et champignons médicinaux (ashwagandha, safran…) pour optimiser sa préparation physique et mentale — avant de créer une marque plus efficace, naturelle et accessible au quotidien.",
+      // Accroche courte et orientée bénéfice : le récit de marque est développé
+      // plus bas dans la section « Notre mission » (ne pas dupliquer le texte).
+      p1: "Stress qui s'installe, nuits trop courtes, brouillard mental, énergie en dents de scie : nos formules courtes répondent à un besoin précis, sans promesse miracle.",
+      p2: "Adaptogènes et champignons fonctionnels dosés selon la science, formulés et fabriqués en France — pensés pour tenir dans un café, un smoothie ou une poignée de secondes le matin.",
       cta: "Découvrir nos produits",
       g1: "Satisfait ou remboursé 30 jours",
       g2: "Marque française",
@@ -82,25 +86,22 @@ const CONTENT = {
       featured: "Ils parlent de nous",
       clickHint: "Cliquez sur un média pour lire l'article ↗",
       readArticle: (n: string) => `Lire l'article — ${n}`,
-      compliance: "Conformité & transparence",
+      compliance: "Voir nos attestations officielles",
     },
     benefits: {
       eyebrow: "Soutenez votre bien-être",
       title: "Une réponse pour chaque besoin.",
       sub: "Des actifs dosés selon la science, pour cibler ce qui compte vraiment.",
-      diagEyebrow: "Diagnostic",
-      diagText: "En 30 secondes, découvrez le produit BIEN qui répond vraiment à votre problématique.",
-      diagCta: "Faire le test",
     },
     rituals: [
       { title: "Sérénité & Sommeil", desc: "Apaiser le mental, retrouver un sommeil profond." },
-      { title: "Concentration & Clarté mentale", desc: "Soutenir la mémoire et la focus quotidienne." },
+      { title: "Concentration & Clarté mentale", desc: "Soutenir la mémoire et le focus quotidien." },
       { title: "Énergie & Performance", desc: "Endurance physique et tonus durable." },
       { title: "Beauté & équilibre", desc: "Peau, cheveux, équilibre hormonal naturel." },
     ],
     reviews: {
       basedOnPre: "Basé sur ",
-      basedOnStrong: "+100 avis Trustpilot",
+      basedOnStrong: `+${TRUSTPILOT_REVIEWS} avis Trustpilot`,
       verified: "Vérifié",
       seeAll: "Voir tous nos avis sur Trustpilot",
       items: [
@@ -158,8 +159,8 @@ const CONTENT = {
       badge: "Adaptogens and functional mushrooms, dosed according to science. Formulated and made in France to support your everyday life.",
       title1: "Wellness,",
       title2: "naturally.",
-      p1: "BIEN HEALTH is a French brand of natural food supplements on a mission to help life's athletes better handle everyday challenges: stress, sleep, mental fog, memory issues and low energy.",
-      p2: "Born from the journey of a former elite athlete who used adaptogenic plants and medicinal mushrooms (ashwagandha, saffron…) to optimise her physical and mental preparation — before creating a brand that's more effective, natural and accessible every day.",
+      p1: "Creeping stress, short nights, mental fog, energy swings: our short formulas answer one precise need — no miracle promises.",
+      p2: "Adaptogens and functional mushrooms dosed according to science, formulated and made in France — designed to fit into a coffee, a smoothie or a few seconds of your morning.",
       cta: "Discover our products",
       g1: "30-day money-back guarantee",
       g2: "French brand",
@@ -180,15 +181,12 @@ const CONTENT = {
       featured: "As featured in",
       clickHint: "Click a media outlet to read the article ↗",
       readArticle: (n: string) => `Read the article — ${n}`,
-      compliance: "Compliance & transparency",
+      compliance: "See our official certifications",
     },
     benefits: {
       eyebrow: "Support your wellbeing",
       title: "A solution for every need.",
       sub: "Active ingredients dosed according to science, to target what really matters.",
-      diagEyebrow: "Quiz",
-      diagText: "In 30 seconds, find the BIEN product that truly answers your need.",
-      diagCta: "Take the test",
     },
     rituals: [
       { title: "Calm & Sleep", desc: "Soothe the mind, restore deep sleep." },
@@ -198,7 +196,7 @@ const CONTENT = {
     ],
     reviews: {
       basedOnPre: "Based on ",
-      basedOnStrong: "+100 Trustpilot reviews",
+      basedOnStrong: `+${TRUSTPILOT_REVIEWS} Trustpilot reviews`,
       verified: "Verified",
       seeAll: "See all our reviews on Trustpilot",
       items: [
@@ -253,23 +251,6 @@ const CONTENT = {
   },
 } as const;
 
-/** Affiche une note sur 5 avec demi-étoiles (ex. 4,4 → ~4,5 étoiles). */
-function StarRating({ value, className = "h-5 w-5" }: { value: number; className?: string }) {
-  const pct = Math.max(0, Math.min(100, (value / 5) * 100));
-  return (
-    <span className="relative inline-flex align-middle" aria-label={`${value} / 5`}>
-      <span className="flex text-bien-star/25">
-        {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-current`} />)}
-      </span>
-      <span className="absolute inset-0 overflow-hidden" style={{ width: `${pct}%` }}>
-        <span className="inline-flex text-bien-star">
-          {[0, 1, 2, 3, 4].map((i) => <Star key={i} className={`${className} fill-current shrink-0`} />)}
-        </span>
-      </span>
-    </span>
-  );
-}
-
 function Bubble({ item, side, note, anim, delay = 0, lang }: {
   item: { title: string; desc: string; icon: ComponentType<{ className?: string }>; tint: string };
   side: "left" | "right";
@@ -284,7 +265,7 @@ function Bubble({ item, side, note, anim, delay = 0, lang }: {
       style={{ transitionDelay: `${delay}ms` }}
       className={`group relative z-10 w-full max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"}`}
     >
-      <a href={`/${lang}/collections/accessories`} className="block bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      <a href={`/${lang}/boutique`} className="block bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
@@ -331,42 +312,53 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section className="px-4 sm:px-6 lg:px-[100px] pt-6 sm:pt-10">
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.75rem] overflow-hidden bien-shadow">
           <div className="grid lg:grid-cols-[calc(50%_+_100px)_1fr] items-stretch">
-            <div className="anim-up text-bien-cream p-6 sm:p-10 lg:p-16 flex flex-col justify-center">
-              <div className="inline-flex items-start gap-2 rounded-2xl bg-bien-cream/10 backdrop-blur px-4 py-2.5 text-xs sm:text-sm text-bien-cream/90 ring-1 ring-bien-cream/20 max-w-md">
+            {/* Hero compact : produit, promesse et CTA visibles sans défiler
+                (le bloc faisait 920px de haut, le CTA passait sous la ligne
+                de flottaison sur un portable). */}
+            <div className="anim-up text-bien-cream p-6 sm:p-9 lg:p-12 flex flex-col justify-center">
+              <div className="inline-flex items-start gap-2 rounded-2xl bg-bien-cream/10 backdrop-blur px-4 py-2 text-xs sm:text-sm text-bien-cream/90 ring-1 ring-bien-cream/20 max-w-md">
                 <Leaf className="h-4 w-4 shrink-0 mt-0.5 text-bien-gold" />
                 <span className="leading-snug">{c.hero.badge}</span>
               </div>
-              <h1 className="mt-5 font-display font-medium leading-[0.95] text-[clamp(2.5rem,7vw,5.25rem)]">
+              <h1 className="mt-4 font-display font-medium leading-[0.95] text-[clamp(2.2rem,5.2vw,3.9rem)]">
                 {c.hero.title1}<br /><span className="text-bien-gold">{c.hero.title2}</span>
               </h1>
-              <p className="mt-5 text-base sm:text-lg text-bien-cream/90 max-w-xl leading-relaxed">
+              <p className="mt-4 text-base sm:text-lg text-bien-cream/90 max-w-xl leading-relaxed">
                 {c.hero.p1}
               </p>
-              <p className="mt-3 text-sm sm:text-base text-bien-cream/70 max-w-xl leading-relaxed">
+              {/* Second paragraphe réservé au grand écran : sur mobile il
+                  repousserait le CTA hors de l'écran. */}
+              <p className="mt-3 hidden lg:block text-base text-bien-cream/70 max-w-xl leading-relaxed">
                 {c.hero.p2}
               </p>
-              <div className="mt-7 flex flex-col sm:flex-row sm:items-center sm:flex-nowrap gap-x-4 gap-y-3">
-                <a href={`/${lang}/collections/accessories`} className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-7 py-4 text-base font-semibold hover:brightness-95 transition bien-shadow-sm">
+              {/* `flex-wrap` : les garanties passent à la ligne au lieu d'être
+                  rognées par le bord du bloc (« Marque française » était coupé). */}
+              <div className="mt-6 flex flex-wrap items-center gap-x-5 gap-y-3">
+                <a href={`/${lang}/boutique`} className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-7 py-3.5 text-base font-semibold hover:brightness-95 transition bien-shadow-sm">
                   {c.hero.cta} <ArrowRight className="h-4 w-4" />
                 </a>
-                <span className="shrink-0 inline-flex items-center gap-2 text-sm text-bien-cream/85 whitespace-nowrap"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g1}</span>
-                <span className="shrink-0 inline-flex items-center gap-2 text-sm text-bien-cream/85 whitespace-nowrap"><Check className="h-4 w-4 text-bien-gold" /> {c.hero.g2}</span>
+                <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 shrink-0 text-bien-gold" /> {c.hero.g1}</span>
+                <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 shrink-0 text-bien-gold" /> {c.hero.g2}</span>
               </div>
             </div>
-            <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[920px]">
+            {/* Visuels : uniquement des photos où le produit est identifiable
+                (le bol de fruits rouges ne disait rien de la marque). */}
+            <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[680px]">
               <HeroCarousel
                 images={[
-                  { src: "/bien-health-bien-etre.jpg", alt: "Produits BIEN — compléments naturels" },
-                  { src: "/ArcParis-2.jpg", alt: "BIEN — bien-être naturel" },
-                  { src: "/ArcParis-4.jpg", alt: "BIEN — bien-être naturel", pos: "object-bottom" },
+                  { src: "/bien-health-bien-etre.jpg", alt: "Gummies BIEN POWER — énergie et performance" },
+                  { src: "/mushglow.jpg", alt: "MUSHGLOW — supermix champignons, adaptogènes et collagène" },
+                  { src: "/ArcParis-4.jpg", alt: "Gummies BIEN FOCUS — concentration et mémoire", pos: "object-bottom" },
                 ]}
               />
             </div>
           </div>
         </div>
 
-        {/* 4. Reassurance card (overlapping) */}
-        <div className="relative -mt-8 sm:-mt-10 lg:-mt-14 mx-2 sm:mx-6 lg:mx-12 bg-card rounded-3xl bien-shadow p-5 sm:p-7">
+        {/* 4. Carte de réassurance — chevauchement volontaire mais discret
+            (24px) : l'effet de profondeur de la maquette est conservé sans
+            mordre sur la rangée de CTA et de garanties du hero. */}
+        <div className="relative -mt-6 mx-2 sm:mx-6 lg:mx-12 bg-card rounded-3xl ring-1 ring-border bien-shadow p-5 sm:p-7">
           <ul className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
             {c.reassurance.map((label, i) => {
               const Icon = REASSURANCE_ICONS[i];
@@ -381,8 +373,20 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* 5. Press */}
-      <section id="presse" className="reveal px-4 sm:px-6 lg:px-[100px] pt-16 sm:pt-20 scroll-mt-24">
+      {/* 5. Best-sellers — premiers après le hero (demande client). */}
+      <section id="produits" className="reveal px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-14">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <div className="max-w-2xl">
+            <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.best.eyebrow}</p>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1] text-black">{c.best.title}</h2>
+          </div>
+          <Link href={`/${lang}/boutique`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">{c.best.seeAll} <ArrowRight className="h-4 w-4" /></Link>
+        </div>
+        <ProductsCarousel products={products} lang={lang} />
+      </section>
+
+      {/* 6. Press — placée après les best-sellers : les produits arrivent en premier. */}
+      <section id="presse" className="reveal px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 scroll-mt-24">
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-7">
           <div className="inline-flex items-center gap-2">
             <span className="font-semibold text-[15px] text-black tracking-tight">Trustpilot</span>
@@ -410,10 +414,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             title={c.press.seeAllTitle}
             className="group inline-flex items-center gap-3 sm:gap-4 rounded-full bg-card ring-1 ring-border bien-shadow px-5 sm:px-7 py-3 hover:ring-bien-gold/60 hover:-translate-y-0.5 transition-all"
           >
-            <StarRating value={4.4} className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="font-display text-xl sm:text-2xl text-black leading-none">4,4/5</span>
+            <StarRating value={TRUSTPILOT_RATING} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <span className="font-display text-xl sm:text-2xl text-black leading-none">{ratingLabel(lang)}/5</span>
             <span className="h-5 w-px bg-border" />
-            <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">+100</span> {c.press.reviews}</span>
+            <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">+{TRUSTPILOT_REVIEWS}</span> {c.press.reviews}</span>
             <ArrowUpRight className="h-4 w-4 text-bien-leaf opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
           </a>
         </div>
@@ -447,11 +451,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* 6. Bénéfices — bulles reliées à l'image centrale */}
-      <section id="diagnostic" className="reveal bg-bien-cream mt-20 sm:mt-28 px-4 sm:px-6 lg:px-[200px] py-16 lg:py-24">
+      {/* 7. Bénéfices — bulles reliées à l'image centrale */}
+      <section id="diagnostic" className="reveal bg-bien-cream mt-14 sm:mt-20 px-4 sm:px-6 lg:px-[200px] py-12 lg:py-16">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.benefits.eyebrow}</p>
-          <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.benefits.title}</h2>
+          <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1] text-black">{c.benefits.title}</h2>
           <p className="mt-4 text-base sm:text-lg text-black/70">
             {c.benefits.sub}
           </p>
@@ -512,25 +516,19 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </div>
         </div>
 
-        <div className="mt-14 text-center max-w-xl mx-auto">
-          <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.benefits.diagEyebrow}</p>
-          <p className="mt-3 text-lg text-black/80 leading-relaxed">
-            {c.benefits.diagText}
-          </p>
-          <a href={`/${lang}/diagnostic`} className="mt-6 inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold hover:brightness-105 transition bien-shadow-sm">
-            {c.benefits.diagCta} <ArrowRight className="h-4 w-4" />
-          </a>
-        </div>
+        {/* L'appel au diagnostic était répété ici ET dans le grand bloc
+            « Quel est votre besoin ? » plus bas. Un seul endroit suffit :
+            celui qui porte aussi les 4 besoins et la promo. */}
       </section>
 
-      {/* 7. Reviews */}
-      <section id="avis" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
+      {/* 8. Reviews */}
+      <section id="avis" className="reveal px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-6 sm:p-10 lg:p-14">
           <div className="grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-14 items-center">
             <div className="text-center lg:text-left lg:border-r lg:border-bien-forest/10 lg:pr-12 shrink-0">
-              <div className="font-display text-7xl lg:text-8xl text-black leading-none">4,4</div>
+              <div className="font-display text-7xl lg:text-8xl text-black leading-none">{ratingLabel(lang)}</div>
               <div className="mt-3 flex items-center justify-center lg:justify-start">
-                <StarRating value={4.4} className="h-5 w-5" />
+                <StarRating value={TRUSTPILOT_RATING} className="h-5 w-5" />
               </div>
               <p className="mt-3 text-sm text-black/70">{c.reviews.basedOnPre}<span className="font-semibold">{c.reviews.basedOnStrong}</span></p>
               <a
@@ -592,12 +590,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* 8. Ingredients */}
-      <section id="ingredients" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
+      {/* 9. Ingredients */}
+      <section id="ingredients" className="reveal px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20">
         <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16">
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-citrus font-semibold">{c.ingredients.eyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1]">
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1]">
               {c.ingredients.titleA} <br className="hidden sm:block" /><span className="text-bien-citrus">{c.ingredients.titleB}</span>
             </h2>
           </div>
@@ -605,24 +603,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* 9. Best-sellers */}
-      <section id="produits" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.best.eyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.best.title}</h2>
-          </div>
-          <Link href={`/${lang}/collections/accessories`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">{c.best.seeAll} <ArrowRight className="h-4 w-4" /></Link>
-        </div>
-        <ProductsCarousel products={products} lang={lang} />
-      </section>
-
       {/* 10. Diagnostic block */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
+      <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20">
         <div className="bg-bien-gold rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16 text-black">
           <div className="max-w-3xl">
             <p className="text-xs uppercase tracking-[0.2em] font-bold opacity-70">{c.diagBlock.eyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,5vw,4rem)] leading-[1]">{c.diagBlock.title}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,4.4vw,3.52rem)] leading-[1]">{c.diagBlock.title}</h2>
             <p className="mt-4 text-base sm:text-lg opacity-85 max-w-xl">{c.diagBlock.text}</p>
           </div>
           <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -640,14 +626,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 11. Notre mission */}
-      <section id="mission" className="reveal px-4 sm:px-6 lg:px-[100px] mt-20 sm:mt-28">
+      <section id="mission" className="reveal px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[710px] bien-shadow lg:sticky lg:top-28">
             <Image src="/athletes-bien-health.jpg" alt="BIEN — compléments naturels fabriqués en France" fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.mission.eyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-[clamp(2rem,4.5vw,3.5rem)] leading-[1] text-black">{c.mission.title}</h2>
+            <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1] text-black">{c.mission.title}</h2>
             <p className="mt-5 text-base sm:text-lg text-black/75 leading-relaxed">
               {c.mission.p1}
             </p>
@@ -688,10 +674,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
 
         {/* FAQ — réassurance & conformité */}
-        <div className="mt-16 sm:mt-24 max-w-3xl mx-auto">
+        <div className="mt-12 sm:mt-16 max-w-3xl mx-auto">
           <div className="text-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.faq.eyebrow}</p>
-            <h3 className="mt-3 font-display tracking-tighter text-[clamp(1.75rem,4vw,2.75rem)] leading-[1.05] text-black">{c.faq.title}</h3>
+            <h3 className="mt-3 font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.42rem)] leading-[1.05] text-black">{c.faq.title}</h3>
             <p className="mt-3 text-black/70">{c.faq.sub}</p>
           </div>
           <div className="mt-8 space-y-3">
@@ -731,7 +717,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       {/* Footer : désormais global (rendu par le layout). */}
 
       {/* 13. Mobile sticky CTA */}
-      <a href={`/${lang}/collections/accessories`} className="sm:hidden fixed bottom-4 inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
+      <a href={`/${lang}/boutique`} className="sm:hidden fixed bottom-4 inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
         <ShoppingBag className="h-4 w-4" /> {c.mobileCta}
       </a>
     </div>

@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Returns & refunds · BIEN", description: "14-day right of withdrawal, return procedure and refunds for BIEN orders." }
-    : { title: "Retours & remboursements · BIEN", description: "Droit de rétractation de 14 jours, procédure de retour et remboursement des commandes BIEN." };
+  return pageMetadata({
+    lang,
+    path: "retours",
+    title: lang === "en" ? "Returns & refunds · BIEN" : "Retours & remboursements · BIEN",
+    description: lang === "en" ? "14-day right of withdrawal, return procedure and refunds for BIEN orders." : "Droit de rétractation de 14 jours, procédure de retour et remboursement des commandes BIEN.",
+  });
 }
 
 export default async function RetoursPage({

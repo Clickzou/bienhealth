@@ -27,7 +27,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
     { label: t.gummies, href: l("/collections/gummies") },
     { label: t.powders, href: l("/collections/nos-poudres") },
     { label: t.accessories, href: l("/collections/nos-accessoires") },
-    { label: t.allProducts, href: l("/collections/accessories") },
+    { label: t.allProducts, href: l("/boutique") },
   ];
   const BY_NEED = [
     { label: t.needPerformance, href: l("/collections/performance-et-vitalite") },
@@ -71,7 +71,7 @@ export default function MobileMenu({ lang }: { lang: string }) {
             </div>
 
             <nav className="flex-1 overflow-y-auto px-5 py-4" onClick={(e) => { if ((e.target as HTMLElement).closest("a")) setOpen(false); }}>
-              <a href={l("/collections/accessories")} className="flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-5 py-3 font-bold">
+              <a href={l("/boutique")} className="flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-5 py-3 font-bold">
                 <ShoppingBag className="h-4 w-4" /> {t.shop}
               </a>
 

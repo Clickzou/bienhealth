@@ -7,6 +7,7 @@ import { ShoppingBag, Plus, Minus, Trash2, ArrowRight, ArrowLeft } from "lucide-
 import {
   getCart, setQty, removeItem, cartTotal, checkoutUrl, CART_EVENT, type CartItem,
 } from "@/lib/cart";
+import { trackMeta } from "@/lib/meta-pixel";
 
 const T = {
   fr: {
@@ -52,9 +53,9 @@ export default function CartView({ lang }: { lang: string }) {
     return (
       <div className="text-center py-8">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-cream text-black"><ShoppingBag className="h-7 w-7" /></span>
-        <h1 className="mt-5 font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.cart}</h1>
+        <h1 className="mt-5 font-hero text-[clamp(1.76rem,4.4vw,2.64rem)] leading-[1] text-black">{t.cart}</h1>
         <p className="mt-3 text-black/70">{t.empty}</p>
-        <Link href={`/${lang}/collections/accessories`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold hover:brightness-105 transition bien-shadow-sm">
+        <Link href={`/${lang}/boutique`} className="mt-7 inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold hover:brightness-105 transition bien-shadow-sm">
           {t.discover} <ArrowRight className="h-4 w-4" />
         </Link>
       </div>
@@ -65,7 +66,7 @@ export default function CartView({ lang }: { lang: string }) {
 
   return (
     <div>
-      <h1 className="font-hero text-[clamp(2rem,5vw,3rem)] leading-[1] text-black">{t.yourCart}</h1>
+      <h1 className="font-hero text-[clamp(1.76rem,4.4vw,2.64rem)] leading-[1] text-black">{t.yourCart}</h1>
 
       <div className="mt-8 grid lg:grid-cols-[1fr_360px] gap-8 lg:gap-12 items-start">
         {/* Lignes */}
@@ -107,11 +108,25 @@ export default function CartView({ lang }: { lang: string }) {
             <span className="font-display text-black">{t.total}</span>
             <span className="font-display text-xl text-black">{fmt(total, currency)}</span>
           </div>
-          <a href={checkoutUrl(items)} className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm">
+          <a
+            href={checkoutUrl(items)}
+            onClick={() =>
+              // Départ vers le checkout Shopify : dernière conversion mesurable
+              // côté site (le tunnel Shopify a son propre pixel).
+              trackMeta("InitiateCheckout", {
+                content_ids: items.map((i) => i.handle),
+                content_type: "product",
+                num_items: items.reduce((n, i) => n + i.qty, 0),
+                value: total,
+                currency: currency || "EUR",
+              })
+            }
+            className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm"
+          >
             {t.checkout} <ArrowRight className="h-4 w-4" />
           </a>
           <p className="mt-2 text-xs text-black/50 text-center">{t.secure}</p>
-          <Link href={`/${lang}/collections/accessories`} className="mt-3 w-full inline-flex items-center justify-center gap-2 text-sm font-semibold text-bien-leaf hover:underline">
+          <Link href={`/${lang}/boutique`} className="mt-3 w-full inline-flex items-center justify-center gap-2 text-sm font-semibold text-bien-leaf hover:underline">
             <ArrowLeft className="h-4 w-4" /> {t.continue}
           </Link>
         </aside>

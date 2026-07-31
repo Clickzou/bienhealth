@@ -7,7 +7,7 @@ import ReviewsList, { type Review } from "./reviews-list";
  * (popup) + liste paginée. Avis spécifiques par produit ; masquée si aucun avis.
  */
 
-const REVIEWS: Record<string, Review[]> = {
+export const REVIEWS: Record<string, Review[]> = {
   MUSHGLOW: [
     { name: "Marie-elise M.", date: "11/12/2025", verified: true, photo: "https://images.loox.io/uploads/2025/12/11/wgf-wkwUS.jpg", text: "Première fois que je teste ce genre de produit et je dois dire que la promesse est tenue :\n- j'ai plus d'énergie\n- ma peau semble plus lisse\n- je me concentre plus facilement sur la durée\n- j'ai eu des journées bien productives !\n- mon stress semble être moins présent 🤩", textEn: "First time I try this kind of product and I have to say the promise is kept:\n- I have more energy\n- my skin looks smoother\n- I concentrate more easily over time\n- I've had really productive days!\n- my stress seems less present 🤩" },
     { name: "Rabenja T.", date: "25/09/2025", verified: true, text: "Mélanger avec un déca le matin, et sur la journée, ça aide vraiment à dissiper le brouillard mental, et à récupérer physiquement 💫", textEn: "Mixed with a decaf in the morning, and throughout the day, it really helps clear the mental fog and recover physically 💫" },
@@ -110,9 +110,11 @@ export default function ProductReviews({
   const reviews = productKey ? REVIEWS[productKey] ?? [] : [];
   if (reviews.length === 0) return null;
   const en = lang === "en";
+  // Le titre précise « ce produit » : cette note (Loox) porte sur le produit
+  // affiché, à la différence de la note boutique Trustpilot du header.
   const t = en
-    ? { title: "What our customers say", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: "" }
-    : { title: "Ce que disent nos clients", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " clients" };
+    ? { title: "Reviews of this product", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: " for this product" }
+    : { title: "Les avis sur ce produit", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " sur ce produit" };
 
   return (
     <section className="mt-16 sm:mt-24 border-t border-border pt-12 sm:pt-16">

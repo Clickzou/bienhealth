@@ -1,20 +1,22 @@
 import { Truck, ShieldCheck, Star, HeartPulse, Leaf, RefreshCw } from "lucide-react";
+import { HAPPY_CLIENTS } from "@/lib/social-proof";
+import { freeShippingAmount } from "@/lib/shipping";
 
 /** Bande de réassurance (bas de page) — reprise de la boutique live. */
 const ICONS = [Truck, ShieldCheck, Star, RefreshCw, Leaf, HeartPulse];
 const ITEMS_BY_LANG = {
   fr: [
-    { title: "Livraison offerte", sub: "dès 49 € d'achat" },
+    { title: "Livraison offerte", sub: `dès ${freeShippingAmount("fr")} d'achat` },
     { title: "Paiement sécurisé", sub: "Visa, Mastercard" },
-    { title: "+1000 clients", sub: "satisfaits" },
+    { title: `+${HAPPY_CLIENTS} clients`, sub: "satisfaits" },
     { title: "Satisfait ou remboursé", sub: "sous 30 jours" },
     { title: "Naturel & vegan", sub: "fabriqué en France" },
     { title: "Dosé selon la science", sub: "actifs cliniquement dosés" },
   ],
   en: [
-    { title: "Free shipping", sub: "on orders over €49" },
+    { title: "Free shipping", sub: `on orders over ${freeShippingAmount("en")}` },
     { title: "Secure payment", sub: "Visa, Mastercard" },
-    { title: "+1000 customers", sub: "satisfied" },
+    { title: `+${HAPPY_CLIENTS} customers`, sub: "satisfied" },
     { title: "Money-back guarantee", sub: "within 30 days" },
     { title: "Natural & vegan", sub: "made in France" },
     { title: "Science-based dosing", sub: "clinically dosed actives" },

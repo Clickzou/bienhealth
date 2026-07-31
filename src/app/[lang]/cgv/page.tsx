@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Terms and conditions of sale · BIEN", description: "Terms of use and sale of Bien Health SAS (bien.health)." }
-    : { title: "Conditions générales de vente · BIEN", description: "Conditions d'utilisation et de vente de Bien Health SAS (bien.health)." };
+  return pageMetadata({
+    lang,
+    path: "cgv",
+    title: lang === "en" ? "Terms and conditions of sale · BIEN" : "Conditions générales de vente · BIEN",
+    description: lang === "en" ? "Terms of use and sale of Bien Health SAS (bien.health)." : "Conditions d'utilisation et de vente de Bien Health SAS (bien.health).",
+  });
 }
 
 export default async function CgvPage({

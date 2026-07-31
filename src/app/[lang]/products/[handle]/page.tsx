@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import {
-  Star, Truck, ShieldCheck, MapPin, ArrowLeft, Leaf,
+  Truck, ShieldCheck, MapPin, ArrowLeft, Leaf,
   Zap, HeartPulse, RefreshCw, ChevronDown, Plus,
 } from "lucide-react";
 import { hasLocale } from "../../dictionaries";
@@ -11,14 +11,18 @@ import { getProduct, getProducts, formatPrice } from "@/lib/shopify-products";
 import SiteHeader from "@/components/site-header";
 import ProductGallery from "@/components/product-gallery";
 import ProductVideo from "@/components/product-video";
-import ProductReviews from "@/components/product-reviews";
+import ProductReviews, { REVIEWS } from "@/components/product-reviews";
 import ProductStickyBar from "@/components/product-sticky-bar";
 import ReviewsSwitch from "@/components/reviews-switch";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 import AddToCart from "@/components/add-to-cart";
 import JsonLd from "@/components/json-ld";
-import { SITE_URL } from "@/lib/seo";
+import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
+import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
+import { TRUSTPILOT_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
+import StarRating from "@/components/star-rating";
+import MetaViewContent from "@/components/meta-view-content";
 
 export async function generateMetadata({
   params,
@@ -28,10 +32,17 @@ export async function generateMetadata({
   const { lang, handle } = await params;
   const product = await getProduct(handle);
   if (!product) return { title: lang === "en" ? "Product not found — BIEN" : "Produit introuvable — BIEN" };
-  return {
+  const key = keyFor(product.title);
+  const seo = key ? localizeProductSeo(PRODUCT_SEO[key], lang) : null;
+  return pageMetadata({
+    lang,
+    path: `products/${handle}`,
     title: `${product.title} — BIEN`,
-    description: product.description.slice(0, 160),
-  };
+    // Description propre au produit, coupée sur une frontière de mot.
+    description: metaDescription(seo?.paragraphs[0] || product.description || seo?.heading || product.title),
+    image: product.featuredImage?.url ?? product.images[0]?.url ?? null,
+    imageAlt: product.title,
+  });
 }
 
 /** Presse (magazines) affichée dans la colonne d'achat. */
@@ -161,7 +172,7 @@ const VIDEOS: Record<string, { url: string; at: number }[]> = {
   ],
 };
 
-const LIVRAISON = `Livraison offerte en point relais dès 69 € d'achat, expédiée le jour même (pour toute commande passée avant 13h).
+const LIVRAISON = `${freeShippingSentence("fr")}
 
 France 🇫🇷
 • Point Relais (3 à 5 jours ouvrés) — 4 €
@@ -171,7 +182,7 @@ France 🇫🇷
 Europe 🌍
 Les options et tarifs de livraison sont affichés à l'étape de validation de commande.`;
 
-const LIVRAISON_EN = `Free Point Relais delivery on orders over €69, shipped the same day (for orders placed before 1 pm).
+const LIVRAISON_EN = `${freeShippingSentence("en")}
 
 France 🇫🇷
 • Point Relais pick-up (3 to 5 business days) — €4
@@ -186,7 +197,7 @@ type Accordion = { q: string; a: string };
 const MUSHGLOW_ACCORDIONS: Accordion[] = [
   {
     q: "Ingrédients, Bienfaits et Posologie",
-    a: `☕ Le meilleur allié de ton café — un supermix de champignons, adaptogènes et collagène pour booster focus, énergie et glow, en une cuillère par jour.
+    a: `☕ Le meilleur allié de votre café — un supermix de champignons, adaptogènes et collagène pour booster focus, énergie et glow, en une cuillère par jour.
 
 🌿 Formule clean & puissante — Lion's Mane, Cordyceps, Chaga, Maca, L-Théanine, collagène de membrane d'œuf. Des actifs cliniquement dosés, 100 % naturels.
 
@@ -654,11 +665,19 @@ function keyFor(title: string): string | null {
   return Object.keys(ACTIVES).find((k) => title.toUpperCase().includes(k)) ?? null;
 }
 
+/** « 11/12/2025 » → « 2025-12-11 » pour le JSON-LD (null si format inattendu). */
+function isoDate(date?: string): string | null {
+  const m = date?.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  return m ? `${m[3]}-${m[2]}-${m[1]}` : null;
+}
+
 const UI = {
   fr: {
     allProducts: "Tous les produits",
     happyClients: (n: number) => `+${n} clients satisfaits`,
     taxIncluded: "Taxes incluses.",
+    cureLabelGummies: "Cure d'1 mois — 60 gummies",
+    cureLabelPowder: "Cure d'1 mois — 30 portions",
     preorderNote: "Pré-commande — expédiée dès réception du stock",
     lowStock: (n: number) => `Bientôt épuisé — plus que ${n} en stock`,
     pressEyebrow: "La presse en parle",
@@ -667,7 +686,7 @@ const UI = {
     preorderCta: "Précommander",
     backSoon: "Bientôt de retour",
     guarantee: "Satisfait ou remboursé 30 jours · Panier & paiement Shopify.",
-    reassurance: ["Livraison offerte dès 49 €", "Paiement sécurisé", "Fabriqué en France"],
+    reassurance: [`Livraison offerte dès ${freeShippingAmount("fr")}`, "Paiement sécurisé", "Fabriqué en France"],
     videoTitle: "Vu en vidéo",
     routineTitle: "Complétez votre routine",
     add: (t: string) => `Ajouter ${t}`,
@@ -679,6 +698,8 @@ const UI = {
     allProducts: "All products",
     happyClients: (n: number) => `+${n} happy customers`,
     taxIncluded: "Taxes included.",
+    cureLabelGummies: "1-month course — 60 gummies",
+    cureLabelPowder: "1-month course — 30 servings",
     preorderNote: "Pre-order — ships as soon as stock arrives",
     lowStock: (n: number) => `Almost sold out — only ${n} left in stock`,
     pressEyebrow: "As seen in the press",
@@ -687,7 +708,7 @@ const UI = {
     preorderCta: "Pre-order",
     backSoon: "Back soon",
     guarantee: "30-day money-back guarantee · Shopify cart & checkout.",
-    reassurance: ["Free shipping over €49", "Secure payment", "Made in France"],
+    reassurance: [`Free shipping over ${freeShippingAmount("en")}`, "Secure payment", "Made in France"],
     videoTitle: "Seen on video",
     routineTitle: "Complete your routine",
     add: (t: string) => `Add ${t}`,
@@ -737,6 +758,17 @@ export default async function ProductPage({
   const productSeo = key ? localizeProductSeo(PRODUCT_SEO[key], lang) : null;
 
   // Données structurées produit (SEO / rich results).
+  // Les avis repris ici sont ceux affichés sur la page (règle Google : pas de
+  // balisage d'avis invisibles).
+  const productReviews = key ? REVIEWS[key] ?? [] : [];
+  const reviewLd = productReviews.slice(0, 10).map((r) => ({
+    "@type": "Review",
+    author: { "@type": "Person", name: r.name },
+    ...(isoDate(r.date) ? { datePublished: isoDate(r.date) } : {}),
+    reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+    reviewBody: (en && r.textEn ? r.textEn : r.text).replace(/\s+/g, " ").trim(),
+  }));
+
   const availability = !product.available ? "OutOfStock" : preorder ? "PreOrder" : "InStock";
   const productLd: Record<string, unknown> = {
     "@context": "https://schema.org",
@@ -754,8 +786,20 @@ export default async function ProductPage({
       url: `${SITE_URL}/${lang}/products/${handle}`,
     },
     ...(info.reviews
-      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: "5", reviewCount: String(info.reviews) } }
+      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: "5", bestRating: "5", reviewCount: String(info.reviews) } }
       : {}),
+    ...(reviewLd.length ? { review: reviewLd } : {}),
+  };
+
+  // Fil d'Ariane (rich result « breadcrumb » dans les SERP).
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "BIEN", item: `${SITE_URL}/${lang}` },
+      { "@type": "ListItem", position: 2, name: en ? "Shop" : "Boutique", item: `${SITE_URL}/${lang}/boutique` },
+      { "@type": "ListItem", position: 3, name: product.title, item: `${SITE_URL}/${lang}/products/${handle}` },
+    ],
   };
 
   const EXCLUDE = new Set(["mousseur-a-lait", "bien-totebag"]);
@@ -776,6 +820,8 @@ export default async function ProductPage({
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
       <JsonLd data={productLd} />
+      <JsonLd data={breadcrumbLd} />
+      <MetaViewContent handle={handle} title={product.title} price={Number(product.price.amount)} currency={product.price.currencyCode || "EUR"} />
 
       <main className="px-4 sm:px-6 lg:px-[100px] py-10 lg:py-14">
         <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-6">
@@ -790,11 +836,16 @@ export default async function ProductPage({
 
           {/* Colonne droite — défile */}
           <div>
-            <div className="flex items-center gap-2">
-              <span className="inline-flex text-bien-star">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-4 w-4 fill-bien-star" />)}</span>
-              <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{ui.happyClients(info.reviews)}</Link>
+            {/* Preuve sociale : la note affichée est celle de la boutique
+                (Trustpilot, identique au header) et le compteur parle de
+                clients, pas d'avis — les avis de CE produit sont plus bas. */}
+            <div className="flex items-center gap-2 flex-wrap">
+              <StarRating value={TRUSTPILOT_RATING} className="h-4 w-4" />
+              <span className="text-sm font-semibold text-black">{ratingLabel(lang)}/5</span>
+              <span className="text-black/30">·</span>
+              <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{happyClientsLabel(lang)}</Link>
             </div>
-            <h1 className="mt-3 font-hero text-[clamp(2rem,4vw,3rem)] leading-[1] text-black">{product.title}</h1>
+            <h1 className="mt-3 font-hero text-[clamp(1.76rem,3.52vw,2.64rem)] leading-[1] text-black">{product.title}</h1>
 
             <div className="mt-4 flex items-baseline gap-3">
               <span className="font-display text-2xl text-black">{formatPrice(product.price)}</span>
@@ -803,7 +854,12 @@ export default async function ProductPage({
                   <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
                 )}
             </div>
-            <p className="mt-1 text-xs text-black/50">{ui.taxIncluded}</p>
+            <p className="mt-1 text-xs text-black/50">
+              {ui.taxIncluded}
+              {/* Format de la cure : 60 gummies à 2/jour et 30 portions de
+                  poudre couvrent un mois — l'information manquait près du prix. */}
+              {key && <> · <span className="font-semibold text-black/70">{isPowder ? ui.cureLabelPowder : ui.cureLabelGummies}</span></>}
+            </p>
 
             {/* État du stock */}
             {preorder ? (
@@ -816,32 +872,8 @@ export default async function ProductPage({
               </p>
             ) : null}
 
-            {/* Infos clés produit (comme le vrai site) */}
-            <div className="mt-6 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
-              <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
-              <ul className="mt-4 space-y-4">
-                {info.rows.map(({ icon: Icon, text }) => (
-                  <li key={text} className="flex items-center gap-3.5">
-                    <span className="shrink-0 grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/15 text-bien-cream"><Icon className="h-5 w-5" /></span>
-                    <p className="text-sm text-bien-cream/90 leading-relaxed">{text}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* La presse en parle — citation + logos magazines */}
-            <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">{ui.pressEyebrow}</p>
-              <p className="mt-2.5 text-sm text-black/85 leading-snug">
-                {ui.pressQuote}
-              </p>
-              <div className="mt-4 grid grid-cols-4 gap-x-3 items-center">
-                {PRESS.map((p) => (
-                  <span key={p} className="text-center font-display text-lg sm:text-2xl tracking-wide text-black">{p}</span>
-                ))}
-              </div>
-            </div>
-
+            {/* Achat : CTA remonté juste sous le prix — il arrivait
+                après le bloc d'infos et la presse, donc hors écran. */}
             {product.available ? (
               <AddToCart
                 item={cartItem}
@@ -871,6 +903,32 @@ export default async function ProductPage({
               ))}
             </ul>
 
+            {/* Infos clés produit (comme le vrai site) */}
+            <div className="mt-6 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
+              <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
+              <ul className="mt-4 space-y-4">
+                {info.rows.map(({ icon: Icon, text }) => (
+                  <li key={text} className="flex items-center gap-3.5">
+                    <span className="shrink-0 grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/15 text-bien-cream"><Icon className="h-5 w-5" /></span>
+                    <p className="text-sm text-bien-cream/90 leading-relaxed">{text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* La presse en parle — citation + logos magazines */}
+            <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">{ui.pressEyebrow}</p>
+              <p className="mt-2.5 text-sm text-black/85 leading-snug">
+                {ui.pressQuote}
+              </p>
+              <div className="mt-4 grid grid-cols-4 gap-x-3 items-center">
+                {PRESS.map((p) => (
+                  <span key={p} className="text-center font-display text-lg sm:text-2xl tracking-wide text-black">{p}</span>
+                ))}
+              </div>
+            </div>
+
             {/* Vu en vidéo */}
             {videos.length > 0 && (
               <section className="mt-12">
@@ -897,15 +955,16 @@ export default async function ProductPage({
                     const href = `/${lang}/products/${p.handle}`;
                     return (
                       <li key={p.id} className="flex items-center gap-4 rounded-2xl ring-1 ring-border bg-card p-3.5">
-                        <Link href={href} className="relative h-16 w-16 shrink-0 rounded-xl overflow-hidden bg-bien-cream ring-1 ring-border">
+                        <Link href={href} tabIndex={-1} aria-hidden className="relative h-16 w-16 shrink-0 rounded-xl overflow-hidden bg-bien-cream ring-1 ring-border">
                           <Image src={p.featuredImage?.url ?? "/brand/product-mushglow.jpg"} alt={p.title} fill sizes="64px" className="object-cover" />
                         </Link>
                         <div className="min-w-0 flex-1">
                           <Link href={href}><h3 className="font-display text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
                           <p className="mt-0.5 font-semibold text-black">{formatPrice(p.price)}</p>
                         </div>
-                        <Link href={href} aria-label={ui.add(p.title)} className="shrink-0 grid place-items-center h-10 w-10 rounded-full bg-bien-forest text-bien-cream hover:bg-bien-leaf transition-colors">
+                        <Link href={href} className="shrink-0 grid place-items-center h-10 w-10 rounded-full bg-bien-forest text-bien-cream hover:bg-bien-leaf transition-colors">
                           <Plus className="h-5 w-5" />
+                          <span className="sr-only">{ui.add(p.title)}</span>
                         </Link>
                       </li>
                     );

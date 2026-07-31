@@ -6,12 +6,16 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ResellerMap from "@/components/reseller-map-loader";
 import type { Reseller } from "@/components/reseller-map";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Our resellers — Where to find BIEN", description: "Find BIEN supplements at our partner stores in France, Switzerland and Portugal. Become a BIEN reseller." }
-    : { title: "Nos revendeurs — Où trouver BIEN", description: "Retrouvez les compléments BIEN dans nos points de vente partenaires en France, en Suisse et au Portugal. Devenez revendeur BIEN." };
+  return pageMetadata({
+    lang,
+    path: "revendeurs",
+    title: lang === "en" ? "Our resellers — Where to find BIEN" : "Nos revendeurs — Où trouver BIEN",
+    description: lang === "en" ? "Find BIEN supplements at our partner stores in France, Switzerland and Portugal. Become a BIEN reseller." : "Retrouvez les compléments BIEN dans nos points de vente partenaires en France, en Suisse et au Portugal. Devenez revendeur BIEN.",
+  });
 }
 
 const T = {
@@ -64,7 +68,7 @@ export default async function RevendeursPage({
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Store className="h-4 w-4" /> {t.eyebrow}
         </p>
-        <h1 className="mt-3 font-hero text-[clamp(2.5rem,6vw,4rem)] leading-[0.95] text-black">
+        <h1 className="mt-3 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95] text-black">
           {t.h1}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
@@ -83,7 +87,7 @@ export default async function RevendeursPage({
       {/* Devenir revendeur */}
       <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
-          <h2 className="font-display tracking-tighter text-[clamp(1.75rem,4vw,3rem)] leading-[1] text-black">
+          <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
             {t.proTitle}
           </h2>
           <p className="mt-3 text-black/75 max-w-xl mx-auto">

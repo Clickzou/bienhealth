@@ -8,10 +8,16 @@ import { getProducts, formatPrice } from "@/lib/shopify-products";
 import SiteHeader from "@/components/site-header";
 import CartView from "@/components/cart-view";
 
-export const metadata: Metadata = {
-  title: "Votre panier — BIEN",
-  description: "Votre panier BIEN.",
-};
+// Page privée : titre localisé et jamais indexée.
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  return {
+    title: lang === "en" ? "Your cart — BIEN" : "Votre panier — BIEN",
+    description: lang === "en" ? "Your BIEN cart." : "Votre panier BIEN.",
+    alternates: { canonical: `/${lang}/cart` },
+    robots: { index: false, follow: false },
+  };
+}
 
 /**
  * Page Panier. Le panier / checkout est géré par Shopify (architecture headless) :

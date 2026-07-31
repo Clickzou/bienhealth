@@ -9,12 +9,16 @@ import SiteHeader from "@/components/site-header";
 import ProductCard from "@/components/product-card";
 import ReassuranceBand from "@/components/reassurance-band";
 import DiagnosticCTA from "@/components/diagnostic-cta";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Shop — Our natural supplements · BIEN", description: "Discover the BIEN range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." }
-    : { title: "Boutique — Nos compléments naturels · BIEN", description: "Découvrez la gamme BIEN : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France." };
+  return pageMetadata({
+    lang,
+    path: "boutique",
+    title: lang === "en" ? "Shop — Our natural supplements · BIEN" : "Boutique — Nos compléments naturels · BIEN",
+    description: lang === "en" ? "Discover the BIEN range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." : "Découvrez la gamme BIEN : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
+  });
 }
 
 const T = {
@@ -50,15 +54,17 @@ export default async function BoutiquePage({
 
       {/* Hero */}
       <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
-        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+        {/* Bandeau volontairement bas : la grille produits doit apparaître
+            presque tout de suite (le bloc occupait tout l'écran d'accueil). */}
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-12 py-7 sm:py-9">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-          <h1 className="mt-3 font-hero text-bien-cream text-[clamp(2.5rem,6vw,4.5rem)] leading-[0.95]">
+          <h1 className="mt-2 font-hero text-bien-cream text-[clamp(1.9rem,4vw,2.9rem)] leading-[1]">
             {t.h1}
           </h1>
-          <p className="mt-4 max-w-xl text-base sm:text-lg text-bien-cream/85 leading-relaxed">
+          <p className="mt-3 max-w-2xl text-sm sm:text-base text-bien-cream/85 leading-relaxed">
             {t.intro}
           </p>
-          <div className="mt-7 flex flex-wrap gap-2.5">
+          <div className="mt-5 flex flex-wrap gap-2.5">
             {t.needs.map((n) => (
               <Link
                 key={n.slug}
@@ -73,7 +79,7 @@ export default async function BoutiquePage({
       </section>
 
       {/* Grille produits */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
+      <section className="px-4 sm:px-6 lg:px-[100px] mt-6 sm:mt-8">
         <div className="flex items-end justify-between gap-4 mb-6">
           <h2 className="font-display tracking-tight text-2xl text-black">
             {products.length} {products.length > 1 ? t.products : t.product}

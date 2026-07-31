@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Leaf, Heart } from "lucide-react";
 import FooterCredit from "./footer-credit";
 import NewsletterForm from "./newsletter-form";
 import { ui } from "@/lib/i18n";
@@ -76,14 +77,31 @@ export default function SiteFooter({ lang }: { lang: string }) {
               href="https://www.instagram.com/bien.health/"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Instagram BIEN"
               className="mt-5 inline-flex items-center justify-center h-11 w-11 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 text-bien-cream hover:bg-bien-gold hover:text-black hover:ring-bien-gold transition-colors"
             >
               <InstagramIcon className="h-5 w-5" />
+              <span className="sr-only">Instagram BIEN</span>
             </a>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-bien-cream/15 text-xs text-bien-cream/55 leading-relaxed text-center">
+        {/* Engagements associatifs — mention texte ; les logos officiels
+            (Team for the Planet, Hôpital Sourire) seront ajoutés ici dès
+            réception des fichiers. */}
+        <div className="mt-12 pt-8 border-t border-bien-cream/15 text-center">
+          <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.commitmentsTitle}</h3>
+          <ul className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-bien-cream/80">
+            <li className="flex items-center gap-2">
+              <Leaf className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
+              {t.commitmentPlanet}
+            </li>
+            <li className="flex items-center gap-2">
+              <Heart className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
+              {t.commitmentChildren}
+            </li>
+          </ul>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-bien-cream/15 text-xs text-bien-cream/55 leading-relaxed text-center">
           <p>{t.disclaimer}</p>
           <p className="mt-3">{t.rights}</p>
           <FooterCredit lang={lang} />

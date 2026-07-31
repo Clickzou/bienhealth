@@ -2,12 +2,16 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Cookie policy · BIEN", description: "How and why bien.health uses cookies, and how to manage them." }
-    : { title: "Politique de cookies · BIEN", description: "Comment et pourquoi le site bien.health utilise des cookies, et comment les gérer." };
+  return pageMetadata({
+    lang,
+    path: "cookies",
+    title: lang === "en" ? "Cookie policy · BIEN" : "Politique de cookies · BIEN",
+    description: lang === "en" ? "How and why bien.health uses cookies, and how to manage them." : "Comment et pourquoi le site bien.health utilise des cookies, et comment les gérer.",
+  });
 }
 
 export default async function CookiesPage({
@@ -35,9 +39,13 @@ export default async function CookiesPage({
         <h2>The cookies we use</h2>
         <ul>
           <li><strong>Essential cookies</strong> — necessary for the site to work (cart, security, language preferences). They cannot be disabled.</li>
-          <li><strong>Analytics cookies</strong> — help us understand how the site is used so we can improve it.</li>
-          <li><strong>Marketing cookies</strong> — let us show you relevant content and ads, on our site and on others.</li>
+          <li><strong>Analytics cookies</strong> — help us understand how the site is used so we can improve it (Google Analytics 4).</li>
+          <li><strong>Marketing cookies</strong> — let us show you relevant content and ads, on our site and on others (Meta pixel, for Facebook and Instagram).</li>
         </ul>
+        <p>
+          Analytics and marketing cookies are only set once you accept them in the cookie banner. Decline and neither
+          Google Analytics nor the Meta pixel is loaded.
+        </p>
         <p>
           Our shop runs on Shopify. For details of the cookies set by Shopify, see{" "}
           <a href="https://www.shopify.com/legal/cookies" target="_blank" rel="noopener noreferrer">shopify.com/legal/cookies</a>.
@@ -84,13 +92,17 @@ export default async function CookiesPage({
         </li>
         <li>
           <strong>Cookies de mesure d&apos;audience</strong> — nous aident à comprendre comment le site est utilisé afin
-          de l&apos;améliorer.
+          de l&apos;améliorer (Google Analytics 4).
         </li>
         <li>
           <strong>Cookies marketing</strong> — permettent de vous proposer des contenus et publicités adaptés, sur notre
-          site et sur d&apos;autres sites.
+          site et sur d&apos;autres sites (pixel Meta, pour Facebook et Instagram).
         </li>
       </ul>
+      <p>
+        Les cookies de mesure d&apos;audience et marketing ne sont déposés qu&apos;après votre acceptation dans la
+        bannière. Si vous refusez, ni Google Analytics ni le pixel Meta ne sont chargés.
+      </p>
       <p>
         Notre boutique s&apos;appuie sur Shopify. Pour le détail des cookies déposés par Shopify, consultez{" "}
         <a href="https://www.shopify.com/legal/cookies" target="_blank" rel="noopener noreferrer">shopify.com/legal/cookies</a>.

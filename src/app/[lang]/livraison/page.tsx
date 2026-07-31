@@ -2,12 +2,20 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
+import { pageMetadata } from "@/lib/seo";
+import { freeShippingAmount } from "@/lib/shipping";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
-  return lang === "en"
-    ? { title: "Shipping — Times & rates · BIEN", description: "Free Point Relais delivery on orders over €69, shipped the same day. Delivery times and rates for France and Europe." }
-    : { title: "Livraison — Délais & tarifs · BIEN", description: "Livraison offerte en Point Relais dès 69 € d'achat, expédiée le jour même. Délais et tarifs de livraison France et Europe." };
+  const en = lang === "en";
+  return pageMetadata({
+    lang,
+    path: "livraison",
+    title: en ? "Shipping — Times & rates · BIEN" : "Livraison — Délais & tarifs · BIEN",
+    description: en
+      ? `Free Point Relais delivery on orders over ${freeShippingAmount("en")}, shipped the same day. Delivery times and rates for France and Europe.`
+      : `Livraison offerte en Point Relais dès ${freeShippingAmount("fr")} d'achat, expédiée le jour même. Délais et tarifs de livraison France et Europe.`,
+  });
 }
 
 export default async function LivraisonPage({
@@ -23,7 +31,7 @@ export default async function LivraisonPage({
     return (
       <LegalLayout lang={lang} title="Shipping">
         <p>
-          Free <strong>Point Relais delivery on orders over €69</strong>, shipped the same day for any order placed
+          Free <strong>Point Relais delivery on orders over {freeShippingAmount("en")}</strong>, shipped the same day for any order placed
           before 1 pm.
         </p>
 
@@ -60,7 +68,7 @@ export default async function LivraisonPage({
   return (
     <LegalLayout lang={lang} title="Livraison">
       <p>
-        Livraison offerte en <strong>Point Relais dès 69 € d&apos;achat</strong>, expédiée le jour même pour toute
+        Livraison offerte en <strong>Point Relais dès {freeShippingAmount("fr")} d&apos;achat</strong>, expédiée le jour même pour toute
         commande passée avant 13h.
       </p>
 
