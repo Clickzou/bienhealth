@@ -160,9 +160,15 @@ Shopify avant tout développement front :
 - [x] 4ᵉ série de recos client (04/08/2026), après relecture sur la préprod :
       **Nav qui chevauchait la note Trustpilot** — sortie du flux, la nav était
       bien centrée mais ne réservait aucune place : le badge recouvrait « Blog ».
-      Elle revient dans une grille `[1fr_auto_1fr]`, où le chevauchement est
-      structurellement impossible ; gouttière du header réduite et note
-      Trustpilot repoussée à `2xl` pour dégager la largeur nécessaire.
+      Elle revient dans une grille, où le chevauchement est structurellement
+      impossible ; gouttière du header réduite et note Trustpilot repoussée à
+      `2xl` pour dégager la largeur nécessaire.
+      **Position finale de la nav (arbitrage client)** : centrée dans l'espace
+      libre entre le logo et le bloc de droite, donc à égale distance des deux.
+      Centrée sur l'axe de la page, elle laissait ~300 px de blanc à gauche
+      contre ~20 px à droite — le bloc de droite (note + CTA + icônes) étant
+      environ trois fois plus large que le logo, les deux ne peuvent pas être
+      satisfaits en même temps. Les méga-menus, eux, restent centrés sur l'écran.
       **Traductions manquantes sur `/en`** — le carrousel de la homepage portait
       une copie française en dur des bienfaits (« Sérénité & sommeil… ») et des
       libellés « Voir » / « Précommander », alors que `lib/shop.ts` avait déjà

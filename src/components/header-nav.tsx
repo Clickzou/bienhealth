@@ -77,8 +77,8 @@ export default function HeaderNav({ lang }: { lang: string }) {
     <nav className="hidden lg:flex items-center justify-center gap-4 xl:gap-5 2xl:gap-6">
       {/* Nos produits — méga-menu.
           Le panneau n'est PAS positionné par rapport au bouton (il déborderait
-          de l'écran) mais par rapport au conteneur de la nav, lui-même centré
-          sur la page (site-header.tsx) : il reste donc toujours centré et cadré. */}
+          de l'écran) mais par rapport au conteneur `relative` du header
+          (site-header.tsx) : il reste donc toujours centré à l'écran et cadré. */}
       <div onMouseEnter={() => open("shop")} onMouseLeave={scheduleClose}>
         <button
           type="button"

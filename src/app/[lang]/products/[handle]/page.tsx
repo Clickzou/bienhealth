@@ -847,6 +847,9 @@ export default async function ProductPage({
               <span className="text-black/30">·</span>
               <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{happyClientsLabel(lang)}</Link>
             </div>
+            {/* Garantie remontée avec la preuve sociale : sous le CTA, elle
+                séparait le bouton de la réassurance juste en dessous. */}
+            <p className="mt-1.5 text-xs text-black/50">{ui.guarantee}</p>
             <h1 className="mt-3 font-hero text-[clamp(1.76rem,3.52vw,2.64rem)] leading-[1] text-black">{product.title}</h1>
 
             {/* État du stock */}
@@ -880,12 +883,15 @@ export default async function ProductPage({
                 </p>
               </div>
 
-              <div className="flex-1 min-w-[240px]">
+              {/* Largeur du CTA calée sur son libellé (pleine largeur seulement
+                  sur mobile) : étiré sur l'espace restant, il faisait deux fois
+                  la largeur nécessaire. */}
+              <div className="w-full sm:w-auto">
                 {product.available ? (
                   <AddToCart
                     item={cartItem}
                     lang={lang}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-10 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
                   >
                     {ctaLabel}
                   </AddToCart>
@@ -893,12 +899,11 @@ export default async function ProductPage({
                   <button
                     type="button"
                     disabled
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold opacity-50 cursor-not-allowed"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-10 py-3.5 font-bold opacity-50 cursor-not-allowed"
                   >
                     {ui.backSoon}
                   </button>
                 )}
-                <p className="mt-1.5 text-xs text-black/50 text-center">{ui.guarantee}</p>
               </div>
             </div>
 

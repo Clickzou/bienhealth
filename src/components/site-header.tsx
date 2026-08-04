@@ -58,17 +58,21 @@ export default function SiteHeader({ lang }: { lang: string }) {
       {/* Fond opaque : en translucide, le titre du hero restait visible « au
           travers » du header et donnait l'impression d'être coupé en deux. */}
       <header className="sticky top-0 z-40 w-full bg-background border-b border-border/60">
-        {/* Colonnes latérales à `1fr` : la nav (colonne `auto`) est centrée sur
-            l'axe de la page sans jamais pouvoir chevaucher le logo ou le bloc
-            de droite — en la sortant du flux, le badge Trustpilot recouvrait
-            « Blog ». `relative` sert d'ancre aux méga-menus : centrés sur ce
-            conteneur, ils restent cadrés sous 1600px. */}
-        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 h-16 sm:h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
+        {/* La nav occupe la colonne `1fr` et s'y centre : elle est donc à égale
+            distance du logo et du bloc de droite (demande client). Centrée sur
+            l'axe de la page, elle laissait ~300px de blanc à gauche contre ~20px
+            à droite, le bloc de droite étant bien plus large que le logo.
+            La grille garantit aussi qu'aucune colonne ne peut en recouvrir une
+            autre. `relative` sert d'ancre aux méga-menus : eux restent centrés
+            sur ce conteneur, donc cadrés à l'écran sous 1600px. */}
+        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
           <a href={`/${lang}`} className="flex items-center">
             <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
             <span className="sr-only">{t.home}</span>
           </a>
-          <HeaderNav lang={lang} />
+          <div className="flex items-center justify-center">
+            <HeaderNav lang={lang} />
+          </div>
           <div className="flex items-center justify-end gap-1 sm:gap-2">
             {/* Note boutique à partir de 2xl seulement : sous cette largeur, ses
                 ~155px poussaient la nav hors de l'axe central. */}
