@@ -121,7 +121,9 @@ export default async function CertificationsPage({
     <div className="min-h-screen bg-background text-foreground bg-[url('/brand/certif-bg.jpg')] bg-cover bg-fixed bg-center bg-no-repeat">
       <SiteHeader lang={lang} />
 
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-[100px] py-12 lg:py-20">
+      {/* Espacements resserrés (recos client) : la page tenait sur trop de
+          hauteur avant d'arriver aux attestations. */}
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-[100px] py-10 lg:py-14">
         {/* Intro */}
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}
@@ -129,10 +131,10 @@ export default async function CertificationsPage({
         <h1 className="mt-3 font-hero text-[clamp(1.76rem,4.4vw,3.08rem)] leading-[1] text-black">
           {t.h1}
         </h1>
-        <p className="mt-5 text-base sm:text-lg text-black/75 leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{ __html: t.intro }} />
+        <p className="mt-4 text-base sm:text-lg text-black/75 leading-relaxed max-w-2xl" dangerouslySetInnerHTML={{ __html: t.intro }} />
 
         {/* Bandeau garanties */}
-        <div className="mt-8 grid sm:grid-cols-3 gap-4">
+        <div className="mt-6 grid sm:grid-cols-3 gap-4">
           {t.badges.map((label, i) => {
             const Icon = BADGE_ICONS[i];
             return (
@@ -145,25 +147,28 @@ export default async function CertificationsPage({
         </div>
 
         {/* Cartes attestations */}
-        <div className="mt-12 grid md:grid-cols-2 gap-6">
+        <div className="mt-8 grid lg:grid-cols-2 gap-5">
           {ATTESTATIONS.map((a) => (
-            <article key={a.name} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col">
-              {/* Grande photo produit en bannière */}
-              <div className="relative aspect-[16/10] bg-bien-cream overflow-hidden">
-                <Image src={a.img} alt={a.name} fill sizes="(max-width:768px) 100vw, 45vw" className="object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
-                <span className="absolute top-4 right-4 text-[11px] uppercase tracking-wider font-semibold text-bien-navy bg-white/90 backdrop-blur rounded-full px-3 py-1">{a.form[en ? "en" : "fr"]}</span>
-                <div className="absolute inset-x-5 sm:inset-x-6 bottom-4 sm:bottom-5">
-                  <h2 className="font-display text-3xl sm:text-4xl text-white leading-none drop-shadow-sm">{a.name}</h2>
-                  <p className="mt-2 text-xs text-white/85">
-                    {t.declaration} <span className="font-semibold text-white">{a.number}</span> · {a.declaredOn[en ? "en" : "fr"]}
-                  </p>
-                </div>
+            <article key={a.name} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col sm:flex-row">
+              {/* Photo produit en colonne, dans un cadre proche du portrait
+                  natif des visuels (2:3). En bannière 16/10, `object-cover`
+                  ne gardait que 42 % de la hauteur : le sachet MUSHGLOW était
+                  coupé en deux et son nom disparaissait du cadre. */}
+              <div className="relative shrink-0 aspect-[3/4] sm:aspect-auto sm:w-[38%] bg-bien-cream overflow-hidden">
+                <Image src={a.img} alt={a.name} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 38vw, 20vw" className="object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+                <span className="absolute top-3 left-3 text-[11px] uppercase tracking-wider font-semibold text-bien-navy bg-white/90 backdrop-blur rounded-full px-3 py-1">{a.form[en ? "en" : "fr"]}</span>
               </div>
 
-              <div className="p-5 sm:p-6 flex-1">
-                <p className="text-xs uppercase tracking-[0.15em] text-bien-leaf font-semibold">{t.declaredActives}</p>
-                <ul className="mt-3 space-y-1.5">
+              <div className="flex flex-1 flex-col p-5 sm:p-6">
+                {/* Nom et n° de déclaration sortis de la photo : en surimpression,
+                    ils imposaient un recadrage large et un dégradé sur le produit. */}
+                <h2 className="font-display text-2xl sm:text-3xl text-black leading-none">{a.name}</h2>
+                <p className="mt-2 text-xs text-black/60">
+                  {t.declaration} <span className="font-semibold text-black">{a.number}</span> · {a.declaredOn[en ? "en" : "fr"]}
+                </p>
+
+                <p className="mt-4 text-xs uppercase tracking-[0.15em] text-bien-leaf font-semibold">{t.declaredActives}</p>
+                <ul className="mt-2.5 space-y-1.5">
                   {a.actifs[en ? "en" : "fr"].map((line) => (
                     <li key={line} className="flex items-start gap-2 text-sm text-black/80">
                       <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-bien-gold shrink-0" />
@@ -171,39 +176,39 @@ export default async function CertificationsPage({
                     </li>
                   ))}
                 </ul>
-              </div>
 
-              <div className="p-5 sm:p-6 pt-0 flex flex-col sm:flex-row gap-3">
-                <a
-                  href={a.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-leaf text-white px-4 py-2.5 text-sm font-semibold hover:brightness-110 transition flex-1"
-                >
-                  <ExternalLink className="h-4 w-4" /> {t.verify}
-                </a>
-                <a
-                  href={a.pdf}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-4 py-2.5 text-sm font-bold hover:brightness-105 transition flex-1"
-                >
-                  <FileText className="h-4 w-4" /> {t.pdf}
-                </a>
+                <div className="mt-auto pt-5 flex flex-col sm:flex-row gap-3">
+                  <a
+                    href={a.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-leaf text-white px-4 py-2.5 text-sm font-semibold hover:brightness-110 transition flex-1"
+                  >
+                    <ExternalLink className="h-4 w-4" /> {t.verify}
+                  </a>
+                  <a
+                    href={a.pdf}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-4 py-2.5 text-sm font-bold hover:brightness-105 transition flex-1"
+                  >
+                    <FileText className="h-4 w-4" /> {t.pdf}
+                  </a>
+                </div>
               </div>
             </article>
           ))}
         </div>
 
         {/* Mention légale exacte */}
-        <div className="mt-10 rounded-2xl bg-bien-cream/60 ring-1 ring-border p-5 sm:p-6 text-sm text-black/65 leading-relaxed">
+        <div className="mt-8 rounded-2xl bg-bien-cream/60 ring-1 ring-border p-5 sm:p-6 text-sm text-black/65 leading-relaxed">
           <p className="font-semibold text-black">{t.aboutTitle}</p>
           <p className="mt-2">
             {t.aboutText}
           </p>
         </div>
 
-        <div className="mt-12">
+        <div className="mt-10">
           <Link href={`/${lang}`} className="inline-flex items-center gap-2 text-sm font-semibold text-bien-leaf hover:gap-3 transition-all">
             <ArrowLeft className="h-4 w-4" /> {t.back}
           </Link>

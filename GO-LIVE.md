@@ -1,7 +1,7 @@
 # Checklist de mise en ligne — bien.health
 
 Tout ce qui doit être vérifié, configuré ou décidé **avant** la bascule du site
-headless sur `bien.health`. Dernière mise à jour : 31 juillet 2026.
+headless sur `bien.health`. Dernière mise à jour : 4 août 2026.
 
 Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision client ·
 `[x]` fait et vérifié.
@@ -85,6 +85,10 @@ faussée. Demande un accès à l'admin Shopify.
       Meta (onglet réseau : aucun appel `googletagmanager` ni `fbevents`).
 - [ ] **Méga-menus** : revérifier le cadrage sur plusieurs résolutions réelles
       (13", 15", 24") — c'était le bug signalé par le client.
+- [ ] **Barre de nav centrée** : vérifier sur 13" et 15" que la nav, désormais
+      centrée sur l'axe de la page, ne chevauche ni le logo ni le bloc de
+      droite (note Trustpilot + CTA + icônes). Si c'est juste, la piste est de
+      passer la note Trustpilot de `xl:` à `2xl:`.
 - [ ] **Mobile** : parcours complet sur téléphone (menu, fiche, panier).
 
 ---
@@ -153,6 +157,24 @@ Shopify avant tout développement front :
 
 ## 5. Fait — pour mémoire
 
+- [x] 3ᵉ série de recos client (04/08/2026) — trois points qui n'avaient **pas**
+      été traités le 31/07 :
+      **Menu non centré** — seuls les panneaux déroulants des méga-menus avaient
+      été recentrés, pas la barre de nav elle-même. En colonne de grille, elle
+      était centrée sur l'espace restant entre le logo (~118 px) et le bloc de
+      droite (~440 px avec la note Trustpilot), donc décalée d'environ 160 px
+      vers la gauche. Elle est désormais sortie du flux et centrée sur l'axe de
+      la page ; ce conteneur sert aussi d'ancre aux méga-menus. Le burger mobile
+      est passé à droite (il était seul au centre de l'écran).
+      **Cadrage des photos de la page conformité** — les quatre visuels sont en
+      portrait 2:3 (2200×3300 et 832×1248) et étaient affichés en bannière 16/10
+      avec `object-cover` : seuls 42 % de la hauteur restaient visibles, le
+      sachet MUSHGLOW était coupé en deux et son nom sortait du cadre. La photo
+      passe en colonne latérale au ratio proche du natif ; le nom et le n° de
+      déclaration sortent de la surimpression pour aller dans la colonne texte.
+      **Taille des blocs** — cartes attestations passées en format horizontal
+      (hauteur réduite d'environ 40 %), grille en 2 colonnes à partir de `lg`
+      au lieu de `md`, espacements de la page resserrés.
 - [x] Méga-menus recadrés (ils débordaient de l'écran sous 1600 px).
 - [x] Seuil de livraison offerte unifié à **49 €** (`src/lib/shipping.ts`).
 - [x] Preuve sociale unifiée (`src/lib/social-proof.ts`) — plus de `+1000`

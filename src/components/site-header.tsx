@@ -56,19 +56,22 @@ export default function SiteHeader({ lang }: { lang: string }) {
       {/* Fond opaque : en translucide, le titre du hero restait visible « au
           travers » du header et donnait l'impression d'être coupé en deux. */}
       <header className="sticky top-0 z-40 w-full bg-background border-b border-border/60">
-        {/* `relative` sert d'ancre aux méga-menus : ils sont centrés sur ce
-            conteneur (donc sur l'écran) et non sur leur bouton, sinon le
-            panneau déborde hors de l'écran sur les résolutions < 1600px. */}
-        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
+        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] h-16 sm:h-20 flex items-center justify-between gap-4">
           <a href={`/${lang}`} className="flex items-center">
             <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
             <span className="sr-only">{t.home}</span>
           </a>
-          <div className="flex items-center justify-center">
+          {/* Nav sortie du flux et centrée sur l'axe de la page : en colonne de
+              grille, elle était centrée sur l'espace restant entre le logo
+              (~118px) et le bloc de droite (~440px avec la note Trustpilot),
+              donc décalée d'environ 160px vers la gauche.
+              Ce conteneur sert aussi d'ancre aux méga-menus : `top-full` tombe
+              au bas du header (inset-y-0) et `left-1/2` sur le centre de la
+              page, ce qui garde les panneaux cadrés sous 1600px. */}
+          <div className="hidden lg:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center">
             <HeaderNav lang={lang} />
-            <MobileMenu lang={lang} />
           </div>
-          <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center justify-end gap-1 sm:gap-2">
             <div className="hidden xl:flex items-center gap-2 rounded-full bg-bien-cream px-3 py-1.5 mr-1">
               <Star className="h-4 w-4 fill-bien-star text-bien-star" />
               {/* Note BOUTIQUE (Trustpilot) — les avis d'un produit donné sont
@@ -89,6 +92,9 @@ export default function SiteHeader({ lang }: { lang: string }) {
               <span className="sr-only">{t.cart}</span>
               <CartBadge />
             </a>
+            {/* Burger à droite (convention mobile) : dans la colonne centrale,
+                il se retrouvait seul au milieu de l'écran sous le breakpoint lg. */}
+            <MobileMenu lang={lang} />
           </div>
         </div>
       </header>
