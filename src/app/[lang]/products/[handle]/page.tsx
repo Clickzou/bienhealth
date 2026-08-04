@@ -885,8 +885,9 @@ export default async function ProductPage({
 
               {/* Largeur du CTA calée sur son libellé (pleine largeur seulement
                   sur mobile) : étiré sur l'espace restant, il faisait deux fois
-                  la largeur nécessaire. */}
-              <div className="w-full sm:w-auto">
+                  la largeur nécessaire. `ml-auto` le plaque au bord droit de la
+                  colonne, aligné sur les blocs en dessous. */}
+              <div className="w-full sm:w-auto sm:ml-auto">
                 {product.available ? (
                   <AddToCart
                     item={cartItem}
