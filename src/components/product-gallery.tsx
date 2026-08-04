@@ -54,17 +54,31 @@ export default function ProductGallery({
     if (el) el.scrollBy({ top: dir * el.clientHeight * 0.8, behavior: "smooth" });
   };
 
+  const hasThumbs = count > 1;
+
   return (
-    <div className="flex items-start gap-3 sm:gap-4" onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
+    /* La bande de miniatures est en position absolue : hors du flux, elle ne
+       peut plus imposer sa hauteur à la ligne. La hauteur du bloc est donc celle
+       de l'image (carrée), et `inset-y-0` cale les miniatures dessus. Avec une
+       hauteur fixe, cinq miniatures dépassaient l'image de ~170px sur mobile et
+       repoussaient le texte hors de l'écran. Le padding gauche réserve leur
+       colonne. */
+    <div
+      className={`relative ${hasThumbs ? "pl-[4.75rem] sm:pl-24" : ""}`}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
       {/* Miniatures verticales à gauche */}
-      {count > 1 && (
-        <div className="flex flex-col gap-2 w-16 sm:w-20 shrink-0">
+      {hasThumbs && (
+        <div className="absolute inset-y-0 left-0 w-16 sm:w-20 flex flex-col gap-2">
           {count > 4 && (
-            <button onClick={() => pageThumbs(-1)} aria-label="Miniatures précédentes" className="grid place-items-center h-7 rounded-lg bg-card text-black ring-1 ring-border hover:bg-bien-cream transition">
+            <button onClick={() => pageThumbs(-1)} aria-label="Miniatures précédentes" className="shrink-0 grid place-items-center h-7 rounded-lg bg-card text-black ring-1 ring-border hover:bg-bien-cream transition">
               <ChevronUp className="h-4 w-4" />
             </button>
           )}
-          <div ref={thumbsRef} className="max-h-[21.5rem] flex flex-col gap-2 overflow-y-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          {/* `min-h-0` : sans lui, un conteneur flex refuse de descendre sous la
+              hauteur de son contenu et le débordement revient. */}
+          <div ref={thumbsRef} className="flex-1 min-h-0 flex flex-col gap-2 overflow-y-auto scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             {images.map((img, i) => (
               <button
                 key={img.url + i}
@@ -77,15 +91,15 @@ export default function ProductGallery({
             ))}
           </div>
           {count > 4 && (
-            <button onClick={() => pageThumbs(1)} aria-label="Miniatures suivantes" className="grid place-items-center h-7 rounded-lg bg-card text-black ring-1 ring-border hover:bg-bien-cream transition">
+            <button onClick={() => pageThumbs(1)} aria-label="Miniatures suivantes" className="shrink-0 grid place-items-center h-7 rounded-lg bg-card text-black ring-1 ring-border hover:bg-bien-cream transition">
               <ChevronDown className="h-4 w-4" />
             </button>
           )}
         </div>
       )}
 
-      {/* Image principale carrée */}
-      <div className="group relative flex-1 aspect-square rounded-3xl overflow-hidden bg-bien-cream ring-1 ring-border">
+      {/* Image principale carrée — c'est elle qui donne sa hauteur au bloc */}
+      <div className="group relative aspect-square rounded-3xl overflow-hidden bg-bien-cream ring-1 ring-border">
         {/* Bandeau diagonal Best-seller (haut droite) — uniquement pour le best-seller */}
         {bestSeller && (
           <span className="pointer-events-none absolute top-5 -right-11 z-20 rotate-45 bg-bien-gold text-black text-[11px] font-bold uppercase tracking-wider px-12 py-1 bien-shadow-sm">
