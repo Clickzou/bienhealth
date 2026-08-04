@@ -823,8 +823,10 @@ export default async function ProductPage({
       <JsonLd data={breadcrumbLd} />
       <MetaViewContent handle={handle} title={product.title} price={Number(product.price.amount)} currency={product.price.currencyCode || "EUR"} />
 
-      <main className="px-4 sm:px-6 lg:px-[100px] py-10 lg:py-14">
-        <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-6">
+      {/* Gouttière haute resserrée : sur un 13", la marge blanche au-dessus de
+          la photo repoussait le bloc « Équilibre global » hors de l'écran. */}
+      <main className="px-4 sm:px-6 lg:px-[100px] py-5 lg:py-7">
+        <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-4">
           <ArrowLeft className="h-4 w-4" /> {ui.allProducts}
         </Link>
 
@@ -847,20 +849,6 @@ export default async function ProductPage({
             </div>
             <h1 className="mt-3 font-hero text-[clamp(1.76rem,3.52vw,2.64rem)] leading-[1] text-black">{product.title}</h1>
 
-            <div className="mt-4 flex items-baseline gap-3">
-              <span className="font-display text-2xl text-black">{formatPrice(product.price)}</span>
-              {product.compareAtPrice &&
-                Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
-                  <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
-                )}
-            </div>
-            <p className="mt-1 text-xs text-black/50">
-              {ui.taxIncluded}
-              {/* Format de la cure : 60 gummies à 2/jour et 30 portions de
-                  poudre couvrent un mois — l'information manquait près du prix. */}
-              {key && <> · <span className="font-semibold text-black/70">{isPowder ? ui.cureLabelPowder : ui.cureLabelGummies}</span></>}
-            </p>
-
             {/* État du stock */}
             {preorder ? (
               <p className="mt-3 inline-flex items-center gap-2 rounded-full bg-bien-gold/20 text-black px-3 py-1.5 text-sm font-semibold">
@@ -872,26 +860,47 @@ export default async function ProductPage({
               </p>
             ) : null}
 
-            {/* Achat : CTA remonté juste sous le prix — il arrivait
-                après le bloc d'infos et la presse, donc hors écran. */}
-            {product.available ? (
-              <AddToCart
-                item={cartItem}
-                lang={lang}
-                className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold hover:brightness-105 transition bien-shadow-sm"
-              >
-                {ctaLabel}
-              </AddToCart>
-            ) : (
-              <button
-                type="button"
-                disabled
-                className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-4 font-bold opacity-50 cursor-not-allowed"
-              >
-                {ui.backSoon}
-              </button>
-            )}
-            <p className="mt-2 text-xs text-black/50 text-center">{ui.guarantee}</p>
+            {/* Achat : prix et CTA sur la même ligne (le CTA pleine largeur sous
+                le prix coûtait une centaine de pixels de haut sur un 13").
+                Le CTA repasse sous le prix quand la colonne devient étroite. */}
+            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <div>
+                <div className="flex items-baseline gap-3">
+                  <span className="font-display text-2xl text-black">{formatPrice(product.price)}</span>
+                  {product.compareAtPrice &&
+                    Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
+                      <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
+                    )}
+                </div>
+                <p className="mt-1 text-xs text-black/50">
+                  {ui.taxIncluded}
+                  {/* Format de la cure : 60 gummies à 2/jour et 30 portions de
+                      poudre couvrent un mois — l'information manquait près du prix. */}
+                  {key && <> · <span className="font-semibold text-black/70">{isPowder ? ui.cureLabelPowder : ui.cureLabelGummies}</span></>}
+                </p>
+              </div>
+
+              <div className="flex-1 min-w-[240px]">
+                {product.available ? (
+                  <AddToCart
+                    item={cartItem}
+                    lang={lang}
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
+                  >
+                    {ctaLabel}
+                  </AddToCart>
+                ) : (
+                  <button
+                    type="button"
+                    disabled
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold opacity-50 cursor-not-allowed"
+                  >
+                    {ui.backSoon}
+                  </button>
+                )}
+                <p className="mt-1.5 text-xs text-black/50 text-center">{ui.guarantee}</p>
+              </div>
+            </div>
 
             {/* Réassurance */}
             <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">

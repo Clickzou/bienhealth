@@ -13,18 +13,13 @@ export type CarouselProduct = {
   available: boolean;
 };
 
-/** Bienfaits courts par produit (repli sur le tagline Shopify si inconnu). */
-const BENEFITS: Record<string, string> = {
-  CALM: "Sérénité & sommeil — apaise le stress et favorise un sommeil réparateur.",
-  FOCUS: "Concentration & mémoire — clarté mentale et focus durable.",
-  POWER: "Énergie & performance — tonus physique sans coup de barre.",
-  MUSHGLOW: "Beauté & éclat — peau, cheveux et vitalité, 6-en-1.",
-};
+/* `tagline` arrive déjà localisé de la page (benefitFor dans lib/shop.ts) :
+   ce composant ne porte plus de copie des bienfaits. */
 
-function benefitFor(name: string, fallback: string): string {
-  const key = Object.keys(BENEFITS).find((k) => name.toUpperCase().includes(k));
-  return key ? BENEFITS[key] : fallback;
-}
+const T = {
+  fr: { prev: "Produits précédents", next: "Produits suivants", bestSeller: "Best-seller", backSoon: "Bientôt de retour", see: "Voir", preorder: "Précommander", alt: (n: string) => `Complément ${n}` },
+  en: { prev: "Previous products", next: "Next products", bestSeller: "Best-seller", backSoon: "Back in stock soon", see: "View", preorder: "Pre-order", alt: (n: string) => `${n} supplement` },
+} as const;
 
 export default function ProductsCarousel({
   products,
@@ -34,6 +29,7 @@ export default function ProductsCarousel({
   lang: string;
 }) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const t = T[lang === "en" ? "en" : "fr"];
 
   const scroll = (dir: 1 | -1) => {
     const el = trackRef.current;
@@ -46,14 +42,14 @@ export default function ProductsCarousel({
       {/* Flèches */}
       <button
         onClick={() => scroll(-1)}
-        aria-label="Produits précédents"
+        aria-label={t.prev}
         className="absolute left-1 sm:-left-4 top-[36%] -translate-y-1/2 z-20 hidden sm:grid place-items-center h-11 w-11 rounded-full bg-card text-black ring-1 ring-border bien-shadow hover:bg-bien-gold transition"
       >
         <ChevronLeft className="h-5 w-5" />
       </button>
       <button
         onClick={() => scroll(1)}
-        aria-label="Produits suivants"
+        aria-label={t.next}
         className="absolute right-1 sm:-right-4 top-[36%] -translate-y-1/2 z-20 hidden sm:grid place-items-center h-11 w-11 rounded-full bg-card text-black ring-1 ring-border bien-shadow hover:bg-bien-gold transition"
       >
         <ChevronRight className="h-5 w-5" />
@@ -77,19 +73,19 @@ export default function ProductsCarousel({
               <a href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
                 {showBadge && (
                   <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-bien-gold text-black px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
-                    {p.available ? "Best-seller" : "Bientôt de retour"}
+                    {p.available ? t.bestSeller : t.backSoon}
                   </span>
                 )}
-                <Image src={p.img} alt={`Complément ${p.name}`} fill loading="lazy" sizes="(max-width:1024px) 72vw, 22vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                <Image src={p.img} alt={t.alt(p.name)} fill loading="lazy" sizes="(max-width:1024px) 72vw, 22vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
               </a>
               <div className="p-4 sm:p-5 flex flex-col flex-1">
                 <div className="flex gap-0.5">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-3.5 w-3.5 fill-bien-star text-bien-star" />)}</div>
                 <a href={href}><h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">{p.name}</h3></a>
-                <p className="mt-1 text-sm text-black/65 leading-snug">{benefitFor(p.name, p.tagline)}</p>
+                <p className="mt-1 text-sm text-black/65 leading-snug">{p.tagline}</p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="font-display text-lg text-black">{p.price}</span>
                   <a href={href} className="inline-flex items-center gap-1.5 rounded-full bg-bien-forest text-bien-cream px-3.5 py-2 text-xs font-semibold hover:bg-bien-leaf transition-colors">
-                    <ShoppingBag className="h-3.5 w-3.5" /> {p.available ? "Voir" : "Précommander"}
+                    <ShoppingBag className="h-3.5 w-3.5" /> {p.available ? t.see : t.preorder}
                   </a>
                 </div>
               </div>

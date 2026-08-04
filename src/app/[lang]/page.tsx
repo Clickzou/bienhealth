@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import type { ComponentType } from "react";
 import { hasLocale } from "./dictionaries";
 import { getProducts, formatPrice } from "@/lib/shopify-products";
+import { benefitFor } from "@/lib/shop";
 import IngredientsCarousel from "@/components/ingredients-carousel";
 import HeroCarousel from "@/components/hero-carousel";
 import RevealController from "@/components/reveal-controller";
@@ -295,13 +296,15 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   const products = shopProducts.length
     ? shopProducts.map((p) => ({
         name: p.title,
-        tagline: p.tags[0] ?? c.best.fallbackTag,
+        // Bienfait résolu ici (côté serveur) et non dans le carrousel : celui-ci
+        // en gardait une copie française en dur, qui restait en français sur /en.
+        tagline: benefitFor(p.title, p.tags[0] ?? c.best.fallbackTag, lang),
         price: formatPrice(p.price),
         img: p.featuredImage?.url ?? "/brand/product-mushglow.jpg",
         handle: p.handle as string | null,
         available: p.available,
       }))
-    : FALLBACK_PRODUCTS.map((p) => ({ ...p, tagline: c.best.fallbackTag, handle: null as string | null, available: true }));
+    : FALLBACK_PRODUCTS.map((p) => ({ ...p, tagline: benefitFor(p.name, c.best.fallbackTag, lang), handle: null as string | null, available: true }));
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -346,9 +349,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[680px]">
               <HeroCarousel
                 images={[
-                  { src: "/bien-health-bien-etre.jpg", alt: "Gummies BIEN POWER — énergie et performance" },
-                  { src: "/mushglow.jpg", alt: "MUSHGLOW — supermix champignons, adaptogènes et collagène" },
-                  { src: "/ArcParis-4.jpg", alt: "Gummies BIEN FOCUS — concentration et mémoire", pos: "object-bottom" },
+                  { src: "/bien-health-bien-etre.jpg", alt: lang === "en" ? "BIEN POWER gummies — energy and performance" : "Gummies BIEN POWER — énergie et performance" },
+                  { src: "/mushglow.jpg", alt: lang === "en" ? "MUSHGLOW — mushroom, adaptogen and collagen supermix" : "MUSHGLOW — supermix champignons, adaptogènes et collagène" },
+                  { src: "/ArcParis-4.jpg", alt: lang === "en" ? "BIEN FOCUS gummies — focus and memory" : "Gummies BIEN FOCUS — concentration et mémoire", pos: "object-bottom" },
                 ]}
               />
             </div>
@@ -506,7 +509,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
           {/* Image centrale */}
           <div className="order-1 lg:order-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
-            <Image src="/prelude-bien-health.jpg" alt="Produits BIEN — bénéfices" fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
+            <Image src="/prelude-bien-health.jpg" alt={lang === "en" ? "BIEN products — benefits" : "Produits BIEN — bénéfices"} fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
           </div>
 
           {/* Colonne droite */}
@@ -599,7 +602,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               {c.ingredients.titleA} <br className="hidden sm:block" /><span className="text-bien-citrus">{c.ingredients.titleB}</span>
             </h2>
           </div>
-          <IngredientsCarousel />
+          <IngredientsCarousel lang={lang} />
         </div>
       </section>
 
@@ -629,7 +632,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       <section id="mission" className="reveal px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[710px] bien-shadow lg:sticky lg:top-28">
-            <Image src="/athletes-bien-health.jpg" alt="BIEN — compléments naturels fabriqués en France" fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+            <Image src="/athletes-bien-health.jpg" alt={lang === "en" ? "BIEN — natural supplements made in France" : "BIEN — compléments naturels fabriqués en France"} fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.mission.eyebrow}</p>

@@ -28,7 +28,9 @@ export default function SiteHeader({ lang }: { lang: string }) {
     <>
       {/* Barre d'offre */}
       <div className="w-full bg-bien-forest text-bien-cream text-[11px] sm:text-sm">
-        <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-[100px] py-2.5 flex items-center gap-2 sm:gap-4">
+        {/* Même gouttière que le header en dessous, sinon la langue et Instagram
+            ne s'alignent plus sur le panier. */}
+        <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-12 xl:px-16 py-2.5 flex items-center gap-2 sm:gap-4">
           {/* Espaceur gauche pour équilibrer le centrage (desktop) */}
           <div className="hidden sm:block shrink-0 w-[64px]" aria-hidden />
           <span className="flex-1 min-w-0 font-medium text-center leading-snug">
@@ -56,23 +58,21 @@ export default function SiteHeader({ lang }: { lang: string }) {
       {/* Fond opaque : en translucide, le titre du hero restait visible « au
           travers » du header et donnait l'impression d'être coupé en deux. */}
       <header className="sticky top-0 z-40 w-full bg-background border-b border-border/60">
-        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] h-16 sm:h-20 flex items-center justify-between gap-4">
+        {/* Colonnes latérales à `1fr` : la nav (colonne `auto`) est centrée sur
+            l'axe de la page sans jamais pouvoir chevaucher le logo ou le bloc
+            de droite — en la sortant du flux, le badge Trustpilot recouvrait
+            « Blog ». `relative` sert d'ancre aux méga-menus : centrés sur ce
+            conteneur, ils restent cadrés sous 1600px. */}
+        <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 h-16 sm:h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-4">
           <a href={`/${lang}`} className="flex items-center">
             <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
             <span className="sr-only">{t.home}</span>
           </a>
-          {/* Nav sortie du flux et centrée sur l'axe de la page : en colonne de
-              grille, elle était centrée sur l'espace restant entre le logo
-              (~118px) et le bloc de droite (~440px avec la note Trustpilot),
-              donc décalée d'environ 160px vers la gauche.
-              Ce conteneur sert aussi d'ancre aux méga-menus : `top-full` tombe
-              au bas du header (inset-y-0) et `left-1/2` sur le centre de la
-              page, ce qui garde les panneaux cadrés sous 1600px. */}
-          <div className="hidden lg:flex absolute inset-y-0 left-1/2 -translate-x-1/2 items-center">
-            <HeaderNav lang={lang} />
-          </div>
+          <HeaderNav lang={lang} />
           <div className="flex items-center justify-end gap-1 sm:gap-2">
-            <div className="hidden xl:flex items-center gap-2 rounded-full bg-bien-cream px-3 py-1.5 mr-1">
+            {/* Note boutique à partir de 2xl seulement : sous cette largeur, ses
+                ~155px poussaient la nav hors de l'axe central. */}
+            <div className="hidden 2xl:flex items-center gap-2 rounded-full bg-bien-cream px-3 py-1.5 mr-1">
               <Star className="h-4 w-4 fill-bien-star text-bien-star" />
               {/* Note BOUTIQUE (Trustpilot) — les avis d'un produit donné sont
                   affichés sur sa fiche, avec leur propre libellé. */}

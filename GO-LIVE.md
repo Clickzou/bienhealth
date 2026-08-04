@@ -85,10 +85,10 @@ faussée. Demande un accès à l'admin Shopify.
       Meta (onglet réseau : aucun appel `googletagmanager` ni `fbevents`).
 - [ ] **Méga-menus** : revérifier le cadrage sur plusieurs résolutions réelles
       (13", 15", 24") — c'était le bug signalé par le client.
-- [ ] **Barre de nav centrée** : vérifier sur 13" et 15" que la nav, désormais
-      centrée sur l'axe de la page, ne chevauche ni le logo ni le bloc de
-      droite (note Trustpilot + CTA + icônes). Si c'est juste, la piste est de
-      passer la note Trustpilot de `xl:` à `2xl:`.
+- [~] **Note Trustpilot du header** : affichée seulement à partir de 1536 px
+      (`2xl`). En dessous, ses ~155 px poussaient la nav hors de l'axe central.
+      À valider : la preuve sociale reste visible sur la page (bandeau avis,
+      fiches produit), mais plus dans le header sur un 13"/15".
 - [ ] **Mobile** : parcours complet sur téléphone (menu, fiche, panier).
 
 ---
@@ -157,6 +157,22 @@ Shopify avant tout développement front :
 
 ## 5. Fait — pour mémoire
 
+- [x] 4ᵉ série de recos client (04/08/2026), après relecture sur la préprod :
+      **Nav qui chevauchait la note Trustpilot** — sortie du flux, la nav était
+      bien centrée mais ne réservait aucune place : le badge recouvrait « Blog ».
+      Elle revient dans une grille `[1fr_auto_1fr]`, où le chevauchement est
+      structurellement impossible ; gouttière du header réduite et note
+      Trustpilot repoussée à `2xl` pour dégager la largeur nécessaire.
+      **Traductions manquantes sur `/en`** — le carrousel de la homepage portait
+      une copie française en dur des bienfaits (« Sérénité & sommeil… ») et des
+      libellés « Voir » / « Précommander », alors que `lib/shop.ts` avait déjà
+      les versions anglaises : le bienfait est désormais résolu côté serveur, le
+      carrousel n'en garde plus de copie. Carrousel d'ingrédients entièrement
+      localisé (noms, noms latins, vertus, descriptions), `alt` du hero et des
+      visuels de la homepage traduits.
+      **Fiche produit sur 13"** — la section « Équilibre global » n'était pas
+      visible en entier : gouttière haute réduite et CTA d'ajout au panier
+      remonté à côté du prix (il était en pleine largeur en dessous).
 - [x] 3ᵉ série de recos client (04/08/2026) — trois points qui n'avaient **pas**
       été traités le 31/07 :
       **Menu non centré** — seuls les panneaux déroulants des méga-menus avaient
