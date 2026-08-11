@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "cookies",
-    title: lang === "en" ? "Cookie policy · BIEN" : "Politique de cookies · BIEN",
+    title: lang === "en" ? "Cookie policy | BIEN health" : "Politique de cookies | BIEN health",
     description: lang === "en" ? "How and why bien.health uses cookies, and how to manage them." : "Comment et pourquoi le site bien.health utilise des cookies, et comment les gérer.",
   });
 }
@@ -38,9 +38,9 @@ export default async function CookiesPage({
 
         <h2>The cookies we use</h2>
         <ul>
-          <li><strong>Essential cookies</strong> — necessary for the site to work (cart, security, language preferences). They cannot be disabled.</li>
-          <li><strong>Analytics cookies</strong> — help us understand how the site is used so we can improve it (Google Analytics 4).</li>
-          <li><strong>Marketing cookies</strong> — let us show you relevant content and ads, on our site and on others (Meta pixel, for Facebook and Instagram).</li>
+          <li><strong>Essential cookies</strong>: necessary for the site to work (cart, security, language preferences). They cannot be disabled.</li>
+          <li><strong>Analytics cookies</strong>: help us understand how the site is used so we can improve it (Google Analytics 4).</li>
+          <li><strong>Marketing cookies</strong>: let us show you relevant content and ads, on our site and on others (Meta pixel, for Facebook and Instagram).</li>
         </ul>
         <p>
           Analytics and marketing cookies are only set once you accept them in the cookie banner. Decline and neither
@@ -87,15 +87,15 @@ export default async function CookiesPage({
       <h2>Les cookies que nous utilisons</h2>
       <ul>
         <li>
-          <strong>Cookies essentiels</strong> — nécessaires au fonctionnement du site (panier, sécurité, préférences de
+          <strong>Cookies essentiels</strong> : nécessaires au fonctionnement du site (panier, sécurité, préférences de
           langue). Ils ne peuvent pas être désactivés.
         </li>
         <li>
-          <strong>Cookies de mesure d&apos;audience</strong> — nous aident à comprendre comment le site est utilisé afin
+          <strong>Cookies de mesure d&apos;audience</strong> : nous aident à comprendre comment le site est utilisé afin
           de l&apos;améliorer (Google Analytics 4).
         </li>
         <li>
-          <strong>Cookies marketing</strong> — permettent de vous proposer des contenus et publicités adaptés, sur notre
+          <strong>Cookies marketing</strong> : permettent de vous proposer des contenus et publicités adaptés, sur notre
           site et sur d&apos;autres sites (pixel Meta, pour Facebook et Instagram).
         </li>
       </ul>

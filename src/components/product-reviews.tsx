@@ -1,6 +1,7 @@
-import { Star } from "lucide-react";
 import ReviewForm from "./review-form";
 import ReviewsList, { type Review } from "./reviews-list";
+import StarRating from "./star-rating";
+import { TRUSTPILOT_RATING, ratingLabel } from "@/lib/social-proof";
 
 /**
  * Section avis produit (pleine largeur) : note globale + bouton « Écrire un avis »
@@ -12,10 +13,10 @@ export const REVIEWS: Record<string, Review[]> = {
     { name: "Marie-elise M.", date: "11/12/2025", verified: true, photo: "https://images.loox.io/uploads/2025/12/11/wgf-wkwUS.jpg", text: "Première fois que je teste ce genre de produit et je dois dire que la promesse est tenue :\n- j'ai plus d'énergie\n- ma peau semble plus lisse\n- je me concentre plus facilement sur la durée\n- j'ai eu des journées bien productives !\n- mon stress semble être moins présent 🤩", textEn: "First time I try this kind of product and I have to say the promise is kept:\n- I have more energy\n- my skin looks smoother\n- I concentrate more easily over time\n- I've had really productive days!\n- my stress seems less present 🤩" },
     { name: "Rabenja T.", date: "25/09/2025", verified: true, text: "Mélanger avec un déca le matin, et sur la journée, ça aide vraiment à dissiper le brouillard mental, et à récupérer physiquement 💫", textEn: "Mixed with a decaf in the morning, and throughout the day, it really helps clear the mental fog and recover physically 💫" },
     { name: "Marion C.", date: "05/05/2025", text: "J'ai intégré mushglow à ma routine et je suis super contente des effets. Très facile à utiliser. Je recommande vivement !", textEn: "I added MushGlow to my routine and I'm super happy with the effects. Very easy to use. Highly recommend!" },
-    { name: "Justine Q.", date: "23/04/2025", verified: true, text: "Suis vraiment convaincue, focus, énergie et ma peau semble avoir plus d'éclat.", textEn: "I'm really convinced — focus, energy, and my skin seems to have more glow." },
+    { name: "Justine Q.", date: "23/04/2025", verified: true, text: "Suis vraiment convaincue, focus, énergie et ma peau semble avoir plus d'éclat.", textEn: "I'm really convinced: focus, energy, and my skin seems to have more glow." },
     { name: "Anais M.", date: "20/04/2025", verified: true, text: "Une dose par jour, trop facile à mélanger dans mon smoothie. J'adore mushglow !", textEn: "One dose a day, so easy to mix into my smoothie. I love MushGlow!" },
     { name: "Marion F.", date: "19/04/2025", verified: true, text: "Je me sens juste mieux depuis que j'ai intégré mushglow à ma routine. Plus posée, et beaucoup plus d'énergie.", textEn: "I just feel better since I added MushGlow to my routine. Calmer, and much more energy." },
-    { name: "Orianne G.", date: "19/04/2025", verified: true, text: "Je suis hyper contente, j'ai arrêté le café récemment et je cherchais quelque chose qui me donne de l'énergie sans le crash après café. Franchement top !", textEn: "I'm really happy — I recently quit coffee and was looking for something to give me energy without the coffee crash. Honestly great!" },
+    { name: "Orianne G.", date: "19/04/2025", verified: true, text: "Je suis hyper contente, j'ai arrêté le café récemment et je cherchais quelque chose qui me donne de l'énergie sans le crash après café. Franchement top !", textEn: "I'm really happy: I recently quit coffee and was looking for something to give me energy without the coffee crash. Honestly great!" },
     { name: "Sophie B.", date: "18/04/2025", verified: true, text: "Je ne saurais pas expliquer exactement comment, mais je me sens juste mieux. Du coup je prends une cuillère tous les jours.", textEn: "I couldn't explain exactly how, but I just feel better. So I take a spoonful every day." },
     { name: "Jade T.", date: "16/04/2025", verified: true, text: "C'est plus économique et le produit est vraiment bien ! Je recommande :)", textEn: "It's more economical and the product is really good! I recommend :)" },
     { name: "Laura S.", date: "13/04/2025", verified: true, text: "J'adore le fait qu'il y ait 6 ingrédients en une dose, avec le collagène en plus c'est top !", textEn: "I love that there are 6 ingredients in one dose, and with collagen on top it's great!" },
@@ -25,11 +26,11 @@ export const REVIEWS: Record<string, Review[]> = {
     { name: "Victor J.", date: "04/04/2025", verified: true, text: "Franchement j'adore ! Je ressens vraiment les effets surtout après une semaine.", textEn: "Honestly I love it! I really feel the effects, especially after a week." },
     { name: "Zoé C.", date: "23/03/2025", verified: true, text: "C'est top je recommande !", textEn: "It's great, I recommend!" },
     { name: "Guillaume B.", date: "17/03/2025", verified: true, text: "Je le prends tous les matins dans mon café. J'ai effectivement moins de stress et je suis plus concentré.", textEn: "I take it every morning in my coffee. I do have less stress and I'm more focused." },
-    { name: "Marie L.", date: "15/03/2025", verified: true, text: "Je prenais trop de compléments différents, là plus besoin d'avaler trop de pilules ! Top !", textEn: "I used to take too many different supplements — now no need to swallow so many pills! Great!" },
+    { name: "Marie L.", date: "15/03/2025", verified: true, text: "Je prenais trop de compléments différents, là plus besoin d'avaler trop de pilules ! Top !", textEn: "I used to take too many different supplements, and now no need to swallow so many pills! Great!" },
     { name: "Paola H.", date: "13/03/2025", verified: true, text: "J'ai clairement vu un avant/après sur ma peau et mon mood. C'est devenu mon petit rituel.", textEn: "I clearly saw a before/after on my skin and my mood. It's become my little ritual." },
     { name: "Hugo C.", date: "11/03/2025", verified: true, text: "Je récupère mieux après le sport, je me sens focus toute la journée.", textEn: "I recover better after sport, I feel focused all day." },
     { name: "Arthur D.", date: "08/03/2025", verified: true, text: "Franchement trop bien ! Je vais refaire une cure.", textEn: "Honestly so good! I'm going to do another course." },
-    { name: "Jeanne V.", date: "06/03/2025", verified: true, text: "Je pensais que c'était du bluff, mais non. J'ai vraiment ressenti les effets, suis moins fatiguée, moins stressée et mon teint est au top !", textEn: "I thought it was a bluff, but no. I really felt the effects — less tired, less stressed and my complexion is great!" },
+    { name: "Jeanne V.", date: "06/03/2025", verified: true, text: "Je pensais que c'était du bluff, mais non. J'ai vraiment ressenti les effets, suis moins fatiguée, moins stressée et mon teint est au top !", textEn: "I thought it was a bluff, but no. I really felt the effects: less tired, less stressed and my complexion is great!" },
     { name: "Lucas T.", date: "04/03/2025", verified: true, text: "Trop bien d'avoir tout en un. J'ai viré mes autres compléments. Et le goût passe nickel dans mon smoothie.", textEn: "So good to have everything in one. I ditched my other supplements. And the taste is perfect in my smoothie." },
     { name: "Julie M.", date: "02/03/2025", verified: true, text: "Je mets MushGlow dans mon matcha, je suis accro.", textEn: "I put MushGlow in my matcha, I'm hooked." },
   ],
@@ -37,7 +38,7 @@ export const REVIEWS: Record<string, Review[]> = {
     { name: "Aleksandra N.", date: "18/05/2026", verified: true, text: "Il faut 15 jours d'utilisation minimum pour que ça marche. Les effets sont très satisfaisants.", textEn: "You need at least 15 days of use for it to work. The effects are very satisfying." },
     { name: "Sandrine A.", date: "21/12/2025", verified: true, text: "Produit au top !!!", textEn: "Top product!!!" },
     { name: "Alice J.", date: "22/04/2025", text: "WOW j'ai vu une vrai différence sur mon sommeil. Bravo BIEN !", textEn: "WOW I saw a real difference in my sleep. Well done BIEN!" },
-    { name: "Catherine T.", date: "20/04/2025", text: "J'ai toujours eu beaucoup d'anxiété, le mélange d'ingrédients est top je me sens beaucoup mieux !", textEn: "I've always had a lot of anxiety — the blend of ingredients is great, I feel much better!" },
+    { name: "Catherine T.", date: "20/04/2025", text: "J'ai toujours eu beaucoup d'anxiété, le mélange d'ingrédients est top je me sens beaucoup mieux !", textEn: "I've always had a lot of anxiety, and the blend of ingredients is great, I feel much better!" },
     { name: "Marion F.", date: "19/04/2025", verified: true, text: "Vraiment BIEN !", textEn: "Really BIEN!" },
     { name: "Eva S.", date: "13/04/2025", verified: true, text: "Bon goût et trop contente des effets !", textEn: "Good taste and so happy with the effects!" },
     { name: "Camille K.", date: "12/04/2025", verified: true, text: "Je viens de finir la cure, je vais en recommander une asap !", textEn: "I just finished the course, I'll reorder one asap!" },
@@ -72,7 +73,7 @@ export const REVIEWS: Record<string, Review[]> = {
     { name: "Hugo C.", date: "11/03/2025", verified: true, text: "J'aime le fait que ce soit naturel et que ça marche. Juste ce qu'il faut pour rester dans le flow.", textEn: "I like that it's natural and that it works. Just what I need to stay in the flow." },
     { name: "Arthur D.", date: "08/03/2025", verified: true, text: "Je le prends avant les réunions ou quand j'ai beaucoup à faire. Mental plus net, pas de crash.", textEn: "I take it before meetings or when I have a lot to do. Clearer mind, no crash." },
     { name: "Maria V.", date: "06/03/2025", verified: true, text: "Je sens la diff quand je l'oublie. J'suis plus lente, moins claire. Ça booste sans m'énerver.", textEn: "I feel the difference when I forget it. I'm slower, less clear. It boosts me without making me jittery." },
-    { name: "Enzo T.", date: "04/03/2025", verified: true, text: "J'ai un cerveau qui part dans tous les sens, ça m'aide à rester focus sans stress.", textEn: "My brain goes in every direction — it helps me stay focused without stress." },
+    { name: "Enzo T.", date: "04/03/2025", verified: true, text: "J'ai un cerveau qui part dans tous les sens, ça m'aide à rester focus sans stress.", textEn: "My brain goes in every direction, and it helps me stay focused without stress." },
     { name: "Caroune M.", date: "02/03/2025", verified: true, text: "Je prends un Focus le matin avant de bosser, j'suis beaucoup + concentrée. Moins dans le brouillard.", textEn: "I take a Focus in the morning before working, I'm much more focused. Less foggy." },
   ],
   POWER: [
@@ -90,7 +91,7 @@ export const REVIEWS: Record<string, Review[]> = {
     { name: "Lola H.", date: "13/03/2025", verified: true, text: "J'ai bien calmé le café grâce à ces gummies, franchement BIEN :)", textEn: "I really cut down my coffee thanks to these gummies, honestly BIEN :)" },
     { name: "Matthieu G.", date: "11/03/2025", verified: true, text: "Le goût est trop bon ! Du coup je n'oublie jamais de le prendre.", textEn: "The taste is so good! So I never forget to take it." },
     { name: "Jean D.", date: "08/03/2025", verified: true, text: "Je le prends avant mes séances de sport ou quand j'ai besoin d'envoyer. Franchement, ça aide.", textEn: "I take it before my workouts or when I need to deliver. Honestly, it helps." },
-    { name: "Margaux V.", date: "06/03/2025", verified: true, text: "Je sens la diff quand je l'oublie. J'ai moins d'énergie, ça marche !", textEn: "I feel the difference when I forget it. I have less energy — it works!" },
+    { name: "Margaux V.", date: "06/03/2025", verified: true, text: "Je sens la diff quand je l'oublie. J'ai moins d'énergie, ça marche !", textEn: "I feel the difference when I forget it. I have less energy: it works!" },
     { name: "Thomas T.", date: "04/03/2025", verified: true, text: "Je prends Power le matin quand j'ai une grosse journée, ça me donne un bon coup de boost !", textEn: "I take Power in the morning when I have a big day, it gives me a good boost!" },
     { name: "Justine M.", date: "02/03/2025", verified: true, text: "Top produit, j'ai trop la forme. Je reco !", textEn: "Top product, I feel great. Recommend!" },
   ],
@@ -110,11 +111,12 @@ export default function ProductReviews({
   const reviews = productKey ? REVIEWS[productKey] ?? [] : [];
   if (reviews.length === 0) return null;
   const en = lang === "en";
-  // Le titre précise « ce produit » : cette note (Loox) porte sur le produit
-  // affiché, à la différence de la note boutique Trustpilot du header.
+  // Une seule note sur toute la page : celle du header (Trustpilot boutique).
+  // La fiche affichait « 5,0 » avec cinq étoiles pleines pendant que le header
+  // annonçait 4,4 — trois chiffres différents au même endroit (retour client).
   const t = en
-    ? { title: "Reviews of this product", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: " for this product" }
-    : { title: "Les avis sur ce produit", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " sur ce produit" };
+    ? { title: "Reviews of this product", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: " for this product", shopRating: "Shop rating on Trustpilot" }
+    : { title: "Les avis sur ce produit", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " sur ce produit", shopRating: "Note de la boutique sur Trustpilot" };
 
   return (
     <section className="mt-16 sm:mt-24 border-t border-border pt-12 sm:pt-16">
@@ -124,10 +126,11 @@ export default function ProductReviews({
       {/* En-tête : note globale + CTA */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-5">
         <div className="flex items-center gap-4">
-          <span className="font-display text-5xl text-black leading-none">{en ? "5.0" : "5,0"}</span>
+          <span className="font-display text-5xl text-black leading-none">{ratingLabel(lang)}</span>
           <span>
-            <span className="inline-flex text-bien-star">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-5 w-5 fill-bien-star" />)}</span>
-            <span className="mt-1 block text-sm text-black/60">{t.basedPre}<span className="font-semibold text-black">{reviews.length} {t.reviewsWord}</span>{t.basedSuf}</span>
+            <StarRating value={TRUSTPILOT_RATING} className="h-5 w-5" />
+            <span className="mt-1 block text-sm text-black/60">{t.shopRating}</span>
+            <span className="block text-sm text-black/60">{t.basedPre}<span className="font-semibold text-black">{reviews.length} {t.reviewsWord}</span>{t.basedSuf}</span>
           </span>
         </div>
         <ReviewForm productHandle={productHandle} productTitle={productTitle} lang={lang} />

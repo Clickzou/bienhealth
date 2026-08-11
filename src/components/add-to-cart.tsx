@@ -16,38 +16,59 @@ export default function AddToCart({
   lang,
   className,
   children,
+  /** Affiche un sélecteur 1 / 2 / 3 devant le bouton (fiche produit). */
+  quantitySelector = false,
 }: {
   item: Omit<CartItem, "qty">;
   lang: string;
   className?: string;
   children: React.ReactNode;
+  quantitySelector?: boolean;
 }) {
   const [open, setOpen] = useState(false);
+  const [qty, setQty] = useState(1);
   const en = lang === "en";
   const t = en
-    ? { added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart", aria: "Item added to cart" }
-    : { added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier", aria: "Article ajouté au panier" };
+    ? { added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart", aria: "Item added to cart", quantity: "Quantity" }
+    : { added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier", aria: "Article ajouté au panier", quantity: "Quantité" };
 
   function add() {
-    addToCart(item);
+    addToCart(item, qty);
     // Conversion Meta (ne part que si le pixel est chargé, donc après consentement).
     trackMeta("AddToCart", {
       content_ids: [item.handle],
       content_name: item.title,
       content_type: "product",
-      value: item.price,
+      value: item.price * qty,
       currency: item.currency || "EUR",
     });
     setOpen(true);
   }
 
-  const price = new Intl.NumberFormat(en ? "en-IE" : "fr-FR", { style: "currency", currency: item.currency || "EUR" }).format(item.price);
+  const price = new Intl.NumberFormat(en ? "en-IE" : "fr-FR", { style: "currency", currency: item.currency || "EUR" }).format(item.price * qty);
 
   return (
     <>
-      <button type="button" onClick={add} className={className}>
-        {children}
-      </button>
+      <div className={quantitySelector ? "flex items-center gap-3" : "contents"}>
+        {quantitySelector && (
+          <div className="shrink-0 inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>
+            {[1, 2, 3].map((n) => (
+              <button
+                key={n}
+                type="button"
+                onClick={() => setQty(n)}
+                aria-pressed={qty === n}
+                className={`h-9 w-9 rounded-full text-sm font-bold transition ${qty === n ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
+        )}
+        <button type="button" onClick={add} className={className}>
+          {children}
+        </button>
+      </div>
 
       {open && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t.aria}>
@@ -73,7 +94,7 @@ export default function AddToCart({
               </div>
               <div className="min-w-0">
                 <p className="font-display text-black leading-tight truncate">{item.title}</p>
-                <p className="text-sm text-black/60">{price}</p>
+                <p className="text-sm text-black/60">{qty > 1 && <span className="font-semibold text-black">×{qty} · </span>}{price}</p>
               </div>
             </div>
 

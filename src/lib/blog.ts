@@ -53,7 +53,7 @@ export const ARTICLES: Article[] = [
     blocks: [
       { h2: "Qu'est-ce qu'un champignon adaptogène ?" },
       {
-        p: "Un <strong>adaptogène</strong> est une substance naturelle — plante ou champignon — qui aide le corps à résister aux différents stress (physique, mental, environnemental) en favorisant un retour à l'équilibre, sans surstimuler l'organisme. Les <strong>champignons adaptogènes</strong> sont une catégorie de champignons fonctionnels reconnus pour cette capacité à soutenir la résilience de l'organisme.",
+        p: "Un <strong>adaptogène</strong> est une substance naturelle (plante ou champignon) qui aide le corps à résister aux différents stress (physique, mental, environnemental) en favorisant un retour à l'équilibre, sans surstimuler l'organisme. Les <strong>champignons adaptogènes</strong> sont une catégorie de champignons fonctionnels reconnus pour cette capacité à soutenir la résilience de l'organisme.",
       },
       {
         p: "Contrairement à un excitant comme la caféine, un adaptogène agit en douceur et sur la durée : il module la réponse au stress plutôt que de la forcer. C'est pourquoi ces champignons se prennent idéalement en cure régulière, pour des effets progressifs et durables.",
@@ -64,11 +64,11 @@ export const ARTICLES: Article[] = [
       },
       {
         ul: [
-          "<strong>Gestion du stress et de l'anxiété</strong> — en aidant à réguler la réponse au stress.",
-          "<strong>Concentration et clarté mentale</strong> — soutien de la fonction cognitive et de la mémoire.",
-          "<strong>Énergie et endurance</strong> — meilleure tolérance à l'effort, sans coup de barre.",
-          "<strong>Immunité</strong> — richesse en composés antioxydants et bêta-glucanes.",
-          "<strong>Beauté de la peau</strong> — protection cellulaire face au stress oxydatif.",
+          "<strong>Gestion du stress et de l'anxiété</strong> : en aidant à réguler la réponse au stress.",
+          "<strong>Concentration et clarté mentale</strong> : soutien de la fonction cognitive et de la mémoire.",
+          "<strong>Énergie et endurance</strong> : meilleure tolérance à l'effort, sans contre-coup.",
+          "<strong>Immunité</strong> : richesse en composés antioxydants et bêta-glucanes.",
+          "<strong>Beauté de la peau</strong> : protection cellulaire face au stress oxydatif.",
         ],
       },
       {
@@ -112,17 +112,17 @@ export const ARTICLES: Article[] = [
       },
       {
         ul: [
-          "<strong>En gummies</strong> — pratiques, gourmands et faciles à intégrer, ils offrent une meilleure observance que les gélules. Découvrez nos <a href=\"" +
+          "<strong>En gummies</strong> : pratiques, gourmands et faciles à intégrer, ils offrent une meilleure observance que les gélules. Découvrez nos <a href=\"" +
             l("/collections/gummies") +
             "\">gummies adaptogènes</a>.",
-          "<strong>En poudre</strong> — un format tout-en-un à mélanger dans un café, un matcha ou un smoothie, comme notre <a href=\"" +
+          "<strong>En poudre</strong> : un format tout-en-un à mélanger dans un café, un matcha ou un smoothie, comme notre <a href=\"" +
             l("/collections/nos-poudres") +
             "\">poudre MushGlow</a>.",
-          "<strong>En infusion ou café</strong> — pour ceux qui aiment les rituels chauds.",
+          "<strong>En infusion ou café</strong> : pour ceux qui aiment les rituels chauds.",
         ],
       },
       {
-        p: "Dans tous les cas, la <strong>régularité prime</strong> : comptez une cure d'au moins 30 jours pour ressentir pleinement les bienfaits. Privilégiez des produits aux <strong>dosages transparents</strong>, à base d'actifs de qualité et fabriqués selon des normes strictes — comme les compléments <strong>BIEN</strong>, formulés et fabriqués en France.",
+        p: "Dans tous les cas, la <strong>régularité prime</strong> : comptez une cure d'au moins 30 jours pour ressentir pleinement les bienfaits. Privilégiez des produits aux <strong>dosages transparents</strong>, à base d'actifs de qualité et fabriqués selon des normes strictes, comme les compléments <strong>BIEN health</strong>, formulés et fabriqués en France.",
       },
       { h2: "Y a-t-il des précautions à prendre ?" },
       {
@@ -165,16 +165,16 @@ export const ARTICLES: Article[] = [
         "<strong>Adaptogenic mushrooms</strong> are enjoying growing popularity, and it's no coincidence. Used for centuries in traditional medicine, these functional mushrooms help the body adapt better to stress, while supporting energy, focus and overall balance. In this complete guide, we explain what adaptogenic mushrooms are, their benefits, the most studied ones (Lion's Mane, Reishi, Cordyceps, Chaga) and how to easily add them to your routine.",
       blocks: [
         { h2: "What is an adaptogenic mushroom?" },
-        { p: "An <strong>adaptogen</strong> is a natural substance — plant or mushroom — that helps the body resist different kinds of stress (physical, mental, environmental) by promoting a return to balance, without over-stimulating the body. <strong>Adaptogenic mushrooms</strong> are a category of functional mushrooms recognised for this ability to support the body's resilience." },
+        { p: "An <strong>adaptogen</strong> is a natural substance (plant or mushroom) that helps the body resist different kinds of stress (physical, mental, environmental) by promoting a return to balance, without over-stimulating the body. <strong>Adaptogenic mushrooms</strong> are a category of functional mushrooms recognised for this ability to support the body's resilience." },
         { p: "Unlike a stimulant such as caffeine, an adaptogen acts gently and over time: it modulates the stress response rather than forcing it. That's why these mushrooms are ideally taken as a regular course, for gradual, lasting effects." },
         { h2: "What are the benefits of adaptogenic mushrooms?" },
         { p: "Depending on the mushroom, the benefits vary, but several broad areas are supported by a growing body of studies:" },
         { ul: [
-          "<strong>Stress and anxiety management</strong> — by helping regulate the stress response.",
-          "<strong>Focus and mental clarity</strong> — support for cognitive function and memory.",
-          "<strong>Energy and stamina</strong> — better tolerance to effort, without the crash.",
-          "<strong>Immunity</strong> — rich in antioxidant compounds and beta-glucans.",
-          "<strong>Skin beauty</strong> — cellular protection against oxidative stress.",
+          "<strong>Stress and anxiety management</strong>: by helping regulate the stress response.",
+          "<strong>Focus and mental clarity</strong>: support for cognitive function and memory.",
+          "<strong>Energy and stamina</strong>: better tolerance to effort, without the rebound.",
+          "<strong>Immunity</strong>: rich in antioxidant compounds and beta-glucans.",
+          "<strong>Skin beauty</strong>: cellular protection against oxidative stress.",
         ] },
         { p: "These effects are not those of a \"miracle product\": they build up with regularity and a good lifestyle. Adaptogenic mushroom supplements come as support, not a substitute, for a varied diet." },
         { h2: "The 4 most studied adaptogenic mushrooms" },
@@ -190,11 +190,11 @@ export const ARTICLES: Article[] = [
         { h2: "How to take adaptogenic mushrooms?" },
         { p: "There are several formats, to choose according to your lifestyle:" },
         { ul: [
-          "<strong>As gummies</strong> — practical, tasty and easy to fit in, they offer better adherence than capsules. Discover our <a href=\"" + le("/collections/gummies") + "\">adaptogenic gummies</a>.",
-          "<strong>As a powder</strong> — an all-in-one format to mix into a coffee, matcha or smoothie, like our <a href=\"" + le("/collections/nos-poudres") + "\">MushGlow powder</a>.",
-          "<strong>As an infusion or coffee</strong> — for those who love warm rituals.",
+          "<strong>As gummies</strong>: practical, tasty and easy to fit in, they offer better adherence than capsules. Discover our <a href=\"" + le("/collections/gummies") + "\">adaptogenic gummies</a>.",
+          "<strong>As a powder</strong>: an all-in-one format to mix into a coffee, matcha or smoothie, like our <a href=\"" + le("/collections/nos-poudres") + "\">MushGlow powder</a>.",
+          "<strong>As an infusion or coffee</strong>: for those who love warm rituals.",
         ] },
-        { p: "In all cases, <strong>regularity is key</strong>: allow a course of at least 30 days to fully feel the benefits. Favour products with <strong>transparent dosages</strong>, made from quality actives to strict standards — like <strong>BIEN</strong> supplements, formulated and made in France." },
+        { p: "In all cases, <strong>regularity is key</strong>: allow a course of at least 30 days to fully feel the benefits. Favour products with <strong>transparent dosages</strong>, made from quality actives to strict standards, like <strong>BIEN health</strong> supplements, formulated and made in France." },
         { h2: "Are there any precautions?" },
         { p: "Adaptogenic mushrooms are generally well tolerated. As a precaution, they are <strong>not recommended for pregnant or breastfeeding women</strong> or people on medical treatment without a healthcare professional's advice. Always respect the recommended daily dose and keep products out of reach of children." },
         { h2: "Where to start with BIEN?" },
@@ -224,7 +224,7 @@ export const ARTICLES: Article[] = [
       "Charge mentale, tensions, nuits agitées : le stress s'invite dans le quotidien de chacun. Bonne nouvelle, il existe de nombreuses façons de <strong>gérer le stress naturellement</strong>, sans médicament. Respiration, mode de vie, alimentation et plantes adaptogènes : voici 7 solutions concrètes et éprouvées pour apaiser le mental et retrouver un vrai sentiment de sérénité.",
     blocks: [
       { h2: "1. Apprendre à respirer (vraiment)" },
-      { p: "La respiration profonde est l'outil anti-stress le plus immédiat. La cohérence cardiaque — inspirer 5 secondes, expirer 5 secondes, pendant 5 minutes — aide à faire baisser la fréquence cardiaque et à calmer le système nerveux. Un réflexe simple à adopter dès que la pression monte." },
+      { p: "La respiration profonde est l'outil anti-stress le plus immédiat. La cohérence cardiaque (inspirer 5 secondes, expirer 5 secondes, pendant 5 minutes) aide à faire baisser la fréquence cardiaque et à calmer le système nerveux. Un réflexe simple à adopter dès que la pression monte." },
       { h2: "2. Bouger pour évacuer" },
       { p: "L'activité physique libère des endorphines et réduit le taux de cortisol, l'hormone du stress. Nul besoin de performances : une marche quotidienne, du yoga ou quelques étirements suffisent à relâcher les tensions accumulées." },
       { h2: "3. Protéger son sommeil" },
@@ -236,7 +236,7 @@ export const ARTICLES: Article[] = [
       { h2: "6. Se ménager des vraies pauses" },
       { p: "Méditation, nature, lecture, temps sans écran : le cerveau a besoin de récupérer. Quelques minutes de pause consciente par jour font une réelle différence sur le niveau de stress ressenti." },
       { h2: "7. Installer une routine régulière" },
-      { p: "La régularité rassure le système nerveux. Une routine du soir apaisante — tisane, respiration, deux gummies CALM une heure avant le coucher — envoie au corps le signal qu'il peut relâcher. Comme pour les adaptogènes, les bénéfices s'installent avec le temps, sur une cure d'au moins 30 jours." },
+      { p: "La régularité rassure le système nerveux. Une routine du soir apaisante (tisane, respiration, deux gummies CALM une heure avant le coucher) envoie au corps le signal qu'il peut relâcher. Comme pour les adaptogènes, les bénéfices s'installent avec le temps, sur une cure d'au moins 30 jours." },
       { h2: "Par où commencer ?" },
       { p: "Combinez ces leviers selon votre mode de vie. Si vous cherchez un soutien naturel ciblé, faites le <a href=\"" + l("/diagnostic") + "\">diagnostic BIEN</a> ou découvrez la collection <a href=\"" + l("/collections/serenite") + "\">Sérénité &amp; Sommeil</a>." },
     ],
@@ -251,10 +251,10 @@ export const ARTICLES: Article[] = [
       metaDescription: "How to manage stress naturally? Breathing, sleep, adaptogenic plants (ashwagandha, reishi)… 7 concrete, natural solutions to regain calm.",
       excerpt: "Breathing, physical activity, sleep, adaptogens… 7 natural, concrete solutions to reduce stress and regain your everyday calm.",
       category: "Sleep & stress",
-      intro: "Mental load, tension, restless nights: stress creeps into everyone's daily life. Good news — there are many ways to <strong>manage stress naturally</strong>, without medication. Breathing, lifestyle, diet and adaptogenic plants: here are 7 concrete, proven solutions to soothe the mind and regain a real sense of calm.",
+      intro: "Mental load, tension, restless nights: stress creeps into everyone's daily life. Good news: there are many ways to <strong>manage stress naturally</strong>, without medication. Breathing, lifestyle, diet and adaptogenic plants: here are 7 concrete, proven solutions to soothe the mind and regain a real sense of calm.",
       blocks: [
         { h2: "1. Learn to breathe (properly)" },
-        { p: "Deep breathing is the most immediate anti-stress tool. Cardiac coherence — inhale for 5 seconds, exhale for 5 seconds, for 5 minutes — helps lower your heart rate and calm the nervous system. A simple reflex to adopt whenever pressure builds." },
+        { p: "Deep breathing is the most immediate anti-stress tool. Cardiac coherence (inhale for 5 seconds, exhale for 5 seconds, for 5 minutes) helps lower your heart rate and calm the nervous system. A simple reflex to adopt whenever pressure builds." },
         { h2: "2. Move to release" },
         { p: "Physical activity releases endorphins and lowers cortisol, the stress hormone. No need for performance: a daily walk, some yoga or a few stretches are enough to release accumulated tension." },
         { h2: "3. Protect your sleep" },
@@ -266,7 +266,7 @@ export const ARTICLES: Article[] = [
         { h2: "6. Give yourself real breaks" },
         { p: "Meditation, nature, reading, screen-free time: the brain needs to recover. A few minutes of mindful pause a day make a real difference to perceived stress levels." },
         { h2: "7. Set up a regular routine" },
-        { p: "Regularity reassures the nervous system. A soothing evening routine — herbal tea, breathing, two CALM gummies an hour before bed — sends the body the signal that it can let go. As with adaptogens, the benefits build over time, on a course of at least 30 days." },
+        { p: "Regularity reassures the nervous system. A soothing evening routine (herbal tea, breathing, two CALM gummies an hour before bed) sends the body the signal that it can let go. As with adaptogens, the benefits build over time, on a course of at least 30 days." },
         { h2: "Where to start?" },
         { p: "Combine these levers according to your lifestyle. If you're looking for targeted natural support, take the <a href=\"" + le("/diagnostic") + "\">BIEN quiz</a> or discover the <a href=\"" + le("/collections/serenite") + "\">Calm &amp; Sleep</a> collection." },
       ],
@@ -363,7 +363,7 @@ export const ARTICLES: Article[] = [
       { p: "Manque de sommeil, stress chronique, alimentation déséquilibrée, sédentarité : les causes d'une baisse d'énergie sont souvent cumulées. Identifier la vôtre est la première étape. Si la fatigue s'installe durablement, lisez notre article sur la <a href=\"" + l("/blog/fatigue-chronique-solution") + "\">fatigue chronique</a>." },
       { h2: "Les fondations d'une énergie durable" },
       { h3: "Un sommeil de qualité" },
-      { p: "Rien ne remplace des nuits réparatrices. Régularité des horaires et bonne hygiène de sommeil rechargent réellement les batteries — bien plus qu'un énième café." },
+      { p: "Rien ne remplace des nuits réparatrices. Régularité des horaires et bonne hygiène de sommeil rechargent réellement les batteries, bien plus qu'un énième café." },
       { h3: "Une alimentation qui soutient" },
       { p: "Privilégiez les sucres lents, les protéines et les aliments riches en fer et en magnésium. Évitez les pics de sucre rapide, responsables des coups de barre qui suivent." },
       { h3: "Bouger, même un peu" },
@@ -390,7 +390,7 @@ export const ARTICLES: Article[] = [
         { p: "Lack of sleep, chronic stress, an unbalanced diet, a sedentary lifestyle: the causes of an energy dip are often cumulative. Identifying yours is the first step. If fatigue sets in for the long term, read our article on <a href=\"" + le("/blog/fatigue-chronique-solution") + "\">chronic fatigue</a>." },
         { h2: "The foundations of lasting energy" },
         { h3: "Quality sleep" },
-        { p: "Nothing replaces restorative nights. Regular hours and good sleep hygiene truly recharge the batteries — far more than yet another coffee." },
+        { p: "Nothing replaces restorative nights. Regular hours and good sleep hygiene truly recharge the batteries, far more than yet another coffee." },
         { h3: "A supportive diet" },
         { p: "Favour slow-release carbs, protein and foods rich in iron and magnesium. Avoid fast-sugar spikes, responsible for the slumps that follow." },
         { h3: "Move, even a little" },
@@ -423,7 +423,7 @@ export const ARTICLES: Article[] = [
       "On les retrouve partout dans les rayons bien-être, mais <strong>qu'est-ce qu'un adaptogène</strong>, au juste ? Derrière ce terme se cachent des plantes et des champignons capables d'aider l'organisme à mieux résister au stress. Définition, mode d'action et principales plantes adaptogènes : voici tout ce qu'il faut savoir.",
     blocks: [
       { h2: "Définition d'un adaptogène" },
-      { p: "Un <strong>adaptogène</strong> est une substance naturelle qui augmente la capacité de l'organisme à s'adapter aux stress de toute nature — physique, mental ou environnemental — en favorisant un retour à l'équilibre. Pour mériter ce nom, un actif doit être non toxique, agir de façon non spécifique et aider à normaliser les fonctions de l'organisme." },
+      { p: "Un <strong>adaptogène</strong> est une substance naturelle qui augmente la capacité de l'organisme à s'adapter aux stress de toute nature (physique, mental ou environnemental) en favorisant un retour à l'équilibre. Pour mériter ce nom, un actif doit être non toxique, agir de façon non spécifique et aider à normaliser les fonctions de l'organisme." },
       { h2: "Comment agissent-ils ?" },
       { p: "Contrairement à un stimulant qui pousse l'organisme, l'adaptogène le régule. Il agit notamment sur l'axe du stress et la production de cortisol, aidant le corps à mieux encaisser les pics de tension puis à récupérer. D'où une action douce, progressive et durable." },
       { h2: "Les principales plantes adaptogènes" },
@@ -450,7 +450,7 @@ export const ARTICLES: Article[] = [
       intro: "They're everywhere in the wellness aisles, but <strong>what is an adaptogen</strong>, exactly? Behind the term are plants and mushrooms able to help the body resist stress better. Definition, mode of action and main adaptogenic plants: here's everything you need to know.",
       blocks: [
         { h2: "Definition of an adaptogen" },
-        { p: "An <strong>adaptogen</strong> is a natural substance that increases the body's ability to adapt to stress of all kinds — physical, mental or environmental — by promoting a return to balance. To earn the name, an active must be non-toxic, act non-specifically and help normalise the body's functions." },
+        { p: "An <strong>adaptogen</strong> is a natural substance that increases the body's ability to adapt to stress of all kinds (physical, mental or environmental) by promoting a return to balance. To earn the name, an active must be non-toxic, act non-specifically and help normalise the body's functions." },
         { h2: "How do they work?" },
         { p: "Unlike a stimulant that pushes the body, an adaptogen regulates it. It acts in particular on the stress axis and cortisol production, helping the body cope better with tension peaks and then recover. Hence a gentle, gradual and lasting action." },
         { h2: "The main adaptogenic plants" },
@@ -489,15 +489,15 @@ export const ARTICLES: Article[] = [
       { p: "Le collagène est la protéine la plus abondante du corps. C'est lui qui donne à la peau sa fermeté, son élasticité et sa capacité à retenir l'eau. Problème : sa production diminue naturellement avec l'âge, ce qui se traduit par une peau moins tonique et plus sèche." },
       { h2: "Les bienfaits du collagène pour la peau" },
       { ul: [
-        "<strong>Hydratation</strong> — il aide la peau à retenir l'eau et à rester souple.",
-        "<strong>Élasticité et fermeté</strong> — il soutient la structure et le rebond cutané.",
-        "<strong>Éclat</strong> — une peau mieux nourrie paraît plus lumineuse.",
-        "<strong>Cheveux et ongles</strong> — le collagène contribue aussi à leur solidité.",
+        "<strong>Hydratation</strong> : il aide la peau à retenir l'eau et à rester souple.",
+        "<strong>Élasticité et fermeté</strong> : il soutient la structure et le rebond cutané.",
+        "<strong>Éclat</strong> : une peau mieux nourrie paraît plus lumineuse.",
+        "<strong>Cheveux et ongles</strong> : le collagène contribue aussi à leur solidité.",
       ] },
       { h2: "Comment favoriser son collagène ?" },
       { p: "Côté assiette : misez sur la vitamine C (agrumes, kiwi, poivron), les protéines et les antioxydants, qui soutiennent la synthèse et protègent le collagène existant. Limitez le sucre et l'exposition solaire non protégée, qui l'accélèrent le vieillissement cutané." },
       { h2: "Le collagène en complément" },
-      { p: "Les compléments apportent du collagène directement assimilable. Notre poudre <a href=\"" + l("/products/mushglow") + "\">MushGlow</a> contient du collagène de membrane d'œuf, associé au <strong>Chaga</strong> — champignon antioxydant qui protège les cellules du stress oxydatif — pour un effet beauté complet, de l'intérieur. Une cuillère par jour dans votre boisson suffit." },
+      { p: "Les compléments apportent du collagène directement assimilable. Notre poudre <a href=\"" + l("/products/mushglow") + "\">MushGlow</a> contient du collagène de membrane d'œuf, associé au <strong>Chaga</strong>, champignon antioxydant qui protège les cellules du stress oxydatif, pour un effet beauté complet, de l'intérieur. Une cuillère par jour dans votre boisson suffit." },
       { h2: "Par où commencer ?" },
       { p: "Adoptez un rituel régulier et une routine beauté globale. Découvrez la collection <a href=\"" + l("/collections/beaute-et-bien-etre") + "\">Beauté &amp; Bien-être</a> ou faites le <a href=\"" + l("/diagnostic") + "\">diagnostic BIEN</a>." },
     ],
@@ -518,15 +518,15 @@ export const ARTICLES: Article[] = [
         { p: "Collagen is the most abundant protein in the body. It's what gives skin its firmness, elasticity and ability to hold water. The problem: its production naturally declines with age, resulting in less toned, drier skin." },
         { h2: "The benefits of collagen for the skin" },
         { ul: [
-          "<strong>Hydration</strong> — it helps skin retain water and stay supple.",
-          "<strong>Elasticity and firmness</strong> — it supports skin structure and bounce.",
-          "<strong>Radiance</strong> — better-nourished skin looks more luminous.",
-          "<strong>Hair and nails</strong> — collagen also contributes to their strength.",
+          "<strong>Hydration</strong>: it helps skin retain water and stay supple.",
+          "<strong>Elasticity and firmness</strong>: it supports skin structure and bounce.",
+          "<strong>Radiance</strong>: better-nourished skin looks more luminous.",
+          "<strong>Hair and nails</strong>: collagen also contributes to their strength.",
         ] },
         { h2: "How to support your collagen?" },
         { p: "On the plate: rely on vitamin C (citrus, kiwi, peppers), protein and antioxidants, which support synthesis and protect existing collagen. Limit sugar and unprotected sun exposure, which accelerate skin ageing." },
         { h2: "Collagen as a supplement" },
-        { p: "Supplements provide directly absorbable collagen. Our <a href=\"" + le("/products/mushglow") + "\">MushGlow</a> powder contains eggshell-membrane collagen, combined with <strong>Chaga</strong> — an antioxidant mushroom that protects cells from oxidative stress — for a complete beauty effect, from within. One spoon a day in your drink is enough." },
+        { p: "Supplements provide directly absorbable collagen. Our <a href=\"" + le("/products/mushglow") + "\">MushGlow</a> powder contains eggshell-membrane collagen, combined with <strong>Chaga</strong>, an antioxidant mushroom that protects cells from oxidative stress, for a complete beauty effect, from within. One spoon a day in your drink is enough." },
         { h2: "Where to start?" },
         { p: "Adopt a regular ritual and a holistic beauty routine. Discover the <a href=\"" + le("/collections/beaute-et-bien-etre") + "\">Beauty &amp; Wellbeing</a> collection or take the <a href=\"" + le("/diagnostic") + "\">BIEN quiz</a>." },
       ],
@@ -555,7 +555,7 @@ export const ARTICLES: Article[] = [
       { h2: "Qu'est-ce que le Lion's Mane ?" },
       { p: "Le Lion's Mane est un champignon comestible reconnaissable à ses longues « barbes » blanches. Utilisé depuis des siècles en médecine traditionnelle asiatique, il fait aujourd'hui partie des <a href=\"" + l("/blog/champignons-adaptogenes-guide-complet") + "\">champignons adaptogènes</a> les plus populaires pour le soutien cognitif." },
       { h2: "Les bienfaits du Lion's Mane" },
-      { p: "Ce qui distingue le Lion's Mane, ce sont ses composés actifs — les héricénones et érinacines — étudiés pour leur influence sur le NGF (facteur de croissance nerveuse). Concrètement, il est apprécié pour :" },
+      { p: "Ce qui distingue le Lion's Mane, ce sont ses composés actifs (les héricénones et érinacines), étudiés pour leur influence sur le NGF (facteur de croissance nerveuse). Concrètement, il est apprécié pour :" },
       { ul: [
         "<strong>La mémoire et l'apprentissage</strong> : soutien des fonctions cognitives au quotidien.",
         "<strong>La concentration</strong> : un esprit plus clair, moins de <a href=\"" + l("/blog/brouillard-mental") + "\">brouillard mental</a>.",
@@ -587,7 +587,7 @@ export const ARTICLES: Article[] = [
         { h2: "What is Lion's Mane?" },
         { p: "Lion's Mane is an edible mushroom recognisable by its long white \"spines\". Used for centuries in traditional Asian medicine, it's now one of the most popular <a href=\"" + le("/blog/champignons-adaptogenes-guide-complet") + "\">adaptogenic mushrooms</a> for cognitive support." },
         { h2: "The benefits of Lion's Mane" },
-        { p: "What sets Lion's Mane apart are its active compounds — hericenones and erinacines — studied for their influence on NGF (nerve growth factor). In practice, it's valued for:" },
+        { p: "What sets Lion's Mane apart are its active compounds (hericenones and erinacines), studied for their influence on NGF (nerve growth factor). In practice, it's valued for:" },
         { ul: [
           "<strong>Memory and learning</strong>: everyday support for cognitive function.",
           "<strong>Focus</strong>: a clearer mind, less <a href=\"" + le("/blog/brouillard-mental") + "\">mental fog</a>.",
@@ -747,7 +747,7 @@ export const ARTICLES: Article[] = [
     title: "Mieux dormir naturellement : 8 conseils qui marchent",
     metaTitle: "Mieux dormir naturellement : 8 conseils",
     metaDescription:
-      "Comment mieux dormir naturellement ? 8 conseils concrets — routine, écrans, alimentation, plantes adaptogènes — pour un sommeil profond et réparateur sans médicament.",
+      "Comment mieux dormir naturellement ? 8 conseils concrets (routine, écrans, alimentation, plantes adaptogènes) pour un sommeil profond et réparateur sans médicament.",
     excerpt:
       "Endormissement difficile, réveils nocturnes ? 8 conseils naturels et concrets pour retrouver un sommeil profond et réparateur, sans médicament.",
     category: "Sommeil & stress",
@@ -758,7 +758,7 @@ export const ARTICLES: Article[] = [
       "Un bon sommeil est le socle de la santé, de l'énergie et de l'humeur. Pourtant, difficultés d'endormissement et réveils nocturnes touchent une grande partie d'entre nous. Voici 8 conseils pour <strong>mieux dormir naturellement</strong>, sans somnifère, en agissant sur les vraies causes.",
     blocks: [
       { h2: "1. Des horaires réguliers" },
-      { p: "Se coucher et se lever à heures fixes — même le week-end — synchronise l'horloge biologique. C'est le levier le plus puissant, et le plus sous-estimé, d'un sommeil de qualité." },
+      { p: "Se coucher et se lever à heures fixes, même le week-end, synchronise l'horloge biologique. C'est le levier le plus puissant, et le plus sous-estimé, d'un sommeil de qualité." },
       { h2: "2. Couper les écrans plus tôt" },
       { p: "La lumière bleue des écrans retarde la sécrétion de mélatonine, l'hormone du sommeil. Idéalement, on éteint 60 minutes avant le coucher, ou on active un filtre de lumière chaude." },
       { h2: "3. Une chambre fraîche et sombre" },
@@ -784,13 +784,13 @@ export const ARTICLES: Article[] = [
     en: {
       title: "Sleeping better naturally: 8 tips that work",
       metaTitle: "Sleep better naturally: 8 tips",
-      metaDescription: "How to sleep better naturally? 8 concrete tips — routine, screens, diet, adaptogenic plants — for deep, restorative sleep without medication.",
+      metaDescription: "How to sleep better naturally? 8 concrete tips (routine, screens, diet, adaptogenic plants) for deep, restorative sleep without medication.",
       excerpt: "Trouble falling asleep, night-time waking? 8 natural, concrete tips to regain deep, restorative sleep, without medication.",
       category: "Sleep & stress",
       intro: "Good sleep is the foundation of health, energy and mood. Yet difficulty falling asleep and night-time waking affect a large share of us. Here are 8 tips to <strong>sleep better naturally</strong>, without sleeping pills, by acting on the real causes.",
       blocks: [
         { h2: "1. Regular hours" },
-        { p: "Going to bed and getting up at fixed times — even at the weekend — synchronises the body clock. It's the most powerful, and most underestimated, lever for quality sleep." },
+        { p: "Going to bed and getting up at fixed times, even at the weekend, synchronises the body clock. It's the most powerful, and most underestimated, lever for quality sleep." },
         { h2: "2. Cut screens earlier" },
         { p: "The blue light of screens delays the secretion of melatonin, the sleep hormone. Ideally, switch off 60 minutes before bed, or enable a warm-light filter." },
         { h2: "3. A cool, dark bedroom" },
@@ -975,7 +975,7 @@ export const ARTICLES: Article[] = [
       { h2: "4. Le café aux champignons" },
       { p: "Le <a href=\"" + l("/blog/cafe-champignons-mushroom-coffee") + "\">mushroom coffee</a> combine (moins de) café et champignons fonctionnels : on garde le plaisir du café en réduisant la nervosité. Un excellent compromis pour une transition en douceur." },
       { h2: "5. La L-théanine" },
-      { p: "Cet acide aminé du thé favorise un état de concentration calme. Associée au Lion's Mane et à la rhodiola, elle compose nos gummies <a href=\"" + l("/products/focus") + "\">FOCUS</a> — un focus net, sans jitters ni redescente." },
+      { p: "Cet acide aminé du thé favorise un état de concentration calme. Associée au Lion's Mane et à la rhodiola, elle compose nos gummies <a href=\"" + l("/products/focus") + "\">FOCUS</a>, pour un focus net, sans jitters ni redescente." },
       { h2: "Réduire le café, mode d'emploi" },
       { p: "Inutile de tout arrêter d'un coup. Réduisez progressivement, remplacez une tasse par une alternative, et surveillez surtout la caféine de l'après-midi pour protéger votre <a href=\"" + l("/blog/mieux-dormir-naturellement") + "\">sommeil</a>." },
       { h2: "Par où commencer ?" },
@@ -1003,7 +1003,7 @@ export const ARTICLES: Article[] = [
         { h2: "4. Mushroom coffee" },
         { p: "<a href=\"" + le("/blog/cafe-champignons-mushroom-coffee") + "\">Mushroom coffee</a> combines (less) coffee and functional mushrooms: you keep the pleasure of coffee while reducing the jitters. An excellent compromise for a gentle transition." },
         { h2: "5. L-theanine" },
-        { p: "This amino acid from tea promotes a state of calm focus. Combined with Lion's Mane and rhodiola, it makes up our <a href=\"" + le("/products/focus") + "\">FOCUS</a> gummies — clear focus, without jitters or a comedown." },
+        { p: "This amino acid from tea promotes a state of calm focus. Combined with Lion's Mane and rhodiola, it makes up our <a href=\"" + le("/products/focus") + "\">FOCUS</a> gummies: clear focus, without jitters or a comedown." },
         { h2: "Cutting down on coffee, how-to" },
         { p: "No need to stop everything at once. Reduce gradually, replace a cup with an alternative, and above all watch afternoon caffeine to protect your <a href=\"" + le("/blog/mieux-dormir-naturellement") + "\">sleep</a>." },
         { h2: "Where to start?" },
@@ -1029,7 +1029,7 @@ export const ARTICLES: Article[] = [
     readingMinutes: 7,
     cover: "/brand/blog/cover-fatigue.jpg",
     intro:
-      "Se sentir épuisé de temps en temps est normal. Mais lorsque la fatigue s'installe et résiste au repos, on parle de <strong>fatigue chronique</strong>. Avant de la subir, il faut en comprendre les causes — souvent multiples — pour agir efficacement et retrouver de l'énergie durablement.",
+      "Se sentir épuisé de temps en temps est normal. Mais lorsque la fatigue s'installe et résiste au repos, on parle de <strong>fatigue chronique</strong>. Avant de la subir, il faut en comprendre les causes, souvent multiples, pour agir efficacement et retrouver de l'énergie durablement.",
     blocks: [
       { h2: "Fatigue passagère ou chronique ?" },
       { p: "Une fatigue est dite chronique quand elle dure plusieurs semaines et n'est pas soulagée par une bonne nuit de sommeil. Elle s'accompagne souvent de baisse de motivation, de <a href=\"" + l("/blog/brouillard-mental") + "\">brouillard mental</a> et d'une sensibilité accrue au stress." },
@@ -1060,7 +1060,7 @@ export const ARTICLES: Article[] = [
       metaDescription: "Chronic fatigue: understand the causes of persistent exhaustion and discover natural solutions (sleep, diet, Cordyceps) to regain energy.",
       excerpt: "Fatigue that sets in despite rest? Identify the possible causes and discover natural solutions to regain your energy for good.",
       category: "Energy & performance",
-      intro: "Feeling exhausted from time to time is normal. But when fatigue sets in and resists rest, we talk about <strong>chronic fatigue</strong>. Before enduring it, you need to understand its causes — often multiple — to act effectively and regain energy for good.",
+      intro: "Feeling exhausted from time to time is normal. But when fatigue sets in and resists rest, we talk about <strong>chronic fatigue</strong>. Before enduring it, you need to understand its causes, often multiple, to act effectively and regain energy for good.",
       blocks: [
         { h2: "Temporary or chronic fatigue?" },
         { p: "Fatigue is called chronic when it lasts several weeks and isn't relieved by a good night's sleep. It often comes with lower motivation, <a href=\"" + le("/blog/brouillard-mental") + "\">mental fog</a> and heightened sensitivity to stress." },
@@ -1216,7 +1216,7 @@ export const ARTICLES: Article[] = [
     metaDescription:
       "Gummies ou gélules pour vos compléments alimentaires ? Avantages, limites, absorption, dosage et observance : le comparatif pour bien choisir sa forme.",
     excerpt:
-      "Gummies gourmands ou gélules classiques ? On compare les deux formes de compléments — absorption, dosage, plaisir, observance — pour vous aider à choisir.",
+      "Gummies gourmands ou gélules classiques ? On compare les deux formes de compléments (absorption, dosage, plaisir, observance) pour vous aider à choisir.",
     category: "Ingrédients & science",
     date: "2026-06-20",
     readingMinutes: 5,
@@ -1225,13 +1225,13 @@ export const ARTICLES: Article[] = [
       "Face au rayon des compléments alimentaires, une question revient : <strong>gummies ou gélules</strong> ? Les deux formes ont leurs atouts. Absorption, dosage, plaisir de prise et régularité : voici un comparatif clair pour choisir la forme qui vous convient vraiment.",
     blocks: [
       { h2: "Les gummies : plaisir et observance" },
-      { p: "Les gummies séduisent par leur goût et leur facilité de prise, sans eau. Leur principal avantage est souvent sous-estimé : l'<strong>observance</strong>. Un complément qu'on prend avec plaisir est un complément qu'on n'oublie pas — et la régularité est la clé de l'efficacité des adaptogènes." },
+      { p: "Les gummies séduisent par leur goût et leur facilité de prise, sans eau. Leur principal avantage est souvent sous-estimé : l'<strong>observance</strong>. Un complément qu'on prend avec plaisir est un complément qu'on n'oublie pas, et la régularité est la clé de l'efficacité des adaptogènes." },
       { h2: "Les gélules : concentration et neutralité" },
       { p: "Les gélules permettent des dosages parfois plus élevés et n'apportent ni sucre ni arôme. Elles conviennent aux formules très concentrées ou aux actifs au goût prononcé. En revanche, elles sont parfois moins agréables à avaler et plus faciles à oublier." },
       { h2: "Et l'absorption ?" },
       { p: "Contrairement à une idée reçue, une gummie bien formulée assure une bonne assimilation des actifs. La forme compte moins que la qualité de la formule, le dosage réel et la régularité de la prise." },
       { h2: "Le point sur le sucre" },
-      { p: "Le vrai critère de vigilance pour les gummies, c'est le sucre. Chez BIEN, nos gummies <a href=\"" + l("/products/calm") + "\">CALM</a>, <a href=\"" + l("/products/focus") + "\">FOCUS</a> et <a href=\"" + l("/products/power") + "\">POWER</a> sont formulés sans sucres ajoutés, vegan et aux dosages étudiés — le plaisir sans le compromis." },
+      { p: "Le vrai critère de vigilance pour les gummies, c'est le sucre. Chez BIEN health, nos gummies <a href=\"" + l("/products/calm") + "\">CALM</a>, <a href=\"" + l("/products/focus") + "\">FOCUS</a> et <a href=\"" + l("/products/power") + "\">POWER</a> sont formulés sans sucres ajoutés, vegan et aux dosages étudiés : le plaisir sans le compromis." },
       { h2: "Alors, que choisir ?" },
       { p: "Si vous cherchez la simplicité et la régularité au quotidien, les gummies sont idéales. Pour des dosages très élevés ou des cures pointues, les gélules gardent leur intérêt. Et pour un geste complet, la poudre <a href=\"" + l("/products/mushglow") + "\">MushGlow</a> à diluer offre une troisième voie, riche et modulable." },
       { h2: "Par où commencer ?" },
@@ -1246,18 +1246,18 @@ export const ARTICLES: Article[] = [
       title: "Gummies or capsules: which to choose for your supplements?",
       metaTitle: "Gummies or capsules: which to choose?",
       metaDescription: "Gummies or capsules for your food supplements? Advantages, limits, absorption, dosage and adherence: the comparison to choose the right format.",
-      excerpt: "Tasty gummies or classic capsules? We compare the two supplement formats — absorption, dosage, pleasure, adherence — to help you choose.",
+      excerpt: "Tasty gummies or classic capsules? We compare the two supplement formats (absorption, dosage, pleasure, adherence) to help you choose.",
       category: "Ingredients & science",
       intro: "Facing the supplement aisle, one question keeps coming up: <strong>gummies or capsules</strong>? Both formats have their strengths. Absorption, dosage, pleasure of taking and regularity: here's a clear comparison to choose the format that really suits you.",
       blocks: [
         { h2: "Gummies: pleasure and adherence" },
-        { p: "Gummies win people over with their taste and ease of taking, without water. Their main advantage is often underestimated: <strong>adherence</strong>. A supplement you enjoy taking is one you don't forget — and regularity is the key to adaptogens' effectiveness." },
+        { p: "Gummies win people over with their taste and ease of taking, without water. Their main advantage is often underestimated: <strong>adherence</strong>. A supplement you enjoy taking is one you don't forget, and regularity is the key to adaptogens' effectiveness." },
         { h2: "Capsules: concentration and neutrality" },
         { p: "Capsules allow sometimes higher dosages and add neither sugar nor flavouring. They suit very concentrated formulas or strong-tasting actives. On the other hand, they're sometimes less pleasant to swallow and easier to forget." },
         { h2: "What about absorption?" },
         { p: "Contrary to popular belief, a well-formulated gummy ensures good absorption of the actives. The format matters less than the quality of the formula, the real dosage and the regularity of intake." },
         { h2: "A word on sugar" },
-        { p: "The real point of vigilance for gummies is sugar. At BIEN, our <a href=\"" + le("/products/calm") + "\">CALM</a>, <a href=\"" + le("/products/focus") + "\">FOCUS</a> and <a href=\"" + le("/products/power") + "\">POWER</a> gummies are formulated with no added sugar, vegan and at studied dosages — pleasure without the compromise." },
+        { p: "The real point of vigilance for gummies is sugar. At BIEN health, our <a href=\"" + le("/products/calm") + "\">CALM</a>, <a href=\"" + le("/products/focus") + "\">FOCUS</a> and <a href=\"" + le("/products/power") + "\">POWER</a> gummies are formulated with no added sugar, vegan and at studied dosages: pleasure without the compromise." },
         { h2: "So, which to choose?" },
         { p: "If you're after simplicity and everyday regularity, gummies are ideal. For very high dosages or specialised courses, capsules keep their appeal. And for a complete gesture, the <a href=\"" + le("/products/mushglow") + "\">MushGlow</a> powder to dilute offers a third way, rich and adjustable." },
         { h2: "Where to start?" },
@@ -1277,7 +1277,7 @@ export const ARTICLES: Article[] = [
     metaDescription:
       "Café aux champignons (mushroom coffee) : qu'est-ce que c'est, quels bienfaits, quel goût et comment le préparer ? Le guide complet de cette alternative tendance.",
     excerpt:
-      "Moins de nervosité, plus de focus : le café aux champignons séduit. Bienfaits, goût, préparation et champignons utilisés — le guide complet.",
+      "Moins de nervosité, plus de focus : le café aux champignons séduit. Bienfaits, goût, préparation et champignons utilisés : le guide complet.",
     category: "Ingrédients & science",
     date: "2026-06-19",
     readingMinutes: 6,
@@ -1312,7 +1312,7 @@ export const ARTICLES: Article[] = [
       title: "Mushroom coffee: the guide",
       metaTitle: "Mushroom coffee: the guide",
       metaDescription: "Mushroom coffee: what it is, what benefits, what taste and how to prepare it? The complete guide to this trending alternative.",
-      excerpt: "Less jitters, more focus: mushroom coffee is winning people over. Benefits, taste, preparation and mushrooms used — the complete guide.",
+      excerpt: "Less jitters, more focus: mushroom coffee is winning people over. Benefits, taste, preparation and mushrooms used: the complete guide.",
       category: "Ingredients & science",
       intro: "<strong>Mushroom coffee</strong> has become one of the big wellness trends. The idea: keep the pleasure of coffee while reducing its jitters, thanks to functional mushrooms. We explain what it is, its benefits, its taste and how to prepare it.",
       blocks: [

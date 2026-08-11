@@ -56,13 +56,13 @@ export async function generateMetadata({
   // Valeurs par défaut du site. Chaque page redéfinit ses propres canonical /
   // Open Graph via `pageMetadata` (cf. src/lib/seo.ts).
   return {
-    applicationName: "BIEN",
+    applicationName: "BIEN health",
     ...pageMetadata({
       lang,
       path: "",
       title: dict.meta.title,
       description: dict.meta.description,
-      imageAlt: "BIEN — compléments naturels",
+      imageAlt: "BIEN health, compléments naturels",
     }),
   };
 }
@@ -84,7 +84,7 @@ export default async function RootLayout({
           data={{
             "@context": "https://schema.org",
             "@type": "Organization",
-            name: "BIEN",
+            name: "BIEN health",
             legalName: "BIEN Health France SAS",
             url: SITE_URL,
             logo: `${SITE_URL}/brand/logo-bien.png`,

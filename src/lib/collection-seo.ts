@@ -15,20 +15,20 @@ export function localizeCollectionSeo(seo: CollectionSeo, lang: string): SeoBody
 export const COLLECTION_SEO: Record<string, CollectionSeo> = {
   gummies: {
     intro: [
-      "Les gummies BIEN réinventent le complément alimentaire du quotidien. Formulées avec des champignons fonctionnels et des plantes adaptogènes, ces gommes à mâcher offrent une alternative gourmande, efficace et facile à adopter aux traditionnelles gélules. Fabriqués en France, sans sucre, sans gluten et 100 % vegan, nos gummies adaptogènes accompagnent votre concentration, votre énergie et votre sérénité, jour après jour.",
+      "Les gummies BIEN health réinventent le complément alimentaire du quotidien. Formulées avec des champignons fonctionnels et des plantes adaptogènes, ces gommes à mâcher offrent une alternative gourmande, efficace et facile à adopter aux traditionnelles gélules. Fabriqués en France, sans sucre, sans additifs artificiels, sans gluten et 100 % vegan, nos gummies adaptogènes accompagnent votre concentration, votre énergie et votre sérénité, jour après jour.",
     ],
     blocks: [
       {
         h: "Pourquoi choisir des gummies adaptogènes ?",
         p: [
-          "La forme gummy n'est pas qu'une question de plaisir : elle est aussi plus efficace. En partie absorbés dès la bouche, les actifs agissent plus rapidement qu'une pilule classique. Surtout, l'observance est bien meilleure — la majorité des personnes terminent leur cure sous forme de gommes, contre à peine la moitié pour les comprimés.",
+          "La forme gummy n'est pas qu'une question de plaisir : elle est aussi plus efficace. En partie absorbés dès la mastication, les actifs agissent plus rapidement qu'une pilule classique. Surtout, l'observance est bien meilleure : la majorité des personnes terminent leur cure sous forme de gummies, contre à peine la moitié pour les comprimés.",
           "Nos gummies concentrent des adaptogènes reconnus (ashwagandha, rhodiola, safran) et des champignons fonctionnels (lion's mane, reishi, cordyceps), dosés selon la littérature scientifique. Une manière simple et naturelle de soutenir votre organisme face au stress, à la fatigue mentale et aux baisses d'énergie.",
         ],
       },
       {
         h: "CALM, FOCUS, POWER : à chaque besoin son gummy",
         p: [
-          "Trois formules complémentaires composent notre gamme de gummies. CALM associe Reishi, Ashwagandha et Safran pour apaiser le stress et favoriser un sommeil réparateur. FOCUS réunit Lion's Mane, Rhodiola et L-Théanine pour la concentration et la clarté mentale, sans nervosité. POWER, enrichi en Cordyceps, Rhodiola Rosea et Panax Ginseng, soutient l'énergie et l'endurance, sans coup de barre.",
+          "Trois formules complémentaires composent notre gamme de gummies. CALM associe Reishi, Ashwagandha et Safran pour apaiser le stress et favoriser un sommeil réparateur. FOCUS réunit Lion's Mane, Rhodiola Rosea et L-Théanine pour améliorer la concentration et la clarté mentale, sans nervosité. POWER, enrichi en Cordyceps, Rhodiola Rosea et Panax Ginseng, soutient les performances physiques, l'énergie et l'endurance.",
           "Vous hésitez ? Notre diagnostic personnalisé vous oriente en moins d'une minute vers la formule la plus adaptée à votre rythme et à vos objectifs.",
         ],
       },
@@ -41,20 +41,20 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
     ],
     en: {
       intro: [
-        "BIEN gummies reinvent the everyday food supplement. Formulated with functional mushrooms and adaptogenic plants, these chewable gummies offer a tasty, effective and easy-to-adopt alternative to traditional capsules. Made in France, sugar-free, gluten-free and 100% vegan, our adaptogenic gummies support your focus, energy and calm, day after day.",
+        "BIEN health gummies reinvent the everyday food supplement. Formulated with functional mushrooms and adaptogenic plants, these chewable gummies offer a tasty, effective and easy-to-adopt alternative to traditional capsules. Made in France, sugar-free, gluten-free and 100% vegan, our adaptogenic gummies support your focus, energy and calm, day after day.",
       ],
       blocks: [
         {
           h: "Why choose adaptogenic gummies?",
           p: [
-            "The gummy format isn't just about pleasure — it's also more effective. Partly absorbed in the mouth, the actives work faster than a classic pill. Above all, adherence is much better: most people finish their course in gummy form, versus barely half for tablets.",
+            "The gummy format isn't just about pleasure. It's also more effective. Partly absorbed in the mouth, the actives work faster than a classic pill. Above all, adherence is much better: most people finish their course in gummy form, versus barely half for tablets.",
             "Our gummies concentrate well-known adaptogens (ashwagandha, rhodiola, saffron) and functional mushrooms (lion's mane, reishi, cordyceps), dosed according to scientific literature. A simple, natural way to support your body against stress, mental fatigue and energy dips.",
           ],
         },
         {
           h: "CALM, FOCUS, POWER: a gummy for every need",
           p: [
-            "Three complementary formulas make up our gummy range. CALM combines Reishi, Ashwagandha and Saffron to soothe stress and promote restorative sleep. FOCUS brings together Lion's Mane, Rhodiola and L-Theanine for focus and mental clarity, without jitters. POWER, enriched with Cordyceps, Rhodiola Rosea and Panax Ginseng, supports energy and stamina, without the crash.",
+            "Three complementary formulas make up our gummy range. CALM combines Reishi, Ashwagandha and Saffron to soothe stress and promote restorative sleep. FOCUS brings together Lion's Mane, Rhodiola Rosea and L-Theanine to improve focus and mental clarity, without jitters. POWER, enriched with Cordyceps, Rhodiola Rosea and Panax Ginseng, supports physical performance, energy and stamina.",
             "Not sure? Our personalised quiz points you in under a minute to the formula best suited to your lifestyle and goals.",
           ],
         },
@@ -70,7 +70,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   serenite: {
     intro: [
-      "Stress chronique, tensions, nuits agitées : le quotidien met le système nerveux à rude épreuve. La collection Sérénité & Sommeil de BIEN rassemble des compléments alimentaires naturels pensés pour apaiser le mental, réduire le stress et retrouver un sommeil réparateur — sans accoutumance ni somnolence au réveil.",
+      "Stress chronique, tensions, nuits agitées : le quotidien met le système nerveux à rude épreuve. La collection Sérénité & Sommeil de BIEN health rassemble des compléments alimentaires naturels pensés pour apaiser le mental, réduire le stress et retrouver un sommeil réparateur, sans accoutumance ni somnolence au réveil.",
     ],
     blocks: [
       {
@@ -95,7 +95,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
     ],
     en: {
       intro: [
-        "Chronic stress, tension, restless nights: everyday life puts the nervous system to the test. BIEN's Calm & Sleep collection brings together natural food supplements designed to soothe the mind, reduce stress and restore restful sleep — without dependency or morning grogginess.",
+        "Chronic stress, tension, restless nights: everyday life puts the nervous system to the test. BIEN health's Calm & Sleep collection brings together natural food supplements designed to soothe the mind, reduce stress and restore restful sleep, without dependency or morning grogginess.",
       ],
       blocks: [
         {
@@ -123,13 +123,13 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   "nos-poudres": {
     intro: [
-      "Nos poudres réunissent le meilleur des champignons fonctionnels, des adaptogènes et du collagène dans un format tout-en-un. Une cuillère suffit pour transformer votre café, votre matcha ou votre smoothie en un véritable rituel bien-être. Clean, sans sucre et fabriquée en France, la poudre adaptogène BIEN simplifie votre routine tout en agissant sur plusieurs fronts : énergie, concentration, gestion du stress et éclat de la peau.",
+      "Notre poudre réunit le meilleur des champignons fonctionnels, des adaptogènes et du collagène dans un format 6-en-1. Une cuillère suffit pour transformer votre petit-déjeuner en un véritable rituel bien-être. Naturelle, sans sucre et fabriquée en France, la poudre adaptogène BIEN health simplifie votre routine tout en agissant sur plusieurs fronts : énergie, concentration, gestion du stress et éclat de la peau.",
     ],
     blocks: [
       {
         h: "La poudre, le format tout-en-un",
         p: [
-          "Pourquoi multiplier les compléments quand une seule dose peut tout regrouper ? La forme poudre permet de concentrer plusieurs actifs cliniquement dosés en une prise quotidienne, sans avaler une poignée de gélules. Elle se marie naturellement à vos boissons et se fond dans votre routine du matin.",
+          "Pourquoi multiplier les compléments quand une seule dose peut tout regrouper ? La forme poudre permet de concentrer plusieurs actifs cliniquement dosés en une prise quotidienne, sans avaler une poignée de gélules. Elle se marie naturellement à votre routine du matin : yaourts, œufs, boissons…",
         ],
       },
       {
@@ -141,19 +141,20 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
       {
         h: "Comment consommer votre poudre ?",
         p: [
-          "Ajoutez une cuillère (incluse) à la boisson de votre choix, chaude ou froide, et mélangez — un mousseur donne une texture ultra-lisse. Au goût neutre et légèrement terreux, la poudre se prend idéalement le matin. Comptez une cure régulière de 30 jours pour profiter pleinement des bienfaits des adaptogènes et du collagène.",
+          "Ajouter 1 cuillère à soupe rase par jour (environ 4 g) dans vos préparations, froides ou chaudes, jusqu'à 200 °C au four. Formule 100 % actifs, sans agents de liaison : de légers grumeaux peuvent apparaître. Bien mélanger pour obtenir une texture homogène.",
+          "Idéal dans les yaourts, smoothies, jus de légumes, soupes ou préparations épaisses. Convient aussi en cuisine : gâteaux, omelettes… Adapter la quantité selon le nombre de portions. À consommer de préférence le matin. Premiers résultats visibles dès le 1er mois, à prolonger pour des effets durables.",
         ],
       },
     ],
     en: {
       intro: [
-        "Our powders bring together the best of functional mushrooms, adaptogens and collagen in an all-in-one format. One spoon is enough to turn your coffee, matcha or smoothie into a real wellness ritual. Clean, sugar-free and made in France, the BIEN adaptogenic powder simplifies your routine while acting on several fronts: energy, focus, stress management and skin radiance.",
+        "Our powder brings together the best of functional mushrooms, adaptogens and collagen in a 6-in-1 format. One spoon is enough to turn your breakfast into a real wellness ritual. Natural, sugar-free and made in France, the BIEN health adaptogenic powder simplifies your routine while acting on several fronts: energy, focus, stress management and skin radiance.",
       ],
       blocks: [
         {
           h: "Powder, the all-in-one format",
           p: [
-            "Why pile up supplements when a single dose can bring everything together? The powder format concentrates several clinically dosed actives in one daily serving, without swallowing a handful of capsules. It naturally blends into your drinks and fits into your morning routine.",
+            "Why pile up supplements when a single dose can bring everything together? The powder format concentrates several clinically dosed actives in one daily serving, without swallowing a handful of capsules. It blends naturally into your morning routine: yoghurts, eggs, drinks…",
           ],
         },
         {
@@ -165,7 +166,8 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
         {
           h: "How to take your powder?",
           p: [
-            "Add one spoon (included) to the drink of your choice, hot or cold, and stir — a frother gives an ultra-smooth texture. With a neutral, slightly earthy taste, the powder is ideally taken in the morning. Allow a regular 30-day course to fully enjoy the benefits of adaptogens and collagen.",
+            "Add 1 level tablespoon a day (about 4 g) to your preparations, cold or hot, up to 200 °C in the oven. A 100% active formula with no binding agents: slight lumps may appear. Stir well for an even texture.",
+            "Ideal in yoghurts, smoothies, vegetable juices, soups or thick preparations. It also works in cooking: cakes, omelettes… Adjust the amount to the number of servings. Best taken in the morning. First results visible from the 1st month, to be continued for lasting effects.",
           ],
         },
       ],
@@ -174,7 +176,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   concentration: {
     intro: [
-      "Brouillard mental, difficultés à rester concentré, baisse de mémoire : la surcharge cognitive fait partie du quotidien. La collection Concentration & Clarté mentale de BIEN rassemble des compléments alimentaires naturels formulés pour soutenir l'attention, la mémoire et la clarté d'esprit — sans nervosité ni coup de barre.",
+      "Brouillard mental, difficultés à rester concentré, baisse de mémoire : la surcharge cognitive fait partie du quotidien. La collection Concentration & Clarté mentale de BIEN health rassemble des compléments alimentaires naturels formulés pour soutenir l'attention, la mémoire et la clarté d'esprit, sans nervosité ni baisse de régime.",
     ],
     blocks: [
       {
@@ -192,13 +194,13 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
       {
         h: "Rester focus au quotidien",
         p: [
-          "Deux gummies FOCUS le matin suffisent à installer une concentration plus intense et plus durable, sans crash. Beaucoup y trouvent une alternative — ou un complément — à leur second café. Comme toujours avec les adaptogènes, la régularité est la clé : une cure de 30 jours révèle tout leur potentiel.",
+          "Deux gummies FOCUS le matin suffisent à installer une concentration plus intense et plus durable, sans crash. Beaucoup y trouvent une alternative, ou un complément, à leur second café. Comme toujours avec les adaptogènes, la régularité est la clé : une cure de 30 jours révèle tout leur potentiel.",
         ],
       },
     ],
     en: {
       intro: [
-        "Mental fog, difficulty staying focused, memory dips: cognitive overload is part of everyday life. BIEN's Focus & Mental Clarity collection brings together natural food supplements formulated to support attention, memory and clarity of mind — without jitters or crashes.",
+        "Mental fog, difficulty staying focused, memory dips: cognitive overload is part of everyday life. BIEN health's Focus & Mental Clarity collection brings together natural food supplements formulated to support attention, memory and clarity of mind, without jitters or dips.",
       ],
       blocks: [
         {
@@ -216,7 +218,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
         {
           h: "Stay focused every day",
           p: [
-            "Two FOCUS gummies in the morning are enough to establish more intense and longer-lasting concentration, without a crash. Many find them an alternative — or a complement — to their second coffee. As always with adaptogens, regularity is key: a 30-day course reveals their full potential.",
+            "Two FOCUS gummies in the morning are enough to establish more intense and longer-lasting concentration, without a crash. Many find them an alternative, or a complement, to their second coffee. As always with adaptogens, regularity is key: a 30-day course reveals their full potential.",
           ],
         },
       ],
@@ -225,19 +227,22 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   "performance-et-vitalite": {
     intro: [
-      "Coup de fatigue en milieu de journée, énergie en dents de scie, récupération difficile : le corps aussi a besoin de soutien. La collection Performance & Vitalité de BIEN réunit des compléments alimentaires naturels conçus pour renforcer l'énergie, l'endurance et la résistance à l'effort — sans excitants ni sensation de nervosité.",
+      "Baisse d'énergie en milieu de journée, énergie en dents de scie, récupération difficile : le corps aussi a besoin de soutien. La collection Performance & Vitalité de BIEN health réunit des compléments alimentaires naturels conçus pour renforcer l'énergie, l'endurance et la résistance à l'effort, sans excitants ni sensation de nervosité.",
     ],
     blocks: [
       {
-        h: "De l'énergie durable, sans coup de barre",
+        h: "De l'énergie durable, sans nervosité",
         p: [
-          "Nos formules privilégient une vitalité saine et progressive plutôt qu'un shot d'énergie suivi d'un crash. Les adaptogènes aident l'organisme à mieux gérer l'effort physique et mental, pour tenir la distance, du matin au soir.",
+          "Nos formules privilégient une vitalité saine et progressive plutôt qu'un shot d'énergie suivi d'une chute. Les adaptogènes aident l'organisme à mieux gérer l'effort physique et mental, pour tenir la distance, du matin au soir.",
         ],
       },
       {
-        h: "Cordyceps, Rhodiola Rosea et Panax Ginseng",
+        // Les trois produits de la collection sont désormais présentés : le
+        // texte ne parlait que de POWER (correction client).
+        h: "POWER, FOCUS et MUSHGLOW : trois soutiens complémentaires",
         p: [
-          "Le gummy POWER associe trois actifs de la performance. Le Cordyceps, champignon prisé pour l'énergie et l'endurance. La Rhodiola Rosea, adaptogène anti-fatigue. Et le Panax Ginseng, référence de la vitalité. Un vrai coup de boost, sans contre-coup. La poudre MushGlow complète cette routine en soutenant l'énergie globale et la récupération.",
+          "Les gummies POWER associent trois actifs de la performance. Le Cordyceps, champignon prisé pour l'énergie et l'endurance. La Rhodiola Rosea, adaptogène anti-fatigue. Et le Panax Ginseng, référence de la vitalité. Un vrai coup de boost, sans contre-coup.",
+          "Les gummies FOCUS prennent le relais sur le versant mental : Lion's Mane, Rhodiola Rosea et L-Théanine soutiennent la concentration et la clarté d'esprit quand la journée s'allonge. La poudre MUSHGLOW, supermix 6-en-1, complète la routine en soutenant l'énergie globale, la résilience au stress et la récupération.",
         ],
       },
       {
@@ -249,19 +254,20 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
     ],
     en: {
       intro: [
-        "A mid-day slump, up-and-down energy, difficult recovery: the body needs support too. BIEN's Performance & Vitality collection brings together natural food supplements designed to boost energy, stamina and resistance to effort — without stimulants or any jittery feeling.",
+        "A mid-day dip, up-and-down energy, difficult recovery: the body needs support too. BIEN health's Performance & Vitality collection brings together natural food supplements designed to boost energy, stamina and resistance to effort, without stimulants or any jittery feeling.",
       ],
       blocks: [
         {
-          h: "Lasting energy, without the crash",
+          h: "Lasting energy, without the jitters",
           p: [
-            "Our formulas favour healthy, gradual vitality rather than an energy shot followed by a crash. Adaptogens help the body better manage physical and mental effort, to go the distance, from morning to evening.",
+            "Our formulas favour healthy, gradual vitality rather than an energy shot followed by a drop. Adaptogens help the body better manage physical and mental effort, to go the distance, from morning to evening.",
           ],
         },
         {
-          h: "Cordyceps, Rhodiola Rosea and Panax Ginseng",
+          h: "POWER, FOCUS and MUSHGLOW: three complementary allies",
           p: [
-            "The POWER gummy combines three performance actives. Cordyceps, a mushroom prized for energy and stamina. Rhodiola Rosea, an anti-fatigue adaptogen. And Panax Ginseng, a benchmark for vitality. A real boost, without the rebound. The MushGlow powder complements this routine by supporting overall energy and recovery.",
+            "POWER gummies combine three performance actives. Cordyceps, a mushroom prized for energy and stamina. Rhodiola Rosea, an anti-fatigue adaptogen. And Panax Ginseng, a benchmark for vitality. A real boost, without the rebound.",
+            "FOCUS gummies take over on the mental side: Lion's Mane, Rhodiola Rosea and L-Theanine support concentration and clarity of mind when the day stretches on. The MUSHGLOW powder, a 6-in-1 supermix, completes the routine by supporting overall energy, stress resilience and recovery.",
           ],
         },
         {
@@ -276,7 +282,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   "beaute-et-bien-etre": {
     intro: [
-      "Une peau éclatante et des cheveux forts commencent de l'intérieur. La collection Beauté & Bien-être de BIEN rassemble des compléments alimentaires naturels riches en collagène et en actifs antioxydants, pour nourrir la peau, soutenir les cheveux et les ongles, et retrouver un équilibre global — le tout dans une routine simple et gourmande.",
+      "Une peau éclatante et des cheveux forts commencent de l'intérieur. La collection Beauté & Bien-être de BIEN health rassemble des compléments alimentaires naturels riches en collagène et en actifs antioxydants, pour nourrir la peau, soutenir les cheveux et les ongles, et retrouver un équilibre global, le tout dans une routine simple et gourmande.",
     ],
     blocks: [
       {
@@ -288,19 +294,21 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
       {
         h: "Collagène et actifs antioxydants",
         p: [
-          "Notre poudre MushGlow contient du collagène de membrane d'œuf, reconnu pour améliorer l'hydratation, l'élasticité et l'éclat de la peau, ainsi que du Chaga, champignon aux puissantes propriétés antioxydantes qui protègent les cellules du stress oxydatif. Le gummy CALM complète cet équilibre en apaisant le stress, souvent responsable des déséquilibres cutanés.",
+          "Notre poudre MushGlow contient entre autre du collagène de membrane d'œuf, reconnu pour améliorer l'hydratation, l'élasticité et l'éclat de la peau, et du Chaga, champignon aux puissantes propriétés antioxydantes qui protègent les cellules du stress oxydatif. Les gummies CALM complètent cet équilibre en apaisant le stress, souvent responsable des déséquilibres cutanés.",
         ],
       },
       {
         h: "Un rituel beauté au quotidien",
         p: [
-          "Une cuillère de MushGlow chaque matin dans votre boisson, en cure régulière, pour révéler l'éclat naturel de votre peau au fil des semaines. Vegan, sans sucre et fabriqué en France, ce rituel beauté s'intègre sans effort à votre routine bien-être.",
+          // MushGlow contient du collagène de membrane d'œuf : végétarienne,
+          // pas vegan (correction client).
+          "Une cuillère de MushGlow chaque matin dans votre boisson, en cure régulière, pour révéler l'éclat naturel de votre peau au fil des semaines. Naturelle, végétarienne, sans sucre et fabriqué en France, ce rituel beauté s'intègre sans effort à votre routine bien-être.",
         ],
       },
     ],
     en: {
       intro: [
-        "Radiant skin and strong hair start from within. BIEN's Beauty & Wellbeing collection brings together natural food supplements rich in collagen and antioxidant actives, to nourish the skin, support hair and nails, and restore overall balance — all in a simple, enjoyable routine.",
+        "Radiant skin and strong hair start from within. BIEN health's Beauty & Wellbeing collection brings together natural food supplements rich in collagen and antioxidant actives, to nourish the skin, support hair and nails, and restore overall balance, all in a simple, enjoyable routine.",
       ],
       blocks: [
         {
@@ -312,13 +320,13 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
         {
           h: "Collagen and antioxidant actives",
           p: [
-            "Our MushGlow powder contains eggshell-membrane collagen, recognised for improving skin hydration, elasticity and radiance, as well as Chaga, a mushroom with powerful antioxidant properties that protect cells from oxidative stress. The CALM gummy completes this balance by soothing stress, which is often responsible for skin imbalances.",
+            "Our MushGlow powder contains, among others, eggshell-membrane collagen, recognised for improving skin hydration, elasticity and radiance, and Chaga, a mushroom with powerful antioxidant properties that protect cells from oxidative stress. The CALM gummies complete this balance by soothing stress, which is often responsible for skin imbalances.",
           ],
         },
         {
           h: "A daily beauty ritual",
           p: [
-            "One spoon of MushGlow every morning in your drink, as a regular course, to reveal your skin's natural radiance over the weeks. Vegan, sugar-free and made in France, this beauty ritual fits effortlessly into your wellness routine.",
+            "One spoon of MushGlow every morning in your drink, as a regular course, to reveal your skin's natural radiance over the weeks. Natural, vegetarian, sugar-free and made in France, this beauty ritual fits effortlessly into your wellness routine.",
           ],
         },
       ],

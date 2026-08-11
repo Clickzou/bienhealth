@@ -9,7 +9,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "cgv",
-    title: lang === "en" ? "Terms and conditions of sale · BIEN" : "Conditions générales de vente · BIEN",
+    title: lang === "en" ? "Terms and conditions of sale | BIEN health" : "Conditions générales de vente | BIEN health",
     description: lang === "en" ? "Terms of use and sale of Bien Health SAS (bien.health)." : "Conditions d'utilisation et de vente de Bien Health SAS (bien.health).",
   });
 }
@@ -83,7 +83,7 @@ export default async function CgvPage({
           agreement, the dispute will be brought before the competent French courts.
         </p>
 
-        <p className="pt-4 text-black/50">© Bien Health SAS — 2026</p>
+        <p className="pt-4 text-black/50">© Bien Health SAS, 2026</p>
       </LegalLayout>
     );
   }
@@ -152,7 +152,7 @@ export default async function CgvPage({
         À défaut d&apos;accord, le litige sera porté devant les juridictions françaises compétentes.
       </p>
 
-      <p className="pt-4 text-black/50">© Bien Health SAS — 2026</p>
+      <p className="pt-4 text-black/50">© Bien Health SAS, 2026</p>
     </LegalLayout>
   );
 }

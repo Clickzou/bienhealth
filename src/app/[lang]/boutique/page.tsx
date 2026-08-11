@@ -16,21 +16,21 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "boutique",
-    title: lang === "en" ? "Shop — Our natural supplements · BIEN" : "Boutique — Nos compléments naturels · BIEN",
-    description: lang === "en" ? "Discover the BIEN range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." : "Découvrez la gamme BIEN : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
+    title: lang === "en" ? "Shop: our natural supplements | BIEN health" : "Boutique : nos compléments naturels | BIEN health",
+    description: lang === "en" ? "Discover the BIEN health range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." : "Découvrez la gamme BIEN health : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
   });
 }
 
 const T = {
   fr: {
     eyebrow: "La gamme BIEN", h1: "Nos produits.",
-    intro: "3 gummies naturels et une poudre tout-en-un. Adaptogènes et champignons fonctionnels, dosés selon la science — vegan, sans sucre, fabriqués en France.",
+    intro: "3 gummies naturels et une poudre tout-en-un. Adaptogènes et champignons fonctionnels, dosés selon la science : vegan, sans sucre, fabriqués en France.",
     needs: [{ label: "Sommeil & Sérénité", slug: "serenite" }, { label: "Concentration", slug: "concentration" }, { label: "Énergie", slug: "performance-et-vitalite" }, { label: "Beauté & Équilibre", slug: "beaute-et-bien-etre" }],
     product: "produit", products: "produits", findFormula: "Trouver ma formule",
   },
   en: {
     eyebrow: "The BIEN range", h1: "Our products.",
-    intro: "3 natural gummies and one all-in-one powder. Adaptogens and functional mushrooms, dosed according to science — vegan, sugar-free, made in France.",
+    intro: "3 natural gummies and one all-in-one powder. Adaptogens and functional mushrooms, dosed according to science: vegan, sugar-free, made in France.",
     needs: [{ label: "Sleep & Calm", slug: "serenite" }, { label: "Focus", slug: "concentration" }, { label: "Energy", slug: "performance-et-vitalite" }, { label: "Beauty & Balance", slug: "beaute-et-bien-etre" }],
     product: "product", products: "products", findFormula: "Find my formula",
   },
@@ -53,7 +53,7 @@ export default async function BoutiquePage({
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-10 sm:pt-14">
         {/* Bandeau volontairement bas : la grille produits doit apparaître
             presque tout de suite (le bloc occupait tout l'écran d'accueil). */}
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-12 py-7 sm:py-9">
@@ -79,7 +79,7 @@ export default async function BoutiquePage({
       </section>
 
       {/* Grille produits */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-6 sm:mt-8">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-6 sm:mt-8">
         <div className="flex items-end justify-between gap-4 mb-6">
           <h2 className="font-display tracking-tight text-2xl text-black">
             {products.length} {products.length > 1 ? t.products : t.product}

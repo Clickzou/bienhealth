@@ -5,14 +5,15 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import ReassuranceBand from "@/components/reassurance-band";
 import { pageMetadata } from "@/lib/seo";
+import { accentLastWord } from "@/lib/accent-title";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   return pageMetadata({
     lang,
     path: "presse",
-    title: lang === "en" ? "As seen in the press · BIEN" : "La presse en parle · BIEN",
-    description: lang === "en" ? "BIEN in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." : "BIEN dans la presse : Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Découvrez ce que les médias disent de nos compléments naturels aux adaptogènes.",
+    title: lang === "en" ? "As seen in the press | BIEN health" : "La presse en parle | BIEN health",
+    description: lang === "en" ? "BIEN health in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." : "BIEN health dans la presse : Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Découvrez ce que les médias disent de nos compléments naturels aux adaptogènes.",
   });
 }
 
@@ -62,7 +63,7 @@ const FEATURES: Feature[] = [
       "D'autres recherches suggèrent une amélioration de la qualité du sommeil, une augmentation de l'énergie et même un soutien des fonctions cognitives.",
       "L'Ashwagandha serait également bénéfique pour réguler la glycémie et soutenir la fonction thyroïdienne. Toutefois, la communauté scientifique appelle à poursuivre les recherches.",
     ],
-    product: { src: "/brand/product-calm.jpg", alt: "BIEN CALM — gummies sérénité & sommeil" },
+    product: { src: "/brand/product-calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
   },
   {
     magazine: "Do It in Paris",
@@ -86,7 +87,7 @@ const FEATURES: Feature[] = [
       "Formulés avec Lion's Mane, Rhodiola et L-Théanine, ces gummies goût ananas boostent la clarté mentale, soutiennent l'attention et favorisent le focus — sans nervosité, ni crash.",
     ],
     note: "FOCUS, 39 € le pot de 60 gummies",
-    product: { src: "/brand/product-focus.jpg", alt: "BIEN FOCUS — gummies concentration & mémoire" },
+    product: { src: "/brand/product-focus.jpg", alt: "BIEN health FOCUS, gummies concentration & mémoire" },
   },
   {
     magazine: "Gala",
@@ -148,11 +149,11 @@ export default async function PressePage({
       {/* Hero */}
       <section className="grid lg:grid-cols-2 items-center">
         <div className="relative h-72 sm:h-96 lg:h-[560px] order-1 lg:order-none">
-          <Image src="/brand/presse-hero.webp" alt="BIEN — Mushglow" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+          <Image src="/brand/presse-hero.webp" alt="BIEN health, Mushglow" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
         </div>
         <div className="px-6 sm:px-10 lg:px-16 py-12 lg:py-20">
           <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-black">
-            {h.h1}
+            {accentLastWord(h.h1)}
           </h1>
           <p className="mt-6 text-base sm:text-lg text-black/75 leading-relaxed max-w-xl">
             {h.p1}
@@ -164,7 +165,7 @@ export default async function PressePage({
       </section>
 
       {/* Parutions presse */}
-      <div className="px-4 sm:px-6 lg:px-[100px] py-8 sm:py-12 space-y-12 sm:space-y-20">
+      <div className="px-4 sm:px-6 lg:px-12 xl:px-16 py-8 sm:py-12 space-y-12 sm:space-y-20">
         {FEATURES.map((f, i) => {
           const reversed = i % 2 === 1;
           return (

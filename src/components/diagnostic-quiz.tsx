@@ -132,7 +132,7 @@ const QUESTIONS_FR: Question[] = [
   {
     id: "email", kind: "email",
     title: "−10 % sur votre première commande si vous vous inscrivez à notre newsletter 🍄",
-    subtitle: "Promis, que du mush love dans votre boîte mail — recevez aussi votre résultat par email.",
+    subtitle: "Promis, que du mush love dans votre boîte mail : vous recevez aussi votre résultat par email.",
   },
 ];
 
@@ -217,7 +217,7 @@ const QUESTIONS_EN: Question[] = [
   {
     id: "email", kind: "email",
     title: "−10% off your first order when you join our newsletter 🍄",
-    subtitle: "Promise, only mush love in your inbox — you'll also get your result by email.",
+    subtitle: "Promise, only mush love in your inbox: you'll also get your result by email.",
   },
 ];
 
@@ -233,7 +233,7 @@ const SCREEN = {
     introBadge: "Diagnostic gratuit · moins d'une minute",
     introH1Pre: "Vous ne savez pas quel produit ",
     introH1Post: " est fait pour vous ?",
-    introText: "Ce diagnostic personnalisé analyse vos besoins et symptômes pour vous orienter vers la routine idéale — naturelle, ciblée, efficace.",
+    introText: "Ce diagnostic personnalisé analyse vos besoins et symptômes pour vous orienter vers la routine idéale : naturelle, ciblée, efficace.",
     start: "Commencer le diagnostic",
     previous: "Précédent",
     ok: "OK",
@@ -252,7 +252,7 @@ const SCREEN = {
     introBadge: "Free quiz · under a minute",
     introH1Pre: "Not sure which ",
     introH1Post: " product is right for you?",
-    introText: "This personalised quiz analyses your needs and symptoms to point you to the ideal routine — natural, targeted, effective.",
+    introText: "This personalised quiz analyses your needs and symptoms to point you to the ideal routine: natural, targeted, effective.",
     start: "Start the quiz",
     previous: "Previous",
     ok: "OK",
@@ -367,7 +367,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
     const p = PRODUCTS[result];
     const loc = en ? p.en : p.fr;
     return (
-      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 sm:py-16 flex items-center">
+      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-12 xl:px-16 py-12 sm:py-16 flex items-center">
         <div className="mx-auto w-full max-w-4xl grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
           <div className="text-bien-cream order-2 lg:order-1">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
@@ -412,7 +412,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
   // --- Écran intro ---
   if (!started) {
     return (
-      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-12 flex items-center">
+      <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-12 xl:px-16 py-12 flex items-center">
         <div className="mx-auto max-w-2xl text-center text-bien-cream">
           <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider">
             <Sparkles className="h-3.5 w-3.5 text-bien-gold" /> {s.introBadge}
@@ -433,7 +433,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
 
   // --- Écran question ---
   return (
-    <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-[100px] py-10 flex flex-col">
+    <section className="hero-surface min-h-[calc(100vh-6.5rem)] px-4 sm:px-6 lg:px-12 xl:px-16 py-10 flex flex-col">
       {/* Progression */}
       <div className="mx-auto w-full max-w-2xl">
         <div className="h-1.5 w-full rounded-full bg-bien-cream/15 overflow-hidden">

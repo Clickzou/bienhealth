@@ -11,20 +11,20 @@ import type { ShopifyProduct } from "./shopify-products";
 /* --- Bienfaits courts par produit --- */
 export const BENEFITS: Record<string, { fr: string; en: string }> = {
   CALM: {
-    fr: "Sérénité & sommeil — apaise le stress et favorise un sommeil réparateur.",
-    en: "Calm & sleep — soothes stress and promotes restorative sleep.",
+    fr: "Sérénité & sommeil : apaise le stress et favorise un sommeil réparateur.",
+    en: "Calm & sleep: soothes stress and promotes restorative sleep.",
   },
   FOCUS: {
-    fr: "Concentration & mémoire — clarté mentale et focus durable.",
-    en: "Focus & memory — mental clarity and lasting concentration.",
+    fr: "Concentration & mémoire : clarté mentale et focus durable.",
+    en: "Focus & memory: mental clarity and lasting concentration.",
   },
   POWER: {
-    fr: "Énergie & performance — tonus physique sans coup de barre.",
-    en: "Energy & performance — physical vitality without the crash.",
+    fr: "Énergie & performance : tonus physique et endurance durables.",
+    en: "Energy & performance: lasting physical vitality and stamina.",
   },
   MUSHGLOW: {
-    fr: "Beauté & éclat — peau, cheveux et vitalité, 6-en-1.",
-    en: "Beauty & glow — skin, hair and vitality, 6-in-1.",
+    fr: "Beauté & éclat : peau, cheveux et vitalité, 6-en-1.",
+    en: "Beauty & glow: skin, hair and vitality, 6-in-1.",
   },
 };
 
@@ -32,6 +32,10 @@ export function benefitFor(name: string, fallback: string, lang = "fr"): string 
   const key = Object.keys(BENEFITS).find((k) => name.toUpperCase().includes(k));
   return key ? BENEFITS[key][lang === "en" ? "en" : "fr"] : fallback;
 }
+
+/** Produits portant le badge « Best-seller » (carrousel accueil, boutique,
+ *  collections). Source unique : le badge doit dire la même chose partout. */
+export const BEST_SELLERS = ["MUSHGLOW", "CALM"];
 
 /* --- Type de produit --- */
 export type ProductType = "gummies" | "poudres" | "accessoires";
@@ -51,6 +55,9 @@ export type Collection = {
   desc: string;
   en: { eyebrow: string; label: string; desc: string };
   match: (p: ShopifyProduct) => boolean;
+  /** Ordre d'affichage imposé (le plus pertinent d'abord). Sans lui, l'ordre
+   *  était celui de Shopify, qui ne suivait pas la logique de la collection. */
+  order?: string[];
 };
 
 const byName = (keys: string[]) => (p: ShopifyProduct) =>
@@ -59,6 +66,20 @@ const byName = (keys: string[]) => (p: ShopifyProduct) =>
 /** Renvoie les champs localisés (eyebrow/label/desc) d'une collection. */
 export function localizeCollection(col: Collection, lang: string) {
   return lang === "en" ? col.en : { eyebrow: col.eyebrow, label: col.label, desc: col.desc };
+}
+
+/**
+ * Trie les produits selon `col.order`. Ce qui n'y figure pas est renvoyé
+ * ensuite, dans l'ordre d'origine.
+ */
+export function sortForCollection<T extends { title: string }>(col: Collection, products: T[]): T[] {
+  const order = col.order;
+  if (!order) return products;
+  const rank = (p: T) => {
+    const i = order.findIndex((k) => p.title.toUpperCase().includes(k));
+    return i === -1 ? order.length : i;
+  };
+  return [...products].sort((a, b) => rank(a) - rank(b));
 }
 
 export const COLLECTIONS: Record<string, Collection> = {
@@ -74,6 +95,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Boost your physical and mental performance with natural supplements tailored to your energy and vitality needs.",
     },
     match: byName(["MUSHGLOW", "FOCUS", "POWER"]),
+    order: ["POWER", "FOCUS", "MUSHGLOW"],
   },
   "serenite": {
     slug: "serenite",
@@ -86,18 +108,20 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Soothe the mind, release tension and restore deep, restorative sleep.",
     },
     match: byName(["CALM", "MUSHGLOW"]),
+    order: ["CALM", "MUSHGLOW"],
   },
   "concentration": {
     slug: "concentration",
     eyebrow: "Par besoin",
     label: "Concentration & Clarté mentale",
-    desc: "Soutenez la mémoire, la concentration et la clarté mentale, sans nervosité ni coup de barre.",
+    desc: "Soutenez la mémoire, la concentration et la clarté mentale, sans nervosité ni baisse de régime.",
     en: {
       eyebrow: "By need",
       label: "Focus & Mental clarity",
-      desc: "Support memory, focus and mental clarity — without jitters or crashes.",
+      desc: "Support memory, focus and mental clarity, without jitters or dips.",
     },
     match: byName(["FOCUS", "MUSHGLOW"]),
+    order: ["FOCUS", "MUSHGLOW"],
   },
   "beaute-et-bien-etre": {
     slug: "beaute-et-bien-etre",
@@ -110,17 +134,18 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Skin, hair and natural hormonal balance, thanks to science-based active ingredients.",
     },
     match: byName(["MUSHGLOW", "CALM"]),
+    order: ["MUSHGLOW", "CALM"],
   },
   // Par type (slugs SEO du live)
   "gummies": {
     slug: "gummies",
     eyebrow: "Par type de produit",
     label: "Gummies",
-    desc: "Nos compléments naturels à mâcher — actifs dosés selon la science, sans sucre ajouté, vegan.",
+    desc: "Nos compléments naturels à mâcher : actifs dosés selon la science, sans sucre ajouté ni additifs artificiels et vegan.",
     en: {
       eyebrow: "By product type",
       label: "Gummies",
-      desc: "Our natural chewable supplements — science-based dosages, no added sugar, vegan.",
+      desc: "Our natural chewable supplements: science-based dosages, no added sugar, no artificial additives and vegan.",
     },
     match: (p) => typeOf(p) === "gummies",
   },
@@ -128,11 +153,11 @@ export const COLLECTIONS: Record<string, Collection> = {
     slug: "nos-poudres",
     eyebrow: "Par type de produit",
     label: "Poudres",
-    desc: "Nos mélanges en poudre tout-en-un, à intégrer à votre boisson quotidienne.",
+    desc: "Notre poudre 6-en-1, à intégrer à vos préparations du matin.",
     en: {
       eyebrow: "By product type",
       label: "Powders",
-      desc: "Our all-in-one powder blends, to add to your daily drink.",
+      desc: "Our 6-in-1 powder, to add to your morning preparations.",
     },
     match: (p) => typeOf(p) === "poudres",
   },

@@ -11,15 +11,15 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "contact",
-    title: lang === "en" ? "Contact — A question? · BIEN" : "Contact — Une question ? · BIEN",
-    description: lang === "en" ? "Contact the BIEN team: email, phone and address. We reply within 48 business hours." : "Contactez l'équipe BIEN : email, téléphone et adresse. Nous répondons sous 48 h ouvrées.",
+    title: "Contact | BIEN health",
+    description: lang === "en" ? "Contact the BIEN health team: email, phone and address. We reply within 48 business hours." : "Contactez l'équipe BIEN health : email, téléphone et adresse. Nous répondons sous 48 h ouvrées.",
   });
 }
 
 const T = {
   fr: {
     eyebrow: "Nous contacter", h1: "Une question ? Écrivez-nous.",
-    intro: "Notre équipe est là pour vous aider — commande, produit, conseil ou partenariat. Nous répondons généralement sous 48 h ouvrées.",
+    intro: "Notre équipe est là pour vous aider : commande, produit, conseil ou partenariat. Nous répondons généralement sous 48 h ouvrées.",
     emailTitle: "Par e-mail", emailSub: "La façon la plus rapide de nous joindre.",
     phoneTitle: "Par téléphone", phoneSub: "Du lundi au vendredi, 9h–18h.",
     addressTitle: "Adresse",
@@ -27,7 +27,7 @@ const T = {
   },
   en: {
     eyebrow: "Contact us", h1: "A question? Write to us.",
-    intro: "Our team is here to help — order, product, advice or partnership. We usually reply within 48 business hours.",
+    intro: "Our team is here to help: order, product, advice or partnership. We usually reply within 48 business hours.",
     emailTitle: "By email", emailSub: "The fastest way to reach us.",
     phoneTitle: "By phone", phoneSub: "Monday to Friday, 9am–6pm.",
     addressTitle: "Address",

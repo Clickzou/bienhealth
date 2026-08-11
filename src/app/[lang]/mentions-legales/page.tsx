@@ -9,8 +9,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "mentions-legales",
-    title: lang === "en" ? "Legal notice · BIEN" : "Mentions légales · BIEN",
-    description: lang === "en" ? "Legal notice for bien.health — Bien Health SAS, Albi, France." : "Mentions légales du site bien.health — Bien Health SAS, Albi.",
+    title: lang === "en" ? "Legal notice | BIEN health" : "Mentions légales | BIEN health",
+    description: lang === "en" ? "Legal notice for bien.health, published by Bien Health SAS, Albi, France." : "Mentions légales du site bien.health, édité par Bien Health SAS, Albi.",
   });
 }
 
@@ -42,10 +42,10 @@ export default async function MentionsLegalesPage({
 
         <h2>Hosting</h2>
         <p>
-          The site is hosted by <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, USA —{" "}
+          The site is hosted by <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, USA,{" "}
           <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a>.
           <br />The shop and order processing are operated via <strong>Shopify Inc.</strong>, 151 O&apos;Connor Street,
-          Ground floor, Ottawa, Ontario, K2P 2L8, Canada —{" "}
+          Ground floor, Ottawa, Ontario, K2P 2L8, Canada,{" "}
           <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer">shopify.com</a>.
         </p>
 
@@ -97,10 +97,10 @@ export default async function MentionsLegalesPage({
 
       <h2>Hébergement</h2>
       <p>
-        Le site est hébergé par <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis —{" "}
+        Le site est hébergé par <strong>Vercel Inc.</strong>, 340 S Lemon Ave #4133, Walnut, CA 91789, États-Unis,{" "}
         <a href="https://vercel.com" target="_blank" rel="noopener noreferrer">vercel.com</a>.
         <br />La boutique et le traitement des commandes sont opérés via <strong>Shopify Inc.</strong>, 151 O&apos;Connor
-        Street, Ground floor, Ottawa, Ontario, K2P 2L8, Canada —{" "}
+        Street, Ground floor, Ottawa, Ontario, K2P 2L8, Canada,{" "}
         <a href="https://www.shopify.com" target="_blank" rel="noopener noreferrer">shopify.com</a>.
       </p>
 

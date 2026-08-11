@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import { X, Sparkles, Check, Copy } from "lucide-react";
+import { CONSENT_KEY, CONSENT_EVENT } from "@/lib/consent";
 
 /**
  * Popup newsletter « −10 % première commande ».
@@ -25,18 +26,36 @@ export default function NewsletterPopup() {
   const [copied, setCopied] = useState(false);
   const dialogRef = useRef<HTMLDivElement>(null);
 
-  // Affichage différé, une seule fois par visiteur.
+  // Affichage différé, une seule fois par visiteur, et seulement APRÈS le choix
+  // sur les cookies : les deux se superposaient à l'arrivée sur mobile.
   useEffect(() => {
     let state: string | null = null;
+    let consent: string | null = null;
     try {
       state = localStorage.getItem(STORAGE_KEY);
+      consent = localStorage.getItem(CONSENT_KEY);
     } catch {
       /* localStorage indisponible (mode privé) → on affiche quand même */
     }
     if (state === "closed" || state === "subscribed") return;
 
-    const timer = window.setTimeout(() => setOpen(true), SHOW_DELAY);
-    return () => window.clearTimeout(timer);
+    let timer = 0;
+    const arm = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => setOpen(true), SHOW_DELAY);
+    };
+
+    if (consent) {
+      arm();
+      return () => window.clearTimeout(timer);
+    }
+    // Bannière cookies encore visible : on attend le clic du visiteur.
+    const onConsent = () => arm();
+    window.addEventListener(CONSENT_EVENT, onConsent);
+    return () => {
+      window.removeEventListener(CONSENT_EVENT, onConsent);
+      window.clearTimeout(timer);
+    };
   }, []);
 
   // Fermeture au clavier (Échap) + focus initial.
@@ -200,7 +219,7 @@ export default function NewsletterPopup() {
         <div className="order-1 sm:order-2 relative h-40 sm:h-auto sm:min-h-[420px]">
           <Image
             src="/brand/hero-lifestyle.jpg"
-            alt="BIEN — bien-être naturel"
+            alt="BIEN health, bien-être naturel"
             fill
             sizes="(max-width:640px) 100vw, 384px"
             className="object-cover"

@@ -86,13 +86,17 @@ export default function MobileMenu({ lang }: { lang: string }) {
                 {ABOUT.map((i) => <MobileLink key={i.href} {...i} />)}
               </MobileGroup>
 
-              <div className="mt-2 border-t border-border pt-2">
+              {/* Chaque entrée porte son propre trait, comme les groupes
+                  dépliables au-dessus : le `border-t` de ce bloc doublait
+                  celui du groupe « À propos » (deux traits), et les liens
+                  simples n'étaient séparés par rien. */}
+              <div>
                 {SIMPLE.map((i) => (
-                  <a key={i.href} href={i.href} className="block py-3 font-display text-black">{i.label}</a>
+                  <a key={i.href} href={i.href} className="block py-3.5 font-display text-black border-b border-border">{i.label}</a>
                 ))}
               </div>
 
-              <div className="mt-2 border-t border-border pt-4 flex items-center gap-3">
+              <div className="mt-5 flex items-center gap-3">
                 <a href={l("/compte")} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-semibold text-black">
                   <User className="h-4 w-4" /> {t.account}
                 </a>

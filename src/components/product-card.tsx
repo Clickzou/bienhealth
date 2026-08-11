@@ -1,21 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ShoppingBag } from "lucide-react";
+import { ShoppingBag } from "lucide-react";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify-products";
-import { benefitFor } from "@/lib/shop";
+import { benefitFor, BEST_SELLERS } from "@/lib/shop";
+import StarRating from "./star-rating";
+import { TRUSTPILOT_RATING } from "@/lib/social-proof";
 
 const T = {
-  fr: { soldOut: "Épuisé", preorder: "Pré-commande", onlyLeft: (n: number) => `Plus que ${n}`, fallbackTag: "Complément naturel", see: "Voir", preorderCta: "Précommander" },
-  en: { soldOut: "Sold out", preorder: "Pre-order", onlyLeft: (n: number) => `Only ${n} left`, fallbackTag: "Natural supplement", see: "View", preorderCta: "Pre-order" },
+  fr: { soldOut: "Épuisé", preorder: "Pré-commande", onlyLeft: (n: number) => `Plus que ${n}`, fallbackTag: "Complément naturel", see: "Voir", preorderCta: "Précommander", bestSeller: "Best-seller" },
+  en: { soldOut: "Sold out", preorder: "Pre-order", onlyLeft: (n: number) => `Only ${n} left`, fallbackTag: "Natural supplement", see: "View", preorderCta: "Pre-order", bestSeller: "Best-seller" },
 } as const;
 
 /** Carte produit réutilisée par la boutique et les pages « collections ». */
 export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: string }) {
   const t = T[lang === "en" ? "en" : "fr"];
   const href = `/${lang}/products/${p.handle}`;
+  // Le badge « Best-seller » n'existait que sur le carrousel de l'accueil : il
+  // manquait sur la page où l'on voit tous les produits (demande client).
+  const isBestSeller = p.available && BEST_SELLERS.some((k) => p.title.toUpperCase().includes(k));
   return (
     <article className="group bg-card rounded-3xl ring-1 ring-border hover:ring-bien-leaf/40 hover:-translate-y-1 transition-all bien-shadow-sm overflow-hidden flex flex-col">
       <Link href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
+        {isBestSeller && (
+          <span className="absolute top-3 right-3 z-10 inline-flex items-center rounded-full bg-bien-gold text-black px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
+            {t.bestSeller}
+          </span>
+        )}
         {!p.available ? (
           <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-black text-white px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
             {t.soldOut}
@@ -39,7 +49,9 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
         />
       </Link>
       <div className="p-4 sm:p-5 flex flex-col flex-1">
-        <div className="flex gap-0.5">{[0, 1, 2, 3, 4].map((i) => <Star key={i} className="h-3.5 w-3.5 fill-bien-star text-bien-star" />)}</div>
+        {/* Même note que le header (4,4/5) : cinq étoiles pleines en dur
+            contredisaient le chiffre affiché partout ailleurs. */}
+        <StarRating value={TRUSTPILOT_RATING} className="h-3.5 w-3.5" />
         <Link href={href}><h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
         <p className="mt-1 text-sm text-black/65 leading-snug flex-1">{benefitFor(p.title, p.tags[0] ?? t.fallbackTag, lang)}</p>
         <div className="mt-4 flex items-center justify-between gap-3">

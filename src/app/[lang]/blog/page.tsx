@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "blog",
-    title: lang === "en" ? "The BIEN Journal — adaptogens & wellbeing" : "Le Journal BIEN — adaptogènes & bien-être",
-    description: lang === "en" ? "Insights, tips and science on adaptogens and functional mushrooms by BIEN: stress, sleep, focus, energy and natural beauty." : "Décryptages, conseils et science des adaptogènes et champignons fonctionnels par BIEN : stress, sommeil, concentration, énergie et beauté au naturel.",
+    title: lang === "en" ? "The Journal: adaptogens & wellbeing | BIEN health" : "Le Journal : adaptogènes & bien-être | BIEN health",
+    description: lang === "en" ? "Insights, tips and science on adaptogens and functional mushrooms by BIEN health: stress, sleep, focus, energy and natural beauty." : "Décryptages, conseils et science des adaptogènes et champignons fonctionnels par BIEN health : stress, sommeil, concentration, énergie et beauté au naturel.",
   });
 }
 
@@ -28,15 +28,15 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
   });
 
   const hero = en
-    ? { eyebrow: "The Journal", intro: "Insights, tips and science on adaptogens and functional mushrooms — to live everyday life better." }
-    : { eyebrow: "Le Journal", intro: "Décryptages, conseils et science des adaptogènes et champignons fonctionnels — pour mieux vivre le quotidien." };
+    ? { eyebrow: "The Journal", intro: "Insights, tips and science on adaptogens and functional mushrooms, to live everyday life better." }
+    : { eyebrow: "Le Journal", intro: "Décryptages, conseils et science des adaptogènes et champignons fonctionnels, pour mieux vivre le quotidien." };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-20 text-center max-w-3xl mx-auto">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-20 text-center max-w-3xl mx-auto">
         <span className="inline-flex items-center gap-1.5 rounded-full bg-bien-gold/15 px-3 py-1 text-[11px] font-semibold uppercase tracking-wider text-[oklch(0.55_0.13_75)]">
           <Sparkles className="h-3.5 w-3.5" /> {hero.eyebrow}
         </span>
@@ -49,7 +49,7 @@ export default async function BlogPage({ params }: { params: Promise<{ lang: str
       </section>
 
       {/* Recherche + tri + grille (client) */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20 mb-24">
         <BlogListing items={items} lang={lang} />
       </section>
     </div>

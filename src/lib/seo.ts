@@ -112,7 +112,7 @@ export function pageMetadata({
       : { index: false, follow: false, googleBot: { index: false, follow: false } },
     openGraph: {
       type: ogType,
-      siteName: "BIEN",
+      siteName: "BIEN health",
       locale: lang === "en" ? "en_US" : "fr_FR",
       url,
       title,

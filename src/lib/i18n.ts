@@ -20,7 +20,7 @@ const DICT = {
       offer2: "1 mousseur offert pour les 100 premières commandes",
       offerCode: "code",
       // Header / actions
-      home: "BIEN — accueil",
+      home: "BIEN health, accueil",
       shop: "Boutique",
       search: "Rechercher",
       account: "Mon compte",
@@ -47,11 +47,13 @@ const DICT = {
       powders: "Poudres",
       accessories: "Accessoires",
       allProducts: "Tous les produits",
-      // Sous-menu « par besoin »
+      // Sous-menu « par besoin » — libellés strictement alignés sur le `label`
+      // des collections correspondantes (@/lib/shop) : le menu annonçait
+      // « Beauté & Régulation Hormonale » pour une page « Beauté & Bien-être ».
       needPerformance: "Performance & Vitalité",
-      needSleep: "Sommeil & Gestion du stress",
-      needFocus: "Concentration & Clarté Mentale",
-      needBeauty: "Beauté & Régulation Hormonale",
+      needSleep: "Sérénité & Sommeil",
+      needFocus: "Concentration & Clarté mentale",
+      needBeauty: "Beauté & Bien-être",
       // À propos
       story: "Notre histoire",
       press: "La presse en parle",
@@ -81,7 +83,7 @@ const DICT = {
       languageTitle: "Langue",
       socialTitle: "Réseau social",
       newsletterTitle: "Rejoignez la newsletter",
-      newsletterText: "Conseils bien-être, nouveautés et offres exclusives — et −10 % sur votre première commande.",
+      newsletterText: "Conseils bien-être, nouveautés et offres exclusives, et −10 % sur votre première commande.",
       newsletterPlaceholder: "Votre adresse email",
       newsletterCta: "S'inscrire",
       newsletterLoading: "Un instant…",
@@ -94,7 +96,7 @@ const DICT = {
       commitmentChildren: "Soutien à l'association Hôpital Sourire",
       disclaimer:
         "Compléments alimentaires. Ne se substituent pas à une alimentation variée et équilibrée. Ne pas dépasser la dose journalière recommandée. Allégations conformes au règlement EFSA.",
-      rights: "© 2026 BIEN Health France — Tous droits réservés.",
+      rights: "© 2026 BIEN Health France. Tous droits réservés.",
     },
   },
   en: {
@@ -102,7 +104,7 @@ const DICT = {
       offer1: "MUSHGLOW in stock",
       offer2: "Free milk frother for the first 100 orders",
       offerCode: "code",
-      home: "BIEN — home",
+      home: "BIEN health, home",
       shop: "Shop",
       search: "Search",
       account: "My account",
@@ -127,9 +129,9 @@ const DICT = {
       accessories: "Accessories",
       allProducts: "All products",
       needPerformance: "Performance & Vitality",
-      needSleep: "Sleep & Stress management",
+      needSleep: "Calm & Sleep",
       needFocus: "Focus & Mental clarity",
-      needBeauty: "Beauty & Hormonal balance",
+      needBeauty: "Beauty & Wellbeing",
       story: "Our story",
       press: "As seen in the press",
       resellers: "Our resellers",
@@ -157,7 +159,7 @@ const DICT = {
       languageTitle: "Language",
       socialTitle: "Social media",
       newsletterTitle: "Join the newsletter",
-      newsletterText: "Wellness tips, new products and exclusive offers — plus −10% off your first order.",
+      newsletterText: "Wellness tips, new products and exclusive offers, plus −10% off your first order.",
       newsletterPlaceholder: "Your email address",
       newsletterCta: "Subscribe",
       newsletterLoading: "One moment…",
@@ -168,7 +170,7 @@ const DICT = {
       commitmentChildren: "Supporter of the Hôpital Sourire charity",
       disclaimer:
         "Food supplements. Do not replace a varied and balanced diet. Do not exceed the recommended daily dose. Claims comply with EFSA regulation.",
-      rights: "© 2026 BIEN Health France — All rights reserved.",
+      rights: "© 2026 BIEN Health France. All rights reserved.",
     },
   },
 } as const;

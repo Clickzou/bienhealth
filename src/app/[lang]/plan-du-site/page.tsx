@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "plan-du-site",
-    title: lang === "en" ? "Sitemap · BIEN" : "Plan du site · BIEN",
-    description: lang === "en" ? "All the pages of the BIEN site: shop, collections, products, about, help and legal notices." : "Toutes les pages du site BIEN : boutique, collections, produits, à propos, aide et mentions légales.",
+    title: lang === "en" ? "Sitemap | BIEN health" : "Plan du site | BIEN health",
+    description: lang === "en" ? "All the pages of the BIEN health site: shop, collections, products, about, help and legal notices." : "Toutes les pages du site BIEN health : boutique, collections, produits, à propos, aide et mentions légales.",
   });
 }
 

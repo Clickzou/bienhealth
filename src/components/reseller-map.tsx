@@ -42,7 +42,15 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
   useEffect(() => {
     if (!mapEl.current || mapRef.current) return;
 
-    const map = L.map(mapEl.current, { scrollWheelZoom: false }).setView([47.5, 4.5], 5);
+    // Sur écran tactile, le déplacement à un doigt est confié à la page : la
+    // carte capturait le geste, on faisait glisser la carte au lieu de faire
+    // défiler le site. Deux doigts déplacent et zooment la carte.
+    const touch = typeof window !== "undefined" && window.matchMedia("(pointer: coarse)").matches;
+    const map = L.map(mapEl.current, {
+      scrollWheelZoom: false,
+      dragging: !touch,
+    }).setView([47.5, 4.5], 5);
+    if (touch) map.getContainer().style.touchAction = "pan-x pan-y";
     mapRef.current = map;
 
     L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
@@ -55,7 +63,7 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
       const marker = L.marker([r.lat, r.lng], { icon: pinIcon(false) })
         .addTo(map)
         .bindPopup(
-          `<strong>${r.name}</strong><br>${r.address}<br>${r.city} — ${r.country}` +
+          `<strong>${r.name}</strong><br>${r.address}<br>${r.city}, ${r.country}` +
             `<br><a href="${directionsUrl(r)}" target="_blank" rel="noopener">Voir l'itinéraire</a>`,
         )
         .on("click", () => setActive(i));
@@ -84,7 +92,10 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
   }, [active, resellers]);
 
   return (
-    <div className="grid lg:grid-cols-[360px_1fr] rounded-3xl overflow-hidden ring-1 ring-border bien-shadow-sm bg-card">
+    /* `isolate` : Leaflet empile ses panneaux à des z-index de 400 à 1000, qui
+       passaient au-dessus du header sticky (z-40) au défilement. Un contexte
+       d'empilement local les confine dans ce bloc. */
+    <div className="isolate relative z-0 grid lg:grid-cols-[360px_1fr] rounded-3xl overflow-hidden ring-1 ring-border bien-shadow-sm bg-card">
       {/* Liste */}
       <div className="max-h-[320px] lg:max-h-[600px] overflow-y-auto divide-y divide-border">
         {resellers.map((r, i) => (
@@ -99,7 +110,7 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
             </span>
             <span className="min-w-0">
               <span className="block font-display text-black leading-tight">{r.name}</span>
-              <span className="mt-1 block text-sm text-black/65 leading-snug">{r.address}<br />{r.city} — {r.country}</span>
+              <span className="mt-1 block text-sm text-black/65 leading-snug">{r.address}<br />{r.city}, {r.country}</span>
               {i === active && (
                 <a
                   href={directionsUrl(r)}

@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "livraison",
-    title: en ? "Shipping — Times & rates · BIEN" : "Livraison — Délais & tarifs · BIEN",
+    title: en ? "Shipping: times & rates | BIEN health" : "Livraison : délais & tarifs | BIEN health",
     description: en
       ? `Free Point Relais delivery on orders over ${freeShippingAmount("en")}, shipped the same day. Delivery times and rates for France and Europe.`
       : `Livraison offerte en Point Relais dès ${freeShippingAmount("fr")} d'achat, expédiée le jour même. Délais et tarifs de livraison France et Europe.`,
@@ -37,9 +37,9 @@ export default async function LivraisonPage({
 
         <h2>France 🇫🇷</h2>
         <ul>
-          <li><strong>Point Relais pick-up</strong> (3 to 5 business days) — €4</li>
-          <li><strong>Standard home delivery</strong> (2 to 4 business days) — €5.90</li>
-          <li><strong>Express home delivery</strong> (1 to 2 business days) — €11.50</li>
+          <li><strong>Point Relais pick-up</strong> (3 to 5 business days): €4</li>
+          <li><strong>Standard home delivery</strong> (2 to 4 business days): €5.90</li>
+          <li><strong>Express home delivery</strong> (1 to 2 business days): €11.50</li>
         </ul>
 
         <h2>Europe 🌍</h2>
@@ -74,9 +74,9 @@ export default async function LivraisonPage({
 
       <h2>France 🇫🇷</h2>
       <ul>
-        <li><strong>Point Relais</strong> (3 à 5 jours ouvrés) — 4 €</li>
-        <li><strong>Livraison standard à domicile</strong> (2 à 4 jours ouvrés) — 5,90 €</li>
-        <li><strong>Livraison express à domicile</strong> (1 à 2 jours ouvrés) — 11,50 €</li>
+        <li><strong>Point Relais</strong> (3 à 5 jours ouvrés) : 4 €</li>
+        <li><strong>Livraison standard à domicile</strong> (2 à 4 jours ouvrés) : 5,90 €</li>
+        <li><strong>Livraison express à domicile</strong> (1 à 2 jours ouvrés) : 11,50 €</li>
       </ul>
 
       <h2>Europe 🌍</h2>

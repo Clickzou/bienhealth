@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
-import { COLLECTIONS, localizeCollection } from "@/lib/shop";
+import { COLLECTIONS, localizeCollection, sortForCollection } from "@/lib/shop";
 import { COLLECTION_SEO, localizeCollectionSeo } from "@/lib/collection-seo";
 import { pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
@@ -30,7 +30,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: `collections/${slug}`,
-    title: `${c.label} · BIEN`,
+    title: `${c.label} | BIEN health`,
     description: metaDescription(c.desc),
   });
 }
@@ -55,7 +55,7 @@ export default async function CollectionPage({
   const c = localizeCollection(col, lang);
 
   const all = await getProducts(24);
-  const products = all.filter(col.match);
+  const products = sortForCollection(col, all.filter(col.match));
   // « Découvrez aussi » : les produits qui ne sont pas déjà affichés plus haut.
   const shownHandles = new Set(products.map((p) => p.handle));
   const others = all.filter((p) => !shownHandles.has(p.handle));
@@ -65,7 +65,7 @@ export default async function CollectionPage({
       <SiteHeader lang={lang} />
 
       {/* Hero collection */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-10 sm:pt-14">
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{c.eyebrow}</p>
           <h1 className="mt-3 font-hero text-bien-cream text-[clamp(2.2rem,5.28vw,3.96rem)] leading-[0.95]">
@@ -76,7 +76,7 @@ export default async function CollectionPage({
       </section>
 
       {/* Grille produits de la collection */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <div className="flex items-end justify-between gap-4 mb-6">
           <div className="flex items-baseline gap-3 flex-wrap">
             <h2 className="font-display tracking-tight text-2xl text-black">{c.label}</h2>
@@ -95,7 +95,7 @@ export default async function CollectionPage({
 
       {/* Découvrez aussi — les autres produits */}
       {others.length > 0 && (
-        <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24">
+        <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
           <div className="flex items-end justify-between gap-4 mb-6">
             <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{t.alsoDiscover}</h2>
             <Link href={`/${lang}/boutique`} className="text-sm font-semibold text-bien-leaf inline-flex items-center gap-1.5 hover:gap-2.5 transition-all">
@@ -110,7 +110,7 @@ export default async function CollectionPage({
 
       {/* Contenu éditorial SEO */}
       {seo && (
-        <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24">
+        <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
           <div className="rounded-3xl lg:rounded-[2.5rem] bg-bien-cream/50 ring-1 ring-border p-7 sm:p-12 lg:p-16">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.learnMore}</p>
             <div className="mt-4 max-w-3xl space-y-4">

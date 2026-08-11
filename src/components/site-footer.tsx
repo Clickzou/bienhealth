@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Leaf, Heart } from "lucide-react";
+import { Leaf, Heart, ExternalLink } from "lucide-react";
 import FooterCredit from "./footer-credit";
 import NewsletterForm from "./newsletter-form";
 import { ui } from "@/lib/i18n";
@@ -22,7 +22,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
   const t = ui(lang).footer;
   return (
     <footer className="mt-24 bg-bien-forest text-bien-cream">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] py-14 lg:py-20">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 py-14 lg:py-20">
         {/* Bandeau newsletter */}
         <div className="pb-12 mb-12 border-b border-bien-cream/15 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="max-w-md">
@@ -84,19 +84,35 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </a>
           </div>
         </div>
-        {/* Engagements associatifs — mention texte ; les logos officiels
-            (Team for the Planet, Hôpital Sourire) seront ajoutés ici dès
-            réception des fichiers. */}
+        {/* Engagements associatifs — chaque mention renvoie vers le site de
+            l'association (demande client) ; les logos officiels remplaceront
+            les pictogrammes dès réception des fichiers. */}
         <div className="mt-12 pt-8 border-t border-bien-cream/15 text-center">
           <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.commitmentsTitle}</h3>
           <ul className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-bien-cream/80">
-            <li className="flex items-center gap-2">
-              <Leaf className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
-              {t.commitmentPlanet}
+            <li>
+              <a
+                href="https://www.team-for-the-planet.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-bien-gold transition-colors"
+              >
+                <Leaf className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
+                {t.commitmentPlanet}
+                <ExternalLink className="h-3.5 w-3.5 opacity-60" aria-hidden />
+              </a>
             </li>
-            <li className="flex items-center gap-2">
-              <Heart className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
-              {t.commitmentChildren}
+            <li>
+              <a
+                href="https://www.hopital-sourire.fr/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-bien-gold transition-colors"
+              >
+                <Heart className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
+                {t.commitmentChildren}
+                <ExternalLink className="h-3.5 w-3.5 opacity-60" aria-hidden />
+              </a>
             </li>
           </ul>
         </div>

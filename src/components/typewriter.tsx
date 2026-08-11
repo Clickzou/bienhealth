@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 /**
  * Effet « machine à écrire » : le texte s'écrit caractère par caractère
- * lorsqu'il entre dans le viewport, avec un curseur clignotant et un
- * soulignement doré une fois terminé. Respecte prefers-reduced-motion.
+ * lorsqu'il entre dans le viewport, avec un soulignement doré une fois
+ * terminé. Respecte prefers-reduced-motion.
  */
 export default function Typewriter({
   text,
@@ -59,10 +59,14 @@ export default function Typewriter({
       <span className="underline decoration-bien-leaf decoration-2 underline-offset-[6px]" aria-hidden>
         {text.slice(0, shown)}
       </span>
-      <span
-        aria-hidden
-        className={`inline-block ml-[3px] h-[1em] w-[2px] translate-y-[2px] bg-bien-leaf ${done ? "bien-caret" : ""}`}
-      />
+      {/* Curseur affiché pendant la frappe seulement : une fois le texte
+          écrit, il continuait à clignoter en fin de phrase indéfiniment. */}
+      {!done && (
+        <span
+          aria-hidden
+          className="inline-block ml-[3px] h-[1em] w-[2px] translate-y-[2px] bg-bien-leaf"
+        />
+      )}
     </span>
   );
 }

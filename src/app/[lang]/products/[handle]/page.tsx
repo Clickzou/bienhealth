@@ -16,11 +16,13 @@ import ProductStickyBar from "@/components/product-sticky-bar";
 import ReviewsSwitch from "@/components/reviews-switch";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 import AddToCart from "@/components/add-to-cart";
+import DeliveryEstimate from "@/components/delivery-estimate";
 import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
 import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
 import { TRUSTPILOT_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
+import { TRUSTPILOT_URL } from "@/components/trustpilot";
 import StarRating from "@/components/star-rating";
 import MetaViewContent from "@/components/meta-view-content";
 
@@ -31,13 +33,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { lang, handle } = await params;
   const product = await getProduct(handle);
-  if (!product) return { title: lang === "en" ? "Product not found — BIEN" : "Produit introuvable — BIEN" };
+  if (!product) return { title: lang === "en" ? "Product not found | BIEN health" : "Produit introuvable | BIEN health" };
   const key = keyFor(product.title);
   const seo = key ? localizeProductSeo(PRODUCT_SEO[key], lang) : null;
   return pageMetadata({
     lang,
     path: `products/${handle}`,
-    title: `${product.title} — BIEN`,
+    title: `${product.title} | BIEN health`,
     // Description propre au produit, coupée sur une frontière de mot.
     description: metaDescription(seo?.paragraphs[0] || product.description || seo?.heading || product.title),
     image: product.featuredImage?.url ?? product.images[0]?.url ?? null,
@@ -62,7 +64,7 @@ type ProductInfo = { category: string; reviews: number; rows: Highlight[] };
 
 const HIGHLIGHTS: Record<string, ProductInfo> = {
   CALM: {
-    category: "SÉRÉNITÉ & SOMMEIL 🌙", reviews: 19,
+    category: "SÉRÉNITÉ & SOMMEIL", reviews: 19,
     rows: [
       { icon: HeartPulse, text: "Ashwagandha, Reishi et Safran aux doses cliniquement efficaces." },
       { icon: Zap, text: "Favoriser la relaxation, réduire le stress et améliorer la qualité du sommeil." },
@@ -71,7 +73,7 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
     ],
   },
   FOCUS: {
-    category: "CONCENTRATION & MÉMOIRE 🧠", reviews: 19,
+    category: "CONCENTRATION & MÉMOIRE", reviews: 19,
     rows: [
       { icon: HeartPulse, text: "Lion's Mane, Rhodiola Rosea et L-Théanine aux doses cliniquement efficaces." },
       { icon: Zap, text: "Soutenir la concentration, la mémoire et la clarté mentale, sans nervosité ni coup de barre." },
@@ -80,7 +82,7 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
     ],
   },
   POWER: {
-    category: "ÉNERGIE & PERFORMANCE ⚡", reviews: 17,
+    category: "ÉNERGIE & PERFORMANCE", reviews: 17,
     rows: [
       { icon: HeartPulse, text: "Des extraits de Cordyceps, Rhodiola Rosea et Panax Ginseng aux doses cliniquement efficaces." },
       { icon: Zap, text: "Soutenir l'énergie naturelle, optimiser les performances physiques et favoriser la résistance à l'effort, sans sensation de nervosité." },
@@ -89,7 +91,7 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
     ],
   },
   MUSHGLOW: {
-    category: "ÉQUILIBRE GLOBAL ✨", reviews: 23,
+    category: "ÉQUILIBRE GLOBAL", reviews: 23,
     rows: [
       { icon: HeartPulse, text: "Lion's Mane, Cordyceps, Chaga, Maca, L-Théanine et Collagène aux doses cliniquement efficaces." },
       { icon: Zap, text: "Favoriser l'énergie, la concentration, la résilience au stress, l'immunité et une peau éclatante." },
@@ -100,7 +102,7 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
 };
 
 const DEFAULT_INFO: ProductInfo = {
-  category: "BIEN-ÊTRE ✨", reviews: 100,
+  category: "BIEN-ÊTRE", reviews: 100,
   rows: [
     { icon: Leaf, text: "Adaptogènes et champignons fonctionnels dosés selon la science." },
     { icon: ShieldCheck, text: "Une formule naturelle et clean, fabriquée en France." },
@@ -109,45 +111,45 @@ const DEFAULT_INFO: ProductInfo = {
 
 const HIGHLIGHTS_EN: Record<string, ProductInfo> = {
   CALM: {
-    category: "CALM & SLEEP 🌙", reviews: 19,
+    category: "CALM & SLEEP", reviews: 19,
     rows: [
       { icon: HeartPulse, text: "Ashwagandha, Reishi and Saffron at clinically effective doses." },
       { icon: Zap, text: "Promote relaxation, reduce stress and improve sleep quality." },
-      { icon: Leaf, text: "A natural, clean formula — no sugar or additives, vegan and gluten-free." },
+      { icon: Leaf, text: "A natural, clean formula: no sugar or additives, vegan and gluten-free." },
       { icon: RefreshCw, text: "2 gummies to chew in the evening, to calm the mind and prepare for restorative sleep." },
     ],
   },
   FOCUS: {
-    category: "FOCUS & MEMORY 🧠", reviews: 19,
+    category: "FOCUS & MEMORY", reviews: 19,
     rows: [
       { icon: HeartPulse, text: "Lion's Mane, Rhodiola Rosea and L-Theanine at clinically effective doses." },
       { icon: Zap, text: "Support focus, memory and mental clarity, without jitters or crashes." },
-      { icon: Leaf, text: "A natural, clean formula — no sugar or additives, vegan and gluten-free." },
+      { icon: Leaf, text: "A natural, clean formula: no sugar or additives, vegan and gluten-free." },
       { icon: RefreshCw, text: "2 gummies to chew in the morning, to stay focused and productive all day." },
     ],
   },
   POWER: {
-    category: "ENERGY & PERFORMANCE ⚡", reviews: 17,
+    category: "ENERGY & PERFORMANCE", reviews: 17,
     rows: [
       { icon: HeartPulse, text: "Cordyceps, Rhodiola Rosea and Panax Ginseng extracts at clinically effective doses." },
       { icon: Zap, text: "Support natural energy, optimise physical performance and boost stamina, without any jittery feeling." },
-      { icon: Leaf, text: "A natural, clean formula — no added sugar or additives, for healthy, lasting vitality." },
+      { icon: Leaf, text: "A natural, clean formula: no added sugar or additives, for healthy, lasting vitality." },
       { icon: RefreshCw, text: "2 passion-fruit gummies to chew in the morning, to start the day with pleasure and energy." },
     ],
   },
   MUSHGLOW: {
-    category: "OVERALL BALANCE ✨", reviews: 23,
+    category: "OVERALL BALANCE", reviews: 23,
     rows: [
       { icon: HeartPulse, text: "Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine and Collagen at clinically effective doses." },
       { icon: Zap, text: "Support energy, focus, stress resilience, immunity and radiant skin." },
-      { icon: Leaf, text: "A 100% natural formula — no sugar, gluten, lactose, additives or caffeine, and veggie." },
+      { icon: Leaf, text: "A 100% natural formula: no sugar, gluten, lactose, additives or caffeine, and veggie." },
       { icon: RefreshCw, text: "1 level tablespoon, ideally in the morning, for a complete ritual that supports the body's balance." },
     ],
   },
 };
 
 const DEFAULT_INFO_EN: ProductInfo = {
-  category: "WELLBEING ✨", reviews: 100,
+  category: "WELLBEING", reviews: 100,
   rows: [
     { icon: Leaf, text: "Adaptogens and functional mushrooms dosed according to science." },
     { icon: ShieldCheck, text: "A natural, clean formula, made in France." },
@@ -175,9 +177,9 @@ const VIDEOS: Record<string, { url: string; at: number }[]> = {
 const LIVRAISON = `${freeShippingSentence("fr")}
 
 France 🇫🇷
-• Point Relais (3 à 5 jours ouvrés) — 4 €
-• Livraison standard à domicile (2 à 4 jours ouvrés) — 5,90 €
-• Livraison express à domicile (1 à 2 jours ouvrés) — 11,50 €
+• Point Relais (3 à 5 jours ouvrés) : 4 €
+• Livraison standard à domicile (2 à 4 jours ouvrés) : 5,90 €
+• Livraison express à domicile (1 à 2 jours ouvrés) : 11,50 €
 
 Europe 🌍
 Les options et tarifs de livraison sont affichés à l'étape de validation de commande.`;
@@ -185,9 +187,9 @@ Les options et tarifs de livraison sont affichés à l'étape de validation de c
 const LIVRAISON_EN = `${freeShippingSentence("en")}
 
 France 🇫🇷
-• Point Relais pick-up (3 to 5 business days) — €4
-• Standard home delivery (2 to 4 business days) — €5.90
-• Express home delivery (1 to 2 business days) — €11.50
+• Point Relais pick-up (3 to 5 business days): €4
+• Standard home delivery (2 to 4 business days): €5.90
+• Express home delivery (1 to 2 business days): €11.50
 
 Europe 🌍
 Delivery options and rates are shown at checkout.`;
@@ -197,26 +199,27 @@ type Accordion = { q: string; a: string };
 const MUSHGLOW_ACCORDIONS: Accordion[] = [
   {
     q: "Ingrédients, Bienfaits et Posologie",
-    a: `☕ Le meilleur allié de votre café — un supermix de champignons, adaptogènes et collagène pour booster focus, énergie et glow, en une cuillère par jour.
+    a: `Un supermix 6-en-1 de champignons, adaptogènes et collagène pour soutenir focus, énergie et éclat de la peau, en une cuillère par jour.
 
-🌿 Formule clean & puissante — Lion's Mane, Cordyceps, Chaga, Maca, L-Théanine, collagène de membrane d'œuf. Des actifs cliniquement dosés, 100 % naturels.
+Formule clean & puissante : Lion's Mane, Cordyceps, Chaga, Maca, L-Théanine, collagène de membrane d'œuf. Des actifs cliniquement dosés, 100 % naturels.
 
-🚫 Sans sucre. Sans additifs.
+Sans sucre. Sans additifs.
 
-📆 Un rituel quotidien, des effets durables — résilience, clarté mentale et peau lumineuse, visibles avec une prise régulière.`,
+Un rituel quotidien, des effets durables : résilience, clarté mentale et peau lumineuse, visibles avec une prise régulière.`,
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `🥄 Goût neutre & ultra-facile à utiliser — se mélange parfaitement dans votre café, matcha, smoothie ou toute autre boisson chaude ou froide. Une touche subtile et naturelle de champignons.`,
+    a: `Goût neutre et légèrement terreux, facile à intégrer : la poudre se fond dans un yaourt, un smoothie, un jus de légumes ou une soupe, sans dominer la préparation.`,
   },
   {
+    // Conseils revus : la poudre laisse un dépôt dans le café, elle est donc
+    // orientée vers les préparations épaisses (texte fourni par le client).
     q: "Comment le préparer ?",
-    a: `1. Ajoutez simplement 1 dose (cuillère incluse) dans la boisson de votre choix — chaude ou froide.
-2. Mélangez.
-3. Dégustez.
-4. Profitez des effets.
+    a: `Ajouter 1 cuillère à soupe rase par jour (environ 4 g) dans vos préparations, froides ou chaudes, jusqu'à 200 °C au four. Formule 100 % actifs, sans agents de liaison : de légers grumeaux peuvent apparaître. Bien mélanger pour obtenir une texture homogène.
 
-💡 Astuce : utilisez un petit mousseur ou fouet pour une texture ultra-lisse.`,
+Idéal dans les yaourts, smoothies, jus de légumes, soupes ou préparations épaisses. Convient aussi en cuisine : gâteaux, omelettes… Adapter la quantité selon le nombre de portions.
+
+À consommer de préférence le matin. Premiers résultats visibles dès le 1er mois, à prolonger pour des effets durables.`,
   },
   {
     q: "Traçabilité et Qualité",
@@ -231,12 +234,12 @@ const MUSHGLOW_ACCORDIONS: Accordion[] = [
   },
   {
     q: "Ingrédients & Bienfaits",
-    a: `Lion's Mane — 750 mg : soutient la mémoire, la concentration et la fonction cognitive.
-Cordyceps — 500 mg : booste l'énergie, la vitalité et l'endurance physique.
-Chaga — 500 mg : antioxydant puissant, protège les cellules et soutient l'immunité.
-L-Théanine — 200 mg : apaise sans endormir, améliore la clarté mentale et le focus.
-Maca — 750 mg : équilibre hormonal et bien-être émotionnel, améliore l'humeur.
-Collagène — 450 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
+    a: `Lion's Mane, 750 mg : soutient la mémoire, la concentration et la fonction cognitive.
+Cordyceps, 500 mg : booste l'énergie, la vitalité et l'endurance physique.
+Chaga, 500 mg : antioxydant puissant, protège les cellules et soutient l'immunité.
+L-Théanine, 200 mg : apaise sans endormir, améliore la clarté mentale et le focus.
+Maca, 750 mg : équilibre hormonal et bien-être émotionnel, améliore l'humeur.
+Collagène, 450 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
   },
   { q: "Livraison", a: LIVRAISON },
 ];
@@ -252,7 +255,7 @@ Une utilisation régulière pendant 30 jours permet de constater la différence 
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher — sans sucre ajouté.`,
+    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté.`,
   },
   {
     q: "Comment le préparer ?",
@@ -310,7 +313,7 @@ Une utilisation régulière pendant 30 jours permet de constater la différence 
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher — sans sucre ajouté.`,
+    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté.`,
   },
   {
     q: "Comment le préparer ?",
@@ -369,7 +372,7 @@ Une utilisation régulière pendant 30 jours permet de constater la différence 
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `Des gummies moelleux au goût fruité de fruit de la passion, agréables à mâcher — sans sucre ajouté.`,
+    a: `Des gummies moelleux au goût fruité de fruit de la passion, agréables à mâcher, sans sucre ajouté.`,
   },
   {
     q: "Comment le préparer ?",
@@ -419,26 +422,25 @@ RHODIOLA ROSEA
 const MUSHGLOW_ACCORDIONS_EN: Accordion[] = [
   {
     q: "Ingredients, Benefits and Dosage",
-    a: `☕ Your coffee's best ally — a supermix of mushrooms, adaptogens and collagen to boost focus, energy and glow, in one spoon a day.
+    a: `A 6-in-1 supermix of mushrooms, adaptogens and collagen to support focus, energy and glow, in one spoon a day.
 
-🌿 Clean & powerful formula — Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine, eggshell-membrane collagen. Clinically dosed actives, 100% natural.
+Clean & powerful formula: Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine, eggshell-membrane collagen. Clinically dosed actives, 100% natural.
 
-🚫 No sugar. No additives.
+No sugar. No additives.
 
-📆 A daily ritual, lasting effects — resilience, mental clarity and glowing skin, visible with regular use.`,
+A daily ritual, lasting effects: resilience, mental clarity and glowing skin, visible with regular use.`,
   },
   {
     q: "What does it taste like?",
-    a: `🥄 Neutral taste & ultra-easy to use — blends perfectly into your coffee, matcha, smoothie or any other hot or cold drink. A subtle, natural hint of mushrooms.`,
+    a: `A neutral, slightly earthy taste that's easy to work with: the powder blends into a yoghurt, a smoothie, a vegetable juice or a soup without overpowering it.`,
   },
   {
     q: "How do I prepare it?",
-    a: `1. Simply add 1 dose (spoon included) to the drink of your choice — hot or cold.
-2. Stir.
-3. Enjoy.
-4. Feel the effects.
+    a: `Add 1 level tablespoon a day (about 4 g) to your preparations, cold or hot, up to 200 °C in the oven. A 100% active formula with no binding agents: slight lumps may appear. Stir well for an even texture.
 
-💡 Tip: use a small frother or whisk for an ultra-smooth texture.`,
+Ideal in yoghurts, smoothies, vegetable juices, soups or thick preparations. It also works in cooking: cakes, omelettes… Adjust the amount to the number of servings.
+
+Best taken in the morning. First results visible from the 1st month, to be continued for lasting effects.`,
   },
   {
     q: "Traceability and Quality",
@@ -453,12 +455,12 @@ const MUSHGLOW_ACCORDIONS_EN: Accordion[] = [
   },
   {
     q: "Ingredients & Benefits",
-    a: `Lion's Mane — 750 mg: supports memory, focus and cognitive function.
-Cordyceps — 500 mg: boosts energy, vitality and physical stamina.
-Chaga — 500 mg: powerful antioxidant, protects cells and supports immunity.
-L-Theanine — 200 mg: calms without drowsiness, improves mental clarity and focus.
-Maca — 750 mg: hormonal balance and emotional wellbeing, improves mood.
-Collagen — 450 mg: improves skin hydration, elasticity and radiance.`,
+    a: `Lion's Mane, 750 mg: supports memory, focus and cognitive function.
+Cordyceps, 500 mg: boosts energy, vitality and physical stamina.
+Chaga, 500 mg: powerful antioxidant, protects cells and supports immunity.
+L-Theanine, 200 mg: calms without drowsiness, improves mental clarity and focus.
+Maca, 750 mg: hormonal balance and emotional wellbeing, improves mood.
+Collagen, 450 mg: improves skin hydration, elasticity and radiance.`,
   },
   { q: "Shipping", a: LIVRAISON_EN },
 ];
@@ -468,13 +470,13 @@ const CALM_ACCORDIONS_EN: Accordion[] = [
     q: "Ingredients, Benefits and Dosage",
     a: `Thanks to Reishi, Ashwagandha and Saffron, CALM helps release pressure, restore serenity and ease tension while contributing to restorative sleep.
 
-CALM fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its natural variations — to support moments of stress or wind-down before sleep.
+CALM fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its natural variations, to support moments of stress or wind-down before sleep.
 
 Regular use for 30 days lets you notice the difference and regain lasting serenity day to day.`,
   },
   {
     q: "What does it taste like?",
-    a: `Soft, fruity and delicious gummies, pleasant to chew — with no added sugar.`,
+    a: `Soft, fruity and delicious gummies, pleasant to chew, with no added sugar.`,
   },
   {
     q: "How do I take it?",
@@ -532,7 +534,7 @@ Regular use for 30 days lets you notice the difference and enjoy a clearer, full
   },
   {
     q: "What does it taste like?",
-    a: `Soft, fruity and delicious gummies, pleasant to chew — with no added sugar.`,
+    a: `Soft, fruity and delicious gummies, pleasant to chew, with no added sugar.`,
   },
   {
     q: "How do I take it?",
@@ -591,7 +593,7 @@ Regular use for 30 days lets you notice the difference and enjoy natural, lastin
   },
   {
     q: "What does it taste like?",
-    a: `Soft gummies with a fruity passion-fruit taste, pleasant to chew — with no added sugar.`,
+    a: `Soft gummies with a fruity passion-fruit taste, pleasant to chew, with no added sugar.`,
   },
   {
     q: "How do I take it?",
@@ -644,19 +646,22 @@ function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolea
   if (key === "CALM") return en ? CALM_ACCORDIONS_EN : CALM_ACCORDIONS;
   if (key === "FOCUS") return en ? FOCUS_ACCORDIONS_EN : FOCUS_ACCORDIONS;
   if (key === "POWER") return en ? POWER_ACCORDIONS_EN : POWER_ACCORDIONS;
+  // Accessoires (mousseur, tote bag) : aucun `key`. Ils n'ont ni goût, ni
+  // posologie, ni actifs — seule la livraison les concerne (correction client).
+  if (!key) return [{ q: en ? "Shipping" : "Livraison", a: en ? LIVRAISON_EN : LIVRAISON }];
   return en
     ? [
         { q: "Ingredients, Benefits and Dosage", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
-        { q: "What does it taste like?", a: isPowder ? "Neutral taste, blends easily into any hot or cold drink." : "Fruity, delicious gummies, pleasant to chew — with no added sugar." },
+        { q: "What does it taste like?", a: isPowder ? "Neutral taste, blends easily into any hot or cold drink." : "Fruity, delicious gummies, pleasant to chew, with no added sugar." },
         { q: "How do I take it?", a: info.rows[info.rows.length - 1]?.text ?? "" },
-        { q: "Traceability and Quality", a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform) — publicly verifiable declaration number. Actives dosed according to scientific literature." },
+        { q: "Traceability and Quality", a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform), with a publicly verifiable declaration number. Actives dosed according to scientific literature." },
         { q: "Shipping", a: LIVRAISON_EN },
       ]
     : [
         { q: "Ingrédients, Bienfaits et Posologie", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
-        { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher — sans sucre ajouté." },
+        { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté." },
         { q: "Comment le préparer ?", a: info.rows[info.rows.length - 1]?.text ?? "" },
-        { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM) — numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
+        { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM), avec un numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
         { q: "Livraison", a: LIVRAISON },
       ];
 }
@@ -676,10 +681,10 @@ const UI = {
     allProducts: "Tous les produits",
     happyClients: (n: number) => `+${n} clients satisfaits`,
     taxIncluded: "Taxes incluses.",
-    cureLabelGummies: "Cure d'1 mois — 60 gummies",
-    cureLabelPowder: "Cure d'1 mois — 30 portions",
-    preorderNote: "Pré-commande — expédiée dès réception du stock",
-    lowStock: (n: number) => `Bientôt épuisé — plus que ${n} en stock`,
+    cureLabelGummies: "Cure d'1 mois : 60 gummies",
+    cureLabelPowder: "Cure d'1 mois : 30 portions",
+    preorderNote: "Pré-commande : expédiée dès réception du stock",
+    lowStock: (n: number) => `Bientôt épuisé : plus que ${n} en stock`,
     pressEyebrow: "La presse en parle",
     pressQuote: "« Les champignons s'apprêtent à envahir vos routines bien-être, et c'est une bonne chose ! »",
     addToCart: "Ajouter au panier",
@@ -692,16 +697,16 @@ const UI = {
     add: (t: string) => `Ajouter ${t}`,
     aboutEyebrow: "À propos",
     backToShop: "Retour à la boutique",
-    notFound: "Produit introuvable — BIEN",
+    notFound: "Produit introuvable | BIEN health",
   },
   en: {
     allProducts: "All products",
     happyClients: (n: number) => `+${n} happy customers`,
     taxIncluded: "Taxes included.",
-    cureLabelGummies: "1-month course — 60 gummies",
-    cureLabelPowder: "1-month course — 30 servings",
-    preorderNote: "Pre-order — ships as soon as stock arrives",
-    lowStock: (n: number) => `Almost sold out — only ${n} left in stock`,
+    cureLabelGummies: "1-month course: 60 gummies",
+    cureLabelPowder: "1-month course: 30 servings",
+    preorderNote: "Pre-order: ships as soon as stock arrives",
+    lowStock: (n: number) => `Almost sold out: only ${n} left in stock`,
     pressEyebrow: "As seen in the press",
     pressQuote: "“Mushrooms are about to take over your wellness routines, and that's a good thing!”",
     addToCart: "Add to cart",
@@ -714,7 +719,7 @@ const UI = {
     add: (t: string) => `Add ${t}`,
     aboutEyebrow: "About",
     backToShop: "Back to the shop",
-    notFound: "Product not found — BIEN",
+    notFound: "Product not found | BIEN health",
   },
 } as const;
 
@@ -776,7 +781,7 @@ export default async function ProductPage({
     name: product.title,
     image: product.images.length ? product.images.map((i) => i.url) : product.featuredImage ? [product.featuredImage.url] : [],
     description: (product.description || info.category).slice(0, 320),
-    brand: { "@type": "Brand", name: "BIEN" },
+    brand: { "@type": "Brand", name: "BIEN health" },
     sku: handle,
     offers: {
       "@type": "Offer",
@@ -796,7 +801,7 @@ export default async function ProductPage({
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "BIEN", item: `${SITE_URL}/${lang}` },
+      { "@type": "ListItem", position: 1, name: "BIEN health", item: `${SITE_URL}/${lang}` },
       { "@type": "ListItem", position: 2, name: en ? "Shop" : "Boutique", item: `${SITE_URL}/${lang}/boutique` },
       { "@type": "ListItem", position: 3, name: product.title, item: `${SITE_URL}/${lang}/products/${handle}` },
     ],
@@ -816,6 +821,13 @@ export default async function ProductPage({
   const reassuranceIcons = [Truck, ShieldCheck, MapPin];
   const reassurance = ui.reassurance.map((label, i) => ({ icon: reassuranceIcons[i], label }));
 
+  // Nom principal / descriptif : « MUSHGLOW — Supermix 6-en-1 » se coupe au
+  // premier tiret (long ou court) entouré d'espaces.
+  const [titleMain, titleSub] = (() => {
+    const m = product.title.match(/^(.+?)\s+[—–-]\s+(.+)$/);
+    return m ? [m[1], m[2]] : [product.title, null];
+  })();
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
@@ -825,7 +837,7 @@ export default async function ProductPage({
 
       {/* Gouttière haute resserrée : sur un 13", la marge blanche au-dessus de
           la photo repoussait le bloc « Équilibre global » hors de l'écran. */}
-      <main className="px-4 sm:px-6 lg:px-[100px] py-5 lg:py-7">
+      <main className="px-4 sm:px-6 lg:px-12 xl:px-16 py-5 lg:py-7">
         <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-4">
           <ArrowLeft className="h-4 w-4" /> {ui.allProducts}
         </Link>
@@ -845,12 +857,31 @@ export default async function ProductPage({
               <StarRating value={TRUSTPILOT_RATING} className="h-4 w-4" />
               <span className="text-sm font-semibold text-black">{ratingLabel(lang)}/5</span>
               <span className="text-black/30">·</span>
-              <Link href={`/${lang}/avis`} className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline">{happyClientsLabel(lang)}</Link>
+              {/* Le libellé pointe vers Trustpilot, source de la note affichée
+                  juste à gauche : il renvoyait vers la page interne « Avis »,
+                  ce qui donnait un lien qui ne menait pas à la preuve. */}
+              <a
+                href={TRUSTPILOT_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline"
+              >
+                {happyClientsLabel(lang)}
+              </a>
             </div>
             {/* Garantie remontée avec la preuve sociale : sous le CTA, elle
                 séparait le bouton de la réassurance juste en dessous. */}
             <p className="mt-1.5 text-xs text-black/50">{ui.guarantee}</p>
-            <h1 className="mt-3 font-hero text-[clamp(1.76rem,3.52vw,2.64rem)] leading-[1] text-black">{product.title}</h1>
+            {/* Le nom Shopify porte souvent un descriptif après un tiret
+                (« MUSHGLOW — Supermix 6-en-1 ») : le descriptif passe en
+                sous-titre plus discret sous le nom, au lieu de s'afficher au
+                même corps que la marque (demande client). */}
+            <h1 className="mt-3 font-hero text-[clamp(1.76rem,3.52vw,2.64rem)] leading-[1] text-black">
+              {titleMain}
+              {titleSub && (
+                <span className="mt-1.5 block font-display text-base sm:text-lg font-normal text-black/60">{titleSub}</span>
+              )}
+            </h1>
 
             {/* État du stock */}
             {preorder ? (
@@ -863,16 +894,40 @@ export default async function ProductPage({
               </p>
             ) : null}
 
+            {/* Disponibilité + fenêtre de livraison estimée (demande client) */}
+            {product.available && <DeliveryEstimate lang={lang} inStock={!preorder} />}
+
+            {/* Infos clés produit — remontées au-dessus du bloc d'achat : le
+                client veut lire ce que fait le produit avant de voir le prix
+                et le bouton. Masqué pour les accessoires (mousseur, tote bag) :
+                le texte générique leur prêtait des adaptogènes et des
+                champignons qu'ils ne contiennent pas. */}
+            {key && (
+              <div className="mt-5 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
+                <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
+                <ul className="mt-4 space-y-4">
+                  {info.rows.map(({ icon: Icon, text }) => (
+                    <li key={text} className="flex items-center gap-3.5">
+                      <span className="shrink-0 grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/15 text-bien-cream"><Icon className="h-5 w-5" /></span>
+                      <p className="text-sm text-bien-cream/90 leading-relaxed">{text}</p>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Achat : prix et CTA sur la même ligne (le CTA pleine largeur sous
                 le prix coûtait une centaine de pixels de haut sur un 13").
                 Le CTA repasse sous le prix quand la colonne devient étroite. */}
-            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
               <div>
                 <div className="flex items-baseline gap-3">
-                  <span className="font-display text-2xl text-black">{formatPrice(product.price)}</span>
+                  {/* Prix en corps de texte renforcé et non en display : il
+                      écrasait visuellement le nom du produit (retour client). */}
+                  <span className="text-lg font-bold text-black">{formatPrice(product.price)}</span>
                   {product.compareAtPrice &&
                     Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
-                      <span className="text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
+                      <span className="text-sm text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
                     )}
                 </div>
                 <p className="mt-1 text-xs text-black/50">
@@ -892,7 +947,8 @@ export default async function ProductPage({
                   <AddToCart
                     item={cartItem}
                     lang={lang}
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-10 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
+                    quantitySelector
+                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
                   >
                     {ctaLabel}
                   </AddToCart>
@@ -917,19 +973,6 @@ export default async function ProductPage({
                 </li>
               ))}
             </ul>
-
-            {/* Infos clés produit (comme le vrai site) */}
-            <div className="mt-6 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
-              <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
-              <ul className="mt-4 space-y-4">
-                {info.rows.map(({ icon: Icon, text }) => (
-                  <li key={text} className="flex items-center gap-3.5">
-                    <span className="shrink-0 grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/15 text-bien-cream"><Icon className="h-5 w-5" /></span>
-                    <p className="text-sm text-bien-cream/90 leading-relaxed">{text}</p>
-                  </li>
-                ))}
-              </ul>
-            </div>
 
             {/* La presse en parle — citation + logos magazines */}
             <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">

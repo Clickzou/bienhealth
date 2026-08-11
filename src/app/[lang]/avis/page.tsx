@@ -6,14 +6,15 @@ import SiteHeader from "@/components/site-header";
 import { TRUSTPILOT_URL } from "@/components/trustpilot";
 import { TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
 import { pageMetadata } from "@/lib/seo";
+import { accentLastWord } from "@/lib/accent-title";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   return pageMetadata({
     lang,
     path: "avis",
-    title: lang === "en" ? "Customer reviews — BIEN" : "Avis clients — BIEN",
-    description: lang === "en" ? "Verified customer reviews of BIEN supplements: focus, calm, energy, sleep. Rated 4.4/5 across 100+ Trustpilot reviews." : "Les avis vérifiés de nos clients sur les compléments BIEN : concentration, sérénité, énergie, sommeil. Note 4,4/5 sur plus de 100 avis Trustpilot.",
+    title: lang === "en" ? "Customer reviews | BIEN health" : "Avis clients | BIEN health",
+    description: lang === "en" ? "Verified customer reviews of BIEN health supplements: focus, calm, energy, sleep. Rated 4.4/5 across 100+ Trustpilot reviews." : "Les avis vérifiés de nos clients sur les compléments BIEN health : concentration, sérénité, énergie, sommeil. Note 4,4/5 sur plus de 100 avis Trustpilot.",
   });
 }
 
@@ -135,7 +136,7 @@ const REVIEWS: Review[] = [
     title: "Meilleure cure ever",
     titleEn: "Best course ever",
     text: "Meilleure cure ever. Je me sens revivre, je ne me suis jamais sentie aussi en forme et alignée. C'est simple, BIEN a changé mon quotidien. Je suis en pause de deux semaines avant de repartir sur une nouvelle cure, qui m'attend déjà, j'ai hâte de voir comment les effets se prolongent. Je recommande d'arrêter le café et l'alcool pendant cette cure pour vraiment sentir les effets qui sont immédiats et à effet prolongé dans la journée, c'est épatant. Mon moral est aussi sorti vainqueur de l'expérience. Comment ai-je pu faire sans jusque-là ?",
-    textEn: "Best course ever. I feel reborn, I've never felt so fit and aligned. Simply put, BIEN changed my daily life. I'm on a two-week break before starting a new course, which is already waiting for me — I can't wait to see how the effects continue. I recommend quitting coffee and alcohol during this course to really feel the effects, which are immediate and long-lasting through the day, it's amazing. My mood also came out a winner from the experience. How did I manage without it until now?",
+    textEn: "Best course ever. I feel reborn, I've never felt so fit and aligned. Simply put, BIEN changed my daily life. I'm on a two-week break before starting a new course, which is already waiting for me, and I can't wait to see how the effects continue. I recommend quitting coffee and alcohol during this course to really feel the effects, which are immediate and long-lasting through the day, it's amazing. My mood also came out a winner from the experience. How did I manage without it until now?",
   },
   {
     name: "Tom Ptz", country: "FR", date: "9 sept. 2024", rating: 5,
@@ -187,8 +188,8 @@ const REVIEWS: Review[] = [
     titleEn: "More relaxed but very little effect",
     text: "More relaxed but very little effect.",
     textEn: "More relaxed but very little effect.",
-    reply: "Hi Claire, thanks for your review! The « little effect » might be due to the dosage. Could you confirm that you've been taking a full dose of 1g? Feel free to book a free online consultation directly on our website — we would be happy to guide you! The BIEN team.",
-    replyEn: "Hi Claire, thanks for your review! The “little effect” might be due to the dosage. Could you confirm that you've been taking a full dose of 1g? Feel free to book a free online consultation directly on our website — we would be happy to guide you! The BIEN team.",
+    reply: "Hi Claire, thanks for your review! The « little effect » might be due to the dosage. Could you confirm that you've been taking a full dose of 1g? Feel free to book a free online consultation directly on our website: we would be happy to guide you! The BIEN team.",
+    replyEn: "Hi Claire, thanks for your review! The “little effect” might be due to the dosage. Could you confirm that you've been taking a full dose of 1g? Feel free to book a free online consultation directly on our website: we would be happy to guide you! The BIEN team.",
   },
   {
     name: "Lola Policand", country: "FR", date: "4 sept. 2024", rating: 5,
@@ -245,11 +246,11 @@ export default async function AvisPage({
       <SiteHeader lang={lang} />
 
       {/* Hero résumé */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-16">
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.eyebrow}</p>
           <h1 className="mt-3 font-hero text-[clamp(1.98rem,4.4vw,3.3rem)] leading-[1] text-black">
-            {t.h1}
+            {accentLastWord(t.h1)}
           </h1>
           <div className="mt-6 inline-flex items-center gap-4 rounded-2xl bg-card ring-1 ring-border bien-shadow-sm px-6 py-4">
             <span className="font-display text-4xl text-black leading-none">{ratingLabel(lang)}</span>
@@ -273,7 +274,7 @@ export default async function AvisPage({
       </section>
 
       {/* Liste des avis (colonnes façon mur d'avis) */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-12 sm:mt-16 mb-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-12 sm:mt-16 mb-24">
         <div className="columns-1 sm:columns-2 lg:columns-3 gap-5 sm:gap-6 [column-fill:_balance]">
           {REVIEWS.map((r) => (
             <article key={`${r.name}-${r.date}`} className="mb-5 sm:mb-6 break-inside-avoid bg-card rounded-2xl ring-1 ring-border bien-shadow-sm p-5">

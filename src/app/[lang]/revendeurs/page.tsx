@@ -7,30 +7,31 @@ import SiteHeader from "@/components/site-header";
 import ResellerMap from "@/components/reseller-map-loader";
 import type { Reseller } from "@/components/reseller-map";
 import { pageMetadata } from "@/lib/seo";
+import { accentLastWord } from "@/lib/accent-title";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   return pageMetadata({
     lang,
     path: "revendeurs",
-    title: lang === "en" ? "Our resellers — Where to find BIEN" : "Nos revendeurs — Où trouver BIEN",
-    description: lang === "en" ? "Find BIEN supplements at our partner stores in France, Switzerland and Portugal. Become a BIEN reseller." : "Retrouvez les compléments BIEN dans nos points de vente partenaires en France, en Suisse et au Portugal. Devenez revendeur BIEN.",
+    title: lang === "en" ? "Our resellers | Where to find BIEN health" : "Nos revendeurs | Où trouver BIEN health",
+    description: lang === "en" ? "Find BIEN health supplements at our partner stores in France, Spain, Switzerland and Portugal. Become a BIEN health reseller." : "Retrouvez les compléments BIEN health dans nos points de vente partenaires en France, en Espagne, en Suisse et au Portugal. Devenez revendeur BIEN health.",
   });
 }
 
 const T = {
   fr: {
     eyebrow: "Points de vente", h1: "Où trouver BIEN.",
-    intro: (n: number) => `Retrouvez nos compléments chez nos ${n} partenaires en France, en Suisse et au Portugal — ou commandez en ligne, livraison offerte dès 49 €.`,
-    note: "Liste non exhaustive — de nouveaux points de vente rejoignent BIEN régulièrement.",
+    intro: (n: number) => `Retrouvez nos compléments chez nos ${n} partenaires en France, en Espagne, en Suisse et au Portugal, ou commandez en ligne, livraison offerte dès 49 €.`,
+    note: "Liste non exhaustive : de nouveaux points de vente rejoignent BIEN health régulièrement.",
     proTitle: "Vous êtes un professionnel ?",
     proText: "Café, studio, pharmacie, concept-store… Rejoignez le réseau de revendeurs BIEN et proposez nos compléments à vos clients.",
     become: "Devenir revendeur", order: "Commander en ligne",
   },
   en: {
     eyebrow: "Stockists", h1: "Where to find BIEN.",
-    intro: (n: number) => `Find our supplements at our ${n} partners in France, Switzerland and Portugal — or order online, free shipping over €49.`,
-    note: "Non-exhaustive list — new stockists join BIEN regularly.",
+    intro: (n: number) => `Find our supplements at our ${n} partners in France, Spain, Switzerland and Portugal, or order online, free shipping over €49.`,
+    note: "Non-exhaustive list: new stockists join BIEN health regularly.",
     proTitle: "Are you a professional?",
     proText: "Café, studio, pharmacy, concept store… Join the BIEN reseller network and offer our supplements to your customers.",
     become: "Become a reseller", order: "Order online",
@@ -48,6 +49,7 @@ const RESELLERS: Reseller[] = [
   { name: "Superkure", address: "50 Bd Stalingrad", city: "06300 Nice", country: "France", lat: 43.705, lng: 7.286 },
   { name: "Happy Officine", address: "1, Route de la Mortigue", city: "1072 Forel", country: "Suisse", lat: 46.506, lng: 6.736 },
   { name: "Vinent & Miller Lda", address: "Rua de São Bento 106 B", city: "1200-820 Lisboa", country: "Portugal", lat: 38.7139, lng: -9.1522 },
+  { name: "Mudita Herbals", address: "Plaça del Dr. Pont, 7", city: "17488 Cadaqués, Girona", country: "Espagne", lat: 42.2887, lng: 3.2789 },
 ];
 
 export default async function RevendeursPage({
@@ -64,12 +66,12 @@ export default async function RevendeursPage({
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Store className="h-4 w-4" /> {t.eyebrow}
         </p>
         <h1 className="mt-3 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95] text-black">
-          {t.h1}
+          {accentLastWord(t.h1)}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
           {t.intro(RESELLERS.length)}
@@ -77,7 +79,7 @@ export default async function RevendeursPage({
       </section>
 
       {/* Carte interactive + liste */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-10 sm:mt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <ResellerMap resellers={RESELLERS} />
         <p className="mt-6 text-center text-sm text-black/55">
           {t.note}
@@ -85,7 +87,7 @@ export default async function RevendeursPage({
       </section>
 
       {/* Devenir revendeur */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24 mb-24">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
           <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
             {t.proTitle}

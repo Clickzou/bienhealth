@@ -21,7 +21,7 @@ const T = {
 export default function DiagnosticCTA({ lang }: { lang: string }) {
   const t = T[lang === "en" ? "en" : "fr"];
   return (
-    <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
+    <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20 mb-24">
       <div className="bg-bien-gold rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-black text-center">
         <h3 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1]">
           {t.title}

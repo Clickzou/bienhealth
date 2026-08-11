@@ -7,14 +7,15 @@ import SiteHeader from "@/components/site-header";
 import ReassuranceBand from "@/components/reassurance-band";
 import JsonLd from "@/components/json-ld";
 import { pageMetadata } from "@/lib/seo";
+import { accentLastWord } from "@/lib/accent-title";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   return pageMetadata({
     lang,
     path: "faq",
-    title: lang === "en" ? "FAQ — Your questions about BIEN" : "FAQ — Vos questions sur BIEN",
-    description: lang === "en" ? "All the answers about MushGlow, our gummies (CALM, FOCUS, POWER), shipping, returns and how to use BIEN supplements." : "Toutes les réponses sur MushGlow, nos gummies (CALM, FOCUS, POWER), la livraison, les retours et l'utilisation des compléments BIEN.",
+    title: lang === "en" ? "FAQ: your questions | BIEN health" : "FAQ : vos questions | BIEN health",
+    description: lang === "en" ? "All the answers about MushGlow, our gummies (CALM, FOCUS, POWER), shipping, returns and how to use BIEN health supplements." : "Toutes les réponses sur MushGlow, nos gummies (CALM, FOCUS, POWER), la livraison, les retours et l'utilisation des compléments BIEN health.",
   });
 }
 
@@ -38,7 +39,7 @@ const SECTIONS_FR: Section[] = [
   {
     title: "MushGlow",
     items: [
-      { q: "Qu'est-ce que MushGlow ?", a: "MushGlow est une poudre adaptogène premium formulée pour soutenir la clarté mentale, booster l'énergie naturelle, améliorer la gestion du stress et révéler l'éclat de la peau — grâce à des champignons fonctionnels, des adaptogènes et du collagène de membrane d'œuf." },
+      { q: "Qu'est-ce que MushGlow ?", a: "MushGlow est une poudre adaptogène premium formulée pour soutenir la clarté mentale, booster l'énergie naturelle, améliorer la gestion du stress et révéler l'éclat de la peau, grâce à des champignons fonctionnels, des adaptogènes et du collagène de membrane d'œuf." },
       { q: "Comment utiliser MushGlow ?", a: "Ajoutez simplement une cuillère (incluse) à la boisson de votre choix, chaude ou froide : café, matcha, smoothie… Mélangez bien, ou utilisez un mousseur pour une texture ultra-lisse." },
       { q: "Quel goût a MushGlow ?", a: "MushGlow a une subtile touche terreuse provenant des champignons et des adaptogènes, et reste neutre dans les boissons aromatisées. Nous ne le recommandons pas avec de l'eau seule." },
       { q: "Quand dois-je prendre MushGlow ?", a: "À chaque fois que vous avez besoin de concentration, d'énergie, de résistance au stress et d'une peau éclatante. La plupart des gens le préfèrent le matin." },
@@ -82,7 +83,7 @@ const SECTIONS_EN: Section[] = [
   {
     title: "MushGlow",
     items: [
-      { q: "What is MushGlow?", a: "MushGlow is a premium adaptogenic powder formulated to support mental clarity, boost natural energy, improve stress management and reveal radiant skin — thanks to functional mushrooms, adaptogens and eggshell-membrane collagen." },
+      { q: "What is MushGlow?", a: "MushGlow is a premium adaptogenic powder formulated to support mental clarity, boost natural energy, improve stress management and reveal radiant skin, thanks to functional mushrooms, adaptogens and eggshell-membrane collagen." },
       { q: "How do I use MushGlow?", a: "Simply add one spoon (included) to the drink of your choice, hot or cold: coffee, matcha, smoothie… Stir well, or use a frother for an ultra-smooth texture." },
       { q: "What does MushGlow taste like?", a: "MushGlow has a subtle earthy note from the mushrooms and adaptogens, and stays neutral in flavoured drinks. We don't recommend it with plain water." },
       { q: "When should I take MushGlow?", a: "Whenever you need focus, energy, stress resilience and glowing skin. Most people prefer it in the morning." },
@@ -93,7 +94,7 @@ const SECTIONS_EN: Section[] = [
       { q: "Is MushGlow suitable for vegans?", a: "MushGlow contains collagen derived from eggshell membrane: it is vegetarian, but not vegan." },
       { q: "Is MushGlow gluten-free and lactose-free?", a: "Yes! MushGlow is gluten-free, dairy-free and made from natural ingredients." },
       { q: "Can I take MushGlow every day?", a: "Yes! MushGlow is designed for daily use. Adaptogens actually work best when taken regularly." },
-      { q: "How many servings does MushGlow contain?", a: "Each pack contains 30 servings — enough for a month of daily use." },
+      { q: "How many servings does MushGlow contain?", a: "Each pack contains 30 servings, enough for a month of daily use." },
     ],
   },
   {
@@ -153,27 +154,30 @@ export default async function FaqPage({
 
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <HelpCircle className="h-4 w-4" /> {t.eyebrow}
         </p>
         <h1 className="mt-3 font-hero text-[clamp(2.2rem,5.28vw,3.52rem)] leading-[0.95] text-black">
-          {t.h1}
+          {accentLastWord(t.h1)}
         </h1>
         <p className="mt-5 text-base sm:text-lg text-black/70 leading-relaxed">
           {t.introPre}<a href="mailto:info@bien.health" className="text-bien-leaf underline">info@bien.health</a>.
         </p>
       </section>
 
-      {/* Sections FAQ — pleine largeur, 3 colonnes */}
-      <div className="px-4 sm:px-6 lg:px-[100px] mt-12 sm:mt-16 space-y-12">
+      {/* Sections FAQ — une seule colonne de lecture.
+          En grille de 3 colonnes, les questions se lisaient en zigzag et
+          l'ouverture d'une carte décalait toutes les autres : la page était
+          jugée illisible (retour client). */}
+      <div className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-12 sm:mt-16 space-y-12 max-w-3xl mx-auto">
         {SECTIONS.map((section) => (
           <section key={section.title}>
             <h2 className="font-display tracking-tight text-2xl text-black mb-4">{section.title}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 items-start">
+            <div className="rounded-2xl bg-card ring-1 ring-border bien-shadow-sm overflow-hidden divide-y divide-border">
               {section.items.map((qa) => (
-                <details key={qa.q} className="group bg-card rounded-2xl ring-1 ring-border bien-shadow-sm overflow-hidden">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4">
+                <details key={qa.q} className="group">
+                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none px-5 py-4 hover:bg-bien-cream/40 transition-colors">
                     <span className="font-display text-black">{qa.q}</span>
                     <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform group-open:rotate-180" />
                   </summary>

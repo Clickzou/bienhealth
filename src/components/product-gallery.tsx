@@ -100,8 +100,10 @@ export default function ProductGallery({
 
       {/* Image principale carrée — c'est elle qui donne sa hauteur au bloc */}
       <div className="group relative aspect-square rounded-3xl overflow-hidden bg-bien-cream ring-1 ring-border">
-        {/* Bandeau diagonal Best-seller (haut droite) — uniquement pour le best-seller */}
-        {bestSeller && (
+        {/* Bandeau diagonal Best-seller (haut droite) — uniquement sur la
+            première photo : sur les suivantes il recouvrait le texte des
+            visuels (signalé par le client). */}
+        {bestSeller && active === 0 && (
           <span className="pointer-events-none absolute top-5 -right-11 z-20 rotate-45 bg-bien-gold text-black text-[11px] font-bold uppercase tracking-wider px-12 py-1 bien-shadow-sm">
             Best seller
           </span>
@@ -120,10 +122,13 @@ export default function ProductGallery({
 
         {count > 1 && (
           <>
-            <button onClick={() => go(-1)} aria-label="Image précédente" className="absolute left-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-card/85 text-black ring-1 ring-border bien-shadow opacity-0 group-hover:opacity-100 hover:bg-bien-gold transition">
+            {/* Flèches toujours visibles sous `lg` : elles n'apparaissaient
+                qu'au survol, donc jamais au doigt — on ne pouvait pas deviner
+                que les photos défilaient (signalé sur mobile). */}
+            <button onClick={() => go(-1)} aria-label="Image précédente" className="absolute left-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-card/85 text-black ring-1 ring-border bien-shadow lg:opacity-0 lg:group-hover:opacity-100 hover:bg-bien-gold transition">
               <ChevronLeft className="h-5 w-5" />
             </button>
-            <button onClick={() => go(1)} aria-label="Image suivante" className="absolute right-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-card/85 text-black ring-1 ring-border bien-shadow opacity-0 group-hover:opacity-100 hover:bg-bien-gold transition">
+            <button onClick={() => go(1)} aria-label="Image suivante" className="absolute right-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-card/85 text-black ring-1 ring-border bien-shadow lg:opacity-0 lg:group-hover:opacity-100 hover:bg-bien-gold transition">
               <ChevronRight className="h-5 w-5" />
             </button>
             <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">

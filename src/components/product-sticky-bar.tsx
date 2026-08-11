@@ -54,7 +54,7 @@ export default function ProductStickyBar({
       aria-hidden={!show}
     >
       <div className="bg-bien-forest text-bien-cream border-t border-bien-cream/10 bien-shadow">
-        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] py-3 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 py-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-display text-bien-cream leading-tight truncate">{title}</p>
             <p className="text-sm text-bien-cream/70">{price}</p>

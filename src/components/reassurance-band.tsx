@@ -27,7 +27,7 @@ export default function ReassuranceBand({ lang = "fr" }: { lang?: string }) {
   const items = ITEMS_BY_LANG[lang === "en" ? "en" : "fr"];
   return (
     <section className="mt-16 sm:mt-20 bg-muted/60 border-y border-border">
-      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-[100px] py-10 sm:py-12">
+      <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 py-10 sm:py-12">
         <ul className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 sm:gap-8">
           {items.map(({ title, sub }, i) => {
             const Icon = ICONS[i];

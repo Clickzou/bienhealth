@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "certifications",
-    title: lang === "en" ? "Certifications & official declarations — BIEN" : "Certifications & déclarations officielles — BIEN",
-    description: lang === "en" ? "All BIEN HEALTH supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." : "Tous les compléments BIEN HEALTH sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et enregistrés sur COMPL'ALIM. Numéros de déclaration vérifiables et attestations téléchargeables.",
+    title: lang === "en" ? "Certifications & declarations | BIEN health" : "Certifications & déclarations | BIEN health",
+    description: lang === "en" ? "All BIEN health supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." : "Tous les compléments BIEN health sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et enregistrés sur COMPL'ALIM. Numéros de déclaration vérifiables et attestations téléchargeables.",
   });
 }
 
@@ -38,8 +38,8 @@ const ATTESTATIONS: Attestation[] = [
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/260541",
     pdf: "/attestations/mushglow.pdf",
     actifs: {
-      fr: ["Crinière de lion (Hericium erinaceus) — 750 mg", "Maca (Lepidium meyenii) — 750 mg", "Chaga (Inonotus obliquus) — 500 mg", "Cordyceps (Ophiocordyceps sinensis) — 500 mg", "Collagène — 450 mg", "Théanine — 200 mg · Inulines — 200 mg"],
-      en: ["Lion's Mane (Hericium erinaceus) — 750 mg", "Maca (Lepidium meyenii) — 750 mg", "Chaga (Inonotus obliquus) — 500 mg", "Cordyceps (Ophiocordyceps sinensis) — 500 mg", "Collagen — 450 mg", "Theanine — 200 mg · Inulin — 200 mg"],
+      fr: ["Crinière de lion (Hericium erinaceus) : 750 mg", "Maca (Lepidium meyenii) : 750 mg", "Chaga (Inonotus obliquus) : 500 mg", "Cordyceps (Ophiocordyceps sinensis) : 500 mg", "Collagène : 450 mg", "Théanine : 200 mg · Inulines : 200 mg"],
+      en: ["Lion's Mane (Hericium erinaceus): 750 mg", "Maca (Lepidium meyenii): 750 mg", "Chaga (Inonotus obliquus): 500 mg", "Cordyceps (Ophiocordyceps sinensis): 500 mg", "Collagen: 450 mg", "Theanine: 200 mg · Inulin: 200 mg"],
     },
   },
   {
@@ -51,8 +51,8 @@ const ATTESTATIONS: Attestation[] = [
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257758",
     pdf: "/attestations/calm.pdf",
     actifs: {
-      fr: ["Ashwagandha (Withania somnifera) — 70 mg", "Reishi (Ganoderma lucidum) — 70 mg", "Safran (Crocus sativus) — 16 mg"],
-      en: ["Ashwagandha (Withania somnifera) — 70 mg", "Reishi (Ganoderma lucidum) — 70 mg", "Saffron (Crocus sativus) — 16 mg"],
+      fr: ["Ashwagandha (Withania somnifera) : 70 mg", "Reishi (Ganoderma lucidum) : 70 mg", "Safran (Crocus sativus) : 16 mg"],
+      en: ["Ashwagandha (Withania somnifera): 70 mg", "Reishi (Ganoderma lucidum): 70 mg", "Saffron (Crocus sativus): 16 mg"],
     },
   },
   {
@@ -64,8 +64,8 @@ const ATTESTATIONS: Attestation[] = [
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257824",
     pdf: "/attestations/focus.pdf",
     actifs: {
-      fr: ["Crinière de lion (Hericium erinaceus) — 1200 mg", "Rhodiola (Sedum roseum) — 160 mg", "Théanine — 6 mg"],
-      en: ["Lion's Mane (Hericium erinaceus) — 1200 mg", "Rhodiola (Sedum roseum) — 160 mg", "Theanine — 6 mg"],
+      fr: ["Crinière de lion (Hericium erinaceus) : 1200 mg", "Rhodiola (Sedum roseum) : 160 mg", "Théanine : 6 mg"],
+      en: ["Lion's Mane (Hericium erinaceus): 1200 mg", "Rhodiola (Sedum roseum): 160 mg", "Theanine: 6 mg"],
     },
   },
   {
@@ -77,8 +77,8 @@ const ATTESTATIONS: Attestation[] = [
     url: "https://compl-alim.beta.gouv.fr/mes-declarations/257810",
     pdf: "/attestations/power.pdf",
     actifs: {
-      fr: ["Cordyceps (Ophiocordyceps sinensis) — 1000 mg", "Ginseng (Panax ginseng) — 240 mg", "Rhodiola (Sedum roseum) — 128 mg"],
-      en: ["Cordyceps (Ophiocordyceps sinensis) — 1000 mg", "Ginseng (Panax ginseng) — 240 mg", "Rhodiola (Sedum roseum) — 128 mg"],
+      fr: ["Cordyceps (Ophiocordyceps sinensis) : 1000 mg", "Ginseng (Panax ginseng) : 240 mg", "Rhodiola (Sedum roseum) : 128 mg"],
+      en: ["Cordyceps (Ophiocordyceps sinensis): 1000 mg", "Ginseng (Panax ginseng): 240 mg", "Rhodiola (Sedum roseum): 128 mg"],
     },
   },
 ];
@@ -86,7 +86,7 @@ const ATTESTATIONS: Attestation[] = [
 const T = {
   fr: {
     eyebrow: "Transparence & conformité", h1: "Des produits déclarés en France.",
-    intro: "Chaque complément BIEN HEALTH fait l'objet d'une <strong>déclaration officielle auprès de la DGAL</strong> (Direction générale de l'alimentation — Ministère de l'Agriculture), enregistrée sur la plateforme <strong>COMPL'ALIM</strong>. Chaque déclaration porte un numéro vérifiable publiquement et l'attestation est téléchargeable ci-dessous.",
+    intro: "Chaque complément BIEN health fait l'objet d'une <strong>déclaration officielle auprès de la DGAL</strong> (Direction générale de l'alimentation, Ministère de l'Agriculture), enregistrée sur la plateforme <strong>COMPL'ALIM</strong>. Chaque déclaration porte un numéro vérifiable publiquement et l'attestation est téléchargeable ci-dessous.",
     badges: ["Déclaré auprès de la DGAL", "Dosages transparents", "Fabriqué en France"],
     declaration: "Déclaration DGAL n°", declaredActives: "Actifs déclarés (par DJR)",
     verify: "Vérifier sur COMPL'ALIM", pdf: "Attestation PDF",
@@ -96,7 +96,7 @@ const T = {
   },
   en: {
     eyebrow: "Transparency & compliance", h1: "Products declared in France.",
-    intro: "Every BIEN HEALTH supplement is <strong>officially declared to the DGAL</strong> (French Directorate General for Food — Ministry of Agriculture), registered on the <strong>COMPL'ALIM</strong> platform. Each declaration carries a publicly verifiable number and the certificate is downloadable below.",
+    intro: "Every BIEN health supplement is <strong>officially declared to the DGAL</strong> (French Directorate General for Food, Ministry of Agriculture), registered on the <strong>COMPL'ALIM</strong> platform. Each declaration carries a publicly verifiable number and the certificate is downloadable below.",
     badges: ["Declared to the DGAL", "Transparent dosages", "Made in France"],
     declaration: "DGAL declaration no.", declaredActives: "Declared actives (per RDI)",
     verify: "Verify on COMPL'ALIM", pdf: "PDF certificate",
@@ -123,7 +123,7 @@ export default async function CertificationsPage({
 
       {/* Espacements resserrés (recos client) : la page tenait sur trop de
           hauteur avant d'arriver aux attestations. */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-[100px] py-10 lg:py-14">
+      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 xl:px-16 py-10 lg:py-14">
         {/* Intro */}
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}

@@ -32,6 +32,15 @@
   --color-bien-ink: #021b39;
 
   /*
+    Rose de texte — même teinte que le pink de charte (#ffb2ce), assombri
+    jusqu'à atteindre 5,7:1 sur fond blanc (AA sur toutes tailles). Le pink de
+    charte reste la référence sur fond sombre et pour les aplats ; il monte à
+    peine à 1,6:1 sur blanc, donc jamais de texte rose clair sur fond clair.
+    Sert aux accents : dernier mot des titres de section, puces, filets.
+  */
+  --color-bien-pink-deep: #b13a63;
+
+  /*
     Jaune des étoiles d'avis — conservé hors charte à la demande du client.
     Le Citrus #fff151 serait trop clair pour rester lisible sur fond blanc.
     Réservé aux étoiles : les CTA et accents utilisent le sky.
@@ -104,14 +113,27 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Texte +2px sur tout le site (16px → 18px de base) */
-    font-size: 112.5%;
+    /* Échelle de base ramenée à 16px : à 18px, le texte et les boutons (dont
+       les paddings sont en rem) prenaient trop de place, surtout sur mobile.
+       Un cran intermédiaire au-dessus de 1024px garde du confort de lecture
+       sur grand écran. */
+    font-size: 100%;
+    /* `clip` et non `hidden` : supprime le débordement latéral (on pouvait
+       faire glisser la page vers la droite sur mobile) sans casser le
+       `position: sticky` du header. */
+    overflow-x: clip;
+  }
+  @media (min-width: 1024px) {
+    html {
+      font-size: 106.25%;
+    }
   }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
   }
   /* H1 — Dahlia : grande échelle, 5-6 mots max, interlignage 100 % */
   h1 {

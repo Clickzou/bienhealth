@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "devenir-revendeur",
-    title: lang === "en" ? "Become a BIEN reseller — Trade enquiry" : "Devenir revendeur BIEN — Demande professionnelle",
-    description: lang === "en" ? "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN reseller network and offer our natural supplements to your customers." : "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN et proposez nos compléments naturels à vos clients.",
+    title: lang === "en" ? "Become a BIEN health reseller | Trade enquiry" : "Devenir revendeur BIEN health | Demande pro",
+    description: lang === "en" ? "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN health reseller network and offer our natural supplements to your customers." : "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN health et proposez nos compléments naturels à vos clients.",
   });
 }
 
@@ -54,7 +54,7 @@ export default async function DevenirRevendeurPage({
     <div className="min-h-screen bg-background text-foreground">
       <SiteHeader lang={lang} />
 
-      <main className="px-4 sm:px-6 lg:px-[100px] py-10 sm:py-14">
+      <main className="px-4 sm:px-6 lg:px-12 xl:px-16 py-10 sm:py-14">
         <Link href={`/${lang}/revendeurs`} className="inline-flex items-center gap-2 text-sm font-medium text-black/70 hover:text-black mb-8">
           <ArrowLeft className="h-4 w-4" /> {t.back}
         </Link>

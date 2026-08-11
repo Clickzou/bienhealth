@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -9,56 +9,87 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 type Loc = { name: string; latin: string; virtue: string; text: string };
 type Ingredient = { img: string; fr: Loc; en: Loc };
 
+/**
+ * Liste triée par ordre alphabétique (demande client). Le tri est le même en FR
+ * et en EN : les seuls noms qui divergent (Safran/Saffron, Collagène/Collagen)
+ * gardent leur rang dans les deux langues.
+ */
 const INGREDIENTS: Ingredient[] = [
-  { img: "/brand/lions-mane.png",
-    fr: { name: "Lion's Mane", latin: "Hericium erinaceus", virtue: "Concentration", text: "Soutient la mémoire et la fonction cognitive." },
-    en: { name: "Lion's Mane", latin: "Hericium erinaceus", virtue: "Focus", text: "Supports memory and cognitive function." } },
-  { img: "/brand/reishi.png",
-    fr: { name: "Reishi", latin: "Ganoderma lucidum", virtue: "Immunité", text: "Favorise la relaxation et l'équilibre." },
-    en: { name: "Reishi", latin: "Ganoderma lucidum", virtue: "Immunity", text: "Promotes relaxation and balance." } },
-  { img: "/brand/cordyceps.png",
-    fr: { name: "Cordyceps", latin: "Cordyceps militaris", virtue: "Énergie", text: "Endurance et oxygénation cellulaire." },
-    en: { name: "Cordyceps", latin: "Cordyceps militaris", virtue: "Energy", text: "Stamina and cellular oxygenation." } },
-  { img: "/brand/chaga.png",
-    fr: { name: "Chaga", latin: "Inonotus obliquus", virtue: "Antioxydant", text: "Immunité et éclat de la peau." },
-    en: { name: "Chaga", latin: "Inonotus obliquus", virtue: "Antioxidant", text: "Immunity and skin radiance." } },
   { img: "/brand/ashwagandha.png",
-    fr: { name: "Ashwagandha", latin: "Withania somnifera", virtue: "Anti-stress", text: "Réduit le cortisol, favorise la sérénité." },
-    en: { name: "Ashwagandha", latin: "Withania somnifera", virtue: "Anti-stress", text: "Lowers cortisol, promotes calm." } },
-  { img: "/brand/rhodiola.png",
-    fr: { name: "Rhodiola Rosea", latin: "Rhodiola rosea", virtue: "Anti-fatigue", text: "Clarté mentale et vigueur." },
-    en: { name: "Rhodiola Rosea", latin: "Rhodiola rosea", virtue: "Anti-fatigue", text: "Mental clarity and drive." } },
-  { img: "/brand/maca.png",
-    fr: { name: "Maca", latin: "Lepidium meyenii", virtue: "Endurance", text: "Équilibre hormonal et tonus." },
-    en: { name: "Maca", latin: "Lepidium meyenii", virtue: "Endurance", text: "Hormonal balance and vitality." } },
-  { img: "/brand/l-theanine.png",
-    fr: { name: "L-Théanine", latin: "Acide aminé", virtue: "Calme", text: "Concentration apaisée (ondes alpha)." },
-    en: { name: "L-Theanine", latin: "Amino acid", virtue: "Calm", text: "Calm focus (alpha waves)." } },
-  { img: "/brand/panax-ginseng.png",
-    fr: { name: "Panax Ginseng", latin: "Panax ginseng", virtue: "Vitalité", text: "Cognition et anti-fatigue." },
-    en: { name: "Panax Ginseng", latin: "Panax ginseng", virtue: "Vitality", text: "Cognition and anti-fatigue." } },
-  { img: "/brand/saffron.png",
-    fr: { name: "Safran", latin: "Crocus sativus", virtue: "Humeur", text: "Équilibre émotionnel positif." },
-    en: { name: "Saffron", latin: "Crocus sativus", virtue: "Mood", text: "Positive emotional balance." } },
+    fr: { name: "Ashwagandha", latin: "Withania somnifera", virtue: "Anti-stress", text: "Encourage la détente et l'harmonie intérieure." },
+    en: { name: "Ashwagandha", latin: "Withania somnifera", virtue: "Anti-stress", text: "Encourages relaxation and inner balance." } },
+  { img: "/brand/chaga.png",
+    fr: { name: "Chaga", latin: "Inonotus obliquus", virtue: "Antioxydant", text: "Protège les cellules et révèle l'éclat de la peau." },
+    en: { name: "Chaga", latin: "Inonotus obliquus", virtue: "Antioxidant", text: "Protects cells and reveals skin radiance." } },
   { img: "/brand/collagen.png",
-    fr: { name: "Collagène", latin: "Protéine", virtue: "Peau", text: "Élasticité et santé des articulations." },
-    en: { name: "Collagen", latin: "Protein", virtue: "Skin", text: "Elasticity and joint health." } },
+    fr: { name: "Collagène de membrane d'œuf", latin: "Protéine", virtue: "Peau & articulations", text: "Préserve la souplesse de la peau et le confort articulaire." },
+    en: { name: "Collagen (eggshell membrane)", latin: "Protein", virtue: "Skin & joints", text: "Preserves skin suppleness and joint comfort." } },
+  { img: "/brand/cordyceps.png",
+    fr: { name: "Cordyceps", latin: "Cordyceps militaris", virtue: "Énergie", text: "Développe l'endurance et la vitalité cellulaire." },
+    en: { name: "Cordyceps", latin: "Cordyceps militaris", virtue: "Energy", text: "Builds stamina and cellular vitality." } },
+  { img: "/brand/l-theanine.png",
+    fr: { name: "L-Théanine", latin: "Acide aminé", virtue: "Énergie calme", text: "Accompagne la concentration et installe un état de calme mental." },
+    en: { name: "L-Theanine", latin: "Amino acid", virtue: "Calm energy", text: "Supports focus and settles the mind." } },
+  { img: "/brand/lions-mane.png",
+    fr: { name: "Lion's Mane", latin: "Hericium erinaceus", virtue: "Concentration", text: "Soutient la mémoire et les fonctions cognitives." },
+    en: { name: "Lion's Mane", latin: "Hericium erinaceus", virtue: "Focus", text: "Supports memory and cognitive function." } },
+  { img: "/brand/maca.png",
+    fr: { name: "Maca", latin: "Lepidium meyenii", virtue: "Endurance", text: "Stimule le tonus, l'équilibre hormonal et la force naturelle." },
+    en: { name: "Maca", latin: "Lepidium meyenii", virtue: "Endurance", text: "Stimulates vitality, hormonal balance and natural strength." } },
+  { img: "/brand/panax-ginseng.png",
+    fr: { name: "Panax Ginseng", latin: "Panax ginseng", virtue: "Vitalité", text: "Optimise la résistance à la fatigue et le dynamisme quotidien." },
+    en: { name: "Panax Ginseng", latin: "Panax ginseng", virtue: "Vitality", text: "Optimises resistance to fatigue and daily drive." } },
+  { img: "/brand/reishi.png",
+    fr: { name: "Reishi", latin: "Ganoderma lucidum", virtue: "Sérénité", text: "Favorise la relaxation et le bien-être général." },
+    en: { name: "Reishi", latin: "Ganoderma lucidum", virtue: "Calm", text: "Promotes relaxation and overall wellbeing." } },
+  { img: "/brand/rhodiola.png",
+    fr: { name: "Rhodiola Rosea", latin: "Rhodiola rosea", virtue: "Anti-fatigue", text: "Renforce la vigilance, l'adaptation au stress et la résilience." },
+    en: { name: "Rhodiola Rosea", latin: "Rhodiola rosea", virtue: "Anti-fatigue", text: "Boosts alertness, stress adaptation and resilience." } },
+  { img: "/brand/saffron.png",
+    fr: { name: "Safran", latin: "Crocus sativus", virtue: "Humeur", text: "Cultive l'équilibre émotionnel et la sérénité." },
+    en: { name: "Saffron", latin: "Crocus sativus", virtue: "Mood", text: "Cultivates emotional balance and serenity." } },
 ];
 
 const T = {
-  fr: { prev: "Précédent", next: "Suivant" },
-  en: { prev: "Previous", next: "Next" },
+  fr: { prev: "Précédent", next: "Suivant", page: "Page" },
+  en: { prev: "Previous", next: "Next", page: "Page" },
 } as const;
 
 export default function IngredientsCarousel({ lang }: { lang: string }) {
   const trackRef = useRef<HTMLDivElement>(null);
   const en = lang === "en";
   const t = T[en ? "en" : "fr"];
+  // Pagination : sans elle, rien n'indiquait que la liste continuait au-delà
+  // des cartes visibles (les flèches sont masquées sous `sm`).
+  const [pages, setPages] = useState(1);
+  const [page, setPage] = useState(0);
+
+  const measure = useCallback(() => {
+    const el = trackRef.current;
+    if (!el || el.clientWidth === 0) return;
+    setPages(Math.max(1, Math.round(el.scrollWidth / el.clientWidth)));
+    setPage(Math.round(el.scrollLeft / el.clientWidth));
+  }, []);
+
+  useEffect(() => {
+    measure();
+    const el = trackRef.current;
+    if (!el) return;
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [measure]);
 
   const scroll = (dir: 1 | -1) => {
     const el = trackRef.current;
     if (!el) return;
     el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 600), behavior: "smooth" });
+  };
+
+  const goToPage = (i: number) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
   };
 
   return (
@@ -75,6 +106,7 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
 
       <div
         ref={trackRef}
+        onScroll={measure}
         className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {INGREDIENTS.map((ingredient) => {
@@ -97,6 +129,28 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
           );
         })}
       </div>
+
+      {/* Indicateur de pages : le client ne voyait pas que la liste des
+          11 ingrédients continuait au-delà des cartes affichées. */}
+      {pages > 1 && (
+        <div className="mt-6 flex items-center justify-center gap-4">
+          <div className="flex gap-2">
+            {Array.from({ length: pages }, (_, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => goToPage(i)}
+                aria-label={`${t.page} ${i + 1}`}
+                aria-current={i === page ? "true" : undefined}
+                className={`h-2 rounded-full bg-bien-cream transition-all ${i === page ? "w-6" : "w-2 opacity-40 hover:opacity-70"}`}
+              />
+            ))}
+          </div>
+          <span className="text-xs font-semibold tabular-nums text-bien-cream/60">
+            {Math.min(page + 1, pages)} / {pages}
+          </span>
+        </div>
+      )}
     </div>
   );
 }

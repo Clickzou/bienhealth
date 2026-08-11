@@ -12,7 +12,7 @@ import CartView from "@/components/cart-view";
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
   return {
-    title: lang === "en" ? "Your cart — BIEN" : "Votre panier — BIEN",
+    title: lang === "en" ? "Your cart | BIEN health" : "Votre panier | BIEN health",
     description: lang === "en" ? "Your BIEN cart." : "Votre panier BIEN.",
     alternates: { canonical: `/${lang}/cart` },
     robots: { index: false, follow: false },

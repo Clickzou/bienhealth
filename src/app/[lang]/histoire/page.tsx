@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "histoire",
-    title: lang === "en" ? "Our story — BIEN" : "Notre histoire — BIEN",
-    description: lang === "en" ? "BIEN HEALTH, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." : "BIEN HEALTH, marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels pour les athlètes de la vie.",
+    title: lang === "en" ? "Our story | BIEN health" : "Notre histoire | BIEN health",
+    description: lang === "en" ? "BIEN health, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." : "BIEN health, marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels pour les athlètes de la vie.",
   });
 }
 
@@ -24,18 +24,18 @@ const T = {
     eyebrow: "Notre histoire",
     h1: "Aider les athlètes de la vie à mieux vivre le quotidien.",
     heroText: "BIEN HEALTH est une marque française de compléments alimentaires naturels dont la mission est d'accompagner chacun à mieux vivre les défis du quotidien : stress, sommeil, brouillard mental, troubles de la mémoire, manque d'énergie.",
-    fromEyebrow: "D'où vient BIEN", fromTitle: "Née du sport de haut niveau.",
+    fromEyebrow: "D'où vient BIEN ?", fromTitle: "Née du sport de haut niveau.",
     story: [
-      "La marque est née du parcours d'une ancienne sportive de haut niveau, qui a utilisé les plantes adaptogènes et champignons médicinaux (ashwagandha, safran…) pour optimiser sa préparation physique et mentale — avant de créer une marque plus efficace, naturelle et accessible au quotidien.",
+      "La marque est née du parcours d'une ancienne sportive de haut niveau, qui a utilisé les plantes adaptogènes et champignons médicinaux (ashwagandha, safran…) pour optimiser sa préparation physique et mentale, avant de créer une marque plus efficace, naturelle et accessible au quotidien.",
       "Notre corps et notre esprit méritent des solutions naturelles pour performer durablement. Habituée aux exigences du sport de haut niveau, la clarté mentale, la récupération et la vitalité ont toujours été au cœur de mes préoccupations.",
       "Quand j'ai découvert les champignons adaptogènes, j'ai trouvé la réponse naturelle et cohérente que je cherchais pour m'accompagner dans mes challenges quotidiens, bien au-delà du sport : soutenir mon organisme, renforcer ma concentration et optimiser mon énergie, sans compromis.",
       "Aujourd'hui, c'est dans cette culture de la performance consciente que l'on fait grandir BIEN, en respectant l'équilibre, la santé et la résilience sur le long terme.",
-      "Accompagnés par un laboratoire scientifique français, nous développons des compléments adaptogènes conçus pour soutenir le corps et l'esprit face aux défis du quotidien. Pensés pour les athlètes de la vie — entrepreneurs, créatifs, sportifs, parents, leaders — notre gamme s'inscrit dans une vision moderne, transparente et fonctionnelle du bien-être.",
+      "Accompagnés par un laboratoire scientifique français, nous développons des compléments adaptogènes conçus pour soutenir le corps et l'esprit face aux défis du quotidien. Pensés pour les athlètes de la vie (entrepreneurs, créatifs, sportifs, parents, leaders), notre gamme s'inscrit dans une vision moderne, transparente et fonctionnelle du bien-être.",
     ],
     ceo: "Carla, CEO BIEN Health",
     list: [
       "4 produits naturels : 3 gummies + 1 poudre tout-en-un",
-      "Vegan, sans sucre ni colorants, sans gluten — fabriqué en France",
+      "Vegan, sans sucre ni colorants, sans gluten, fabriqué en France",
       "Riches en fibres prébiotiques pour l'équilibre du microbiote",
       "Plantes adaptogènes & champignons médicinaux, dosages transparents",
     ],
@@ -50,18 +50,18 @@ const T = {
     eyebrow: "Our story",
     h1: "Helping life's athletes live better every day.",
     heroText: "BIEN HEALTH is a French brand of natural food supplements on a mission to help everyone better handle everyday challenges: stress, sleep, mental fog, memory issues and low energy.",
-    fromEyebrow: "Where BIEN comes from", fromTitle: "Born from elite sport.",
+    fromEyebrow: "Where does BIEN come from?", fromTitle: "Born from elite sport.",
     story: [
-      "The brand was born from the journey of a former elite athlete who used adaptogenic plants and medicinal mushrooms (ashwagandha, saffron…) to optimise her physical and mental preparation — before creating a brand that's more effective, natural and accessible every day.",
+      "The brand was born from the journey of a former elite athlete who used adaptogenic plants and medicinal mushrooms (ashwagandha, saffron…) to optimise her physical and mental preparation, before creating a brand that's more effective, natural and accessible every day.",
       "Our body and mind deserve natural solutions to perform sustainably. Used to the demands of elite sport, mental clarity, recovery and vitality have always been at the heart of my concerns.",
       "When I discovered adaptogenic mushrooms, I found the natural, coherent answer I was looking for to support me through my daily challenges, well beyond sport: supporting my body, strengthening my focus and optimising my energy, with no compromise.",
       "Today, it's within this culture of conscious performance that we grow BIEN, respecting balance, health and resilience over the long term.",
-      "Supported by a French scientific laboratory, we develop adaptogenic supplements designed to support body and mind against everyday challenges. Made for life's athletes — entrepreneurs, creatives, athletes, parents, leaders — our range embodies a modern, transparent and functional vision of wellbeing.",
+      "Supported by a French scientific laboratory, we develop adaptogenic supplements designed to support body and mind against everyday challenges. Made for life's athletes (entrepreneurs, creatives, athletes, parents, leaders), our range embodies a modern, transparent and functional vision of wellbeing.",
     ],
     ceo: "Carla, CEO BIEN Health",
     list: [
       "4 natural products: 3 gummies + 1 all-in-one powder",
-      "Vegan, no sugar or colourings, gluten-free — made in France",
+      "Vegan, no sugar or colourings, gluten-free, made in France",
       "Rich in prebiotic fibres for a balanced microbiome",
       "Adaptogenic plants & medicinal mushrooms, transparent dosages",
     ],
@@ -89,25 +89,28 @@ export default async function HistoirePage({
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-10 sm:pt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-10 sm:pt-14">
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow grid lg:grid-cols-2 items-stretch">
-          <div className="text-bien-cream p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
+          {/* Bloc d'ouverture resserré : il occupait beaucoup plus de hauteur
+              que le reste de la page et cassait la cohérence visuelle avec la
+              suite (retour client). */}
+          <div className="text-bien-cream p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-            <h1 className="mt-4 font-hero text-[clamp(1.98rem,4.84vw,3.52rem)] leading-[0.98]">
+            <h1 className="mt-3.5 font-hero text-[clamp(1.85rem,4.2vw,3rem)] leading-[0.98]">
               {t.h1}
             </h1>
-            <p className="mt-5 text-base sm:text-lg text-bien-cream/85 leading-relaxed">
+            <p className="mt-4 text-[15px] sm:text-base text-bien-cream/85 leading-relaxed">
               {t.heroText}
             </p>
           </div>
-          <div className="relative min-h-[300px] lg:min-h-[520px]">
+          <div className="relative min-h-[260px] lg:min-h-[420px]">
             <Image src="/brand/story.jpg" alt="L'histoire de BIEN" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" priority />
           </div>
         </div>
       </section>
 
       {/* Récit */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] bien-shadow">
             <Image src="/brand/founder.jpg" alt="La fondatrice de BIEN" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
@@ -118,7 +121,9 @@ export default async function HistoirePage({
               {t.fromTitle}
             </h2>
             {t.story.map((para, i) => (
-              <p key={i} className={`${i === 0 ? "mt-5" : "mt-4"} text-base sm:text-lg text-black/75 leading-relaxed`}>{para}</p>
+              // Corps ramené à `text-base` et justifié : le récit paraissait
+              // gros et long, surtout sur mobile (retour client).
+              <p key={i} className={`${i === 0 ? "mt-5" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>{para}</p>
             ))}
             <p className="mt-5 font-display text-black">{t.ceo}</p>
             <ul className="mt-7 space-y-3">
@@ -134,7 +139,7 @@ export default async function HistoirePage({
       </section>
 
       {/* Valeurs */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
         <div className="grid sm:grid-cols-3 gap-5">
           {VALUES.map(({ icon: Icon, title, text }) => (
             <article key={title} className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">
@@ -147,7 +152,7 @@ export default async function HistoirePage({
       </section>
 
       {/* CTA */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-16 sm:mt-24 mb-24 text-center">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24 mb-24 text-center">
         <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
           {t.ctaTitle}
         </h2>

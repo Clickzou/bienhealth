@@ -9,8 +9,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "confidentialite",
-    title: lang === "en" ? "Privacy policy · BIEN" : "Politique de confidentialité · BIEN",
-    description: lang === "en" ? "How Bien Health collects, uses and discloses your personal information on bien.health." : "Comment Bien Health collecte, utilise et divulgue vos informations personnelles sur bien.health.",
+    title: lang === "en" ? "Privacy policy | BIEN health" : "Politique de confidentialité | BIEN health",
+    description: lang === "en" ? "How BIEN health collects, uses and discloses your personal information on bien.health." : "Comment BIEN health collecte, utilise et divulgue vos informations personnelles sur bien.health.",
   });
 }
 
@@ -80,10 +80,10 @@ export default async function ConfidentialitePage({
 
         <h2>How we use your personal information</h2>
         <ul>
-          <li><strong>Providing Products and Services</strong> — process your payments, fulfil your orders, manage your account, arrange shipping and facilitate returns and exchanges.</li>
-          <li><strong>Marketing and advertising</strong> — send you marketing communications by email, SMS or post and show you relevant ads (art. 6 (1) (f) GDPR in the EEA).</li>
-          <li><strong>Security and fraud prevention</strong> — detect and prevent fraudulent, illegal or malicious activity.</li>
-          <li><strong>Communicating and improving the Services</strong> — provide you with customer service and improve our Services.</li>
+          <li><strong>Providing Products and Services</strong>: process your payments, fulfil your orders, manage your account, arrange shipping and facilitate returns and exchanges.</li>
+          <li><strong>Marketing and advertising</strong>: send you marketing communications by email, SMS or post and show you relevant ads (art. 6 (1) (f) GDPR in the EEA).</li>
+          <li><strong>Security and fraud prevention</strong>: detect and prevent fraudulent, illegal or malicious activity.</li>
+          <li><strong>Communicating and improving the Services</strong>: provide you with customer service and improve our Services.</li>
         </ul>
 
         <h2>Cookies</h2>
@@ -230,10 +230,10 @@ export default async function ConfidentialitePage({
 
       <h2>Comment nous utilisons vos informations personnelles</h2>
       <ul>
-        <li><strong>Fourniture des Produits et Services</strong> — traiter vos paiements, exécuter vos commandes, gérer votre compte, organiser l&apos;expédition et faciliter retours et échanges.</li>
-        <li><strong>Marketing et publicité</strong> — vous envoyer des communications marketing par e-mail, SMS ou courrier et vous présenter des publicités adaptées (art. 6 (1) (f) du RGPD dans l&apos;EEE).</li>
-        <li><strong>Sécurité et prévention de la fraude</strong> — détecter et prévenir les activités frauduleuses, illégales ou malveillantes.</li>
-        <li><strong>Communiquer et améliorer les Services</strong> — vous fournir le service client et améliorer nos Services.</li>
+        <li><strong>Fourniture des Produits et Services</strong> : traiter vos paiements, exécuter vos commandes, gérer votre compte, organiser l&apos;expédition et faciliter retours et échanges.</li>
+        <li><strong>Marketing et publicité</strong> : vous envoyer des communications marketing par e-mail, SMS ou courrier et vous présenter des publicités adaptées (art. 6 (1) (f) du RGPD dans l&apos;EEE).</li>
+        <li><strong>Sécurité et prévention de la fraude</strong> : détecter et prévenir les activités frauduleuses, illégales ou malveillantes.</li>
+        <li><strong>Communiquer et améliorer les Services</strong> : vous fournir le service client et améliorer nos Services.</li>
       </ul>
 
       <h2>Cookies</h2>

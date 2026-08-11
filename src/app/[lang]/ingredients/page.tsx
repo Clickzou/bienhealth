@@ -12,8 +12,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "ingredients",
-    title: lang === "en" ? "Ingredients — Adaptogens & functional mushrooms · BIEN" : "Ingrédients — Adaptogènes & champignons fonctionnels · BIEN",
-    description: lang === "en" ? "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Saffron… Discover the premium actives of BIEN formulas, dosed according to science." : "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Safran… Découvrez les actifs nobles des formules BIEN, dosés selon la science.",
+    title: lang === "en" ? "Ingredients: adaptogens & mushrooms | BIEN health" : "Ingrédients : adaptogènes & champignons | BIEN health",
+    description: lang === "en" ? "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Saffron… Discover the premium actives of BIEN health formulas, dosed according to science." : "Lion's Mane, Reishi, Cordyceps, Chaga, Ashwagandha, Rhodiola, Safran… Découvrez les actifs nobles des formules BIEN health, dosés selon la science.",
   });
 }
 
@@ -88,7 +88,7 @@ export default async function IngredientsPage({
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-[100px] pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-16 text-center max-w-2xl mx-auto">
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <Leaf className="h-4 w-4" /> {t.eyebrow}
         </p>
@@ -101,7 +101,7 @@ export default async function IngredientsPage({
       </section>
 
       {/* Grille ingrédients */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-12 sm:mt-16">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-12 sm:mt-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
           {INGREDIENTS.map((ing) => {
             const loc = en ? ing.en : ing.fr;
@@ -121,7 +121,7 @@ export default async function IngredientsPage({
       </section>
 
       {/* CTA */}
-      <section className="px-4 sm:px-6 lg:px-[100px] mt-14 sm:mt-20 mb-24">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20 mb-24">
         <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.5rem] p-8 sm:p-12 text-center">
           <h2 className="font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1]">
             {t.ctaTitle}

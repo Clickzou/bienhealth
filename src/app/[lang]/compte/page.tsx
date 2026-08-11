@@ -17,8 +17,8 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     ...pageMetadata({
       lang,
       path: "compte",
-      title: lang === "en" ? "My account — BIEN" : "Mon compte — BIEN",
-      description: lang === "en" ? "Log in to your BIEN account: orders, addresses and personal details." : "Connectez-vous à votre compte BIEN : commandes, adresses et informations personnelles.",
+      title: lang === "en" ? "My account | BIEN health" : "Mon compte | BIEN health",
+      description: lang === "en" ? "Log in to your BIEN health account: orders, addresses and personal details." : "Connectez-vous à votre compte BIEN health : commandes, adresses et informations personnelles.",
     }),
     // Espace privé : jamais indexé.
     robots: { index: false, follow: false },

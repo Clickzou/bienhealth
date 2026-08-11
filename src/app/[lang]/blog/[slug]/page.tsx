@@ -78,7 +78,7 @@ export default async function ArticlePage({
           author: { "@type": "Organization", name: "BIEN" },
           publisher: {
             "@type": "Organization",
-            name: "BIEN",
+            name: "BIEN health",
             logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/logo-bien.png` },
           },
           mainEntityOfPage: url,
