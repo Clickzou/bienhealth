@@ -28,7 +28,7 @@ const PRODUCTS: Record<Product, {
   },
   FOCUS: {
     name: "FOCUS", handle: "focus", price: "39 €", img: "/brand/focus.png",
-    fr: { tagline: "Concentration & Mémoire", bullets: ["Soutient la concentration et la mémoire", "Clarté mentale, sans coup de barre", "Reste focus plus longtemps"] },
+    fr: { tagline: "Concentration & Mémoire", bullets: ["Soutient la concentration et la mémoire", "Clarté mentale, sans nervosité", "Reste focus plus longtemps"] },
     en: { tagline: "Focus & Memory", bullets: ["Supports focus and memory", "Mental clarity, without the crash", "Stay focused for longer"] },
   },
   POWER: {

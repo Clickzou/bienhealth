@@ -14,14 +14,14 @@ const T = {
     cart: "Panier", empty: "Votre panier est vide.", discover: "Découvrir la boutique",
     yourCart: "Votre panier", removeOne: "Retirer un", addOne: "Ajouter un", remove: "Retirer",
     summary: "Récapitulatif", subtotal: "Sous-total", shipping: "Livraison", shippingCalc: "Calculée au paiement",
-    total: "Total", checkout: "Passer au paiement", secure: "Paiement sécurisé Shopify · Satisfait ou remboursé 30 jours.",
+    total: "Total", checkout: "Passer au paiement", secure: "Paiement sécurisé · Satisfaits ou remboursés sous 30 jours.",
     continue: "Continuer mes achats",
   },
   en: {
     cart: "Cart", empty: "Your cart is empty.", discover: "Discover the shop",
     yourCart: "Your cart", removeOne: "Remove one", addOne: "Add one", remove: "Remove",
     summary: "Summary", subtotal: "Subtotal", shipping: "Shipping", shippingCalc: "Calculated at checkout",
-    total: "Total", checkout: "Proceed to checkout", secure: "Secure Shopify payment · 30-day money-back guarantee.",
+    total: "Total", checkout: "Proceed to checkout", secure: "Secure payment · 30-day money-back guarantee.",
     continue: "Continue shopping",
   },
 } as const;

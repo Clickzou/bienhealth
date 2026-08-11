@@ -66,25 +66,25 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
   CALM: {
     category: "SÉRÉNITÉ & SOMMEIL", reviews: 19,
     rows: [
-      { icon: HeartPulse, text: "Ashwagandha, Reishi et Safran aux doses cliniquement efficaces." },
-      { icon: Zap, text: "Favoriser la relaxation, réduire le stress et améliorer la qualité du sommeil." },
+      { icon: HeartPulse, text: "Des extraits de Reishi, Ashwagandha et Safran aux doses cliniquement efficaces." },
+      { icon: Zap, text: "Soutenir l'équilibre émotionnel, favoriser la détente, et retrouver un sommeil réparateur, sans somnolence." },
       { icon: Leaf, text: "Une formule naturelle et clean, sans sucre ni additif, vegan et sans gluten." },
-      { icon: RefreshCw, text: "2 gummies à mâcher en soirée, pour apaiser le mental et préparer un sommeil réparateur." },
+      { icon: RefreshCw, text: "2 gummies au goût mûre, dans la journée pour se détendre ou le soir pour un sommeil de qualité." },
     ],
   },
   FOCUS: {
     category: "CONCENTRATION & MÉMOIRE", reviews: 19,
     rows: [
-      { icon: HeartPulse, text: "Lion's Mane, Rhodiola Rosea et L-Théanine aux doses cliniquement efficaces." },
-      { icon: Zap, text: "Soutenir la concentration, la mémoire et la clarté mentale, sans nervosité ni coup de barre." },
+      { icon: HeartPulse, text: "Des extraits de Lion's Mane, L-Théanine et Rhodiole aux doses cliniquement efficaces." },
+      { icon: Zap, text: "Soutenir la concentration, favoriser la clarté mentale et réduire la fatigue cognitive, sans stress." },
       { icon: Leaf, text: "Une formule naturelle et clean, sans sucre ni additif, vegan et sans gluten." },
-      { icon: RefreshCw, text: "2 gummies à mâcher le matin, pour rester focus et productif toute la journée." },
+      { icon: RefreshCw, text: "2 gummies au goût ananas à prendre le matin, pour stimuler l'attention et avoir un esprit vif." },
     ],
   },
   POWER: {
     category: "ÉNERGIE & PERFORMANCE", reviews: 17,
     rows: [
-      { icon: HeartPulse, text: "Des extraits de Cordyceps, Rhodiola Rosea et Panax Ginseng aux doses cliniquement efficaces." },
+      { icon: HeartPulse, text: "Des extraits de Cordyceps, Rhodiola et Panax Ginseng aux doses cliniquement efficaces." },
       { icon: Zap, text: "Soutenir l'énergie naturelle, optimiser les performances physiques et favoriser la résistance à l'effort, sans sensation de nervosité." },
       { icon: Leaf, text: "Une formule naturelle et clean, sans sucre ajouté ni additif, pour une vitalité saine et durable." },
       { icon: RefreshCw, text: "2 gummies au fruit de la passion à mâcher le matin, pour démarrer la journée avec plaisir et énergie." },
@@ -113,25 +113,25 @@ const HIGHLIGHTS_EN: Record<string, ProductInfo> = {
   CALM: {
     category: "CALM & SLEEP", reviews: 19,
     rows: [
-      { icon: HeartPulse, text: "Ashwagandha, Reishi and Saffron at clinically effective doses." },
-      { icon: Zap, text: "Promote relaxation, reduce stress and improve sleep quality." },
+      { icon: HeartPulse, text: "Reishi, Ashwagandha and Saffron extracts at clinically effective doses." },
+      { icon: Zap, text: "Support emotional balance, encourage relaxation and restore restful sleep, without drowsiness." },
       { icon: Leaf, text: "A natural, clean formula: no sugar or additives, vegan and gluten-free." },
-      { icon: RefreshCw, text: "2 gummies to chew in the evening, to calm the mind and prepare for restorative sleep." },
+      { icon: RefreshCw, text: "2 blackberry gummies, during the day to unwind or in the evening for quality sleep." },
     ],
   },
   FOCUS: {
     category: "FOCUS & MEMORY", reviews: 19,
     rows: [
-      { icon: HeartPulse, text: "Lion's Mane, Rhodiola Rosea and L-Theanine at clinically effective doses." },
-      { icon: Zap, text: "Support focus, memory and mental clarity, without jitters or crashes." },
+      { icon: HeartPulse, text: "Lion's Mane, L-Theanine and Rhodiola extracts at clinically effective doses." },
+      { icon: Zap, text: "Support focus, encourage mental clarity and reduce cognitive fatigue, without stress." },
       { icon: Leaf, text: "A natural, clean formula: no sugar or additives, vegan and gluten-free." },
-      { icon: RefreshCw, text: "2 gummies to chew in the morning, to stay focused and productive all day." },
+      { icon: RefreshCw, text: "2 pineapple gummies in the morning, to sharpen attention and keep the mind alert." },
     ],
   },
   POWER: {
     category: "ENERGY & PERFORMANCE", reviews: 17,
     rows: [
-      { icon: HeartPulse, text: "Cordyceps, Rhodiola Rosea and Panax Ginseng extracts at clinically effective doses." },
+      { icon: HeartPulse, text: "Cordyceps, Rhodiola and Panax Ginseng extracts at clinically effective doses." },
       { icon: Zap, text: "Support natural energy, optimise physical performance and boost stamina, without any jittery feeling." },
       { icon: Leaf, text: "A natural, clean formula: no added sugar or additives, for healthy, lasting vitality." },
       { icon: RefreshCw, text: "2 passion-fruit gummies to chew in the morning, to start the day with pleasure and energy." },
@@ -690,7 +690,7 @@ const UI = {
     addToCart: "Ajouter au panier",
     preorderCta: "Précommander",
     backSoon: "Bientôt de retour",
-    guarantee: "Satisfait ou remboursé 30 jours · Panier & paiement Shopify.",
+    guarantee: "Satisfaits ou remboursés sous 30 jours · Paiement sécurisé.",
     reassurance: [`Livraison offerte dès ${freeShippingAmount("fr")}`, "Paiement sécurisé", "Fabriqué en France"],
     videoTitle: "Vu en vidéo",
     routineTitle: "Complétez votre routine",
@@ -712,7 +712,7 @@ const UI = {
     addToCart: "Add to cart",
     preorderCta: "Pre-order",
     backSoon: "Back soon",
-    guarantee: "30-day money-back guarantee · Shopify cart & checkout.",
+    guarantee: "30-day money-back guarantee · Secure payment.",
     reassurance: [`Free shipping over ${freeShippingAmount("en")}`, "Secure payment", "Made in France"],
     videoTitle: "Seen on video",
     routineTitle: "Complete your routine",

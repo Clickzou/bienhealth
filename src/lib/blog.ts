@@ -302,7 +302,7 @@ export const ARTICLES: Article[] = [
       { h3: "Dormir et bouger" },
       { p: "Un cerveau reposé et oxygéné se concentre mieux. Le sommeil consolide la mémoire, et l'activité physique améliore l'afflux sanguin cérébral. Deux piliers trop souvent négligés." },
       { h2: "Les compléments naturels de la concentration" },
-      { p: "Certains actifs soutiennent directement la fonction cognitive. Le <strong>Lion's Mane</strong>, champignon reconnu pour la mémoire et la clarté mentale ; la <strong>Rhodiola Rosea</strong>, adaptogène anti-fatigue mentale ; et la <strong>L-théanine</strong>, qui apaise sans endormir. Nos gummies <a href=\"" + l("/products/focus") + "\">FOCUS</a> combinent ces trois ingrédients pour une concentration intense et durable, sans nervosité ni coup de barre." },
+      { p: "Certains actifs soutiennent directement la fonction cognitive. Le <strong>Lion's Mane</strong>, champignon reconnu pour la mémoire et la clarté mentale ; la <strong>Rhodiola Rosea</strong>, adaptogène anti-fatigue mentale ; et la <strong>L-théanine</strong>, qui apaise sans endormir. Nos gummies <a href=\"" + l("/products/focus") + "\">FOCUS</a> combinent ces trois ingrédients pour une concentration intense et durable, sans nervosité ni baisse de régime." },
       { h2: "Une alternative au café ?" },
       { p: "Plutôt que d'empiler les cafés (et de subir le crash), beaucoup adoptent un soutien plus stable. Découvrez nos <a href=\"" + l("/blog/alternative-cafe-focus") + "\">alternatives naturelles au café pour rester focus</a>." },
       { h2: "Par où commencer ?" },

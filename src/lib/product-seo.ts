@@ -47,7 +47,7 @@ export const PRODUCT_SEO: Record<string, ProductSeo> = {
   FOCUS: {
     heading: "FOCUS, des gummies concentration & clarté mentale",
     paragraphs: [
-      "FOCUS est un complément alimentaire sous forme de gummies conçu pour soutenir la concentration, la mémoire et la clarté mentale, sans nervosité ni coup de barre. Sa formule combine le Lion's Mane, champignon reconnu pour la fonction cognitive, la Rhodiola Rosea, adaptogène anti-fatigue mentale, et la L-Théanine, qui booste notre cerveau tout en l'apaisant.",
+      "FOCUS est un complément alimentaire sous forme de gummies conçu pour soutenir la concentration, la mémoire et la clarté mentale, sans nervosité ni baisse de régime. Sa formule combine le Lion's Mane, champignon reconnu pour la fonction cognitive, la Rhodiola Rosea, adaptogène anti-fatigue mentale, et la L-Théanine, qui booste notre cerveau tout en l'apaisant.",
       "Deux gummies FOCUS le matin installent une concentration plus intense et plus durable. Beaucoup y trouvent une alternative à leur second café. Au goût ananas, sans sucre et végan, ces gummies Focus sont l'allié quotidien des étudiants, entrepreneurs et créatifs, mais aussi de tous ceux qui passent leurs journées derrière un écran et peinent à rester concentrés, même en pleine surcharge mentale.",
     ],
     en: {
