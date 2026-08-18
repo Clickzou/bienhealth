@@ -475,12 +475,17 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             inégales, se chevauchaient. Chaque logo occupe désormais une cellule
             de hauteur fixe, et le filtre niveaux de gris rattrape leurs
             colorimétries hétérogènes (couleur au survol). */}
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2 items-center">
+        {/* Cadre de hauteur fixe + `fill` : les logos n'ont ni la même hauteur
+            ni le même rapport de forme, et une image en flux normal ne se
+            laisse pas borner par un `max-h-*` en pourcentage — les fichiers HD
+            débordaient de leur case et se chevauchaient. En `fill`, l'image est
+            posée en absolu dans la case et `object-contain` la fait tenir. */}
+        <div className="mt-6 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-3 items-center">
           {PRESS.map((p) => {
             const logo = (
-              <Image src={p.logo} alt={p.name} width={200} height={60} className="max-h-full w-auto max-w-[80%] object-contain" />
+              <Image src={p.logo} alt={p.name} fill sizes="(max-width:640px) 30vw, (max-width:1024px) 22vw, 17vw" className="object-contain" />
             );
-            const shell = "grid place-items-center h-16 sm:h-20 grayscale opacity-65 transition-all";
+            const shell = "relative block h-14 sm:h-16 grayscale opacity-65 transition-all";
             return p.href ? (
               <a
                 key={p.name}
