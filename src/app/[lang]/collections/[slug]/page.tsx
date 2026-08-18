@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Sparkles, ArrowRight } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
-import { COLLECTIONS, localizeCollection, sortForCollection } from "@/lib/shop";
+import { COLLECTIONS, localizeCollection, sortForCollection, isAccessory } from "@/lib/shop";
 import { COLLECTION_SEO, localizeCollectionSeo } from "@/lib/collection-seo";
 import { pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
@@ -57,8 +57,13 @@ export default async function CollectionPage({
   const all = await getProducts(24);
   const products = sortForCollection(col, all.filter(col.match));
   // « Découvrez aussi » : les produits qui ne sont pas déjà affichés plus haut.
+  // Les accessoires en sont exclus, sauf sur leur propre collection : le client
+  // ne veut les voir que dans « tous les produits » — le mousseur et le tote bag
+  // apparaissaient en bas des pages gummies et poudres.
   const shownHandles = new Set(products.map((p) => p.handle));
-  const others = all.filter((p) => !shownHandles.has(p.handle));
+  const others = all.filter(
+    (p) => !shownHandles.has(p.handle) && (col.slug === "nos-accessoires" || !isAccessory(p)),
+  );
 
   return (
     <div className="min-h-screen bg-background text-foreground">
