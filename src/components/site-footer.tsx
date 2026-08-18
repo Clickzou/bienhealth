@@ -1,7 +1,8 @@
 import Image from "next/image";
-import { Leaf, Heart, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import FooterCredit from "./footer-credit";
 import NewsletterForm from "./newsletter-form";
+import { accentLastWord } from "@/lib/accent-title";
 import { ui } from "@/lib/i18n";
 
 function InstagramIcon({ className }: { className?: string }) {
@@ -15,6 +16,29 @@ function InstagramIcon({ className }: { className?: string }) {
 }
 
 /**
+ * Associations soutenues par la marque. `label` pointe vers la traduction
+ * (`ui(lang).footer`), les dimensions sont celles des fichiers détourés.
+ */
+const COMMITMENTS = [
+  {
+    href: "https://www.team-for-the-planet.com/",
+    name: "Team for the Planet",
+    logo: "/brand/assoc/team-for-the-planet.webp",
+    width: 376,
+    height: 299,
+    label: "commitmentPlanet",
+  },
+  {
+    href: "https://www.hopital-sourire.fr/",
+    name: "Hôpital Sourire",
+    logo: "/brand/assoc/hopital-sourire.webp",
+    width: 271,
+    height: 366,
+    label: "commitmentChildren",
+  },
+] as const;
+
+/**
  * Pied de page global du site (partagé par toutes les pages via le layout).
  * Palette forêt/crème, coordonnées légales, liens d'aide & mentions, sélecteur de langue.
  */
@@ -26,7 +50,9 @@ export default function SiteFooter({ lang }: { lang: string }) {
         {/* Bandeau newsletter */}
         <div className="pb-12 mb-12 border-b border-bien-cream/15 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
           <div className="max-w-md">
-            <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-bien-cream">{t.newsletterTitle}</h2>
+            {/* Fond navy : le rose de charte s'y lit à 11:1, c'est le seul
+                endroit du site où il peut servir de couleur de texte. */}
+            <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-bien-cream">{accentLastWord(t.newsletterTitle, { onDark: true })}</h2>
             <p className="mt-2 text-sm text-bien-cream/70 leading-relaxed">{t.newsletterText}</p>
           </div>
           <div className="lg:flex-1 lg:max-w-md">
@@ -84,36 +110,32 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </a>
           </div>
         </div>
-        {/* Engagements associatifs — chaque mention renvoie vers le site de
-            l'association (demande client) ; les logos officiels remplaceront
-            les pictogrammes dès réception des fichiers. */}
+        {/* Engagements associatifs — logos officiels fournis par le client.
+            Les deux fichiers sont sur fond blanc (aucune version détourée ni
+            monochrome n'existe) : ils sont donc posés sur une pastille blanche
+            plutôt que collés au navy, où le noir de « Team for the Planet »
+            disparaîtrait. Chaque mention renvoie au site de l'association. */}
         <div className="mt-12 pt-8 border-t border-bien-cream/15 text-center">
           <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.commitmentsTitle}</h3>
-          <ul className="mt-4 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-8 text-sm text-bien-cream/80">
-            <li>
-              <a
-                href="https://www.team-for-the-planet.com/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-bien-gold transition-colors"
-              >
-                <Leaf className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
-                {t.commitmentPlanet}
-                <ExternalLink className="h-3.5 w-3.5 opacity-60" aria-hidden />
-              </a>
-            </li>
-            <li>
-              <a
-                href="https://www.hopital-sourire.fr/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 hover:text-bien-gold transition-colors"
-              >
-                <Heart className="h-4 w-4 text-bien-gold shrink-0" aria-hidden />
-                {t.commitmentChildren}
-                <ExternalLink className="h-3.5 w-3.5 opacity-60" aria-hidden />
-              </a>
-            </li>
+          <ul className="mt-5 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-8 text-sm text-bien-cream/80">
+            {COMMITMENTS.map((org) => (
+              <li key={org.href}>
+                <a
+                  href={org.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-3 rounded-2xl bg-bien-cream/5 ring-1 ring-bien-cream/10 p-2.5 pr-4 hover:bg-bien-cream/10 transition-colors"
+                >
+                  <span className="shrink-0 grid place-items-center h-14 w-14 rounded-xl bg-white p-2">
+                    <Image src={org.logo} alt={org.name} width={org.width} height={org.height} className="max-h-full w-auto object-contain" />
+                  </span>
+                  <span className="text-left group-hover:text-bien-cream transition-colors">
+                    {t[org.label]}
+                    <ExternalLink className="inline-block ml-1.5 h-3.5 w-3.5 align-[-2px] opacity-60" aria-hidden />
+                  </span>
+                </a>
+              </li>
+            ))}
           </ul>
         </div>
 

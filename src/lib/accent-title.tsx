@@ -1,19 +1,20 @@
 import type { ReactNode } from "react";
 
 /**
- * Met le dernier mot d'un titre en rose.
+ * Accentue le dernier mot d'un titre avec le rose de la charte (#ffb2ce).
  *
  * La charte V2 réserve 5 % de la palette au pink : c'est un accent, pas une
- * couleur de titre. On ne teinte donc qu'un mot, en fin de titre, là où l'œil
+ * couleur de titre. On ne marque donc qu'un mot, en fin de titre, là où l'œil
  * termine sa lecture.
  *
- * Deux teintes selon le fond, parce que le pink de charte (#ffb2ce) ne passe
- * pas en texte sur fond clair :
- *   fond clair  → `--color-bien-pink-deep` (5,7:1 sur blanc)
- *   fond sombre → pink de charte, autorisé sur navy par la charte (p. 24)
+ * Le rose de charte ne tient pas comme couleur de texte sur fond clair (1,6:1),
+ * et le client tient à ce rose exact — pas de variante assombrie. Deux
+ * traitements selon le fond :
+ *   fond sombre → le mot passe en rose (11:1 sur navy, association autorisée p. 24)
+ *   fond clair  → le mot reste noir et reçoit un filet rose sous la ligne de base
  *
- * La ponctuation finale reste collée au mot accentué : « préférés. » passe en
- * rose avec son point, sinon le point orphelin en noir se voit.
+ * La ponctuation finale reste collée au mot accentué : « préférés. » est
+ * souligné avec son point, sinon le point orphelin se voit.
  */
 export function accentLastWord(title: string, { onDark = false } = {}): ReactNode {
   const cut = title.trimEnd().lastIndexOf(" ");
@@ -21,11 +22,11 @@ export function accentLastWord(title: string, { onDark = false } = {}): ReactNod
 
   const head = title.slice(0, cut);
   const tail = title.slice(cut + 1);
-  const color = onDark ? "text-bien-pink" : "text-bien-pink-deep";
+  const accent = onDark ? "text-bien-pink" : "bien-accent-underline";
 
   return (
     <>
-      {head} <span className={color}>{tail}</span>
+      {head} <span className={accent}>{tail}</span>
     </>
   );
 }

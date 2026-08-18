@@ -477,7 +477,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* L'essentiel — points clés (déplacé depuis le hero) */}
         <div className="mt-10 max-w-[1268px] mx-auto rounded-[1.75rem] bg-card ring-1 ring-border bien-shadow-sm p-5 sm:p-6">
           <div className="flex items-center justify-center gap-2 pb-3">
-            <span className="h-1.5 w-1.5 rounded-full bg-bien-pink-deep" />
+            <span className="h-2 w-2 rounded-full bg-bien-pink" />
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-bien-leaf">{c.hero.keyPointsTitle}</p>
           </div>
           <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-1.5">

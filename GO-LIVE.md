@@ -1,7 +1,7 @@
 # Checklist de mise en ligne — bien.health
 
 Tout ce qui doit être vérifié, configuré ou décidé **avant** la bascule du site
-headless sur `bien.health`. Dernière mise à jour : 4 août 2026.
+headless sur `bien.health`. Dernière mise à jour : 18 août 2026.
 
 Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision client ·
 `[x]` fait et vérifié.
@@ -95,6 +95,18 @@ faussée. Demande un accès à l'admin Shopify.
 
 ## 3. En attente d'une info ou d'une décision client
 
+- [~] **Fond du favicon** — la marque est désormais découpée dans le vrai logo
+      (`public/brand/logo-bien.png`, le B avec le champignon en contre-forme),
+      posée sur le Deep Blue de la charte, comme la pastille du site actuel du
+      client. Il écrivait « en noir sur fond blanc » en décrivant le fichier
+      qu'il joignait : si c'est bien le rendu voulu dans l'onglet, la variante
+      noir sur blanc se régénère avec le même script (voir le commit).
+- [~] **Rose sur les CTA** — demandé par le client (« ou sinon les CTA ? »).
+      Non appliqué : la charte n'autorise que du vert sur un aplat pink (p. 25),
+      et vert sur rose plafonne à 2,4:1, donc un bouton illisible. Les seules
+      combinaisons lisibles sur pink sont interdites par la charte. À arbitrer
+      avec le client s'il veut passer outre la charte sur ce point.
+
 - [~] **Logos associatifs** — Team for the Planet et Hôpital Sourire sont
       affichés en texte dans le footer. Manquent : les fichiers logos (PNG/SVG)
       et les URL officielles des deux associations.
@@ -156,6 +168,22 @@ Shopify avant tout développement front :
 ---
 
 ## 5. Fait — pour mémoire
+
+- [x] Réponses client au point d'avancement du 11/08/2026 (traitées le 18/08) :
+      **Favicon** — le client précise que le « B » n'est pas une affaire de
+      police mais son logo : le champignon en contre-forme dans le B. Le
+      monogramme dessiné à la main est remplacé par une découpe du logo
+      officiel (`icon.png` 64 px, `apple-icon.png` 180 px, générés avec sharp
+      depuis `public/brand/logo-bien.png`) ; `icon.svg` supprimé.
+      **Rose** — le client garde le rose de charte (#ffb2ce) et refuse la
+      variante assombrie, tout en constatant lui-même l'illisibilité sur blanc.
+      Le rose devient donc un élément graphique sur fond clair (filet sous le
+      dernier mot du titre, puce) et reste une couleur de texte sur fond navy
+      (titre du bloc newsletter du footer, 11:1). `--color-bien-pink-deep`
+      supprimé du design system.
+      **Textes des fiches produit, mentions Shopify, « coup de barre »** —
+      validés sur le principe, à vérifier une fois en ligne (commit `f2d445c`,
+      déjà poussé sur `main`).
 
 - [x] 4ᵉ série de recos client (04/08/2026), après relecture sur la préprod :
       **Nav qui chevauchait la note Trustpilot** — sortie du flux, la nav était

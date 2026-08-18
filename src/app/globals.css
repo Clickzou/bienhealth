@@ -32,13 +32,13 @@
   --color-bien-ink: #021b39;
 
   /*
-    Rose de texte — même teinte que le pink de charte (#ffb2ce), assombri
-    jusqu'à atteindre 5,7:1 sur fond blanc (AA sur toutes tailles). Le pink de
-    charte reste la référence sur fond sombre et pour les aplats ; il monte à
-    peine à 1,6:1 sur blanc, donc jamais de texte rose clair sur fond clair.
-    Sert aux accents : dernier mot des titres de section, puces, filets.
+    Emploi du pink #ffb2ce (décision client du 11/08/2026 : garder le rose de
+    la charte, sans variante assombrie). Il plafonne à 1,6:1 sur blanc, donc :
+      fond sombre (navy/ink) → rose EN TEXTE, 11:1, autorisé par la charte p. 24
+      fond clair            → rose en ÉLÉMENT GRAPHIQUE seulement (filet sous
+                              le mot accentué, puce), le texte restant noir.
+    Voir `bien-accent-underline` plus bas et `lib/accent-title.tsx`.
   */
-  --color-bien-pink-deep: #b13a63;
 
   /*
     Jaune des étoiles d'avis — conservé hors charte à la demande du client.
@@ -196,6 +196,20 @@
 /* Fond des héros : aplat bleu foncé, sans dégradé. Texte off-white ou sky. */
 @utility hero-surface {
   background-color: var(--color-bien-ink);
+}
+
+/*
+  Filet rose sous le dernier mot d'un titre, sur fond clair.
+  Tracé en `background-image` et non en `border-bottom` : le filet se cale sur
+  la ligne de base du mot (et non sous la boîte, très basse en font-display),
+  et il suit le mot si le titre passe à la ligne.
+*/
+@utility bien-accent-underline {
+  background-image: linear-gradient(var(--color-bien-pink), var(--color-bien-pink));
+  background-repeat: no-repeat;
+  background-size: 100% 0.11em;
+  background-position: 0 96%;
+  padding-bottom: 0.06em;
 }
 
 /* --- Dégradés de marque (charte p. 26) --- */
