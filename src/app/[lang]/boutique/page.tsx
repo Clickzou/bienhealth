@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Sparkles } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
-import { typeOf } from "@/lib/shop";
+import { isAccessory } from "@/lib/shop";
 import SiteHeader from "@/components/site-header";
 import ProductCard from "@/components/product-card";
 import ReassuranceBand from "@/components/reassurance-band";
@@ -45,8 +45,12 @@ export default async function BoutiquePage({
   if (!hasLocale(lang)) notFound();
   const t = T[lang === "en" ? "en" : "fr"];
 
-  // Landing boutique : toute la gamme sauf les accessoires.
-  const products = (await getProducts(24)).filter((p) => typeOf(p) !== "accessoires");
+  // « Tous les produits » : la gamme complète, accessoires compris — c'est le
+  // seul endroit où le client veut les voir (ils sont exclus des collections
+  // gummies et poudres). Ils passent en fin de grille pour que la boutique
+  // s'ouvre sur les compléments.
+  const all = await getProducts(24);
+  const products = [...all.filter((p) => !isAccessory(p)), ...all.filter(isAccessory)];
 
   return (
     <div className="min-h-screen bg-background text-foreground">
