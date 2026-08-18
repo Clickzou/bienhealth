@@ -475,34 +475,44 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             inégales, se chevauchaient. Chaque logo occupe désormais une cellule
             de hauteur fixe, et le filtre niveaux de gris rattrape leurs
             colorimétries hétérogènes (couleur au survol). */}
-        {/* Cadre de hauteur fixe + `fill` : les logos n'ont ni la même hauteur
-            ni le même rapport de forme, et une image en flux normal ne se
-            laisse pas borner par un `max-h-*` en pourcentage — les fichiers HD
-            débordaient de leur case et se chevauchaient. En `fill`, l'image est
-            posée en absolu dans la case et `object-contain` la fait tenir. */}
-        <div className="mt-6 grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-3 items-center">
-          {PRESS.map((p) => {
-            const logo = (
-              <Image src={p.logo} alt={p.name} fill sizes="(max-width:640px) 30vw, (max-width:1024px) 22vw, 17vw" className="object-contain" />
-            );
-            const shell = "relative block h-14 sm:h-16 grayscale opacity-65 transition-all";
-            return p.href ? (
-              <a
-                key={p.name}
-                href={p.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                title={c.press.readArticle(p.name)}
-                className={`${shell} hover:grayscale-0 hover:opacity-100`}
-              >
-                {logo}
-              </a>
-            ) : (
-              <div key={p.name} className={shell}>
-                {logo}
+        {/* Défilement continu : vingt logos ne tenaient pas en grille sans
+            occuper quatre rangées. La liste est rendue deux fois — la seconde
+            copie, invisible pour les lecteurs d'écran, referme la boucle (voir
+            `bien-marquee` dans globals.css). Chaque logo vit dans une case de
+            taille fixe et remplit en `object-contain` : les fichiers n'ont ni
+            la même hauteur ni le même rapport de forme. */}
+        <div className="mt-6 bien-marquee [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
+          {/* L'écart entre logos est porté par une marge sur chaque case et non
+              par un `gap` : la largeur d'une copie vaut alors exactement la
+              moitié de la piste, et la boucle se referme sans décalage. */}
+          <div className="bien-marquee-track flex w-max items-center">
+            {[0, 1].map((copy) => (
+              <div key={copy} className="flex items-center" aria-hidden={copy === 1 ? true : undefined}>
+                {PRESS.map((p) => {
+                  const logo = (
+                    <Image src={p.logo} alt={copy === 1 ? "" : p.name} fill sizes="160px" className="object-contain" />
+                  );
+                  const shell = "relative block h-12 sm:h-14 w-28 sm:w-36 shrink-0 mr-8 sm:mr-12 grayscale opacity-65 transition-all";
+                  return p.href && copy === 0 ? (
+                    <a
+                      key={p.name}
+                      href={p.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      title={c.press.readArticle(p.name)}
+                      className={`${shell} hover:grayscale-0 hover:opacity-100`}
+                    >
+                      {logo}
+                    </a>
+                  ) : (
+                    <div key={p.name} className={shell}>
+                      {logo}
+                    </div>
+                  );
+                })}
               </div>
-            );
-          })}
+            ))}
+          </div>
         </div>
       </section>
 

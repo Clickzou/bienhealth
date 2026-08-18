@@ -166,6 +166,30 @@
 /* Curseur clignotant de la machine à écrire */
 .bien-caret { animation: bien-blink 1s steps(1) infinite; }
 
+/*
+  Bandeau de logos presse en défilement continu.
+
+  La piste contient la liste des logos **deux fois** : à -50 % de translation,
+  la seconde copie occupe exactement la place de la première, donc la boucle ne
+  se voit pas. Le défilement s'arrête au survol, sinon un logo cliquable se
+  déroberait sous le curseur.
+
+  Sans animation (préférence système « moins d'animations »), la piste devient
+  simplement défilable au doigt ou à la molette : les logos restent tous
+  atteignables.
+*/
+@keyframes bien-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+.bien-marquee { overflow-x: auto; scrollbar-width: none; }
+.bien-marquee::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .bien-marquee { overflow-x: hidden; }
+  .bien-marquee-track { animation: bien-marquee 70s linear infinite; }
+  .bien-marquee:hover .bien-marquee-track,
+  .bien-marquee:focus-within .bien-marquee-track { animation-play-state: paused; }
+}
+
 @media (prefers-reduced-motion: no-preference) {
   /* Entrée au chargement */
   .anim-down { animation: bien-fade-down 0.6s ease both; }
