@@ -320,13 +320,17 @@ réalisables tout de suite, les `[~]` attendent encore une information.
       réelle et vérifiable, sinon Google sanctionne), et `lib/social-proof.ts`.
       Il demande aussi quelle plateforme d'avis ouvrir pour la nouvelle société
       (l'actuelle est rattachée à l'entité néerlandaise) : à lui répondre.
-- [ ] **Accessoires et packs dans les collections** — accessoires uniquement
-      dans « tous les produits » (déjà le cas via `typeOf` dans `lib/shop.ts`,
-      mais la liste des handles accessoires est écrite en dur : tout nouvel
-      accessoire retomberait dans « gummies »). Packs attendus dans « tous les
-      produits » **et** dans gummies et poudres.
-- [ ] **Textes de la page Ingrédients** — à reprendre depuis
-      `https://bien.health/pages/ingredients`.
+- [x] **Accessoires et packs dans les collections** — fait le 18/08/2026.
+      Un accessoire est reconnu par son **tag Shopify « Accessories »** ; la
+      liste de handles ne sert plus que de garde-fou pour le mousseur, qui n'en
+      porte pas. **À faire côté client : poser le tag « Accessories » sur tout
+      nouvel accessoire**, sinon il sera pris pour un complément. Les
+      collections gummies et poudres se basent sur les noms cités dans le titre :
+      un pack « CALM + MUSHGLOW » apparaîtra dans les deux.
+- [x] **Textes de la page Ingrédients** — repris mot pour mot depuis
+      `https://bien.health/pages/ingredients` le 18/08/2026 (les versions
+      publiées ici n'en gardaient que la moitié). Coquilles de la source
+      corrigées (« adaptogêne », « commeune »), version anglaise traduite.
 - [ ] **Photo RTL de la page Presse** — fournie ; la mise en page complète de la
       page presse est repoussée par le client (« pas le plus important »).
 
@@ -352,25 +356,37 @@ réalisables tout de suite, les `[~]` attendent encore une information.
 
 ### Chantiers « ASAP » listés par le client
 
-- [ ] **Fiche produit** : disposition nom/prix/bouton, prix nettement plus
-      petit, encadré de description au-dessus du bouton, sélecteur 1/2/3
-      produits (voir remises ci-dessus), étoiles moins marquées, suppression des
-      questions qui répètent les sections ingrédients/bienfaits/posologie.
-- [ ] **Mobile** : bandeau cookies et popup de bienvenue qui s'affichent en même
-      temps, carrousels sans indice de défilement, boutons et textes trop gros,
-      page qui glisse latéralement au chargement, carte des revendeurs qui
-      capture le geste de défilement.
-- [ ] **Page d'accueil** : hero à réduire encore (quatre garanties sur une
-      ligne), curseur du typewriter qui saute en fin de phrase, espaces entre
-      blocs à resserrer, lien vers les attestations à descendre après la section
-      bien-être, nombre de pages des ingrédients à afficher et tri alphabétique,
-      formulations corrigées à reprendre section par section.
-- [ ] **Pages « par besoin »** : ordre des produits dans les quatre rubriques,
-      textes de bas de page qui ne parlent pas de tous les produits présentés,
-      titre « Beauté & bien-être », poudre à déclarer végétarienne et non végane.
-- [ ] **Corrections ponctuelles** : « 6-en-1 » et non « tout-en-1 » (fait),
-      nouveau texte de conseils d'utilisation MUSHGLOW, retrait des émoticônes,
-      badge « best-seller » sur la première photo seulement, retrait du
-      paragraphe champignons des pages mousseur et tote bag, Cadaqués sur la
-      carte des revendeurs et l'Espagne dans le titre, textes justifiés et
-      police réduite.
+- [x] **Fiche produit** — fait le 18/08/2026 : prix ramené au corps de texte,
+      étoiles réduites, sélecteur de cure (voir remises ci-dessus), encadré
+      d'infos déjà au-dessus du bouton, et surtout suppression des répétitions
+      dans les accordéons (le premier bloc portait bienfaits + posologie + délai
+      d'effet, que les deux questions suivantes reprenaient mot pour mot).
+      Le bloc « La presse en parle » est masqué sur le mousseur et le tote bag.
+- [x] **Mobile** — les cinq points étaient déjà traités dans le commit
+      `548cfb4` du 11/08/2026, écrit le jour même où le client rédigeait sa
+      liste : popup de bienvenue armée seulement après le choix sur les cookies,
+      points de pagination sur les deux carrousels, échelle de base ramenée à
+      16 px, `overflow-x: clip` contre le glissement latéral, et carte des
+      revendeurs non déplaçable au doigt (`dragging: !touch`). **Rien à refaire :
+      à faire revérifier par le client sur la préprod.**
+- [~] **Page d'accueil** — fait le 18/08 : quatre garanties sur une seule ligne
+      dès 640 px (elles passaient en 2×2 jusqu'à 1024 px), hero raccourci d'un
+      cran, rythme vertical resserré. Déjà faits le 11/08 : curseur du typewriter
+      (il ne clignote plus une fois la phrase écrite), lien attestations descendu
+      après « Soutenez votre bien-être », nombre de pages des ingrédients et tri
+      alphabétique. **Reste en attente : les formulations corrigées section par
+      section — le client doit envoyer son texte.**
+- [x] **Pages « par besoin »** — titre « Beauté & bien-être » corrigé et
+      allégations véganes reprises le 18/08 : la poudre contient du collagène de
+      membrane d'œuf, elle est végétarienne. Toutes les phrases qui couvraient la
+      gamme entière en la disant végane sont corrigées (boutique, accueil,
+      histoire, bandeau de réassurance). L'ordre des produits et les textes de
+      bas de page citant tous les produits étaient déjà en place le 11/08.
+- [x] **Corrections ponctuelles** — toutes faites. « 6-en-1 » partout,
+      émoticônes retirées de la copie du site (elles restent dans les avis
+      clients et les citations de presse : on ne réécrit pas la parole de
+      quelqu'un d'autre), paragraphe champignons retiré des pages mousseur et
+      tote bag, textes éditoriaux justifiés et police réduite sur les pages
+      collection. Déjà faits le 11/08 : conseils d'utilisation MUSHGLOW (son
+      texte), badge « best-seller » sur la première photo seulement, Cadaqués sur
+      la carte et l'Espagne mentionnée.
