@@ -127,7 +127,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
     ],
     blocks: [
       {
-        h: "La poudre, le format tout-en-un",
+        h: "La poudre, le format 6-en-1",
         p: [
           "Pourquoi multiplier les compléments quand une seule dose peut tout regrouper ? La forme poudre permet de concentrer plusieurs actifs cliniquement dosés en une prise quotidienne, sans avaler une poignée de gélules. Elle se marie naturellement à votre routine du matin : yaourts, œufs, boissons…",
         ],
@@ -152,7 +152,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
       ],
       blocks: [
         {
-          h: "Powder, the all-in-one format",
+          h: "Powder, the 6-in-1 format",
           p: [
             "Why pile up supplements when a single dose can bring everything together? The powder format concentrates several clinically dosed actives in one daily serving, without swallowing a handful of capsules. It blends naturally into your morning routine: yoghurts, eggs, drinks…",
           ],

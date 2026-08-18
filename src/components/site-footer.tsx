@@ -15,13 +15,40 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+function LinkedInIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.77-1.95C21.4 8.75 22 11.1 22 14.16V21h-4v-6.06c0-1.45-.03-3.3-2.02-3.3-2.02 0-2.33 1.57-2.33 3.2V21h-3.9V9Z" />
+    </svg>
+  );
+}
+
+function TikTokIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} fill="currentColor" aria-hidden>
+      <path d="M16.5 2h-3v13.2a2.7 2.7 0 1 1-2.2-2.65V9.4a5.9 5.9 0 1 0 5.2 5.85V8.9a7.2 7.2 0 0 0 4 1.22V7.06a4.2 4.2 0 0 1-4-4.06V2Z" />
+    </svg>
+  );
+}
+
+/**
+ * Comptes sociaux de la marque. Les paramètres de suivi collés par le client
+ * au bout de l'URL TikTok (`is_from_webapp`, `sender_device`) sont retirés :
+ * ils décrivent sa propre navigation, pas celle des visiteurs.
+ */
+const SOCIALS = [
+  { href: "https://www.instagram.com/bien.health/", label: "Instagram BIEN health", icon: InstagramIcon },
+  { href: "https://www.tiktok.com/@bien.health", label: "TikTok BIEN health", icon: TikTokIcon },
+  { href: "https://fr.linkedin.com/company/bien-health", label: "LinkedIn BIEN health", icon: LinkedInIcon },
+] as const;
+
 /**
  * Associations soutenues par la marque. `label` pointe vers la traduction
  * (`ui(lang).footer`), les dimensions sont celles des fichiers détourés.
  */
 const COMMITMENTS = [
   {
-    href: "https://www.team-for-the-planet.com/",
+    href: "https://team-planet.com/fr",
     name: "Team for the Planet",
     logo: "/brand/assoc/team-for-the-planet.webp",
     width: 376,
@@ -29,7 +56,7 @@ const COMMITMENTS = [
     label: "commitmentPlanet",
   },
   {
-    href: "https://www.hopital-sourire.fr/",
+    href: "https://www.hopitalsourire.com",
     name: "Hôpital Sourire",
     logo: "/brand/assoc/hopital-sourire.webp",
     width: 271,
@@ -99,15 +126,20 @@ export default function SiteFooter({ lang }: { lang: string }) {
             </div>
 
             <h3 className="mt-8 font-display text-sm uppercase tracking-wider text-bien-gold">{t.socialTitle}</h3>
-            <a
-              href="https://www.instagram.com/bien.health/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-5 inline-flex items-center justify-center h-11 w-11 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 text-bien-cream hover:bg-bien-gold hover:text-black hover:ring-bien-gold transition-colors"
-            >
-              <InstagramIcon className="h-5 w-5" />
-              <span className="sr-only">Instagram BIEN</span>
-            </a>
+            <div className="mt-5 flex items-center gap-2.5">
+              {SOCIALS.map(({ href, label, icon: Icon }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center h-11 w-11 rounded-full bg-bien-cream/10 ring-1 ring-bien-cream/20 text-bien-cream hover:bg-bien-gold hover:text-black hover:ring-bien-gold transition-colors"
+                >
+                  <Icon className="h-5 w-5" />
+                  <span className="sr-only">{label}</span>
+                </a>
+              ))}
+            </div>
           </div>
         </div>
         {/* Engagements associatifs — logos officiels fournis par le client.

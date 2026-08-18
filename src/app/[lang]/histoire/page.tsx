@@ -34,7 +34,7 @@ const T = {
     ],
     ceo: "Carla, CEO BIEN Health",
     list: [
-      "4 produits naturels : 3 gummies + 1 poudre tout-en-un",
+      "4 produits naturels : 3 gummies + 1 poudre 6-en-1",
       "Vegan, sans sucre ni colorants, sans gluten, fabriqué en France",
       "Riches en fibres prébiotiques pour l'équilibre du microbiote",
       "Plantes adaptogènes & champignons médicinaux, dosages transparents",
@@ -44,6 +44,14 @@ const T = {
       { title: "Fabriqué en France", text: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape." },
       { title: "Dosé par la science", text: "Adaptogènes et champignons fonctionnels aux dosages transparents, déclarés à la DGAL." },
     ],
+    trackEyebrow: "Sur la piste",
+    photos: {
+      porsche: "La Porsche 911 GT3 Cup aux couleurs de BIEN health, en piste",
+      gt4: "Carla, fondatrice de BIEN health, devant sa Mercedes-AMG GT4",
+      helmet: "Carla au volant, casque et harnais, dans les stands",
+      panning: "La Porsche BIEN health n°81 en piste au coucher du soleil",
+      founder: "Carla, fondatrice de BIEN health, avec la gamme complète",
+    },
     ctaTitle: "Prêt·e à découvrir votre rituel ?", seeShop: "Voir la boutique", quiz: "Faire le diagnostic",
   },
   en: {
@@ -60,7 +68,7 @@ const T = {
     ],
     ceo: "Carla, CEO BIEN Health",
     list: [
-      "4 natural products: 3 gummies + 1 all-in-one powder",
+      "4 natural products: 3 gummies + 1 6-in-1 powder",
       "Vegan, no sugar or colourings, gluten-free, made in France",
       "Rich in prebiotic fibres for a balanced microbiome",
       "Adaptogenic plants & medicinal mushrooms, transparent dosages",
@@ -70,6 +78,14 @@ const T = {
       { title: "Made in France", text: "Formulated and made in France, with quality controls at every step." },
       { title: "Science-based dosing", text: "Adaptogens and functional mushrooms with transparent dosages, declared to the DGAL." },
     ],
+    trackEyebrow: "On track",
+    photos: {
+      porsche: "The Porsche 911 GT3 Cup in BIEN health colours, on track",
+      gt4: "Carla, founder of BIEN health, in front of her Mercedes-AMG GT4",
+      helmet: "Carla at the wheel, helmet and harness on, in the pits",
+      panning: "The BIEN health Porsche no.81 on track at sunset",
+      founder: "Carla, founder of BIEN health, with the full range",
+    },
     ctaTitle: "Ready to discover your ritual?", seeShop: "Visit the shop", quiz: "Take the quiz",
   },
 } as const;
@@ -109,23 +125,24 @@ export default async function HistoirePage({
         </div>
       </section>
 
-      {/* Récit */}
+      {/* Récit — sport auto à gauche, texte à droite (mise en page demandée par
+          le client). Les photos fournies sont au format paysage : le cadre est
+          en 3/2 plutôt qu'en portrait, sinon `object-cover` rognerait la
+          voiture. */}
       <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
-          <div className="relative rounded-3xl overflow-hidden aspect-[4/5] bien-shadow">
-            <Image src="/brand/founder.jpg" alt="La fondatrice de BIEN" fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+          <div className="relative rounded-3xl overflow-hidden aspect-[3/2] bien-shadow">
+            <Image src="/brand/histoire/porsche-piste.webp" alt={t.photos.porsche} fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
           </div>
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.fromEyebrow}</p>
             <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.54rem,3.52vw,2.64rem)] leading-[1] text-black">
               {t.fromTitle}
             </h2>
-            {t.story.map((para, i) => (
-              // Corps ramené à `text-base` et justifié : le récit paraissait
-              // gros et long, surtout sur mobile (retour client).
-              <p key={i} className={`${i === 0 ? "mt-5" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>{para}</p>
-            ))}
-            <p className="mt-5 font-display text-black">{t.ceo}</p>
+            {/* Corps ramené à `text-base` et justifié : le récit paraissait
+                gros et long, surtout sur mobile (retour client). */}
+            <p className="mt-5 text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{t.story[0]}</p>
+            <p className="mt-4 text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{t.story[4]}</p>
             <ul className="mt-7 space-y-3">
               {t.list.map((line) => (
                 <li key={line} className="flex items-start gap-3 text-black">
@@ -135,6 +152,40 @@ export default async function HistoirePage({
               ))}
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Témoignage — l'inverse du bloc précédent : texte à gauche, photo de la
+          fondatrice avec la gamme à droite. Les trois paragraphes écrits à la
+          première personne passent entre guillemets, c'est sa parole. */}
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
+          <blockquote className="order-2 lg:order-1 relative">
+            <span aria-hidden className="block font-display text-6xl leading-none text-bien-pink">&laquo;</span>
+            {t.story.slice(1, 4).map((para, i) => (
+              <p key={i} className={`${i === 0 ? "mt-1" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>{para}</p>
+            ))}
+            <footer className="mt-5 font-display text-black">{t.ceo}</footer>
+          </blockquote>
+          <div className="order-1 lg:order-2 relative rounded-3xl overflow-hidden aspect-[4/5] bien-shadow">
+            <Image src="/brand/founder.jpg" alt={t.photos.founder} fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+          </div>
+        </div>
+      </section>
+
+      {/* Sur la piste — les autres photos de sponsoring fournies par le client. */}
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-16 sm:mt-24">
+        <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold text-center">{t.trackEyebrow}</p>
+        <div className="mt-5 grid sm:grid-cols-3 gap-4 sm:gap-5">
+          {[
+            { src: "/brand/histoire/carla-gt4.webp", alt: t.photos.gt4 },
+            { src: "/brand/histoire/casque-stands.webp", alt: t.photos.helmet },
+            { src: "/brand/histoire/porsche-coucher-soleil.webp", alt: t.photos.panning },
+          ].map((photo) => (
+            <div key={photo.src} className="relative rounded-2xl overflow-hidden aspect-[3/2] bien-shadow-sm">
+              <Image src={photo.src} alt={photo.alt} fill sizes="(max-width:640px) 100vw, 30vw" className="object-cover" />
+            </div>
+          ))}
         </div>
       </section>
 

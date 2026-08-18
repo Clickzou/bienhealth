@@ -26,13 +26,40 @@ const TP_TEMPLATE_ID = process.env.NEXT_PUBLIC_TRUSTPILOT_TEMPLATE_ID;
 
 /** Page d'accueil BIEN — contenu bilingue (FR / EN) co-localisé. */
 
-const PRESS = [
-  { name: "Doit in Paris", logo: "/48collagen.webp", href: "https://www.doitinparis.com/fr/boissons-detox-paris-27378" },
-  { name: "Gala", logo: "/gala.avif", href: "https://www.moncarnet-gala.fr/articles/view/BIEN" },
-  { name: "BIBA", logo: "/logobiba.webp", href: "https://www.bibamagazine.fr/lifestyle/sante/adieu-le-cafe-cette-boisson-naturelle-a-base-de-champignons-est-le-secret-pour-se-reveiller-sans-doper-son-cortisol-498845.html" },
-  { name: "L'Officiel", logo: "/Sans-titre-1.webp", href: "https://www.lofficiel.com/beaute/10-produits-de-beaute-a-acheter-en-janvier-2026" },
-  { name: "Beauté test", logo: "/beaute-test.webp", href: "https://www.beaute-test.com/mag/jai-teste-pour-vous-ces-gummies-anti-stress-sans-melatonine-qui-apaisent-vraiment.php" },
-  { name: "Snake Twist", logo: "/Sans-titre-1_2e2ae90a-cb66-4551-9b39-528991293895.webp", href: "https://www.instagram.com/p/DUIVTzWjQAn/?igsh=MTU0dXNnZ2hnOTJ6cg%3D%3D" },
+/**
+ * Médias qui ont parlé de la marque.
+ *
+ * Les logos viennent tous de `public/brand/presse/logos/`, normalisés à 240 px
+ * de haut depuis les fichiers d'origine du client : les six premiers étaient
+ * enregistrés en deçà de leur taille d'affichage, d'où le flou qu'il nous a
+ * signalé. Fond blanc aplati puis détouré pour que les logos s'alignent malgré
+ * leurs marges d'origine très inégales.
+ *
+ * `href` est optionnel : les médias arrivés sans lien d'article sont affichés
+ * mais pas cliquables, plutôt que de renvoyer vers une page d'accueil de
+ * magazine qui ne prouverait rien. Les entrées cliquables passent en premier.
+ */
+const PRESS: { name: string; logo: string; href?: string }[] = [
+  { name: "Doit in Paris", logo: "/brand/presse/logos/do-it-in-paris.webp", href: "https://www.doitinparis.com/fr/boissons-detox-paris-27378" },
+  { name: "Gala", logo: "/brand/presse/logos/gala.webp", href: "https://www.moncarnet-gala.fr/articles/view/BIEN" },
+  { name: "BIBA", logo: "/brand/presse/logos/biba.webp", href: "https://www.bibamagazine.fr/lifestyle/sante/adieu-le-cafe-cette-boisson-naturelle-a-base-de-champignons-est-le-secret-pour-se-reveiller-sans-doper-son-cortisol-498845.html" },
+  { name: "L'Officiel", logo: "/brand/presse/logos/lofficiel.webp", href: "https://www.lofficiel.com/beaute/10-produits-de-beaute-a-acheter-en-janvier-2026" },
+  { name: "Beauté test", logo: "/brand/presse/logos/beaute-test.webp", href: "https://www.beaute-test.com/mag/jai-teste-pour-vous-ces-gummies-anti-stress-sans-melatonine-qui-apaisent-vraiment.php" },
+  { name: "Snake & Twist", logo: "/brand/presse/logos/snake-twist.webp", href: "https://www.instagram.com/p/DUIVTzWjQAn/?igsh=MTU0dXNnZ2hnOTJ6cg%3D%3D" },
+  { name: "ELLE", logo: "/brand/presse/logos/elle.webp" },
+  { name: "Marie Claire", logo: "/brand/presse/logos/marie-claire.webp" },
+  { name: "Paris Match", logo: "/brand/presse/logos/paris-match.webp" },
+  { name: "Grazia", logo: "/brand/presse/logos/grazia.webp" },
+  { name: "Closer", logo: "/brand/presse/logos/closer.webp" },
+  { name: "Voici", logo: "/brand/presse/logos/voici.webp" },
+  { name: "Public", logo: "/brand/presse/logos/public.webp" },
+  { name: "Femme Actuelle", logo: "/brand/presse/logos/femme-actuelle.webp" },
+  { name: "Psychologies", logo: "/brand/presse/logos/psychologies.webp" },
+  { name: "Pleine Vie", logo: "/brand/presse/logos/pleine-vie.webp" },
+  { name: "Magicmaman", logo: "/brand/presse/logos/magicmaman.webp" },
+  { name: "Vital", logo: "/brand/presse/logos/vital.webp" },
+  { name: "Côté Santé", logo: "/brand/presse/logos/cote-sante.webp" },
+  { name: "Sud Radio", logo: "/brand/presse/logos/sud-radio.webp" },
 ];
 
 const RITUAL_ICONS = [Moon, Brain, Zap, Sparkles];
@@ -89,7 +116,7 @@ const CONTENT = {
       seeAllTitle: "Voir tous nos avis sur Trustpilot",
       reviews: "avis",
       featured: "Ils parlent de nous",
-      clickHint: "Cliquez sur un média pour lire l'article ↗",
+      clickHint: "Les logos cliquables renvoient vers l'article ↗",
       readArticle: (n: string) => `Lire l'article : ${n}`,
       compliance: "Voir nos attestations officielles",
     },
@@ -186,7 +213,7 @@ const CONTENT = {
       seeAllTitle: "See all our reviews on Trustpilot",
       reviews: "reviews",
       featured: "As featured in",
-      clickHint: "Click a media outlet to read the article ↗",
+      clickHint: "Clickable logos link through to the article ↗",
       readArticle: (n: string) => `Read the article: ${n}`,
       compliance: "See our official certifications",
     },
@@ -448,19 +475,29 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             inégales, se chevauchaient. Chaque logo occupe désormais une cellule
             de hauteur fixe, et le filtre niveaux de gris rattrape leurs
             colorimétries hétérogènes (couleur au survol). */}
-        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-6 gap-y-4 items-center">
-          {PRESS.map((p) => (
-            <a
-              key={p.name}
-              href={p.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              title={c.press.readArticle(p.name)}
-              className="grid place-items-center h-20 sm:h-24 grayscale opacity-65 hover:grayscale-0 hover:opacity-100 transition-all"
-            >
-              <Image src={p.logo} alt={p.name} width={160} height={48} className="max-h-full w-auto max-w-[80%] object-contain" />
-            </a>
-          ))}
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-x-6 gap-y-2 items-center">
+          {PRESS.map((p) => {
+            const logo = (
+              <Image src={p.logo} alt={p.name} width={200} height={60} className="max-h-full w-auto max-w-[80%] object-contain" />
+            );
+            const shell = "grid place-items-center h-16 sm:h-20 grayscale opacity-65 transition-all";
+            return p.href ? (
+              <a
+                key={p.name}
+                href={p.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                title={c.press.readArticle(p.name)}
+                className={`${shell} hover:grayscale-0 hover:opacity-100`}
+              >
+                {logo}
+              </a>
+            ) : (
+              <div key={p.name} className={shell}>
+                {logo}
+              </div>
+            );
+          })}
         </div>
       </section>
 

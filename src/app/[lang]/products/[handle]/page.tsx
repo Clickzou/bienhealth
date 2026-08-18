@@ -75,7 +75,7 @@ const HIGHLIGHTS: Record<string, ProductInfo> = {
   FOCUS: {
     category: "CONCENTRATION & MÉMOIRE", reviews: 19,
     rows: [
-      { icon: HeartPulse, text: "Des extraits de Lion's Mane, L-Théanine et Rhodiole aux doses cliniquement efficaces." },
+      { icon: HeartPulse, text: "Des extraits de Lion's Mane, L-Théanine et Rhodiola Rosea aux doses cliniquement efficaces." },
       { icon: Zap, text: "Soutenir la concentration, favoriser la clarté mentale et réduire la fatigue cognitive, sans stress." },
       { icon: Leaf, text: "Une formule naturelle et clean, sans sucre ni additif, vegan et sans gluten." },
       { icon: RefreshCw, text: "2 gummies au goût ananas à prendre le matin, pour stimuler l'attention et avoir un esprit vif." },
@@ -305,7 +305,7 @@ SAFRAN (CROCUS SATIVUS)
 const FOCUS_ACCORDIONS: Accordion[] = [
   {
     q: "Ingrédients, Bienfaits et Posologie",
-    a: `Grâce au Lion's Mane, au Thé vert riche en L-Théanine et à la Rhodiole, FOCUS soutient les performances intellectuelles, favorise la clarté mentale et aide à retrouver un esprit léger.
+    a: `Grâce au Lion's Mane, au Thé vert riche en L-Théanine et à la Rhodiola Rosea, FOCUS soutient les performances intellectuelles, favorise la clarté mentale et aide à retrouver un esprit léger.
 
 FOCUS s'intègre facilement dans la routine quotidienne, avec 2 gummies par jour à adapter selon le rythme de la journée, en fonction de vos besoins d'attention et de concentration : le matin, après le déjeuner ou dans l'après-midi.
 

@@ -81,7 +81,7 @@ const DICT = {
       cookies: "Cookies",
       sitemap: "Plan du site",
       languageTitle: "Langue",
-      socialTitle: "Réseau social",
+      socialTitle: "Réseaux sociaux",
       newsletterTitle: "Rejoignez la newsletter",
       newsletterText: "Conseils bien-être, nouveautés et offres exclusives, et −10 % sur votre première commande.",
       newsletterPlaceholder: "Votre adresse email",
