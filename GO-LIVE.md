@@ -297,16 +297,21 @@ réalisables tout de suite, les `[~]` attendent encore une information.
 
 ### À faire — information reçue, développement à mener
 
-- [ ] **Remises par quantité sur la fiche produit** — le client les a créées
-      dans Shopify le 18/08 : **−5 % dès 2, −10 % dès 3, −15 % dès 6** sur
-      chaque produit (logique cures de 2, 3 et 6 mois). Reste à les afficher sur
-      la fiche produit, à la manière du sélecteur qu'il a joint en exemple :
-      trois lignes, remise et livraison offerte annoncées sur chacune, ancien
-      prix barré, mention « Meilleure offre » au milieu. Les remises étant
-      automatiques côté Shopify, le panier et le checkout les appliquent déjà :
-      le site n'a qu'à afficher les mêmes chiffres. **Vérifier que les taux
-      affichés et ceux de Shopify ne divergent jamais** (un prix barré faux au
-      checkout fait abandonner le panier).
+- [x] **Remises par quantité sur la fiche produit** — faites le 18/08/2026.
+      Sélecteur de cure 1 / 2 / 3 / 6 mois sur les fiches des quatre
+      compléments, avec la remise, le prix barré, le prix au mois, la livraison
+      offerte quand la ligne dépasse 49 € et « Meilleure offre » sur 3 mois.
+      Le panier applique les mêmes remises, ligne par ligne, et le récapitulatif
+      affiche le montant économisé : le total du panier ne peut plus diverger de
+      celui du checkout. Les taux vivent dans `src/lib/discounts.ts`, **seul
+      endroit à modifier s'ils changent dans Shopify**.
+      Deux points à vérifier côté client :
+      → les remises Shopify s'appliquent-elles bien à **tous** les produits
+        (accessoires compris) ou seulement à une collection ? Le site les
+        affiche aujourd'hui sur les quatre compléments uniquement ;
+      → il demandait trois lignes (1/2/3) : on en affiche quatre, parce que
+        Shopify a un palier à 6. Réduire à trois si les six mois ne l'intéressent
+        pas en fiche produit.
 - [ ] **Notes clients à unifier** — décision du client : garder **5,0/5 sur
       23 avis**, supprimer partout la note Trustpilot **4,4/5**, garder
       « +500 clients satisfaits ». Conséquences à traiter ensemble : le widget

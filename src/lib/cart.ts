@@ -17,6 +17,8 @@ export type CartItem = {
   qty: number;
 };
 
+import { lineSubtotal, lineTotal, lineSavings } from "./discounts";
+
 const KEY = "bien-cart";
 export const CART_EVENT = "bien-cart-change";
 // Domaine du checkout Shopify : on privilégie le domaine myshopify (toujours
@@ -71,8 +73,25 @@ export function cartCount(items = getCart()): number {
   return items.reduce((n, i) => n + i.qty, 0);
 }
 
+/** Total du panier **avant** remises par quantité. */
+export function cartSubtotal(items = getCart()): number {
+  return items.reduce((s, i) => s + lineSubtotal(i.price, i.qty), 0);
+}
+
+/**
+ * Total du panier, remises par quantité comprises.
+ *
+ * Les remises sont automatiques côté Shopify : elles s'appliqueront au
+ * paiement que le site les affiche ou non. Les compter ici évite qu'un client
+ * voie un total sur la page panier puis un autre au checkout.
+ */
 export function cartTotal(items = getCart()): number {
-  return items.reduce((s, i) => s + i.price * i.qty, 0);
+  return items.reduce((s, i) => s + lineTotal(i.price, i.qty), 0);
+}
+
+/** Montant total économisé grâce aux remises par quantité. */
+export function cartSavings(items = getCart()): number {
+  return items.reduce((s, i) => s + lineSavings(i.price, i.qty), 0);
 }
 
 /** Id numérique de variante (le permalink Shopify n'accepte pas les GID). */

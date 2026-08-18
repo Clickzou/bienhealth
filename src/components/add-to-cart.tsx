@@ -5,6 +5,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { addToCart, type CartItem } from "@/lib/cart";
+import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
+import { FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 import { trackMeta } from "@/lib/meta-pixel";
 
 /**
@@ -16,39 +18,114 @@ export default function AddToCart({
   lang,
   className,
   children,
-  /** Affiche un sélecteur 1 / 2 / 3 devant le bouton (fiche produit). */
+  /** Affiche un sélecteur 1 / 2 / 3 devant le bouton (accessoires). */
   quantitySelector = false,
+  /**
+   * Affiche le choix de la cure (1, 2, 3 ou 6 mois) avec les remises Shopify,
+   * à la place du sélecteur ci-dessus. Réservé aux compléments : une « cure de
+   * 3 mois » n'a aucun sens pour un mousseur à lait.
+   */
+  cureSelector = false,
 }: {
   item: Omit<CartItem, "qty">;
   lang: string;
   className?: string;
   children: React.ReactNode;
   quantitySelector?: boolean;
+  cureSelector?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
   const en = lang === "en";
   const t = en
-    ? { added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart", aria: "Item added to cart", quantity: "Quantity" }
-    : { added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier", aria: "Article ajouté au panier", quantity: "Quantité" };
+    ? {
+        added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart",
+        aria: "Item added to cart", quantity: "Quantity",
+        cureTitle: "Choose your course", month: "month", months: "months", unit: "item", units: "items",
+        perMonth: "per month", bestValue: "Best value", freeShipping: "Free shipping",
+      }
+    : {
+        added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier",
+        aria: "Article ajouté au panier", quantity: "Quantité",
+        cureTitle: "Choisissez votre cure", month: "mois", months: "mois", unit: "produit", units: "produits",
+        perMonth: "par mois", bestValue: "Meilleure offre", freeShipping: "Livraison offerte",
+      };
+
+  const currency = item.currency || "EUR";
+  const money = (value: number) =>
+    new Intl.NumberFormat(en ? "en-IE" : "fr-FR", { style: "currency", currency }).format(value);
 
   function add() {
     addToCart(item, qty);
     // Conversion Meta (ne part que si le pixel est chargé, donc après consentement).
+    // La valeur envoyée est celle réellement payée : les remises par quantité
+    // sont appliquées par Shopify au checkout.
     trackMeta("AddToCart", {
       content_ids: [item.handle],
       content_name: item.title,
       content_type: "product",
-      value: item.price * qty,
-      currency: item.currency || "EUR",
+      value: lineTotal(item.price, qty),
+      currency,
     });
     setOpen(true);
   }
 
-  const price = new Intl.NumberFormat(en ? "en-IE" : "fr-FR", { style: "currency", currency: item.currency || "EUR" }).format(item.price * qty);
+  const price = money(lineTotal(item.price, qty));
 
   return (
     <>
+      {cureSelector && (
+        /* Les remises viennent de Shopify (voir lib/discounts.ts) : le site les
+           réaffiche, il ne les invente pas. Le prix barré est donc celui qui
+           sera bien remisé au paiement. */
+        <fieldset className="mb-4">
+          <legend className="text-xs font-bold uppercase tracking-[0.18em] text-black/50 mb-2.5">{t.cureTitle}</legend>
+          <div className="space-y-2" role="radiogroup" aria-label={t.cureTitle}>
+            {CURE_QUANTITIES.map((n) => {
+              const total = lineTotal(item.price, n);
+              const before = lineSubtotal(item.price, n);
+              const off = discountPercent(n);
+              const selected = qty === n;
+              return (
+                <button
+                  key={n}
+                  type="button"
+                  role="radio"
+                  aria-checked={selected}
+                  onClick={() => setQty(n)}
+                  className={`w-full flex items-center gap-3 rounded-2xl px-4 py-2.5 text-left transition-colors ${
+                    selected ? "bg-bien-cream ring-2 ring-bien-forest" : "bg-card ring-1 ring-border hover:bg-bien-cream/50"
+                  }`}
+                >
+                  <span className={`shrink-0 grid place-items-center h-4 w-4 rounded-full ring-1 ${selected ? "ring-bien-forest" : "ring-border"}`}>
+                    {selected && <span className="h-2 w-2 rounded-full bg-bien-forest" />}
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
+                      <span className="text-sm font-bold text-black">{n} {n > 1 ? t.months : t.month}</span>
+                      {off > 0 && (
+                        <span className="rounded-full bg-bien-leaf/15 text-bien-leaf text-[11px] font-bold px-2 py-0.5">-{off}%</span>
+                      )}
+                      {n === BEST_VALUE_QUANTITY && (
+                        <span className="rounded-full bg-bien-forest text-bien-cream text-[10px] font-bold uppercase tracking-wider px-2 py-0.5">{t.bestValue}</span>
+                      )}
+                    </span>
+                    <span className="block text-[11px] text-black/55 mt-0.5">
+                      {n} {n > 1 ? t.units : t.unit} · {money(total / n)} {t.perMonth}
+                      {total >= FREE_SHIPPING_THRESHOLD && <> · <span className="text-bien-leaf font-semibold">{t.freeShipping}</span></>}
+                    </span>
+                  </span>
+                  <span className="shrink-0 text-right">
+                    <span className="block text-sm font-bold text-black">{money(total)}</span>
+                    {off > 0 && <span className="block text-[11px] text-black/45 line-through">{money(before)}</span>}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </fieldset>
+      )}
+
       <div className={quantitySelector ? "flex items-center gap-3" : "contents"}>
         {quantitySelector && (
           <div className="shrink-0 inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>

@@ -916,10 +916,12 @@ export default async function ProductPage({
               </div>
             )}
 
-            {/* Achat : prix et CTA sur la même ligne (le CTA pleine largeur sous
-                le prix coûtait une centaine de pixels de haut sur un 13").
-                Le CTA repasse sous le prix quand la colonne devient étroite. */}
-            <div className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-3">
+            {/* Achat. Pour un complément, le choix de la cure (1/2/3/6 mois avec
+                les remises Shopify) prend toute la largeur et le CTA passe en
+                dessous. Pour un accessoire, on garde prix et CTA sur la même
+                ligne : le CTA pleine largeur sous le prix coûtait une centaine
+                de pixels de haut sur un 13". */}
+            <div className={`mt-5 ${key ? "" : "flex flex-wrap items-center gap-x-6 gap-y-3"}`}>
               <div>
                 <div className="flex items-baseline gap-3">
                   {/* Prix en corps de texte renforcé et non en display : il
@@ -942,13 +944,14 @@ export default async function ProductPage({
                   sur mobile) : étiré sur l'espace restant, il faisait deux fois
                   la largeur nécessaire. `ml-auto` le plaque au bord droit de la
                   colonne, aligné sur les blocs en dessous. */}
-              <div className="w-full sm:w-auto sm:ml-auto">
+              <div className={key ? "mt-5" : "w-full sm:w-auto sm:ml-auto"}>
                 {product.available ? (
                   <AddToCart
                     item={cartItem}
                     lang={lang}
-                    quantitySelector
-                    className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm"
+                    cureSelector={Boolean(key)}
+                    quantitySelector={!key}
+                    className={`${key ? "w-full" : "flex-1 sm:flex-none"} inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm`}
                   >
                     {ctaLabel}
                   </AddToCart>

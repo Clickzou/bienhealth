@@ -5,8 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingBag, Plus, Minus, Trash2, ArrowRight, ArrowLeft } from "lucide-react";
 import {
-  getCart, setQty, removeItem, cartTotal, checkoutUrl, CART_EVENT, type CartItem,
+  getCart, setQty, removeItem, cartTotal, cartSubtotal, cartSavings, checkoutUrl, CART_EVENT, type CartItem,
 } from "@/lib/cart";
+import { discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { trackMeta } from "@/lib/meta-pixel";
 
 const T = {
@@ -15,14 +16,14 @@ const T = {
     yourCart: "Votre panier", removeOne: "Retirer un", addOne: "Ajouter un", remove: "Retirer",
     summary: "Récapitulatif", subtotal: "Sous-total", shipping: "Livraison", shippingCalc: "Calculée au paiement",
     total: "Total", checkout: "Passer au paiement", secure: "Paiement sécurisé · Satisfaits ou remboursés sous 30 jours.",
-    continue: "Continuer mes achats",
+    continue: "Continuer mes achats", savings: "Remise quantité",
   },
   en: {
     cart: "Cart", empty: "Your cart is empty.", discover: "Discover the shop",
     yourCart: "Your cart", removeOne: "Remove one", addOne: "Add one", remove: "Remove",
     summary: "Summary", subtotal: "Subtotal", shipping: "Shipping", shippingCalc: "Calculated at checkout",
     total: "Total", checkout: "Proceed to checkout", secure: "Secure payment · 30-day money-back guarantee.",
-    continue: "Continue shopping",
+    continue: "Continue shopping", savings: "Quantity discount",
   },
 } as const;
 
@@ -43,6 +44,10 @@ export default function CartView({ lang }: { lang: string }) {
     };
   }, []);
 
+  // Sous-total avant remises, remises par quantité, total réellement payé :
+  // les mêmes chiffres que Shopify appliquera au checkout (lib/discounts.ts).
+  const subtotal = cartSubtotal(items);
+  const savings = cartSavings(items);
   const total = cartTotal(items);
   const fmt = (n: number, c = "EUR") => new Intl.NumberFormat(lang === "en" ? "en-IE" : "fr-FR", { style: "currency", currency: c }).format(n);
 
@@ -86,7 +91,13 @@ export default function CartView({ lang }: { lang: string }) {
                 </div>
               </div>
               <div className="text-right">
-                <p className="font-display text-black">{fmt(it.price * it.qty, it.currency)}</p>
+                <p className="font-display text-black">{fmt(lineTotal(it.price, it.qty), it.currency)}</p>
+                {discountPercent(it.qty) > 0 && (
+                  <p className="text-xs text-black/45">
+                    <span className="line-through">{fmt(lineSubtotal(it.price, it.qty), it.currency)}</span>
+                    <span className="ml-1.5 font-semibold text-bien-leaf">-{discountPercent(it.qty)}%</span>
+                  </p>
+                )}
                 <button onClick={() => removeItem(it.variantId)} className="mt-2 inline-flex items-center gap-1 text-xs text-black/50 hover:text-red-500 transition-colors"><Trash2 className="h-3.5 w-3.5" /> {t.remove}</button>
               </div>
             </li>
@@ -98,8 +109,14 @@ export default function CartView({ lang }: { lang: string }) {
           <h2 className="font-display text-lg text-black">{t.summary}</h2>
           <div className="mt-4 flex items-center justify-between text-sm">
             <span className="text-black/60">{t.subtotal}</span>
-            <span className="font-semibold text-black">{fmt(total, currency)}</span>
+            <span className="font-semibold text-black">{fmt(subtotal, currency)}</span>
           </div>
+          {savings > 0 && (
+            <div className="mt-2 flex items-center justify-between text-sm">
+              <span className="text-bien-leaf">{t.savings}</span>
+              <span className="font-semibold text-bien-leaf">-{fmt(savings, currency)}</span>
+            </div>
+          )}
           <div className="mt-2 flex items-center justify-between text-sm">
             <span className="text-black/60">{t.shipping}</span>
             <span className="text-black/60">{t.shippingCalc}</span>
