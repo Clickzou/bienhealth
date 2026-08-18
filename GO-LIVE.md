@@ -107,9 +107,10 @@ faussée. Demande un accès à l'admin Shopify.
       combinaisons lisibles sur pink sont interdites par la charte. À arbitrer
       avec le client s'il veut passer outre la charte sur ce point.
 
-- [~] **Logos associatifs** — Team for the Planet et Hôpital Sourire sont
-      affichés en texte dans le footer. Manquent : les fichiers logos (PNG/SVG)
-      et les URL officielles des deux associations.
+- [x] **Logos associatifs** — fichiers et URL reçus le 18/08/2026, intégrés au
+      footer (pastille blanche, les deux logos n'existant que sur fond blanc).
+      Les URL données par le client (`team-planet.com/fr`,
+      `hopitalsourire.com`) remplacent celles que nous avions devinées.
 - [x] **Chiffres de preuve sociale** — validés par le client le 31/07/2026 :
       `+500 clients satisfaits`, `4,4/5`, `+100 avis Trustpilot`
       (tous centralisés dans `src/lib/social-proof.ts`).
@@ -266,3 +267,105 @@ Shopify avant tout développement front :
       d'offre ; « Cure d'1 mois — 60 gummies / 30 portions » affichée sous le
       prix ; CTA « Ajouter au panier » remonté juste sous le prix (il arrivait
       après le bloc d'infos et la presse).
+
+
+---
+
+## 6. Réponses client du 11/08/2026 — décisions et chantiers ouverts
+
+Reçues et traitées à partir du 18/08/2026. Les points marqués `[ ]` sont
+réalisables tout de suite, les `[~]` attendent encore une information.
+
+### Décisions prises par le client
+
+- [x] **Favicon** : c'est son monogramme (le champignon dans le B), pas un B
+      typographique. Intégré depuis `BIEN_MONOGRAM_BLACK.svg`.
+- [x] **Rose** : il garde le #ffb2ce de la charte, la variante assombrie est
+      supprimée. Rose graphique sur fond clair, rose texte sur fond navy.
+- [x] **Logo « BIEN health »** : *« pas prévu pour l'instant, on reste comme
+      ça »*. Le logo n'est pas retouché, seuls les textes et le SEO portent
+      « BIEN health ».
+- [x] **Vocabulaire** : « Rhodiola Rosea » partout (« Rhodiole » corrigé sur la
+      fiche FOCUS), « L-Théanine » (la faute était sur son site à lui).
+- [x] **Logos presse** : ses fichiers d'origine remplacent les six versions
+      floues, quatorze médias s'ajoutent au bandeau.
+- [x] **Réseaux sociaux** : LinkedIn et TikTok ajoutés au footer.
+- [x] **Page Histoire** : photos de sport automobile intégrées selon sa mise en
+      page (photo à gauche / texte à droite, puis l'inverse avec témoignage).
+- [x] **Mentions Shopify, textes des fiches produit, « coup de barre »** :
+      validés sur le principe, à vérifier une fois en ligne.
+
+### À faire — information reçue, développement à mener
+
+- [ ] **Remises par quantité sur la fiche produit** — le client les a créées
+      dans Shopify le 18/08 : **−5 % dès 2, −10 % dès 3, −15 % dès 6** sur
+      chaque produit (logique cures de 2, 3 et 6 mois). Reste à les afficher sur
+      la fiche produit, à la manière du sélecteur qu'il a joint en exemple :
+      trois lignes, remise et livraison offerte annoncées sur chacune, ancien
+      prix barré, mention « Meilleure offre » au milieu. Les remises étant
+      automatiques côté Shopify, le panier et le checkout les appliquent déjà :
+      le site n'a qu'à afficher les mêmes chiffres. **Vérifier que les taux
+      affichés et ceux de Shopify ne divergent jamais** (un prix barré faux au
+      checkout fait abandonner le panier).
+- [ ] **Notes clients à unifier** — décision du client : garder **5,0/5 sur
+      23 avis**, supprimer partout la note Trustpilot **4,4/5**, garder
+      « +500 clients satisfaits ». Conséquences à traiter ensemble : le widget
+      et les liens Trustpilot du header, de l'accueil et de la page Avis, le
+      balisage `AggregateRating` (une note de 5,0 doit correspondre à une source
+      réelle et vérifiable, sinon Google sanctionne), et `lib/social-proof.ts`.
+      Il demande aussi quelle plateforme d'avis ouvrir pour la nouvelle société
+      (l'actuelle est rattachée à l'entité néerlandaise) : à lui répondre.
+- [ ] **Accessoires et packs dans les collections** — accessoires uniquement
+      dans « tous les produits » (déjà le cas via `typeOf` dans `lib/shop.ts`,
+      mais la liste des handles accessoires est écrite en dur : tout nouvel
+      accessoire retomberait dans « gummies »). Packs attendus dans « tous les
+      produits » **et** dans gummies et poudres.
+- [ ] **Textes de la page Ingrédients** — à reprendre depuis
+      `https://bien.health/pages/ingredients`.
+- [ ] **Photo RTL de la page Presse** — fournie ; la mise en page complète de la
+      page presse est repoussée par le client (« pas le plus important »).
+
+### Bloquants côté Shopify
+
+- [~] **Les packs n'existent pas pour le site** — le client affirme les avoir
+      créés, mais l'API Storefront ne renvoie que six produits au 18/08/2026 :
+      `calm`, `focus`, `power`, `mushglow`, `mousseur-a-lait`, `bien-totebag`.
+      Les packs ne sont donc **pas publiés sur le canal de vente** utilisé par
+      le site headless (ou pas créés comme produits). Tant que ce n'est pas
+      corrigé côté Shopify, aucune ligne de code ne peut les faire apparaître.
+
+### En attente d'une information
+
+- [~] **Dosages de FOCUS** — le client confirme qu'il s'agit d'équivalents
+      (extrait concentré vs équivalent plante), s'étonne que l'écart ne touche
+      que FOCUS et propose de nous recommuniquer les dosages de chaque produit.
+      Rien ne bouge avant cette liste : ce sont des mentions réglementaires.
+- [~] **Note Trustpilot de la page Ingrédients** — il précise que la note
+      n'apparaît sur la bannière qu'après dézoom, et qu'elle se comporte
+      autrement sur un autre poste. Piste : le seuil `2xl` (1536 px) au-delà
+      duquel la note revient dans le header. À reproduire aux deux zooms.
+
+### Chantiers « ASAP » listés par le client
+
+- [ ] **Fiche produit** : disposition nom/prix/bouton, prix nettement plus
+      petit, encadré de description au-dessus du bouton, sélecteur 1/2/3
+      produits (voir remises ci-dessus), étoiles moins marquées, suppression des
+      questions qui répètent les sections ingrédients/bienfaits/posologie.
+- [ ] **Mobile** : bandeau cookies et popup de bienvenue qui s'affichent en même
+      temps, carrousels sans indice de défilement, boutons et textes trop gros,
+      page qui glisse latéralement au chargement, carte des revendeurs qui
+      capture le geste de défilement.
+- [ ] **Page d'accueil** : hero à réduire encore (quatre garanties sur une
+      ligne), curseur du typewriter qui saute en fin de phrase, espaces entre
+      blocs à resserrer, lien vers les attestations à descendre après la section
+      bien-être, nombre de pages des ingrédients à afficher et tri alphabétique,
+      formulations corrigées à reprendre section par section.
+- [ ] **Pages « par besoin »** : ordre des produits dans les quatre rubriques,
+      textes de bas de page qui ne parlent pas de tous les produits présentés,
+      titre « Beauté & bien-être », poudre à déclarer végétarienne et non végane.
+- [ ] **Corrections ponctuelles** : « 6-en-1 » et non « tout-en-1 » (fait),
+      nouveau texte de conseils d'utilisation MUSHGLOW, retrait des émoticônes,
+      badge « best-seller » sur la première photo seulement, retrait du
+      paragraphe champignons des pages mousseur et tote bag, Cadaqués sur la
+      carte des revendeurs et l'Espagne dans le titre, textes justifiés et
+      police réduite.
