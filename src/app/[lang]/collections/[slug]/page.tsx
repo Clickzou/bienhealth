@@ -115,7 +115,7 @@ export default async function CollectionPage({
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{t.learnMore}</p>
             <div className="mt-4 max-w-3xl space-y-4">
               {seo.intro.map((p, i) => (
-                <p key={i} className="text-lg sm:text-xl text-black/80 leading-relaxed font-medium">{p}</p>
+                <p key={i} className="text-[15px] sm:text-base text-black/80 leading-relaxed font-medium text-justify hyphens-auto">{p}</p>
               ))}
             </div>
 
@@ -128,7 +128,7 @@ export default async function CollectionPage({
                   </h2>
                   <div className="mt-3 pl-4 space-y-3">
                     {b.p.map((p, i) => (
-                      <p key={i} className="text-[15px] text-black/70 leading-relaxed">{p}</p>
+                      <p key={i} className="text-[15px] text-black/70 leading-relaxed text-justify hyphens-auto">{p}</p>
                     ))}
                   </div>
                 </article>

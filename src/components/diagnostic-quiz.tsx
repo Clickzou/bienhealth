@@ -131,7 +131,7 @@ const QUESTIONS_FR: Question[] = [
   },
   {
     id: "email", kind: "email",
-    title: "−10 % sur votre première commande si vous vous inscrivez à notre newsletter 🍄",
+    title: "−10 % sur votre première commande si vous vous inscrivez à notre newsletter",
     subtitle: "Promis, que du mush love dans votre boîte mail : vous recevez aussi votre résultat par email.",
   },
 ];
@@ -216,7 +216,7 @@ const QUESTIONS_EN: Question[] = [
   },
   {
     id: "email", kind: "email",
-    title: "−10% off your first order when you join our newsletter 🍄",
+    title: "−10% off your first order when you join our newsletter",
     subtitle: "Promise, only mush love in your inbox: you'll also get your result by email.",
   },
 ];

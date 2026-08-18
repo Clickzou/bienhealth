@@ -176,36 +176,35 @@ const VIDEOS: Record<string, { url: string; at: number }[]> = {
 
 const LIVRAISON = `${freeShippingSentence("fr")}
 
-France 🇫🇷
+France
 • Point Relais (3 à 5 jours ouvrés) : 4 €
 • Livraison standard à domicile (2 à 4 jours ouvrés) : 5,90 €
 • Livraison express à domicile (1 à 2 jours ouvrés) : 11,50 €
 
-Europe 🌍
+Europe
 Les options et tarifs de livraison sont affichés à l'étape de validation de commande.`;
 
 const LIVRAISON_EN = `${freeShippingSentence("en")}
 
-France 🇫🇷
+France
 • Point Relais pick-up (3 to 5 business days): €4
 • Standard home delivery (2 to 4 business days): €5.90
 • Express home delivery (1 to 2 business days): €11.50
 
-Europe 🌍
+Europe
 Delivery options and rates are shown at checkout.`;
 
 type Accordion = { q: string; a: string };
 
 const MUSHGLOW_ACCORDIONS: Accordion[] = [
   {
-    q: "Ingrédients, Bienfaits et Posologie",
-    a: `Un supermix 6-en-1 de champignons, adaptogènes et collagène pour soutenir focus, énergie et éclat de la peau, en une cuillère par jour.
-
-Formule clean & puissante : Lion's Mane, Cordyceps, Chaga, Maca, L-Théanine, collagène de membrane d'œuf. Des actifs cliniquement dosés, 100 % naturels.
-
-Sans sucre. Sans additifs.
-
-Un rituel quotidien, des effets durables : résilience, clarté mentale et peau lumineuse, visibles avec une prise régulière.`,
+    q: "Ingrédients & Bienfaits",
+    a: `Lion's Mane, 750 mg : soutient la mémoire, la concentration et la fonction cognitive.
+Cordyceps, 500 mg : booste l'énergie, la vitalité et l'endurance physique.
+Chaga, 500 mg : antioxydant puissant, protège les cellules et soutient l'immunité.
+L-Théanine, 200 mg : apaise sans endormir, améliore la clarté mentale et le focus.
+Maca, 750 mg : équilibre hormonal et bien-être émotionnel, améliore l'humeur.
+Collagène, 450 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
   },
   {
     q: "Quel goût a-t-il ?",
@@ -223,7 +222,7 @@ Idéal dans les yaourts, smoothies, jus de légumes, soupes ou préparations ép
   },
   {
     q: "Traçabilité et Qualité",
-    a: `Formulé sur la base de recherches publiées dans des revues scientifiques internationales 👇
+    a: `Formulé sur la base de recherches publiées dans des revues scientifiques internationales
 
 • Lion's Mane : améliore la cognition et l'humeur chez l'adulte sain (Surendran et al., 2025).
 • Cordyceps : améliore la tolérance à l'effort et la performance physique (Hirsch et al., 2017).
@@ -232,26 +231,13 @@ Idéal dans les yaourts, smoothies, jus de légumes, soupes ou préparations ép
 • L-Théanine : réduit efficacement le stress perçu (Moulin et al., 2024).
 • Collagène (Ovolux™) : améliore visiblement la peau, les cheveux et les ongles (Ruff et al., 2024).`,
   },
-  {
-    q: "Ingrédients & Bienfaits",
-    a: `Lion's Mane, 750 mg : soutient la mémoire, la concentration et la fonction cognitive.
-Cordyceps, 500 mg : booste l'énergie, la vitalité et l'endurance physique.
-Chaga, 500 mg : antioxydant puissant, protège les cellules et soutient l'immunité.
-L-Théanine, 200 mg : apaise sans endormir, améliore la clarté mentale et le focus.
-Maca, 750 mg : équilibre hormonal et bien-être émotionnel, améliore l'humeur.
-Collagène, 450 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
-  },
   { q: "Livraison", a: LIVRAISON },
 ];
 
 const CALM_ACCORDIONS: Accordion[] = [
   {
-    q: "Ingrédients, Bienfaits et Posologie",
-    a: `Grâce au Reishi, à l'Ashwagandha et au Safran, CALM aide à relâcher la pression, retrouver de la sérénité et libérer les tensions tout en contribuant à un sommeil réparateur.
-
-CALM s'intègre facilement dans la routine quotidienne, avec 2 gummies par jour à adapter selon le rythme de la journée, en fonction des besoins de votre corps et de ses variations naturelles, pour accompagner les moments de stress ou la préparation au sommeil.
-
-Une utilisation régulière pendant 30 jours permet de constater la différence et de retrouver une sérénité durable au quotidien.`,
+    q: "Ingrédients & Bienfaits",
+    a: `Grâce au Reishi, à l'Ashwagandha et au Safran, CALM aide à relâcher la pression, retrouver de la sérénité et libérer les tensions tout en contribuant à un sommeil réparateur.`,
   },
   {
     q: "Quel goût a-t-il ?",
@@ -304,12 +290,8 @@ SAFRAN (CROCUS SATIVUS)
 
 const FOCUS_ACCORDIONS: Accordion[] = [
   {
-    q: "Ingrédients, Bienfaits et Posologie",
-    a: `Grâce au Lion's Mane, au Thé vert riche en L-Théanine et à la Rhodiola Rosea, FOCUS soutient les performances intellectuelles, favorise la clarté mentale et aide à retrouver un esprit léger.
-
-FOCUS s'intègre facilement dans la routine quotidienne, avec 2 gummies par jour à adapter selon le rythme de la journée, en fonction de vos besoins d'attention et de concentration : le matin, après le déjeuner ou dans l'après-midi.
-
-Une utilisation régulière pendant 30 jours permet de constater la différence et de profiter d'un esprit plus clair et pleinement concentré au quotidien.`,
+    q: "Ingrédients & Bienfaits",
+    a: `Grâce au Lion's Mane, au Thé vert riche en L-Théanine et à la Rhodiola Rosea, FOCUS soutient les performances intellectuelles, favorise la clarté mentale et aide à retrouver un esprit léger.`,
   },
   {
     q: "Quel goût a-t-il ?",
@@ -363,12 +345,8 @@ RHODIOLA ROSEA
 
 const POWER_ACCORDIONS: Accordion[] = [
   {
-    q: "Ingrédients, Bienfaits et Posologie",
-    a: `Grâce au Cordyceps, au Panax Ginseng et à la Rhodiola Rosea, POWER favorise la vitalité, l'endurance et la récupération tout en réduisant la fatigue.
-
-POWER s'intègre naturellement dans la routine quotidienne, avec 2 gummies par jour à adapter selon le rythme de la journée, en fonction des besoins de votre corps et de ses variations d'énergie : le matin, après le déjeuner ou avant une activité physique.
-
-Une utilisation régulière pendant 30 jours permet de constater la différence et de profiter d'une vitalité quotidienne naturelle et durable.`,
+    q: "Ingrédients & Bienfaits",
+    a: `Grâce au Cordyceps, au Panax Ginseng et à la Rhodiola Rosea, POWER favorise la vitalité, l'endurance et la récupération tout en réduisant la fatigue.`,
   },
   {
     q: "Quel goût a-t-il ?",
@@ -421,14 +399,13 @@ RHODIOLA ROSEA
 
 const MUSHGLOW_ACCORDIONS_EN: Accordion[] = [
   {
-    q: "Ingredients, Benefits and Dosage",
-    a: `A 6-in-1 supermix of mushrooms, adaptogens and collagen to support focus, energy and glow, in one spoon a day.
-
-Clean & powerful formula: Lion's Mane, Cordyceps, Chaga, Maca, L-Theanine, eggshell-membrane collagen. Clinically dosed actives, 100% natural.
-
-No sugar. No additives.
-
-A daily ritual, lasting effects: resilience, mental clarity and glowing skin, visible with regular use.`,
+    q: "Ingredients & Benefits",
+    a: `Lion's Mane, 750 mg: supports memory, focus and cognitive function.
+Cordyceps, 500 mg: boosts energy, vitality and physical stamina.
+Chaga, 500 mg: powerful antioxidant, protects cells and supports immunity.
+L-Theanine, 200 mg: calms without drowsiness, improves mental clarity and focus.
+Maca, 750 mg: hormonal balance and emotional wellbeing, improves mood.
+Collagen, 450 mg: improves skin hydration, elasticity and radiance.`,
   },
   {
     q: "What does it taste like?",
@@ -444,7 +421,7 @@ Best taken in the morning. First results visible from the 1st month, to be conti
   },
   {
     q: "Traceability and Quality",
-    a: `Formulated based on research published in international scientific journals 👇
+    a: `Formulated based on research published in international scientific journals
 
 • Lion's Mane: improves cognition and mood in healthy adults (Surendran et al., 2025).
 • Cordyceps: improves exercise tolerance and physical performance (Hirsch et al., 2017).
@@ -453,26 +430,13 @@ Best taken in the morning. First results visible from the 1st month, to be conti
 • L-Theanine: effectively reduces perceived stress (Moulin et al., 2024).
 • Collagen (Ovolux™): visibly improves skin, hair and nails (Ruff et al., 2024).`,
   },
-  {
-    q: "Ingredients & Benefits",
-    a: `Lion's Mane, 750 mg: supports memory, focus and cognitive function.
-Cordyceps, 500 mg: boosts energy, vitality and physical stamina.
-Chaga, 500 mg: powerful antioxidant, protects cells and supports immunity.
-L-Theanine, 200 mg: calms without drowsiness, improves mental clarity and focus.
-Maca, 750 mg: hormonal balance and emotional wellbeing, improves mood.
-Collagen, 450 mg: improves skin hydration, elasticity and radiance.`,
-  },
   { q: "Shipping", a: LIVRAISON_EN },
 ];
 
 const CALM_ACCORDIONS_EN: Accordion[] = [
   {
-    q: "Ingredients, Benefits and Dosage",
-    a: `Thanks to Reishi, Ashwagandha and Saffron, CALM helps release pressure, restore serenity and ease tension while contributing to restorative sleep.
-
-CALM fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its natural variations, to support moments of stress or wind-down before sleep.
-
-Regular use for 30 days lets you notice the difference and regain lasting serenity day to day.`,
+    q: "Ingredients & Benefits",
+    a: `Thanks to Reishi, Ashwagandha and Saffron, CALM helps release pressure, restore serenity and ease tension while contributing to restorative sleep.`,
   },
   {
     q: "What does it taste like?",
@@ -525,12 +489,8 @@ SAFFRON (CROCUS SATIVUS)
 
 const FOCUS_ACCORDIONS_EN: Accordion[] = [
   {
-    q: "Ingredients, Benefits and Dosage",
-    a: `Thanks to Lion's Mane, green tea rich in L-Theanine and Rhodiola, FOCUS supports intellectual performance, promotes mental clarity and helps you feel light-headed clarity.
-
-FOCUS fits easily into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your attention and focus needs: in the morning, after lunch or in the afternoon.
-
-Regular use for 30 days lets you notice the difference and enjoy a clearer, fully focused mind every day.`,
+    q: "Ingredients & Benefits",
+    a: `Thanks to Lion's Mane, green tea rich in L-Theanine and Rhodiola Rosea, FOCUS supports intellectual performance, promotes mental clarity and helps you feel light-headed clarity.`,
   },
   {
     q: "What does it taste like?",
@@ -584,12 +544,8 @@ RHODIOLA ROSEA
 
 const POWER_ACCORDIONS_EN: Accordion[] = [
   {
-    q: "Ingredients, Benefits and Dosage",
-    a: `Thanks to Cordyceps, Panax Ginseng and Rhodiola Rosea, POWER promotes vitality, stamina and recovery while reducing fatigue.
-
-POWER fits naturally into your daily routine, with 2 gummies a day to adapt to the rhythm of your day, according to your body's needs and its energy variations: in the morning, after lunch or before physical activity.
-
-Regular use for 30 days lets you notice the difference and enjoy natural, lasting daily vitality.`,
+    q: "Ingredients & Benefits",
+    a: `Thanks to Cordyceps, Panax Ginseng and Rhodiola Rosea, POWER promotes vitality, stamina and recovery while reducing fatigue.`,
   },
   {
     q: "What does it taste like?",
@@ -854,7 +810,7 @@ export default async function ProductPage({
                 (Trustpilot, identique au header) et le compteur parle de
                 clients, pas d'avis — les avis de CE produit sont plus bas. */}
             <div className="flex items-center gap-2 flex-wrap">
-              <StarRating value={TRUSTPILOT_RATING} className="h-4 w-4" />
+              <StarRating value={TRUSTPILOT_RATING} className="h-3.5 w-3.5" />
               <span className="text-sm font-semibold text-black">{ratingLabel(lang)}/5</span>
               <span className="text-black/30">·</span>
               {/* Le libellé pointe vers Trustpilot, source de la note affichée
@@ -926,7 +882,7 @@ export default async function ProductPage({
                 <div className="flex items-baseline gap-3">
                   {/* Prix en corps de texte renforcé et non en display : il
                       écrasait visuellement le nom du produit (retour client). */}
-                  <span className="text-lg font-bold text-black">{formatPrice(product.price)}</span>
+                  <span className="text-base font-bold text-black">{formatPrice(product.price)}</span>
                   {product.compareAtPrice &&
                     Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
                       <span className="text-sm text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
@@ -977,7 +933,10 @@ export default async function ProductPage({
               ))}
             </ul>
 
-            {/* La presse en parle — citation + logos magazines */}
+            {/* La presse en parle — citation + logos magazines. Masqué sur les
+                accessoires : la citation parle des champignons adaptogènes,
+                hors sujet sur un mousseur ou un tote bag (demande client). */}
+            {key && (
             <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">{ui.pressEyebrow}</p>
               <p className="mt-2.5 text-sm text-black/85 leading-snug">
@@ -989,6 +948,7 @@ export default async function ProductPage({
                 ))}
               </div>
             </div>
+            )}
 
             {/* Vu en vidéo */}
             {videos.length > 0 && (
@@ -1056,7 +1016,7 @@ export default async function ProductPage({
             <h2 className="mt-3 font-display tracking-tighter text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
             <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
               {productSeo.paragraphs.map((para, i) => (
-                <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed">{para}</p>
+                <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{para}</p>
               ))}
             </div>
           </section>

@@ -100,11 +100,11 @@ const CONTENT = {
       // française » : ces deux garanties figurent déjà dans la carte de
       // réassurance juste en dessous (doublon signalé par le client).
       g1: "Sans sucre ni additifs artificiels",
-      g2: "Sans gluten et végan",
+      g2: "Sans gluten, gummies vegan",
       keyPointsTitle: "L'essentiel",
       keyPoints: [
         "4 produits naturels : 3 gummies + 1 poudre 6-en-1",
-        "Sans sucre ni additifs artificiels, sans gluten et végan, fabriqué en France",
+        "Sans sucre ni additifs artificiels, sans gluten, gummies vegan et poudre végétarienne, fabriqué en France",
         "Riches en fibres prébiotiques pour nourrir le microbiote",
         "Adaptogènes & champignons, dosages transparents",
       ],
@@ -160,7 +160,7 @@ const CONTENT = {
       p2: "La marque est née du parcours d'une ancienne sportive de haut niveau, qui a utilisé les plantes adaptogènes et champignons médicinaux (ashwagandha, safran…) pour optimiser sa préparation physique et mentale, avant de créer une marque plus efficace, naturelle et accessible au quotidien.",
       list: [
         "4 produits naturels : 3 gummies + 1 poudre 6-en-1",
-        "Sans sucre ni additifs artificiels, sans gluten et végan, fabriqué en France",
+        "Sans sucre ni additifs artificiels, sans gluten, gummies vegan et poudre végétarienne, fabriqué en France",
         "Riches en fibres prébiotiques pour nourrir le microbiote",
         "Plantes adaptogènes & champignons médicinaux, dosages transparents",
       ],
@@ -197,11 +197,11 @@ const CONTENT = {
       p2: "Adaptogens and functional mushrooms dosed according to science, formulated and made in France, designed to fit into a coffee, a smoothie or a few seconds of your morning.",
       cta: "Discover our products",
       g1: "No sugar, no artificial additives",
-      g2: "Gluten-free and vegan",
+      g2: "Gluten-free, vegan gummies",
       keyPointsTitle: "The essentials",
       keyPoints: [
         "4 natural products: 3 gummies + 1 6-in-1 powder",
-        "No sugar, no artificial additives, gluten-free and vegan, made in France",
+        "No sugar, no artificial additives, gluten-free, vegan gummies and vegetarian powder, made in France",
         "Rich in prebiotic fibres to nourish the microbiome",
         "Adaptogens & mushrooms, transparent dosages",
       ],
@@ -257,7 +257,7 @@ const CONTENT = {
       p2: "The brand was born from the journey of a former elite athlete who used adaptogenic plants and medicinal mushrooms (ashwagandha, saffron…) to optimise her physical and mental preparation, before creating a brand that's more effective, natural and accessible every day.",
       list: [
         "4 natural products: 3 gummies + 1 6-in-1 powder",
-        "No sugar, no artificial additives, gluten-free and vegan, made in France",
+        "No sugar, no artificial additives, gluten-free, vegan gummies and vegetarian powder, made in France",
         "Rich in prebiotic fibres to nourish the microbiome",
         "Adaptogenic plants & medicinal mushrooms, transparent dosages",
       ],
@@ -389,7 +389,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 écran, y compris sur un 13" (demande client). `min-h` et non
                 `h` : si le texte de gauche est plus haut (traduction longue),
                 la ligne s'étire au lieu de rogner le contenu. */}
-            <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[clamp(400px,calc(100svh-240px),600px)]">
+            <div className="anim-up anim-delay-1 relative h-72 sm:h-96 lg:h-auto lg:min-h-[clamp(360px,calc(100svh-300px),540px)]">
               <HeroCarousel
                 images={[
                   { src: "/bien-health-bien-etre.jpg", alt: lang === "en" ? "BIEN health POWER gummies, energy and performance" : "Gummies BIEN health POWER, énergie et performance" },
@@ -405,7 +405,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             (24px) : l'effet de profondeur de la maquette est conservé sans
             mordre sur la rangée de CTA et de garanties du hero. */}
         <div className="relative -mt-6 mx-2 sm:mx-6 lg:mx-8 bg-card rounded-3xl ring-1 ring-border bien-shadow p-5 sm:p-6">
-          <ul className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+          <ul className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
             {c.reassurance.map((label, i) => {
               const Icon = REASSURANCE_ICONS[i];
               return (
@@ -420,7 +420,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 5. Best-sellers — premiers après le hero (demande client). */}
-      <section id="produits" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 pt-12 sm:pt-14">
+      <section id="produits" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 pt-9 sm:pt-11">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.best.eyebrow}</p>
@@ -432,7 +432,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 6. Press — placée après les best-sellers : les produits arrivent en premier. */}
-      <section id="presse" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20 scroll-mt-24">
+      <section id="presse" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14 scroll-mt-24">
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-7">
           <div className="inline-flex items-center gap-2">
             <span className="font-semibold text-[15px] text-black tracking-tight">Trustpilot</span>
@@ -517,7 +517,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 7. Bénéfices — bulles reliées à l'image centrale */}
-      <section id="diagnostic" className="reveal bg-bien-cream mt-14 sm:mt-20 px-4 sm:px-6 lg:px-24 xl:px-32 py-12 lg:py-16">
+      <section id="diagnostic" className="reveal bg-bien-cream mt-10 sm:mt-14 px-4 sm:px-6 lg:px-24 xl:px-32 py-12 lg:py-16">
         <div className="text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.benefits.eyebrow}</p>
           <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1] text-black">{accentLastWord(c.benefits.title)}</h2>
@@ -601,7 +601,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 8. Reviews */}
-      <section id="avis" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20">
+      <section id="avis" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <div className="bg-bien-cream rounded-3xl lg:rounded-[2.5rem] p-6 sm:p-10 lg:p-14">
           <div className="grid lg:grid-cols-[auto_1fr] gap-10 lg:gap-14 items-center">
             <div className="text-center lg:text-left lg:border-r lg:border-bien-forest/10 lg:pr-12 shrink-0">
@@ -670,7 +670,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 9. Ingredients */}
-      <section id="ingredients" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20">
+      <section id="ingredients" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <div className="bg-bien-leaf text-bien-cream rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16">
           <div className="max-w-2xl">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-citrus font-semibold">{c.ingredients.eyebrow}</p>
@@ -683,7 +683,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 10. Diagnostic block */}
-      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <div className="bg-bien-gold rounded-3xl lg:rounded-[2.75rem] p-8 sm:p-12 lg:p-16 text-black">
           <div className="max-w-3xl">
             <p className="text-xs uppercase tracking-[0.2em] font-bold opacity-70">{c.diagBlock.eyebrow}</p>
@@ -705,7 +705,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
       </section>
 
       {/* 11. Notre mission */}
-      <section id="mission" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-14 sm:mt-20">
+      <section id="mission" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
           <div className="relative rounded-3xl overflow-hidden aspect-[4/5] lg:aspect-auto lg:h-[710px] bien-shadow lg:sticky lg:top-28">
             <Image src="/athletes-bien-health.jpg" alt={lang === "en" ? "BIEN health, natural supplements made in France" : "BIEN health, compléments naturels fabriqués en France"} fill loading="lazy" sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />

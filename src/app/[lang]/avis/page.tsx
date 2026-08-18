@@ -37,7 +37,6 @@ type Review = {
   replyEn?: string;
 };
 
-const FLAG: Record<string, string> = { FR: "🇫🇷", GP: "🇬🇵", GB: "🇬🇧", BE: "🇧🇪", CH: "🇨🇭" };
 
 const REVIEWS: Review[] = [
   {
@@ -299,7 +298,7 @@ export default async function AvisPage({
               )}
 
               <div className="mt-4 flex items-center justify-between text-xs text-black/55">
-                <span className="font-semibold text-black">{FLAG[r.country] ?? "🌍"} {r.name}</span>
+                <span className="font-semibold text-black">{r.name}</span>
                 <span>{r.date}</span>
               </div>
             </article>

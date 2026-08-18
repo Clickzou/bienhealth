@@ -39,12 +39,46 @@ export const BEST_SELLERS = ["MUSHGLOW", "CALM"];
 
 /* --- Type de produit --- */
 export type ProductType = "gummies" | "poudres" | "accessoires";
-export const ACCESSOIRES = new Set(["mousseur-a-lait", "bien-totebag"]);
 
-export function typeOf(p: { handle: string; title: string }): ProductType {
-  if (ACCESSOIRES.has(p.handle)) return "accessoires";
-  if (p.title.toUpperCase().includes("MUSHGLOW")) return "poudres"; // MushGlow = poudre
-  return "gummies"; // CALM, FOCUS, POWER
+/**
+ * Accessoires connus, par handle. Ce garde-fou reste là pour le mousseur, qui
+ * ne porte aucun tag dans Shopify — mais **la bonne façon de déclarer un
+ * nouvel accessoire est de lui poser le tag « Accessories » dans l'admin**,
+ * sinon il sera pris pour un complément.
+ */
+export const ACCESSOIRES = new Set(["mousseur-a-lait", "bien-totebag"]);
+const ACCESSORY_TAGS = ["accessories", "accessoires", "accessoire", "accessory"];
+
+/** Noms de la gamme. Un pack en cite un ou plusieurs dans son titre. */
+const GUMMY_NAMES = ["CALM", "FOCUS", "POWER"];
+const POWDER_NAMES = ["MUSHGLOW"];
+
+type Classifiable = { handle: string; title: string; tags?: string[] };
+
+const named = (p: Classifiable, names: string[]) =>
+  names.some((k) => p.title.toUpperCase().includes(k));
+
+export function isAccessory(p: Classifiable): boolean {
+  return (
+    ACCESSOIRES.has(p.handle) ||
+    (p.tags ?? []).some((t) => ACCESSORY_TAGS.includes(t.trim().toLowerCase()))
+  );
+}
+
+/**
+ * Contient au moins un gummy (ou une poudre) : un pack « CALM + MUSHGLOW »
+ * appartient donc aux deux familles, comme le veut le client. Un produit qui
+ * ne cite aucun nom de la gamme n'apparaît dans aucune des deux plutôt que de
+ * tomber par défaut dans les gummies.
+ */
+export const hasGummies = (p: Classifiable) => !isAccessory(p) && named(p, GUMMY_NAMES);
+export const hasPowder = (p: Classifiable) => !isAccessory(p) && named(p, POWDER_NAMES);
+
+/** Famille principale d'un produit (badge, tri, libellés). */
+export function typeOf(p: Classifiable): ProductType {
+  if (isAccessory(p)) return "accessoires";
+  if (named(p, POWDER_NAMES)) return "poudres";
+  return "gummies";
 }
 
 /* --- Registre des collections (slugs SEO) --- */
@@ -126,7 +160,7 @@ export const COLLECTIONS: Record<string, Collection> = {
   "beaute-et-bien-etre": {
     slug: "beaute-et-bien-etre",
     eyebrow: "Par besoin",
-    label: "Beauté & Bien-être",
+    label: "Beauté & bien-être",
     desc: "Peau, cheveux et équilibre hormonal naturel, grâce à des actifs dosés selon la science.",
     en: {
       eyebrow: "By need",
@@ -147,7 +181,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       label: "Gummies",
       desc: "Our natural chewable supplements: science-based dosages, no added sugar, no artificial additives and vegan.",
     },
-    match: (p) => typeOf(p) === "gummies",
+    match: hasGummies,
   },
   "nos-poudres": {
     slug: "nos-poudres",
@@ -159,7 +193,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       label: "Powders",
       desc: "Our 6-in-1 powder, to add to your morning preparations.",
     },
-    match: (p) => typeOf(p) === "poudres",
+    match: hasPowder,
   },
   "nos-accessoires": {
     slug: "nos-accessoires",
@@ -171,7 +205,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       label: "Accessories",
       desc: "BIEN accessories to elevate your everyday wellness ritual.",
     },
-    match: (p) => typeOf(p) === "accessoires",
+    match: isAccessory,
   },
 };
 

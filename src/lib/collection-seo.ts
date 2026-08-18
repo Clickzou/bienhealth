@@ -282,7 +282,7 @@ export const COLLECTION_SEO: Record<string, CollectionSeo> = {
 
   "beaute-et-bien-etre": {
     intro: [
-      "Une peau éclatante et des cheveux forts commencent de l'intérieur. La collection Beauté & Bien-être de BIEN health rassemble des compléments alimentaires naturels riches en collagène et en actifs antioxydants, pour nourrir la peau, soutenir les cheveux et les ongles, et retrouver un équilibre global, le tout dans une routine simple et gourmande.",
+      "Une peau éclatante et des cheveux forts commencent de l'intérieur. La collection Beauté & bien-être de BIEN health rassemble des compléments alimentaires naturels riches en collagène et en actifs antioxydants, pour nourrir la peau, soutenir les cheveux et les ongles, et retrouver un équilibre global, le tout dans une routine simple et gourmande.",
     ],
     blocks: [
       {

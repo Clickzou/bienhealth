@@ -53,7 +53,7 @@ const DICT = {
       needPerformance: "Performance & Vitalité",
       needSleep: "Sérénité & Sommeil",
       needFocus: "Concentration & Clarté mentale",
-      needBeauty: "Beauté & Bien-être",
+      needBeauty: "Beauté & bien-être",
       // À propos
       story: "Notre histoire",
       press: "La presse en parle",

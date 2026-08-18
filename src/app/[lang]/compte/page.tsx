@@ -80,7 +80,7 @@ export default async function ComptePage({
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
               <div>
                 <h1 className="font-hero text-[clamp(1.76rem,4.4vw,2.64rem)] leading-[1] text-black">
-                  {t.hello}{customer.firstName ? `, ${customer.firstName}` : ""} 👋
+                  {t.hello}{customer.firstName ? `, ${customer.firstName}` : ""}
                 </h1>
                 <p className="mt-2 text-black/65">{t.welcome}</p>
               </div>

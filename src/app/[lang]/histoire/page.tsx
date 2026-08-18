@@ -35,12 +35,12 @@ const T = {
     ceo: "Carla, CEO BIEN Health",
     list: [
       "4 produits naturels : 3 gummies + 1 poudre 6-en-1",
-      "Vegan, sans sucre ni colorants, sans gluten, fabriqué en France",
+      "Gummies vegan et poudre végétarienne, sans sucre ni colorants, sans gluten, fabriqué en France",
       "Riches en fibres prébiotiques pour l'équilibre du microbiote",
       "Plantes adaptogènes & champignons médicinaux, dosages transparents",
     ],
     values: [
-      { title: "Naturel & clean", text: "Vegan, sans sucre ni colorants artificiels, sans gluten, riches en fibres prébiotiques." },
+      { title: "Naturel & clean", text: "Gummies vegan et poudre végétarienne (collagène de membrane d'œuf), sans sucre ni colorants artificiels, sans gluten, riches en fibres prébiotiques." },
       { title: "Fabriqué en France", text: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape." },
       { title: "Dosé par la science", text: "Adaptogènes et champignons fonctionnels aux dosages transparents, déclarés à la DGAL." },
     ],
@@ -69,12 +69,12 @@ const T = {
     ceo: "Carla, CEO BIEN Health",
     list: [
       "4 natural products: 3 gummies + 1 6-in-1 powder",
-      "Vegan, no sugar or colourings, gluten-free, made in France",
+      "Vegan gummies and vegetarian powder, no sugar or colourings, gluten-free, made in France",
       "Rich in prebiotic fibres for a balanced microbiome",
       "Adaptogenic plants & medicinal mushrooms, transparent dosages",
     ],
     values: [
-      { title: "Natural & clean", text: "Vegan, no sugar or artificial colourings, gluten-free, rich in prebiotic fibres." },
+      { title: "Natural & clean", text: "Vegan gummies and vegetarian powder (eggshell-membrane collagen), no sugar or artificial colourings, gluten-free, rich in prebiotic fibres." },
       { title: "Made in France", text: "Formulated and made in France, with quality controls at every step." },
       { title: "Science-based dosing", text: "Adaptogens and functional mushrooms with transparent dosages, declared to the DGAL." },
     ],

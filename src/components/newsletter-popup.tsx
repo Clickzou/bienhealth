@@ -156,7 +156,7 @@ export default function NewsletterPopup() {
               </h2>
               <p className="mt-3 text-sm sm:text-[15px] text-black/70 leading-relaxed">
                 Recevez votre code de bienvenue par mail et suivez nos actualités
-                avant tout le monde 💙
+                avant tout le monde
               </p>
 
               <form onSubmit={onSubmit} className="mt-6 space-y-3">

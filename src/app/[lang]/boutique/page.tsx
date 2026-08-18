@@ -24,13 +24,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
 const T = {
   fr: {
     eyebrow: "La gamme BIEN", h1: "Nos produits.",
-    intro: "3 gummies naturels et une poudre 6-en-1. Adaptogènes et champignons fonctionnels, dosés selon la science : vegan, sans sucre, fabriqués en France.",
+    intro: "3 gummies naturels et une poudre 6-en-1. Adaptogènes et champignons fonctionnels, dosés selon la science : sans sucre, fabriqués en France. Gummies vegan, poudre végétarienne.",
     needs: [{ label: "Sommeil & Sérénité", slug: "serenite" }, { label: "Concentration", slug: "concentration" }, { label: "Énergie", slug: "performance-et-vitalite" }, { label: "Beauté & Équilibre", slug: "beaute-et-bien-etre" }],
     product: "produit", products: "produits", findFormula: "Trouver ma formule",
   },
   en: {
     eyebrow: "The BIEN range", h1: "Our products.",
-    intro: "3 natural gummies and one 6-in-1 powder. Adaptogens and functional mushrooms, dosed according to science: vegan, sugar-free, made in France.",
+    intro: "3 natural gummies and one 6-in-1 powder. Adaptogens and functional mushrooms, dosed according to science: sugar-free, made in France. Vegan gummies, vegetarian powder.",
     needs: [{ label: "Sleep & Calm", slug: "serenite" }, { label: "Focus", slug: "concentration" }, { label: "Energy", slug: "performance-et-vitalite" }, { label: "Beauty & Balance", slug: "beaute-et-bien-etre" }],
     product: "product", products: "products", findFormula: "Find my formula",
   },

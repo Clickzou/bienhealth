@@ -10,7 +10,7 @@ const ITEMS_BY_LANG = {
     { title: "Paiement sécurisé", sub: "Visa, Mastercard" },
     { title: `+${HAPPY_CLIENTS} clients`, sub: "satisfaits" },
     { title: "Satisfait ou remboursé", sub: "sous 30 jours" },
-    { title: "Naturel & vegan", sub: "fabriqué en France" },
+    { title: "Naturel & clean", sub: "fabriqué en France" },
     { title: "Dosé selon la science", sub: "actifs cliniquement dosés" },
   ],
   en: [
@@ -18,7 +18,7 @@ const ITEMS_BY_LANG = {
     { title: "Secure payment", sub: "Visa, Mastercard" },
     { title: `+${HAPPY_CLIENTS} customers`, sub: "satisfied" },
     { title: "Money-back guarantee", sub: "within 30 days" },
-    { title: "Natural & vegan", sub: "made in France" },
+    { title: "Natural & clean", sub: "made in France" },
     { title: "Science-based dosing", sub: "clinically dosed actives" },
   ],
 } as const;

@@ -35,14 +35,14 @@ export default async function LivraisonPage({
           before 1 pm.
         </p>
 
-        <h2>France 🇫🇷</h2>
+        <h2>France</h2>
         <ul>
           <li><strong>Point Relais pick-up</strong> (3 to 5 business days): €4</li>
           <li><strong>Standard home delivery</strong> (2 to 4 business days): €5.90</li>
           <li><strong>Express home delivery</strong> (1 to 2 business days): €11.50</li>
         </ul>
 
-        <h2>Europe 🌍</h2>
+        <h2>Europe</h2>
         <p>Delivery options and rates are shown at checkout.</p>
 
         <h2>Discreet delivery</h2>
@@ -72,14 +72,14 @@ export default async function LivraisonPage({
         commande passée avant 13h.
       </p>
 
-      <h2>France 🇫🇷</h2>
+      <h2>France</h2>
       <ul>
         <li><strong>Point Relais</strong> (3 à 5 jours ouvrés) : 4 €</li>
         <li><strong>Livraison standard à domicile</strong> (2 à 4 jours ouvrés) : 5,90 €</li>
         <li><strong>Livraison express à domicile</strong> (1 à 2 jours ouvrés) : 11,50 €</li>
       </ul>
 
-      <h2>Europe 🌍</h2>
+      <h2>Europe</h2>
       <p>Les options et tarifs de livraison sont affichés à l&apos;étape de validation de commande.</p>
 
       <h2>Livraison discrète</h2>
