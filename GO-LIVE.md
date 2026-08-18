@@ -327,6 +327,10 @@ réalisables tout de suite, les `[~]` attendent encore une information.
       nouvel accessoire**, sinon il sera pris pour un complément. Les
       collections gummies et poudres se basent sur les noms cités dans le titre :
       un pack « CALM + MUSHGLOW » apparaîtra dans les deux.
+      Deux réglages étaient exactement à l'envers de sa demande : la boutique
+      (« tous les produits ») excluait les accessoires de sa grille, tandis que
+      la section « Découvrez aussi » les affichait en bas des pages gummies et
+      poudres. C'est inversé.
 - [x] **Textes de la page Ingrédients** — repris mot pour mot depuis
       `https://bien.health/pages/ingredients` le 18/08/2026 (les versions
       publiées ici n'en gardaient que la moitié). Coquilles de la source
