@@ -241,10 +241,10 @@ const CALM_ACCORDIONS: Accordion[] = [
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté.`,
+    a: `Des gummies moelleux au goût mûre, agréables à mâcher, sans sucre ajouté.`,
   },
   {
-    q: "Comment le préparer ?",
+    q: "Posologie",
     a: `2 gummies par jour, à mâcher. À adapter selon le rythme de votre journée : pour accompagner les moments de stress, ou en préparation au sommeil le soir.`,
   },
   {
@@ -295,10 +295,10 @@ const FOCUS_ACCORDIONS: Accordion[] = [
   },
   {
     q: "Quel goût a-t-il ?",
-    a: `Des gummies moelleux au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté.`,
+    a: `Des gummies moelleux au goût ananas, agréables à mâcher, sans sucre ajouté.`,
   },
   {
-    q: "Comment le préparer ?",
+    q: "Posologie",
     a: `2 gummies par jour, à mâcher. À adapter selon le rythme de votre journée, en fonction de vos besoins d'attention et de concentration : le matin, après le déjeuner ou dans l'après-midi.`,
   },
   {
@@ -353,7 +353,7 @@ const POWER_ACCORDIONS: Accordion[] = [
     a: `Des gummies moelleux au goût fruité de fruit de la passion, agréables à mâcher, sans sucre ajouté.`,
   },
   {
-    q: "Comment le préparer ?",
+    q: "Posologie",
     a: `2 gummies par jour, à mâcher. À adapter selon le rythme de votre journée et vos variations d'énergie : le matin, après le déjeuner ou avant une activité physique.`,
   },
   {
@@ -440,10 +440,10 @@ const CALM_ACCORDIONS_EN: Accordion[] = [
   },
   {
     q: "What does it taste like?",
-    a: `Soft, fruity and delicious gummies, pleasant to chew, with no added sugar.`,
+    a: `Soft blackberry gummies, pleasant to chew, with no added sugar.`,
   },
   {
-    q: "How do I take it?",
+    q: "Dosage",
     a: `2 gummies a day, to chew. Adapt to the rhythm of your day: to support moments of stress, or as a wind-down before sleep in the evening.`,
   },
   {
@@ -494,10 +494,10 @@ const FOCUS_ACCORDIONS_EN: Accordion[] = [
   },
   {
     q: "What does it taste like?",
-    a: `Soft, fruity and delicious gummies, pleasant to chew, with no added sugar.`,
+    a: `Soft pineapple gummies, pleasant to chew, with no added sugar.`,
   },
   {
-    q: "How do I take it?",
+    q: "Dosage",
     a: `2 gummies a day, to chew. Adapt to the rhythm of your day, according to your attention and focus needs: in the morning, after lunch or in the afternoon.`,
   },
   {
@@ -552,7 +552,7 @@ const POWER_ACCORDIONS_EN: Accordion[] = [
     a: `Soft gummies with a fruity passion-fruit taste, pleasant to chew, with no added sugar.`,
   },
   {
-    q: "How do I take it?",
+    q: "Dosage",
     a: `2 gummies a day, to chew. Adapt to the rhythm of your day and your energy variations: in the morning, after lunch or before physical activity.`,
   },
   {
@@ -609,14 +609,14 @@ function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolea
     ? [
         { q: "Ingredients, Benefits and Dosage", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
         { q: "What does it taste like?", a: isPowder ? "Neutral taste, blends easily into any hot or cold drink." : "Fruity, delicious gummies, pleasant to chew, with no added sugar." },
-        { q: "How do I take it?", a: info.rows[info.rows.length - 1]?.text ?? "" },
+        { q: isPowder ? "How do I take it?" : "Dosage", a: info.rows[info.rows.length - 1]?.text ?? "" },
         { q: "Traceability and Quality", a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform), with a publicly verifiable declaration number. Actives dosed according to scientific literature." },
         { q: "Shipping", a: LIVRAISON_EN },
       ]
     : [
         { q: "Ingrédients, Bienfaits et Posologie", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
         { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté." },
-        { q: "Comment le préparer ?", a: info.rows[info.rows.length - 1]?.text ?? "" },
+        { q: isPowder ? "Comment le préparer ?" : "Posologie", a: info.rows[info.rows.length - 1]?.text ?? "" },
         { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM), avec un numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
         { q: "Livraison", a: LIVRAISON },
       ];
@@ -850,8 +850,12 @@ export default async function ProductPage({
               </p>
             ) : null}
 
-            {/* Disponibilité + fenêtre de livraison estimée (demande client) */}
-            {product.available && <DeliveryEstimate lang={lang} inStock={!preorder} />}
+            {/* Disponibilité + fenêtre de livraison estimée : pour un
+                complément, elle est passée juste au-dessus du bouton d'ajout,
+                entre le choix de la cure et le CTA (demande client du
+                19/08/2026). Les accessoires la gardent ici, leur bloc d'achat
+                tenant sur une seule ligne. */}
+            {product.available && !key && <DeliveryEstimate lang={lang} inStock={!preorder} />}
 
             {/* Infos clés produit — remontées au-dessus du bloc d'achat : le
                 client veut lire ce que fait le produit avant de voir le prix
@@ -859,9 +863,15 @@ export default async function ProductPage({
                 le texte générique leur prêtait des adaptogènes et des
                 champignons qu'ils ne contiennent pas. */}
             {key && (
-              <div className="mt-5 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm p-5 sm:p-6">
-                <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
-                <ul className="mt-4 space-y-4">
+              /* Replié par défaut (demande client du 19/08/2026) : déployé, ce
+                 bloc repoussait le bouton d'ajout sous la ligne de flottaison.
+                 Seul l'intitulé reste visible, le contenu s'ouvre au clic. */
+              <details className="group mt-5 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm">
+                <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 sm:px-6 py-4">
+                  <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
+                  <ChevronDown className="h-5 w-5 shrink-0 text-bien-cream/70 transition-transform group-open:rotate-180" />
+                </summary>
+                <ul className="px-5 sm:px-6 pb-5 sm:pb-6 space-y-4">
                   {info.rows.map(({ icon: Icon, text }) => (
                     <li key={text} className="flex items-center gap-3.5">
                       <span className="shrink-0 grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/15 text-bien-cream"><Icon className="h-5 w-5" /></span>
@@ -869,7 +879,7 @@ export default async function ProductPage({
                     </li>
                   ))}
                 </ul>
-              </div>
+              </details>
             )}
 
             {/* Achat. Pour un complément, le choix de la cure (1/2/3/6 mois avec
@@ -879,16 +889,21 @@ export default async function ProductPage({
                 de pixels de haut sur un 13". */}
             <div className={`mt-5 ${key ? "" : "flex flex-wrap items-center gap-x-6 gap-y-3"}`}>
               <div>
-                <div className="flex items-baseline gap-3">
-                  {/* Prix en corps de texte renforcé et non en display : il
-                      écrasait visuellement le nom du produit (retour client). */}
-                  <span className="text-base font-bold text-black">{formatPrice(product.price)}</span>
-                  {product.compareAtPrice &&
-                    Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
-                      <span className="text-sm text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
-                    )}
-                </div>
-                <p className="mt-1 text-xs text-black/50">
+                {/* Sur un complément, le prix unitaire n'est plus répété ici :
+                    chaque ligne du choix de la cure porte déjà son total, son
+                    prix barré et son prix à la journée (demande client du
+                    19/08/2026). Il reste affiché pour les accessoires, qui
+                    n'ont pas ce tableau. */}
+                {!key && (
+                  <div className="flex items-baseline gap-3">
+                    <span className="text-base font-bold text-black">{formatPrice(product.price)}</span>
+                    {product.compareAtPrice &&
+                      Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
+                        <span className="text-sm text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
+                      )}
+                  </div>
+                )}
+                <p className={`text-xs text-black/50 ${key ? "" : "mt-1"}`}>
                   {ui.taxIncluded}
                   {/* Format de la cure : 60 gummies à 2/jour et 30 portions de
                       poudre couvrent un mois — l'information manquait près du prix. */}
@@ -907,6 +922,7 @@ export default async function ProductPage({
                     lang={lang}
                     cureSelector={Boolean(key)}
                     quantitySelector={!key}
+                    beforeButton={key ? <div className="mb-4"><DeliveryEstimate lang={lang} inStock={!preorder} /></div> : undefined}
                     className={`${key ? "w-full" : "flex-1 sm:flex-none"} inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm`}
                   >
                     {ctaLabel}

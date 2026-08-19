@@ -1,7 +1,7 @@
 # Checklist de mise en ligne — bien.health
 
 Tout ce qui doit être vérifié, configuré ou décidé **avant** la bascule du site
-headless sur `bien.health`. Dernière mise à jour : 18 août 2026.
+headless sur `bien.health`. Dernière mise à jour : 19 août 2026.
 
 Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision client ·
 `[x]` fait et vérifié.
@@ -85,22 +85,17 @@ faussée. Demande un accès à l'admin Shopify.
       Meta (onglet réseau : aucun appel `googletagmanager` ni `fbevents`).
 - [ ] **Méga-menus** : revérifier le cadrage sur plusieurs résolutions réelles
       (13", 15", 24") — c'était le bug signalé par le client.
-- [~] **Note Trustpilot du header** : affichée seulement à partir de 1536 px
-      (`2xl`). En dessous, ses ~155 px poussaient la nav hors de l'axe central.
-      À valider : la preuve sociale reste visible sur la page (bandeau avis,
-      fiches produit), mais plus dans le header sur un 13"/15".
+- [x] **Note Trustpilot du header** : réglé le 19/08/2026 en la sortant du
+      header pour la mettre dans la barre d'offre, où elle est visible à toutes
+      les largeurs (voir section 7).
 - [ ] **Mobile** : parcours complet sur téléphone (menu, fiche, panier).
 
 ---
 
 ## 3. En attente d'une info ou d'une décision client
 
-- [~] **Fond du favicon** — la marque est désormais découpée dans le vrai logo
-      (`public/brand/logo-bien.png`, le B avec le champignon en contre-forme),
-      posée sur le Deep Blue de la charte, comme la pastille du site actuel du
-      client. Il écrivait « en noir sur fond blanc » en décrivant le fichier
-      qu'il joignait : si c'est bien le rendu voulu dans l'onglet, la variante
-      noir sur blanc se régénère avec le même script (voir le commit).
+- [x] **Fond du favicon** — tranché le 19/08/2026 : monogramme noir sur fond
+      blanc, régénéré avec `node scripts/generate-favicon.mjs white`.
 - [~] **Rose sur les CTA** — demandé par le client (« ou sinon les CTA ? »).
       Non appliqué : la charte n'autorise que du vert sur un aplat pink (p. 25),
       et vert sur rose plafonne à 2,4:1, donc un bouton illisible. Les seules
@@ -353,10 +348,9 @@ réalisables tout de suite, les `[~]` attendent encore une information.
       (extrait concentré vs équivalent plante), s'étonne que l'écart ne touche
       que FOCUS et propose de nous recommuniquer les dosages de chaque produit.
       Rien ne bouge avant cette liste : ce sont des mentions réglementaires.
-- [~] **Note Trustpilot de la page Ingrédients** — il précise que la note
-      n'apparaît sur la bannière qu'après dézoom, et qu'elle se comporte
-      autrement sur un autre poste. Piste : le seuil `2xl` (1536 px) au-delà
-      duquel la note revient dans le header. À reproduire aux deux zooms.
+- [x] **Note Trustpilot de la page Ingrédients** — c'était bien le seuil `2xl`
+      (1536 px) du header : elle n'apparaissait qu'après dézoom, sur un écran
+      assez large. Réglé le 19/08/2026 par son passage dans la barre d'offre.
 
 ### Chantiers « ASAP » listés par le client
 
@@ -394,3 +388,111 @@ réalisables tout de suite, les `[~]` attendent encore une information.
       collection. Déjà faits le 11/08 : conseils d'utilisation MUSHGLOW (son
       texte), badge « best-seller » sur la première photo seulement, Cadaqués sur
       la carte et l'Espagne mentionnée.
+
+---
+
+## 7. Retours client du 19/08/2026 (« site feedback 3 »)
+
+Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
+
+### Fait
+
+- [x] **Favicon en noir sur fond blanc** — arbitrage rendu par le client : la
+      pastille passe du Deep Blue au blanc, monogramme noir. Régénérée avec
+      `node scripts/generate-favicon.mjs white` (`icon.svg` + `apple-icon.png`).
+- [x] **Barre d'offre** — porte désormais la signature de marque : « **BIEN,**
+      les rituels adaptogènes qui répondent à chacun de vos besoins ». L'accent
+      passe du citrus au pink, autorisé en texte sur fond navy (11:1) et
+      interdit sur fond clair. Le code `BACKTOMUSH` est conservé derrière le
+      slogan, masqué sous 1024 px faute de largeur.
+- [x] **Note boutique enfin visible** — elle vivait dans le header, où elle ne
+      s'affichait qu'au-delà de 1536 px : jamais sur un 13"/15", d'où le
+      « toujours pas » du client. Elle est remontée dans la barre d'offre, à
+      gauche, visible à toutes les largeurs et cliquable vers la page Avis. Le
+      header y gagne la place qui manquait à la nav.
+- [x] **Bandeaux de haut de page raccourcis** — pages collection (le
+      « Gummies » de sa capture) alignées sur la boutique, page Presse
+      raccourcie d'un tiers, bloc d'ouverture de la page Histoire resserré une
+      seconde fois. **La page d'accueil garde son grand hero**, comme demandé.
+- [x] **Logos de presse cliquables** — dix médias renvoient vers leur article
+      (Do It In Paris, Marie Claire, Grazia, Psychologies, Gala, L'Officiel,
+      BIBA, Sud Radio, Beauté test, Snake & Twist). Les liens de tracking
+      e-mail sont retirés des URL. Les dix parutions papier (« PRINT, cf
+      dossier ») restent affichées, non cliquables faute d'URL.
+- [x] **Do It In Paris et Magicmaman trop petits** — leurs fichiers gardaient
+      d'énormes marges blanches : le tracé n'occupait que 14 % de la hauteur du
+      canvas, donc ~7 px à l'écran. Recadrés au tracé, ils s'affichent
+      maintenant à la même échelle optique que les dix-huit autres.
+- [x] **Page Histoire** — guillemet fermant ajouté à la fin du témoignage
+      (seul l'ouvrant était posé), bloc d'ouverture réduit pour laisser
+      apparaître le début de la section suivante.
+- [x] **Fiche produit — prix ramené à la journée** : chaque ligne du choix de
+      la cure affiche « 1,26 € par jour » au lieu du prix au mois (30 jours par
+      unité, 60 gummies à 2/jour comme 30 portions de poudre).
+- [x] **Fiche produit — prix unitaire supprimé** sur les quatre compléments :
+      il faisait doublon avec le tableau des cures, qui porte déjà le total, le
+      prix barré et le prix au jour. Il reste sur le mousseur et le tote bag,
+      qui n'ont pas ce tableau.
+- [x] **Fiche produit — « En stock · Livré entre le… »** déplacé entre le
+      tableau des cures et le bouton d'ajout.
+- [x] **Fiche produit — bloc bleu replié** : le bloc d'infos passe en accordéon
+      fermé, seul son intitulé reste visible. Le bouton d'ajout au panier est
+      donc visible dès l'arrivée sur la page.
+- [x] **Quantités libres** — un menu « autre quantité » (1 à 15) complète les
+      quatre cures sur les compléments ; le mousseur et le tote bag passent de
+      1/2/3 à 1-2-3-4-5 puis « 6+ », qui déplie un second menu jusqu'à 15.
+- [x] **Goûts** — CALM « goût mûre » et FOCUS « goût ananas » sur la question
+      « Quel goût a-t-il ? » (FR et EN) : elle disait « fruité et gourmand »
+      alors que le goût était déjà nommé plus haut dans la page.
+- [x] **« Comment le préparer ? » → « Posologie »** sur les gummies (FR et EN).
+      MUSHGLOW garde « Comment le préparer ? » : c'est une poudre à doser.
+- [x] **Bandeau cookies illisible** — passait en bleu nuit par-dessus des pages
+      bleu nuit, avec un bouton bleu ciel. Il passe en fond off-white, texte
+      noir, bouton vert (association autorisée p. 24) : il se détache
+      désormais de toutes les pages.
+- [x] **Photo de la fenêtre de bienvenue** — c'était un visuel généré par IA où
+      le pot portait le nom d'une marque inventée (« Inno Gut Health »).
+      Remplacé par la photo de la gamme (`bien-gamme.png`) et le fichier IA
+      supprimé du dépôt.
+- [x] **Ingrédients décentrés sur téléphone** — la carte s'alignait sur le bord
+      gauche du carrousel ; elle se centre maintenant dans le bloc vert.
+- [x] **Émoticônes** — décision du client : elles restent telles quelles dans
+      les avis et les citations de presse. Rien à faire.
+
+### En attente d'un fichier ou d'une décision du client
+
+- [~] **Photo du bloc d'ouverture de la page Histoire** — il demande de la
+      changer « cf en dessous », mais l'image de référence n'est pas dans les
+      fichiers reçus. Le bloc a été réduit ; la photo reste `story.jpg` tant
+      que le fichier voulu n'est pas fourni.
+- [~] **Photo RTL de la page Presse** — introuvable dans le dossier « fichiers
+      site » (il contient le plateau Sud Radio, les photos de sport auto et les
+      logos presse, pas de RTL). À renvoyer pour remplacer le visuel IA
+      `presse-hero.webp`.
+- [~] **Note affichée : 4,8 minimum** — le client préfère « prendre le
+      risque ». Deux choses à distinguer, parce que le risque n'est pas le même :
+      afficher une note *inventée* expose au déréférencement des rich snippets
+      Google (le balisage `AggregateRating` doit correspondre à une source
+      vérifiable) **et** à une sanction DGCCRF au titre de la directive
+      Omnibus ; filtrer les avis pour ne garder que ceux au-dessus de 4,8 est
+      une pratique commerciale trompeuse. En revanche, afficher **4,7, la vraie
+      moyenne de son compte Loox**, est licite, vérifiable, et ne coûte qu'un
+      dixième de point. C'est la solution proposée : Loox devient la source
+      unique (note, nombre d'avis, balisage), Trustpilot disparaît du site.
+      Attend sa validation avant d'être appliqué à `lib/social-proof.ts`.
+- [~] **Dosages de FOCUS** — le client renvoie « aux nouvelles fiches de
+      réglementation ». Les quatre attestations DGAL du dépôt ne portent que la
+      déclaration COMPL'ALIM, pas les dosages par actif. Il faut la fiche
+      technique (ou l'étiquette) de chaque produit. Rien ne bouge d'ici là :
+      ce sont des mentions réglementaires.
+- [~] **Mur de célébrités** — proposition du client (page d'avis de
+      personnalités sur la marque). Faisable, mais chaque citation et chaque
+      portrait demande une autorisation écrite de la personne : un avis
+      attribué sans accord est une atteinte au droit à l'image et à la vie
+      privée. À cadrer avec la liste des personnes et leurs accords.
+- [~] **Formulations de la page d'accueil** — le client ne se souvient pas
+      d'avoir annoncé des textes section par section. Point clos, sauf s'il
+      veut réécrire des passages précis.
+- [~] **Packs Shopify** — il les publie sur le canal de vente et nous
+      préviendra. Règle retenue : pas de remise par quantité sur les packs,
+      qui portent déjà la leur.

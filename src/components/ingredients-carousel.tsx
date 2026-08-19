@@ -107,14 +107,18 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
       <div
         ref={trackRef}
         onScroll={measure}
-        className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        /* Sur téléphone, la carte s'aligne au centre et non au bord gauche :
+           calée à gauche, l'ingrédient paraissait décalé dans le bloc vert
+           (retour client du 19/08/2026). Le retrait latéral permet à la
+           première et à la dernière carte de se centrer elles aussi. */
+        className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 px-[7%] sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {INGREDIENTS.map((ingredient) => {
           const ing = ingredient[en ? "en" : "fr"];
           return (
           <article
             key={ingredient.img}
-            className="snap-start shrink-0 w-[80%] sm:w-[46%] lg:w-[calc((100%-8rem)/5)] text-center"
+            className="snap-center sm:snap-start shrink-0 w-[86%] sm:w-[46%] lg:w-[calc((100%-8rem)/5)] text-center"
           >
             <div className="relative aspect-square w-1/2 mx-auto max-w-[150px] rounded-full overflow-hidden ring-1 ring-bien-cream/15 bg-bien-forest/40 group">
               <Image src={ingredient.img} alt={`${ing.name} (${ing.latin})`} fill loading="lazy" sizes="150px" className="object-cover group-hover:scale-105 transition-transform duration-500" />

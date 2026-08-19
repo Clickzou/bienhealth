@@ -70,13 +70,16 @@ export default async function CollectionPage({
       <SiteHeader lang={lang} />
 
       {/* Hero collection */}
-      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-10 sm:pt-14">
-        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-16 py-12 sm:py-16">
+      {/* Bandeau aligné sur celui de la boutique : bas, pour que la grille
+          produits apparaisse presque tout de suite (demande client du
+          19/08/2026 — seule la page d'accueil garde un grand hero). */}
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-8 sm:pt-10">
+        <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow px-6 sm:px-10 lg:px-12 py-7 sm:py-9">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{c.eyebrow}</p>
-          <h1 className="mt-3 font-hero text-bien-cream text-[clamp(2.2rem,5.28vw,3.96rem)] leading-[0.95]">
+          <h1 className="mt-2 font-hero text-bien-cream text-[clamp(1.9rem,4vw,2.9rem)] leading-[1]">
             {c.label}
           </h1>
-          <p className="mt-4 max-w-2xl text-base sm:text-lg text-bien-cream/85 leading-relaxed">{c.desc}</p>
+          <p className="mt-3 max-w-2xl text-sm sm:text-base text-bien-cream/85 leading-relaxed">{c.desc}</p>
         </div>
       </section>
 

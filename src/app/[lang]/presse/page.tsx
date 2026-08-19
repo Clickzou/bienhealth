@@ -148,17 +148,19 @@ export default async function PressePage({
 
       {/* Hero */}
       <section className="grid lg:grid-cols-2 items-center">
-        <div className="relative h-72 sm:h-96 lg:h-[560px] order-1 lg:order-none">
+        {/* Bandeau raccourci (demande client du 19/08/2026 : seule la page
+            d'accueil garde un grand hero). */}
+        <div className="relative h-56 sm:h-72 lg:h-[400px] order-1 lg:order-none">
           <Image src="/brand/presse-hero.webp" alt="BIEN health, Mushglow" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
         </div>
-        <div className="px-6 sm:px-10 lg:px-16 py-12 lg:py-20">
-          <h1 className="font-hero text-4xl sm:text-5xl lg:text-6xl leading-[1.05] text-black">
+        <div className="px-6 sm:px-10 lg:px-16 py-8 lg:py-12">
+          <h1 className="font-hero text-3xl sm:text-4xl lg:text-5xl leading-[1.05] text-black">
             {accentLastWord(h.h1)}
           </h1>
-          <p className="mt-6 text-base sm:text-lg text-black/75 leading-relaxed max-w-xl">
+          <p className="mt-4 text-base text-black/75 leading-relaxed max-w-xl">
             {h.p1}
           </p>
-          <p className="mt-3 text-base sm:text-lg text-black/75 leading-relaxed max-w-xl">
+          <p className="mt-3 text-base text-black/75 leading-relaxed max-w-xl">
             {h.p2}
           </p>
         </div>

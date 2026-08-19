@@ -105,21 +105,21 @@ export default async function HistoirePage({
       <SiteHeader lang={lang} />
 
       {/* Hero */}
-      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-10 sm:pt-14">
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 pt-7 sm:pt-9">
         <div className="relative hero-surface rounded-3xl lg:rounded-[2.5rem] overflow-hidden bien-shadow grid lg:grid-cols-2 items-stretch">
-          {/* Bloc d'ouverture resserré : il occupait beaucoup plus de hauteur
-              que le reste de la page et cassait la cohérence visuelle avec la
-              suite (retour client). */}
-          <div className="text-bien-cream p-7 sm:p-10 lg:p-12 flex flex-col justify-center">
+          {/* Bloc d'ouverture resserré une seconde fois (19/08/2026) : il
+              remplissait encore l'écran d'accueil et ne laissait rien deviner
+              de la section suivante. */}
+          <div className="text-bien-cream p-6 sm:p-8 lg:p-9 flex flex-col justify-center">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-gold font-semibold">{t.eyebrow}</p>
-            <h1 className="mt-3.5 font-hero text-[clamp(1.85rem,4.2vw,3rem)] leading-[0.98]">
+            <h1 className="mt-2.5 font-hero text-[clamp(1.7rem,3.6vw,2.5rem)] leading-[1]">
               {t.h1}
             </h1>
-            <p className="mt-4 text-[15px] sm:text-base text-bien-cream/85 leading-relaxed">
+            <p className="mt-3 text-[15px] sm:text-base text-bien-cream/85 leading-relaxed">
               {t.heroText}
             </p>
           </div>
-          <div className="relative min-h-[260px] lg:min-h-[420px]">
+          <div className="relative min-h-[190px] lg:min-h-[290px]">
             <Image src="/brand/story.jpg" alt="L'histoire de BIEN" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" priority />
           </div>
         </div>
@@ -162,8 +162,12 @@ export default async function HistoirePage({
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           <blockquote className="order-2 lg:order-1 relative">
             <span aria-hidden className="block font-display text-6xl leading-none text-bien-pink">&laquo;</span>
-            {t.story.slice(1, 4).map((para, i) => (
-              <p key={i} className={`${i === 0 ? "mt-1" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>{para}</p>
+            {t.story.slice(1, 4).map((para, i, arr) => (
+              <p key={i} className={`${i === 0 ? "mt-1" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>
+                {para}
+                {/* Guillemet fermant : la citation n'en portait que l'ouvrant. */}
+                {i === arr.length - 1 && <span aria-hidden className="font-display text-bien-pink">&nbsp;&raquo;</span>}
+              </p>
             ))}
             <footer className="mt-5 font-display text-black">{t.ceo}</footer>
           </blockquote>

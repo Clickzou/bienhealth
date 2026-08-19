@@ -26,18 +26,31 @@ export default function SiteHeader({ lang }: { lang: string }) {
   const t = ui(lang).chrome;
   return (
     <>
-      {/* Barre d'offre */}
+      {/* Barre d'offre — porte désormais la signature de marque (demande client
+          du 19/08/2026) ; l'accent passe du citrus au pink, autorisé en texte
+          sur fond navy (11:1) et interdit sur fond clair. La note boutique est
+          remontée ici : dans le header elle n'apparaissait qu'au-delà de
+          1536 px, donc jamais sur un 13"/15" — le client la cherchait « sur le
+          bandeau ». */}
       <div className="w-full bg-bien-forest text-bien-cream text-[11px] sm:text-sm">
         {/* Même gouttière que le header en dessous, sinon la langue et Instagram
             ne s'alignent plus sur le panier. */}
         <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-12 xl:px-16 py-2.5 flex items-center gap-2 sm:gap-4">
-          {/* Espaceur gauche pour équilibrer le centrage (desktop) */}
-          <div className="hidden sm:block shrink-0 w-[64px]" aria-hidden />
+          <a
+            href={`/${lang}/avis`}
+            className="shrink-0 flex items-center gap-1.5 hover:opacity-80 transition-opacity"
+            title={t.reviewsTitle}
+          >
+            <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-bien-star text-bien-star" />
+            <span className="font-semibold">{ratingLabel(lang)}/5</span>
+            <span className="hidden md:inline opacity-70 font-normal">+{TRUSTPILOT_REVIEWS} {t.reviewsBadge}</span>
+          </a>
           <span className="flex-1 min-w-0 font-medium text-center leading-snug">
-            {t.offer1}
-            <span className="opacity-60 mx-1.5 sm:mx-2">·</span>
-            <span className="hidden sm:inline">{t.offer2}<span className="opacity-60 mx-2">·</span></span>
-            {t.offerCode} <span className="font-bold text-bien-citrus tracking-wider">BACKTOMUSH</span>
+            <span className="font-bold text-bien-pink">{t.taglineBrand}</span> {t.taglineRest}
+            <span className="hidden lg:inline">
+              <span className="opacity-60 mx-2">·</span>
+              {t.offerCode} <span className="font-bold text-bien-pink tracking-wider">BACKTOMUSH</span>
+            </span>
           </span>
           <div className="shrink-0 flex items-center gap-3 sm:gap-4">
             <LanguageToggle current={lang} />
@@ -74,14 +87,9 @@ export default function SiteHeader({ lang }: { lang: string }) {
             <HeaderNav lang={lang} />
           </div>
           <div className="flex items-center justify-end gap-1 sm:gap-2">
-            {/* Note boutique à partir de 2xl seulement : sous cette largeur, ses
-                ~155px poussaient la nav hors de l'axe central. */}
-            <div className="hidden 2xl:flex items-center gap-2 rounded-full bg-bien-cream px-3 py-1.5 mr-1">
-              <Star className="h-4 w-4 fill-bien-star text-bien-star" />
-              {/* Note BOUTIQUE (Trustpilot) — les avis d'un produit donné sont
-                  affichés sur sa fiche, avec leur propre libellé. */}
-              <span className="text-xs font-semibold text-black">{ratingLabel(lang)}/5 · <span className="font-normal opacity-70">+{TRUSTPILOT_REVIEWS} {t.reviewsBadge}</span></span>
-            </div>
+            {/* La note boutique vit maintenant dans la barre d'offre : ici elle
+                ne s'affichait qu'au-delà de 1536 px et, en dessous, ses ~155 px
+                poussaient la nav hors de l'axe central. */}
             <a href={`/${lang}/boutique`} className="hidden lg:inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-4 lg:px-5 py-2.5 text-sm font-semibold hover:brightness-95 transition bien-shadow-sm">{t.shop}</a>
             {/* Les liens en icône seule portent un libellé `sr-only` : sans texte
                 d'ancrage, lecteurs d'écran et crawlers affichent l'URL brute

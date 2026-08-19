@@ -25,6 +25,11 @@ export const QUANTITY_TIERS = [
 /** Quantités proposées sur la fiche produit (1 unité = 1 mois de cure). */
 export const CURE_QUANTITIES = [1, 2, 3, 6] as const;
 
+/** Plafond des menus de quantité libre de la fiche produit (demande client :
+ *  jusqu'à 15). Au-delà, c'est une commande revendeur, traitée par le
+ *  formulaire dédié. */
+export const MAX_QUANTITY = 15;
+
 /** Quantité mise en avant comme « Meilleure offre » : la cure de 3 mois, qui
  *  est aussi la durée recommandée en FAQ. */
 export const BEST_VALUE_QUANTITY = 3;

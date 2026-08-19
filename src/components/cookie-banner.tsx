@@ -47,23 +47,28 @@ export default function CookieBanner({ lang }: { lang: string }) {
 
   return (
     <div className="fixed bottom-0 inset-x-0 z-[120] p-3 sm:p-4">
-      <div className="mx-auto max-w-4xl rounded-2xl bg-bien-forest text-bien-cream ring-1 ring-bien-cream/15 bien-shadow p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-        <p className="text-sm text-bien-cream/85 leading-relaxed flex-1">
+      {/* Fond clair et bouton vert : en bleu nuit, le bandeau se superposait au
+          hero — lui aussi bleu nuit — et le « Tout accepter » en bleu ciel sur
+          bleu nuit se lisait mal sur téléphone (retour client du 19/08/2026).
+          Off-white + green est une association autorisée par la charte (p. 24),
+          et le bandeau se détache maintenant de toutes les pages. */}
+      <div className="mx-auto max-w-4xl rounded-2xl bg-bien-offwhite text-black ring-1 ring-border bien-shadow p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <p className="text-sm text-black/70 leading-relaxed flex-1">
           {t.text}{" "}
-          <Link href={`/${lang}/cookies`} className="underline text-bien-cream hover:text-bien-gold">{t.more}</Link>.
+          <Link href={`/${lang}/cookies`} className="underline text-black hover:text-bien-leaf">{t.more}</Link>.
         </p>
         <div className="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             onClick={() => choose("essential")}
-            className="rounded-full ring-1 ring-bien-cream/30 text-bien-cream px-5 py-2.5 text-sm font-semibold hover:bg-bien-cream/10 transition-colors"
+            className="rounded-full ring-1 ring-black/20 text-black px-5 py-2.5 text-sm font-semibold hover:bg-black/5 transition-colors"
           >
             {t.refuse}
           </button>
           <button
             type="button"
             onClick={() => choose("all")}
-            className="rounded-full bg-bien-gold text-bien-forest px-5 py-2.5 text-sm font-bold hover:brightness-105 transition"
+            className="rounded-full bg-bien-leaf text-bien-offwhite px-5 py-2.5 text-sm font-bold hover:brightness-110 transition"
           >
             {t.accept}
           </button>

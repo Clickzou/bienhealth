@@ -5,9 +5,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { Check, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { addToCart, type CartItem } from "@/lib/cart";
-import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
+import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, MAX_QUANTITY, discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 import { trackMeta } from "@/lib/meta-pixel";
+
+/** Quantités du menu « autre quantité » (compléments) et du menu « 6+ » (accessoires). */
+const FREE_QUANTITIES = Array.from({ length: MAX_QUANTITY }, (_, i) => i + 1);
+const BULK_QUANTITIES = FREE_QUANTITIES.filter((n) => n >= 6);
 
 /**
  * Bouton « Ajouter au panier » : ajoute l'article au panier local et ouvre une
@@ -18,7 +22,7 @@ export default function AddToCart({
   lang,
   className,
   children,
-  /** Affiche un sélecteur 1 / 2 / 3 devant le bouton (accessoires). */
+  /** Affiche un sélecteur de quantité devant le bouton (accessoires). */
   quantitySelector = false,
   /**
    * Affiche le choix de la cure (1, 2, 3 ou 6 mois) avec les remises Shopify,
@@ -26,6 +30,18 @@ export default function AddToCart({
    * 3 mois » n'a aucun sens pour un mousseur à lait.
    */
   cureSelector = false,
+  /**
+   * Nombre de jours couverts par une unité (60 gummies à 2/jour comme 30
+   * portions de poudre = 30 jours). Sert à ramener le prix à la journée, que
+   * le client trouve plus parlant que le prix au mois.
+   */
+  daysPerUnit = 30,
+  /**
+   * Glissé entre le choix de la cure et le bouton : le client y veut la
+   * disponibilité et la fenêtre de livraison, qui étaient tout en haut de la
+   * colonne.
+   */
+  beforeButton,
 }: {
   item: Omit<CartItem, "qty">;
   lang: string;
@@ -33,22 +49,28 @@ export default function AddToCart({
   children: React.ReactNode;
   quantitySelector?: boolean;
   cureSelector?: boolean;
+  daysPerUnit?: number;
+  beforeButton?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
+  /** Le second menu (6 à 15) n'apparaît qu'après un clic sur « 6+ ». */
+  const [moreQty, setMoreQty] = useState(false);
   const en = lang === "en";
   const t = en
     ? {
         added: "Your item has been added to the cart", close: "Close", cont: "Continue shopping", view: "View cart",
         aria: "Item added to cart", quantity: "Quantity",
         cureTitle: "Choose your course", month: "month", months: "months", unit: "item", units: "items",
-        perMonth: "per month", bestValue: "Best value", freeShipping: "Free shipping",
+        perDay: "per day", bestValue: "Best value", freeShipping: "Free shipping",
+        otherQty: "Another quantity", pick: "Choose a quantity",
       }
     : {
         added: "Votre article a été ajouté au panier", close: "Fermer", cont: "Continuer mes achats", view: "Voir le panier",
         aria: "Article ajouté au panier", quantity: "Quantité",
         cureTitle: "Choisissez votre cure", month: "mois", months: "mois", unit: "produit", units: "produits",
-        perMonth: "par mois", bestValue: "Meilleure offre", freeShipping: "Livraison offerte",
+        perDay: "par jour", bestValue: "Meilleure offre", freeShipping: "Livraison offerte",
+        otherQty: "Autre quantité", pick: "Choisir une quantité",
       };
 
   const currency = item.currency || "EUR";
@@ -111,7 +133,7 @@ export default function AddToCart({
                       )}
                     </span>
                     <span className="block text-[11px] text-black/55 mt-0.5">
-                      {n} {n > 1 ? t.units : t.unit} · {money(total / n)} {t.perMonth}
+                      {n} {n > 1 ? t.units : t.unit} · {money(total / (n * daysPerUnit))} {t.perDay}
                       {total >= FREE_SHIPPING_THRESHOLD && <> · <span className="text-bien-leaf font-semibold">{t.freeShipping}</span></>}
                     </span>
                   </span>
@@ -123,23 +145,68 @@ export default function AddToCart({
               );
             })}
           </div>
+          {/* Quantité libre : les quatre cures couvrent les paliers de remise
+              Shopify, mais rien ne permettait d'en commander cinq (demande
+              client du 19/08/2026). Le menu reprend la remise du palier
+              atteint, la ligne sélectionnée ci-dessus se dé-surligne d'elle-même
+              quand la quantité n'est plus l'une des quatre. */}
+          <label className="mt-2.5 flex items-center gap-2.5 text-xs text-black/55">
+            {t.otherQty}
+            <select
+              value={qty}
+              onChange={(e) => setQty(Number(e.target.value))}
+              aria-label={t.pick}
+              className="rounded-full ring-1 ring-border bg-card px-3 py-1.5 text-sm font-semibold text-black"
+            >
+              {FREE_QUANTITIES.map((n) => (
+                <option key={n} value={n}>{n}</option>
+              ))}
+            </select>
+          </label>
         </fieldset>
       )}
 
+      {beforeButton}
+
       <div className={quantitySelector ? "flex items-center gap-3" : "contents"}>
         {quantitySelector && (
-          <div className="shrink-0 inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>
-            {[1, 2, 3].map((n) => (
+          /* 1 à 5 puis « 6+ », qui déplie un menu jusqu'à 15 : le trio 1/2/3
+             ne permettait pas de commander plus de trois mousseurs (demande
+             client du 19/08/2026). */
+          <div className="shrink-0 flex items-center gap-2">
+            <div className="inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <button
+                  key={n}
+                  type="button"
+                  onClick={() => { setQty(n); setMoreQty(false); }}
+                  aria-pressed={qty === n && !moreQty}
+                  className={`h-9 w-9 rounded-full text-sm font-bold transition ${qty === n && !moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
+                >
+                  {n}
+                </button>
+              ))}
               <button
-                key={n}
                 type="button"
-                onClick={() => setQty(n)}
-                aria-pressed={qty === n}
-                className={`h-9 w-9 rounded-full text-sm font-bold transition ${qty === n ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
+                onClick={() => { setMoreQty(true); setQty(6); }}
+                aria-pressed={moreQty}
+                className={`h-9 px-3 rounded-full text-sm font-bold transition ${moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
               >
-                {n}
+                6+
               </button>
-            ))}
+            </div>
+            {moreQty && (
+              <select
+                value={qty}
+                onChange={(e) => setQty(Number(e.target.value))}
+                aria-label={t.pick}
+                className="h-9 rounded-full ring-1 ring-border bg-card px-3 text-sm font-semibold text-black"
+              >
+                {BULK_QUANTITIES.map((n) => (
+                  <option key={n} value={n}>{n}</option>
+                ))}
+              </select>
+            )}
           </div>
         )}
         <button type="button" onClick={add} className={className}>

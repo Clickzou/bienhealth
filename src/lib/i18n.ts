@@ -15,7 +15,10 @@ export const isLang = (l: string): l is Lang => l === "fr" || l === "en";
 const DICT = {
   fr: {
     chrome: {
-      // Barre d'offre
+      // Barre d'offre — signature de marque demandée par le client (19/08/2026),
+      // le code promo passant derrière le slogan.
+      taglineBrand: "BIEN,",
+      taglineRest: "les rituels adaptogènes qui répondent à chacun de vos besoins",
       offer1: "MUSHGLOW disponible",
       offer2: "1 mousseur offert pour les 100 premières commandes",
       offerCode: "code",
@@ -29,6 +32,7 @@ const DICT = {
       openMenu: "Ouvrir le menu",
       closeMenu: "Fermer le menu",
       reviewsBadge: "avis",
+      reviewsTitle: "Voir les avis clients",
       // Méga-menus
       products: "Nos produits",
       about: "À propos",
@@ -101,6 +105,8 @@ const DICT = {
   },
   en: {
     chrome: {
+      taglineBrand: "BIEN,",
+      taglineRest: "adaptogenic rituals for every one of your needs",
       offer1: "MUSHGLOW in stock",
       offer2: "Free milk frother for the first 100 orders",
       offerCode: "code",
@@ -113,6 +119,7 @@ const DICT = {
       openMenu: "Open menu",
       closeMenu: "Close menu",
       reviewsBadge: "reviews",
+      reviewsTitle: "See customer reviews",
       products: "Our products",
       about: "About",
       byType: "By product type",

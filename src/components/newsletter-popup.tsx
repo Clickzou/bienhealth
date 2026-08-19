@@ -217,9 +217,13 @@ export default function NewsletterPopup() {
 
         {/* Panneau image — voile dégradé pink→sky (accent doux « bienvenue », charte V2) */}
         <div className="order-1 sm:order-2 relative h-40 sm:h-auto sm:min-h-[420px]">
+          {/* Vraie photo de la gamme : le visuel précédent était une image
+              générée par IA, où le pot portait le nom d'une marque inventée
+              (« Inno Gut Health ») — impubliable pour une marque qui vend de la
+              transparence (retour client du 19/08/2026). */}
           <Image
-            src="/brand/hero-lifestyle.jpg"
-            alt="BIEN health, bien-être naturel"
+            src="/brand/bien-gamme.png"
+            alt="La gamme BIEN health : Mushglow, CALM, FOCUS et POWER"
             fill
             sizes="(max-width:640px) 100vw, 384px"
             className="object-cover"
