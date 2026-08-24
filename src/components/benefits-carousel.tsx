@@ -75,7 +75,11 @@ export default function BenefitsCarousel({
     "sm:hidden shrink-0 grid place-items-center h-9 w-9 rounded-full bg-card text-black ring-1 ring-border bien-shadow-sm hover:ring-bien-gold/60 transition";
 
   return (
-    <div className="flex items-center gap-2 sm:block lg:contents">
+    /* `min-w-0` : la piste vit dans une grille, et un élément de grille refuse
+       par défaut de descendre sous la largeur intrinsèque de son contenu — les
+       quatre cartes mises bout à bout. Le bloc débordait donc de l'écran et la
+       carte affichée était coupée à droite (signalé sur téléphone). */
+    <div className="min-w-0 flex items-center gap-2 sm:block lg:contents">
       <button type="button" onClick={() => go(-1)} aria-label={prevLabel} className={arrow}>
         <ChevronLeft className="h-5 w-5" />
       </button>
