@@ -648,6 +648,7 @@ const UI = {
     reassurancePrev: "Mention précédente",
     reassuranceNext: "Mention suivante",
     videoTitle: "Vu en vidéo",
+    videoPlay: "Lire la vidéo",
     routineTitle: "Complétez votre routine",
     add: (t: string) => `Ajouter ${t}`,
     aboutEyebrow: "À propos",
@@ -669,6 +670,7 @@ const UI = {
     reassurancePrev: "Previous benefit",
     reassuranceNext: "Next benefit",
     videoTitle: "Seen on video",
+    videoPlay: "Play the video",
     routineTitle: "Complete your routine",
     add: (t: string) => `Add ${t}`,
     aboutEyebrow: "About",
@@ -995,13 +997,26 @@ export default async function ProductPage({
                       key={i}
                       src={v.url}
                       at={v.at}
-                      className="w-full aspect-[9/16] object-cover rounded-2xl ring-1 ring-border bg-bien-cream"
+                      playLabel={ui.videoPlay}
+                      className="w-full aspect-[9/16]"
                     />
                   ))}
                 </div>
               </section>
             )}
 
+            {/* Accordéons infos produit */}
+            <section className="mt-12 space-y-3">
+              {accordions.map(({ q, a }) => (
+                <details key={q} className="group bg-card rounded-2xl ring-1 ring-border px-5 open:ring-bien-leaf/40 transition-all">
+                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
+                    <h3 className="font-display text-black">{q}</h3>
+                    <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform duration-300 group-open:rotate-180" />
+                  </summary>
+                  <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed whitespace-pre-line">{a}</p>
+                </details>
+              ))}
+            </section>
             {/* Complétez votre routine */}
             {related.length > 0 && (
               <section className="mt-12">
@@ -1028,19 +1043,6 @@ export default async function ProductPage({
                 </ul>
               </section>
             )}
-
-            {/* Accordéons infos produit */}
-            <section className="mt-12 space-y-3">
-              {accordions.map(({ q, a }) => (
-                <details key={q} className="group bg-card rounded-2xl ring-1 ring-border px-5 open:ring-bien-leaf/40 transition-all">
-                  <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
-                    <h3 className="font-display text-black">{q}</h3>
-                    <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform duration-300 group-open:rotate-180" />
-                  </summary>
-                  <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed whitespace-pre-line">{a}</p>
-                </details>
-              ))}
-            </section>
           </div>
         </div>
 
