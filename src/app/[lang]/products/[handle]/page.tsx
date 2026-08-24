@@ -17,6 +17,7 @@ import ReviewsSwitch from "@/components/reviews-switch";
 import DiagnosticCTA from "@/components/diagnostic-cta";
 import AddToCart from "@/components/add-to-cart";
 import DeliveryEstimate from "@/components/delivery-estimate";
+import ReassuranceCarousel from "@/components/reassurance-carousel";
 import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
@@ -644,6 +645,8 @@ const UI = {
     backSoon: "Bientôt de retour",
     guarantee: "Satisfaits ou remboursés sous 30 jours · Paiement sécurisé.",
     reassurance: [`Livraison offerte dès ${freeShippingAmount("fr")}`, "Paiement sécurisé", "Fabriqué en France"],
+    reassurancePrev: "Mention précédente",
+    reassuranceNext: "Mention suivante",
     videoTitle: "Vu en vidéo",
     routineTitle: "Complétez votre routine",
     add: (t: string) => `Ajouter ${t}`,
@@ -663,6 +666,8 @@ const UI = {
     backSoon: "Back soon",
     guarantee: "30-day money-back guarantee · Secure payment.",
     reassurance: [`Free shipping over ${freeShippingAmount("en")}`, "Secure payment", "Made in France"],
+    reassurancePrev: "Previous benefit",
+    reassuranceNext: "Next benefit",
     videoTitle: "Seen on video",
     routineTitle: "Complete your routine",
     add: (t: string) => `Add ${t}`,
@@ -948,15 +953,17 @@ export default async function ProductPage({
               </div>
             </div>
 
-            {/* Réassurance */}
-            <ul className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3">
+            {/* Réassurance — empilées, les trois mentions poussaient le reste de
+                la page vers le bas sur téléphone : elles y défilent maintenant
+                une à une (demande client). La grille revient dès sm. */}
+            <ReassuranceCarousel className="mt-6" prevLabel={ui.reassurancePrev} nextLabel={ui.reassuranceNext}>
               {reassurance.map(({ icon: Icon, label }) => (
-                <li key={label} className="flex items-center gap-2.5 text-[13px] text-black/80">
+                <div key={label} className="w-full shrink-0 snap-start flex items-center justify-center gap-2.5 text-[13px] text-black/80 sm:w-auto sm:justify-start">
                   <span className="shrink-0 grid place-items-center h-8 w-8 rounded-full bg-bien-leaf/12 text-bien-leaf"><Icon className="h-4 w-4" /></span>
                   {label}
-                </li>
+                </div>
               ))}
-            </ul>
+            </ReassuranceCarousel>
 
             {/* La presse en parle — citation + logos magazines. Masqué sur les
                 accessoires : la citation parle des champignons adaptogènes,
@@ -979,7 +986,10 @@ export default async function ProductPage({
             {videos.length > 0 && (
               <section className="mt-12">
                 <h2 className="font-display text-lg text-black">{ui.videoTitle}</h2>
-                <div className={`mt-4 grid gap-4 ${videos.length > 1 ? "grid-cols-2" : "grid-cols-1 max-w-[16rem]"}`}>
+                {/* Trois colonnes quel que soit le nombre de vidéos : une seule
+                    n'occupe donc plus qu'un tiers de la largeur, et trois
+                    tiennent côte à côte même sur téléphone (demande client). */}
+                <div className="mt-4 grid grid-cols-3 gap-3 max-w-[30rem]">
                   {videos.map((v, i) => (
                     <ProductVideo
                       key={i}

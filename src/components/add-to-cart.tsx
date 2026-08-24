@@ -172,7 +172,7 @@ export default function AddToCart({
               client du 19/08/2026). Le menu reprend la remise du palier
               atteint, la ligne sélectionnée ci-dessus se dé-surligne d'elle-même
               quand la quantité n'est plus l'une des quatre. */}
-          <label className="mt-2.5 flex items-center gap-2.5 text-xs text-black/55">
+          <label className="mt-4 flex items-center gap-2.5 text-xs text-black/55">
             {t.otherQty}
             <select
               value={qty}

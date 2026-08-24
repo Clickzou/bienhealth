@@ -51,7 +51,7 @@ export default function DeliveryEstimate({ lang, inStock }: { lang: string; inSt
   if (!range) return null;
 
   return (
-    <p className="mt-3 inline-flex items-center gap-2 text-sm text-black/75">
+    <p className="mt-3 flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-sm text-black/75">
       <span className={`h-2 w-2 rounded-full ${inStock ? "bg-bien-leaf" : "bg-bien-gold"}`} />
       <span className="font-semibold text-black">{inStock ? (en ? "In stock" : "En stock") : en ? "Pre-order" : "Précommande"}</span>
       <span className="text-black/40">·</span>
