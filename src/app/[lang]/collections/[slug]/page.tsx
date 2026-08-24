@@ -96,7 +96,7 @@ export default async function CollectionPage({
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
           {products.map((p) => <ProductCard key={p.id} p={p} lang={lang} />)}
         </div>
       </section>
@@ -110,7 +110,7 @@ export default async function CollectionPage({
               {t.fullRange} <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {others.map((p) => <ProductCard key={p.id} p={p} lang={lang} />)}
           </div>
         </section>
