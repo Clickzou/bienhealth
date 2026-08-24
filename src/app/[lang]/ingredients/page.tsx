@@ -108,18 +108,21 @@ export default async function IngredientsPage({
 
       {/* Grille ingrédients */}
       <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-12 sm:mt-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+        {/* Deux fiches par ligne dès le téléphone (demande client) : en pleine
+            largeur, une seule tenait à l'écran. Tout ce qui suit se resserre
+            donc sous sm. */}
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6">
           {INGREDIENTS.map((ing) => {
             const loc = en ? ing.en : ing.fr;
             return (
-            <article key={ing.name} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6 flex flex-col items-center text-center hover:-translate-y-1 hover:ring-bien-leaf/40 transition-all">
-              <div className="relative h-32 w-32 mb-4">
-                <Image src={ing.img} alt={ing.name} fill sizes="128px" className="object-contain group-hover:scale-105 transition-transform duration-500" />
+            <article key={ing.name} className="group bg-card rounded-2xl sm:rounded-3xl ring-1 ring-border bien-shadow-sm p-3 sm:p-6 flex flex-col items-center text-center hover:-translate-y-1 hover:ring-bien-leaf/40 transition-all">
+              <div className="relative h-20 w-20 sm:h-32 sm:w-32 mb-3 sm:mb-4">
+                <Image src={ing.img} alt={ing.name} fill sizes="(max-width:640px) 80px, 128px" className="object-contain group-hover:scale-105 transition-transform duration-500" />
               </div>
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-bien-sage">{loc.family}</span>
-              <h2 className="mt-1 font-display text-xl text-black">{ing.name}</h2>
-              <p className="mt-1.5 text-sm font-semibold text-bien-leaf">{loc.hook}</p>
-              <p className="mt-2.5 text-sm text-black/70 leading-relaxed">{loc.desc}</p>
+              <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-bien-sage">{loc.family}</span>
+              <h2 className="mt-1 font-display text-base sm:text-xl leading-tight text-black">{ing.name}</h2>
+              <p className="mt-1.5 text-xs sm:text-sm font-semibold text-bien-leaf leading-snug">{loc.hook}</p>
+              <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-black/70 leading-relaxed line-clamp-5 sm:line-clamp-none">{loc.desc}</p>
             </article>
             );
           })}

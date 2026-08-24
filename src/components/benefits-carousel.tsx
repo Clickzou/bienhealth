@@ -25,13 +25,31 @@ export default function BenefitsCarousel({
 }) {
   const track = useRef<HTMLDivElement>(null);
   const [page, setPage] = useState(0);
-  const [pages, setPages] = useState(1);
+
+  /** Positions de chaque carte dans la piste, gouttières comprises. Se fier à
+   *  `clientWidth` comme pas de défilement était faux : le `gap-5` s'ajoute à
+   *  chaque carte, et l'écart cumulé finissait par couper la carte affichée
+   *  (bug signalé sur téléphone). */
+  const offsets = () => {
+    const el = track.current;
+    if (!el) return [];
+    const items = Array.from(el.children) as HTMLElement[];
+    if (!items.length) return [];
+    const origin = items[0].offsetLeft;
+    return items.map((it) => it.offsetLeft - origin);
+  };
 
   const measure = useCallback(() => {
     const el = track.current;
     if (!el || el.clientWidth === 0) return;
-    setPages(Math.max(1, Math.round(el.scrollWidth / el.clientWidth)));
-    setPage(Math.round(el.scrollLeft / el.clientWidth));
+    const lefts = offsets();
+    // Piste non débordante = pile verticale (sm) ou grille (lg) : une seule vue.
+    if (el.scrollWidth <= el.clientWidth + 4) return setPage(0);
+    let closest = 0;
+    lefts.forEach((left, i) => {
+      if (Math.abs(left - el.scrollLeft) < Math.abs(lefts[closest] - el.scrollLeft)) closest = i;
+    });
+    setPage(closest);
   }, []);
 
   useEffect(() => {
@@ -45,11 +63,12 @@ export default function BenefitsCarousel({
 
   const go = (dir: 1 | -1) => {
     const el = track.current;
-    if (!el) return;
+    const lefts = offsets();
+    if (!el || !lefts.length) return;
     // Boucle : après la dernière carte on revient à la première, sinon la
     // flèche paraît morte au bout de la piste.
-    const next = (page + dir + pages) % pages;
-    el.scrollTo({ left: next * el.clientWidth, behavior: "smooth" });
+    const next = (page + dir + lefts.length) % lefts.length;
+    el.scrollTo({ left: lefts[next], behavior: "smooth" });
   };
 
   const arrow =

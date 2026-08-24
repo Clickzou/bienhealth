@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { ArrowLeft, ShieldCheck, ExternalLink, FileText, BadgeCheck, MapPin } from "lucide-react";
+import { ArrowLeft, ShieldCheck, ExternalLink, FileText, BadgeCheck, MapPin, ChevronDown } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import { pageMetadata } from "@/lib/seo";
@@ -106,6 +106,21 @@ const T = {
   },
 } as const;
 
+/** Les actifs déclarés d'un produit — même liste pour le dépliant du téléphone
+ *  et pour l'affichage direct des grands écrans. */
+function ActivesList({ lines }: { lines: readonly string[] }) {
+  return (
+    <ul className="mt-2 sm:mt-2.5 space-y-1 sm:space-y-1.5">
+      {lines.map((line) => (
+        <li key={line} className="flex items-start gap-2 text-[11px] sm:text-sm text-black/80">
+          <span className="mt-1.5 h-1 w-1 sm:h-1.5 sm:w-1.5 rounded-full bg-bien-gold shrink-0" />
+          <span className="leading-snug">{line}</span>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
 export default async function CertificationsPage({
   params,
 }: {
@@ -147,52 +162,61 @@ export default async function CertificationsPage({
         </div>
 
         {/* Cartes attestations */}
-        <div className="mt-8 grid lg:grid-cols-2 gap-5">
+        {/* Deux attestations par ligne dès le téléphone (demande client) : les
+            quatre produits tiennent alors dans un écran. */}
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-5">
           {ATTESTATIONS.map((a) => (
-            <article key={a.name} className="group bg-card rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col sm:flex-row">
+            <article key={a.name} className="group bg-card rounded-2xl sm:rounded-3xl ring-1 ring-border bien-shadow-sm overflow-hidden flex flex-col lg:flex-row">
               {/* Photo produit en colonne, dans un cadre proche du portrait
                   natif des visuels (2:3). En bannière 16/10, `object-cover`
                   ne gardait que 42 % de la hauteur : le sachet MUSHGLOW était
                   coupé en deux et son nom disparaissait du cadre. */}
-              <div className="relative shrink-0 aspect-[3/4] sm:aspect-auto sm:w-[38%] bg-bien-cream overflow-hidden">
-                <Image src={a.img} alt={a.name} fill sizes="(max-width:640px) 100vw, (max-width:1024px) 38vw, 20vw" className="object-cover group-hover:scale-[1.04] transition-transform duration-500" />
-                <span className="absolute top-3 left-3 text-[11px] uppercase tracking-wider font-semibold text-bien-navy bg-white/90 backdrop-blur rounded-full px-3 py-1">{a.form[en ? "en" : "fr"]}</span>
+              <div className="relative shrink-0 aspect-[4/5] lg:aspect-auto lg:w-[38%] bg-bien-cream overflow-hidden">
+                <Image src={a.img} alt={a.name} fill sizes="(max-width:640px) 50vw, (max-width:1024px) 50vw, 20vw" className="object-cover group-hover:scale-[1.04] transition-transform duration-500" />
+                <span className="absolute top-2 left-2 sm:top-3 sm:left-3 text-[9px] sm:text-[11px] uppercase tracking-wider font-semibold text-bien-navy bg-white/90 backdrop-blur rounded-full px-2 py-0.5 sm:px-3 sm:py-1">{a.form[en ? "en" : "fr"]}</span>
               </div>
 
-              <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <div className="flex flex-1 flex-col p-3 sm:p-5 lg:p-6">
                 {/* Nom et n° de déclaration sortis de la photo : en surimpression,
                     ils imposaient un recadrage large et un dégradé sur le produit. */}
-                <h2 className="font-display text-2xl sm:text-3xl text-black leading-none">{a.name}</h2>
-                <p className="mt-2 text-xs text-black/60">
+                <h2 className="font-display text-lg sm:text-2xl lg:text-3xl text-black leading-none">{a.name}</h2>
+                <p className="mt-1.5 sm:mt-2 text-[10px] sm:text-xs text-black/60">
                   {t.declaration} <span className="font-semibold text-black">{a.number}</span> · {a.declaredOn[en ? "en" : "fr"]}
                 </p>
 
-                <p className="mt-4 text-xs uppercase tracking-[0.15em] text-bien-leaf font-semibold">{t.declaredActives}</p>
-                <ul className="mt-2.5 space-y-1.5">
-                  {a.actifs[en ? "en" : "fr"].map((line) => (
-                    <li key={line} className="flex items-start gap-2 text-sm text-black/80">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-bien-gold shrink-0" />
-                      <span className="leading-snug">{line}</span>
-                    </li>
-                  ))}
-                </ul>
+                {/* Actifs déclarés. Sous sm la liste doublait à elle seule la
+                    hauteur de la carte : elle y passe dans un dépliant, fermé
+                    par défaut. Rien n'est retiré, tout est à un appui. Un
+                    `<details>` ne pouvant être ouvert par media query, la liste
+                    est rendue à part au-dessus de sm — d'où les deux blocs. */}
+                <details className="mt-3 group/actifs sm:hidden">
+                  <summary className="flex items-center gap-1.5 cursor-pointer list-none [&::-webkit-details-marker]:hidden text-[10px] uppercase tracking-[0.15em] text-bien-leaf font-semibold">
+                    {t.declaredActives}
+                    <ChevronDown className="h-3.5 w-3.5 shrink-0 transition-transform group-open/actifs:rotate-180" />
+                  </summary>
+                  <ActivesList lines={a.actifs[en ? "en" : "fr"]} />
+                </details>
+                <div className="hidden sm:block">
+                  <p className="mt-4 text-xs uppercase tracking-[0.15em] text-bien-leaf font-semibold">{t.declaredActives}</p>
+                  <ActivesList lines={a.actifs[en ? "en" : "fr"]} />
+                </div>
 
-                <div className="mt-auto pt-5 flex flex-col sm:flex-row gap-3">
+                <div className="mt-auto pt-3 sm:pt-5 flex gap-2 sm:gap-3">
                   <a
                     href={a.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-leaf text-white px-4 py-2.5 text-sm font-semibold hover:brightness-110 transition flex-1"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-leaf text-white px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-semibold hover:brightness-110 transition flex-1 min-w-0"
                   >
-                    <ExternalLink className="h-4 w-4" /> {t.verify}
+                    <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" /> <span className="truncate">{t.verify}</span>
                   </a>
                   <a
                     href={a.pdf}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-4 py-2.5 text-sm font-bold hover:brightness-105 transition flex-1"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-gold text-black px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-bold hover:brightness-105 transition flex-1 min-w-0"
                   >
-                    <FileText className="h-4 w-4" /> {t.pdf}
+                    <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" /> <span className="truncate">{t.pdf}</span>
                   </a>
                 </div>
               </div>

@@ -47,28 +47,29 @@ export default function CookieBanner({ lang }: { lang: string }) {
 
   return (
     <div className="fixed bottom-0 inset-x-0 z-[120] p-3 sm:p-4">
-      {/* Fond clair et bouton vert : en bleu nuit, le bandeau se superposait au
-          hero — lui aussi bleu nuit — et le « Tout accepter » en bleu ciel sur
-          bleu nuit se lisait mal sur téléphone (retour client du 19/08/2026).
-          Off-white + green est une association autorisée par la charte (p. 24),
-          et le bandeau se détache maintenant de toutes les pages. */}
-      <div className="mx-auto max-w-4xl rounded-2xl bg-bien-offwhite text-black ring-1 ring-border bien-shadow p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
-        <p className="text-sm text-black/70 leading-relaxed flex-1">
+      {/* Fond rose de la charte (demande client), celui du bandeau d'annonce.
+          Il ne se confond avec aucune page — l'off-white précédent se fondait
+          dans les fonds clairs, et le bleu nuit d'avant se superposait au hero.
+          Sur ce rose, tout le texte passe en noir plein et le « Tout accepter »
+          en bleu nuit : c'est le contraste le plus fort de la palette, là où le
+          vert d'avant se serait éteint. */}
+      <div className="mx-auto max-w-4xl rounded-2xl bg-bien-pink text-black ring-1 ring-black/10 bien-shadow p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center gap-4">
+        <p className="text-sm text-black/80 leading-relaxed flex-1">
           {t.text}{" "}
-          <Link href={`/${lang}/cookies`} className="underline text-black hover:text-bien-leaf">{t.more}</Link>.
+          <Link href={`/${lang}/cookies`} className="underline font-semibold text-black hover:text-bien-navy">{t.more}</Link>.
         </p>
         <div className="flex items-center gap-2.5 shrink-0">
           <button
             type="button"
             onClick={() => choose("essential")}
-            className="rounded-full ring-1 ring-black/20 text-black px-5 py-2.5 text-sm font-semibold hover:bg-black/5 transition-colors"
+            className="rounded-full ring-1 ring-black/35 text-black px-5 py-2.5 text-sm font-semibold hover:bg-black/10 transition-colors"
           >
             {t.refuse}
           </button>
           <button
             type="button"
             onClick={() => choose("all")}
-            className="rounded-full bg-bien-leaf text-bien-offwhite px-5 py-2.5 text-sm font-bold hover:brightness-110 transition"
+            className="rounded-full bg-bien-navy text-bien-cream px-5 py-2.5 text-sm font-bold hover:brightness-150 transition"
           >
             {t.accept}
           </button>
