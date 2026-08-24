@@ -120,7 +120,7 @@ export default async function HistoirePage({
             </p>
           </div>
           <div className="relative min-h-[190px] lg:min-h-[290px]">
-            <Image src="/brand/story.jpg" alt="L'histoire de BIEN" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" priority />
+            <Image src="/brand/histoire/arc-paris.jpg" alt="L'histoire de BIEN" fill sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" priority />
           </div>
         </div>
       </section>
