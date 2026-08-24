@@ -52,7 +52,11 @@ export default async function SiteHeader({ lang }: { lang: string }) {
           >
             <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-bien-star text-bien-star" />
             <span className="font-semibold">{ratingLabel(lang)}/5</span>
-            <span className="hidden md:inline opacity-70 font-normal">{reviews} {t.reviewsBadge}</span>
+            {/* Le volume d'avis était réservé au desktop : sur téléphone, la
+                note seule ne disait pas sur combien de clients elle repose
+                (demande client). La barre garde de la place, les réseaux et
+                les langues étant compacts. */}
+            <span className="opacity-70 font-normal whitespace-nowrap">{reviews} {t.reviewsBadge}</span>
           </a>
           <div className="flex-1 flex justify-end">
             <LanguageToggle current={lang} />
