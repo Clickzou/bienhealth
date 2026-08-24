@@ -609,3 +609,13 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       au survol restait armée pour toute la visite. Elle est désormais réservée
       aux appareils à vrai pointeur, un geste au doigt ne met en pause que
       2,5 s, et seul le focus **clavier** (`:focus-visible`) arrête le bandeau.
+- [x] **Photo de la section « Soutenez votre bien-être » masquée sur téléphone**
+      — au format 3/4 elle occupait un écran entier avant d'arriver aux
+      bénéfices. Elle reste au centre du dispositif à partir de 1024 px, entre
+      les deux colonnes de cartes. `display: none` sur mobile : Next/Image ne
+      la télécharge donc pas non plus.
+- [x] **Ordre mobile : bénéfices avant « L'essentiel »** — c'est la promesse
+      produit qui ouvre la section, la liste des points clés vient l'appuyer
+      ensuite. Obtenu par `flex flex-col` + `order` sous 1024 px, sans toucher
+      à l'ordre du DOM (donc sans effet sur le desktop ni sur la lecture par un
+      lecteur d'écran au-delà de ce point de rupture).

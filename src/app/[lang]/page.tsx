@@ -523,9 +523,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
       </section>
 
-      {/* 7. Bénéfices — bulles reliées à l'image centrale */}
-      <section id="diagnostic" className="reveal bg-bien-cream mt-10 sm:mt-14 px-4 sm:px-6 lg:px-24 xl:px-32 py-12 lg:py-16">
-        <div className="text-center max-w-2xl mx-auto">
+      {/* 7. Bénéfices — bulles reliées à l'image centrale.
+          Sur téléphone, les bénéfices remontent AVANT « L'essentiel » (demande
+          client) : c'est la promesse produit qui doit arriver en premier, la
+          liste des points clés vient l'appuyer ensuite. `flex flex-col` +
+          `order` le temps du mobile, retour au flux du DOM à partir de lg où
+          les cartes entourent la photo. */}
+      <section id="diagnostic" className="reveal bg-bien-cream mt-10 sm:mt-14 px-4 sm:px-6 lg:px-24 xl:px-32 py-12 lg:py-16 flex flex-col lg:block">
+        <div className="order-1 text-center max-w-2xl mx-auto">
           <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{c.benefits.eyebrow}</p>
           <h2 className="mt-3 font-display tracking-tighter text-[clamp(1.76rem,3.96vw,3.08rem)] leading-[1] text-black">{accentLastWord(c.benefits.title)}</h2>
           <p className="mt-4 text-base sm:text-lg text-black/70">
@@ -534,7 +539,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
 
         {/* L'essentiel — points clés (déplacé depuis le hero) */}
-        <div className="mt-10 max-w-[1268px] mx-auto rounded-[1.75rem] bg-card ring-1 ring-border bien-shadow-sm p-5 sm:p-6">
+        <div className="order-3 mt-10 max-w-[1268px] mx-auto rounded-[1.75rem] bg-card ring-1 ring-border bien-shadow-sm p-5 sm:p-6">
           <div className="flex items-center justify-center gap-2 pb-3">
             <span className="h-2 w-2 rounded-full bg-bien-pink" />
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-bien-leaf">{c.hero.keyPointsTitle}</p>
@@ -554,7 +559,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </ul>
         </div>
 
-        <div className="mt-16 relative grid lg:grid-cols-[1fr_minmax(360px,560px)_1fr] gap-y-14 lg:gap-x-8 items-center">
+        <div className="order-2 mt-10 lg:mt-16 relative grid lg:grid-cols-[1fr_minmax(360px,560px)_1fr] gap-y-14 lg:gap-x-8 items-center">
           <svg
             aria-hidden
             viewBox="0 0 1000 680"
@@ -570,14 +575,18 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             ))}
           </svg>
 
-          {/* Image centrale — première dans le DOM : sur téléphone elle ouvre
-              la section, au-dessus des bénéfices. */}
-          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
+          {/* Image centrale — masquée sur téléphone (demande client) : au
+              format 3/4 elle occupait un écran entier avant d'arriver aux
+              bénéfices. À partir de lg elle reprend sa place au centre, entre
+              les deux colonnes de cartes. */}
+          <div className="hidden lg:block lg:col-start-2 lg:row-start-1 lg:row-span-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
             <Image src="/prelude-bien-health.jpg" alt={lang === "en" ? "BIEN health products, benefits" : "Produits BIEN health, bénéfices"} fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
           </div>
 
           {/* Bénéfices — carrousel sur téléphone uniquement (demande client) :
               empilées, les quatre cartes faisaient quatre écrans de défilement.
+              Sur téléphone la piste ouvre donc la section, la photo étant
+              masquée.
               À partir de `sm` on retrouve la pile, et `lg:contents` fait des
               cartes des enfants directs de la grille : deux à gauche, deux à
               droite de la photo, comme avant. La gouttière négative laisse la
@@ -597,7 +606,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* Attestations : déplacé depuis la section presse pour arriver après
             « Soutenez votre bien-être » (demande client) — la preuve de
             conformité suit ainsi les bénéfices annoncés. */}
-        <div className="mt-14 flex justify-center">
+        <div className="order-4 mt-14 flex justify-center">
           <a
             href={`/${lang}/certifications`}
             className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-bien-leaf text-white bien-shadow-sm px-7 py-3.5 text-[15px] font-bold hover:brightness-110 hover:-translate-y-0.5 transition-all"
