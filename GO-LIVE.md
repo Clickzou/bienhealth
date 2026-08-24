@@ -645,3 +645,15 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       au-dessus depuis le 19/08, et tout en haut de la colonne avant cela). La
       prop `beforeButton` d'`add-to-cart` devient `afterButton`. Changement
       structurel, donc valable sur téléphone comme sur ordinateur.
+- [x] **Barre d'achat collante désynchronisée du choix de cure (mobile)** — le
+      bouton du bas et celui de la fiche sont deux composants frères sans
+      parent client commun : la barre ajoutait toujours **une** unité au prix
+      de base, même après avoir coché « 2 mois ». Le sélecteur diffuse
+      désormais sa quantité sur `window` (`CURE_EVENT`), la barre s'y accroche,
+      affiche le total remisé et le nombre de mois, et ajoute la bonne
+      quantité. Bug de panier : le client payait une cure d'un mois en croyant
+      en commander deux.
+- [x] **Bandeau produit déployé par défaut** — le bloc « SÉRÉNITÉ & SOMMEIL »
+      (et son équivalent sur chaque fiche) s'ouvre d'emblée. Revient sur le
+      repli demandé le 19/08 : il repoussera de nouveau le bouton d'ajout vers
+      le bas, ce qui était la raison du repli. Reste refermable.

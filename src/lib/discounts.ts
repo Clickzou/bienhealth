@@ -62,3 +62,21 @@ export function lineTotal(unitPrice: number, qty: number): number {
 export function lineSavings(unitPrice: number, qty: number): number {
   return round2(lineSubtotal(unitPrice, qty) - lineTotal(unitPrice, qty));
 }
+
+/**
+ * Choix de cure diffusé par la fiche produit à la barre d'achat collante.
+ *
+ * Les deux boutons « Ajouter au panier » (celui de la fiche et celui de la
+ * barre du bas) sont deux composants frères, sans parent client commun : la
+ * barre ajoutait donc toujours une seule unité au prix de base, même après
+ * avoir choisi « 2 mois » plus haut. Le sélecteur diffuse sa quantité sur
+ * `window`, la barre s'y accroche.
+ */
+export const CURE_EVENT = "bien:cure-change";
+
+export type CureChange = { handle: string; qty: number };
+
+export function emitCureChange(detail: CureChange): void {
+  if (typeof window === "undefined") return;
+  window.dispatchEvent(new CustomEvent<CureChange>(CURE_EVENT, { detail }));
+}

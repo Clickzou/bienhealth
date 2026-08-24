@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { ShoppingBag } from "lucide-react";
 import AddToCart from "./add-to-cart";
 import type { CartItem } from "@/lib/cart";
+import { CURE_EVENT, lineTotal, type CureChange } from "@/lib/discounts";
 
 /**
  * Barre d'achat sticky en bas de la fiche produit (apparaît au scroll).
@@ -27,6 +28,23 @@ export default function ProductStickyBar({
   anchorId?: string;
 }) {
   const [show, setShow] = useState(false);
+  /**
+   * Quantité choisie dans le sélecteur de cure de la fiche. La barre ajoutait
+   * toujours une unité au prix de base : après avoir coché « 2 mois », le
+   * client retrouvait une cure d'un mois dans son panier (retour client du
+   * 24/08/2026).
+   */
+  const [qty, setQty] = useState(1);
+
+  useEffect(() => {
+    const onCure = (e: Event) => {
+      const detail = (e as CustomEvent<CureChange>).detail;
+      if (!detail || detail.handle !== item.handle) return;
+      setQty(detail.qty);
+    };
+    window.addEventListener(CURE_EVENT, onCure);
+    return () => window.removeEventListener(CURE_EVENT, onCure);
+  }, [item.handle]);
 
   useEffect(() => {
     // La barre apparaît quand le trait de séparation au-dessus des avis
@@ -48,6 +66,12 @@ export default function ProductStickyBar({
     };
   }, [anchorId]);
 
+  const money = (value: number) =>
+    new Intl.NumberFormat(lang === "en" ? "en-IE" : "fr-FR", {
+      style: "currency",
+      currency: item.currency || "EUR",
+    }).format(value);
+
   return (
     <div
       className={`fixed bottom-0 inset-x-0 z-50 transition-transform duration-300 ${show ? "translate-y-0" : "translate-y-full"}`}
@@ -57,12 +81,18 @@ export default function ProductStickyBar({
         <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 py-3 flex items-center justify-between gap-4">
           <div className="min-w-0">
             <p className="font-display text-bien-cream leading-tight truncate">{title}</p>
-            <p className="text-sm text-bien-cream/70">{price}</p>
+            {/* Le prix suit la cure : total remisé de la ligne, et rappel du
+                nombre de mois pour qu'on voie ce qu'on s'apprête à ajouter. */}
+            <p className="text-sm text-bien-cream/70">
+              {qty > 1 && <span className="font-semibold text-bien-cream">{qty} {lang === "en" ? "months" : "mois"} · </span>}
+              {qty > 1 ? money(lineTotal(item.price, qty)) : price}
+            </p>
           </div>
           {available ? (
             <AddToCart
               item={item}
               lang={lang}
+              quantity={qty}
               className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-bien-forest px-6 sm:px-9 py-3 font-bold hover:brightness-105 transition bien-shadow-sm"
             >
               <ShoppingBag className="h-4 w-4" />

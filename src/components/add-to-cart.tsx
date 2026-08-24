@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Check, X, ShoppingBag, ArrowRight } from "lucide-react";
 import { addToCart, type CartItem } from "@/lib/cart";
-import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, MAX_QUANTITY, discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
+import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, MAX_QUANTITY, discountPercent, emitCureChange, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 import { trackMeta } from "@/lib/meta-pixel";
 
@@ -42,6 +42,12 @@ export default function AddToCart({
    * au-dessus du bouton, et avant cela tout en haut de la colonne.
    */
   afterButton,
+  /**
+   * Quantité imposée de l'extérieur (barre d'achat collante) : elle suit alors
+   * le choix de cure fait plus haut dans la fiche, au lieu d'ajouter
+   * obstinément une unité.
+   */
+  quantity,
 }: {
   item: Omit<CartItem, "qty">;
   lang: string;
@@ -51,9 +57,14 @@ export default function AddToCart({
   cureSelector?: boolean;
   daysPerUnit?: number;
   afterButton?: React.ReactNode;
+  quantity?: number;
 }) {
   const [open, setOpen] = useState(false);
-  const [qty, setQty] = useState(1);
+  const [ownQty, setOwnQty] = useState(1);
+  // Une quantité imposée gagne : c'est le cas de la barre collante, qui reflète
+  // le choix de cure du sélecteur principal.
+  const qty = quantity ?? ownQty;
+  const setQty = setOwnQty;
   /** Le second menu (6 à 15) n'apparaît qu'après un clic sur « 6+ ». */
   const [moreQty, setMoreQty] = useState(false);
   const en = lang === "en";
@@ -72,6 +83,14 @@ export default function AddToCart({
         perDay: "par jour", bestValue: "Meilleure offre", freeShipping: "Livraison offerte",
         otherQty: "Autre quantité", pick: "Choisir une quantité",
       };
+
+  // Seule l'instance qui porte un sélecteur diffuse son choix : la barre
+  // collante écoute, elle ne parle pas (sinon les deux se répondraient).
+  const broadcasts = cureSelector || quantitySelector;
+  useEffect(() => {
+    if (!broadcasts) return;
+    emitCureChange({ handle: item.handle, qty });
+  }, [broadcasts, item.handle, qty]);
 
   const currency = item.currency || "EUR";
   const money = (value: number) =>

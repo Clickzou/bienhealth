@@ -881,10 +881,12 @@ export default async function ProductPage({
                 le texte générique leur prêtait des adaptogènes et des
                 champignons qu'ils ne contiennent pas. */}
             {key && (
-              /* Replié par défaut (demande client du 19/08/2026) : déployé, ce
-                 bloc repoussait le bouton d'ajout sous la ligne de flottaison.
-                 Seul l'intitulé reste visible, le contenu s'ouvre au clic. */
-              <details className="group mt-5 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm">
+              /* Déployé par défaut sur toutes les fiches (demande client du
+                 24/08/2026, qui revient sur le repli demandé le 19/08) : ce
+                 qu'apporte le produit doit se lire sans un clic de plus. Le
+                 bloc reste refermable, et il repousse d'autant le bouton
+                 d'ajout — c'était la raison du repli initial. */
+              <details open className="group mt-5 rounded-3xl bg-bien-forest text-bien-cream bien-shadow-sm">
                 <summary className="flex items-center justify-between gap-3 cursor-pointer list-none px-5 sm:px-6 py-4">
                   <h2 className="font-display text-bien-gold tracking-wide">{info.category}</h2>
                   <ChevronDown className="h-5 w-5 shrink-0 text-bien-cream/70 transition-transform group-open:rotate-180" />
