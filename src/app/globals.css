@@ -141,7 +141,13 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
-    overflow-x: clip;
+    /* Pas d'`overflow-x` ici : `clip` sur le body — contrairement à `html`, où
+       il est propagé au viewport — établit un contexte de rognage dont les
+       descendants `position: fixed` deviennent solidaires. Le CTA collant de
+       l'accueil se calait alors sur le body et flottait au milieu de la page
+       (signalé sur téléphone) ; le bandeau cookies, la barre produit et le
+       menu mobile étaient logés à la même enseigne. La règle posée sur `html`
+       suffit à supprimer le débordement latéral. */
   }
   /* H1 — Dahlia : grande échelle, 5-6 mots max, interlignage 100 % */
   h1 {

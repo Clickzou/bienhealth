@@ -281,7 +281,10 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
           de carrousel) finissent à la même hauteur, quel que soit le nombre de
           lignes du titre. Le descriptif absorbe la différence en `flex-1`, si
           bien que le « Découvrir » reste aligné d'une carte à l'autre. */}
-      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      {/* Pas d'ombre tant que la carte est dans la piste du carrousel : posée sur
+          le fond crème, elle y traînait un liseré gris sous la carte (retour
+          client). Elle revient dès sm, où les cartes redeviennent une pile. */}
+      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
@@ -787,8 +790,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* Footer : désormais global (rendu par le layout). */}
 
-      {/* 13. Mobile sticky CTA */}
-      <a href={`/${lang}/boutique`} className="sm:hidden fixed bottom-4 inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
+      {/* 13. Mobile sticky CTA — la marge basse suit la zone sûre du téléphone,
+             sinon la barre d'adresse d'iOS recouvre le bouton. */}
+      <a href={`/${lang}/boutique`} className="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
         <ShoppingBag className="h-4 w-4" /> {c.mobileCta}
       </a>
     </div>
