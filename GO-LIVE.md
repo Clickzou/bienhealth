@@ -124,7 +124,6 @@ faussée. Demande un accès à l'admin Shopify.
 - [~] **Positionnement « athlètes de la vie »** — question soulevée par le
       client : cible sportive assumée, ou trop restrictive ? Décision éditoriale
       qui impacte le hero, la page Histoire et la section mission.
-- [~] **Code promo `BACKTOMUSH`** — vérifier qu'il est actif dans Shopify.
 - [~] **Tutoiement / vouvoiement** — tout le site est passé au vouvoiement
       (le diagnostic et la popup newsletter étaient en tutoiement). Réversible
       si le client préfère le tutoiement sur ces parcours.
@@ -403,8 +402,7 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
 - [x] **Barre d'offre** — porte désormais la signature de marque : « **BIEN,**
       les rituels adaptogènes qui répondent à chacun de vos besoins ». L'accent
       passe du citrus au pink, autorisé en texte sur fond navy (11:1) et
-      interdit sur fond clair. Le code `BACKTOMUSH` est conservé derrière le
-      slogan, masqué sous 1024 px faute de largeur.
+      interdit sur fond clair. *Remanié le 24/08/2026, voir §8.*
 - [x] **Note boutique enfin visible** — elle vivait dans le header, où elle ne
       s'affichait qu'au-delà de 1536 px : jamais sur un 13"/15", d'où le
       « toujours pas » du client. Elle est remontée dans la barre d'offre, à
@@ -496,3 +494,106 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
 - [~] **Packs Shopify** — il les publie sur le canal de vente et nous
       préviendra. Règle retenue : pas de remise par quantité sur les packs,
       qui portent déjà la leur.
+
+---
+
+## 8. Retours client du 24/08/2026
+
+### Fait
+
+- [x] **Code promo retiré du bandeau** — `BACKTOMUSH` ne s'affiche plus. Les
+      clés `offerCode` des deux langues sont supprimées ; plus rien à vérifier
+      côté Shopify pour l'affichage.
+- [x] **Barre d'offre réorganisée** — réseaux sociaux à gauche, note boutique
+      centrée sur l'axe de la page, langues à droite. Instagram est rejoint par
+      TikTok et LinkedIn : les trois liens viennent désormais de
+      `components/socials.tsx`, partagé avec le footer, qui les dupliquait.
+- [x] **Signature de marque en second bandeau** — « BIEN, les rituels
+      adaptogènes… » passe sous la barre navy, en aplat rose sur texte noir
+      (demande client). Elle a quitté la barre navy, qui n'a plus la largeur de
+      la porter à côté des trois blocs ci-dessus. Le rose n'est interdit qu'en
+      *texte* sur fond clair ; en aplat sous du noir il monte à 13:1.
+- [x] **Icône planète retirée** du sélecteur de langue : les libellés FR/EN se
+      lisent seuls.
+- [x] **Puces du carrousel hero supprimées** — le fondu automatique reste, les
+      pastilles blanches sur la photo disparaissent.
+- [x] **Flèches sur le bandeau de logos presse** — le défilement passe d'une
+      animation CSS sur `transform` à un `scrollLeft` piloté à la frame
+      (`components/press-marquee.tsx`) : c'est la condition pour que des flèches
+      puissent déplacer la piste. Défilement toujours en pause au survol et au
+      focus clavier, et neutralisé si le système demande moins d'animations.
+- [x] **Exposants ¹ ² ³ ⁴ retirés** des titres de bénéfices (« Sérénité &
+      Sommeil », « Concentration & Mémoire », …) : ils ne renvoyaient à aucune
+      note de bas de page.
+- [x] **Site rendu à 90 %** — `zoom: 0.9` sur `html` (`globals.css`), la
+      cliente consultant le site avec le zoom navigateur à 90 %. Choisi plutôt
+      qu'une échelle `rem` réduite, qui aurait laissé à 100 % la centaine de
+      tailles écrites en px « en dur » et désaccordé la mise en page. Les media
+      queries restent calées sur les largeurs physiques : les breakpoints ne
+      bougent pas. Deux conséquences à surveiller : la cliente doit remettre
+      son navigateur à 100 % (sinon elle verra 81 %), et le corps de texte
+      mobile tombe à ~13 px, sous les 14 px habituellement recommandés en
+      lisibilité. Repasser la valeur à `1` annule tout.
+- [x] **Compteur du carrousel d'ingrédients faux** — 11 fiches affichées 5 par
+      vue : l'arrondi annonçait « 1 / 2 » alors qu'il faut bien trois vues pour
+      atteindre la onzième, et la dernière puce ne s'allumait jamais (en butée,
+      le rapport vaut 1,2 et s'arrondissait à 1). Passage à `ceil`, fin de
+      course traitée comme dernière page, et les flèches avancent maintenant
+      d'une page entière au lieu de 80 % de largeur — leurs positions de repos
+      coïncident enfin avec les puces.
+- [x] **Carrousel d'ingrédients décentré sur téléphone** — en butée, la
+      dernière fiche collait au bord droit et la précédente réapparaissait à
+      gauche : le `padding` de fin d'un conteneur scrollable n'entre pas dans
+      sa largeur de défilement. L'espace de centrage est désormais porté par
+      les marges des fiches de tête et de queue, et l'écart entre fiches passe
+      à 2,5 rem sur mobile (à 2 rem, la voisine mordait dans l'écran).
+- [x] **« Supermix 6-en-1 » deux fois plus petit** — le descriptif que Shopify
+      colle après un tiret reste sur la ligne du nom, à sa droite, mais à
+      `0.5em` de son corps (~10 px) sur les cartes produit (accueil et
+      boutique) : au même corps, il faisait passer le titre de MUSHGLOW sur
+      deux lignes et sa carte dépassait ses voisines. La
+      découpe est partagée avec la fiche produit, qui l'appliquait déjà
+      (`lib/product-title.ts`).
+- [x] **Bénéfices en carrousel sur téléphone** — les quatre cartes (« Sérénité
+      & Sommeil », …) s'empilaient sur quatre écrans de défilement. Sous 640 px
+      elles défilent horizontalement, aimantées ; au-dessus, la pile puis les
+      deux colonnes autour de la photo sont inchangées (`lg:contents` fait des
+      cartes des enfants directs de la grille).
+- [x] **Trustpilot remplacé par Loox** — la boutique ne collectait rien sur
+      Trustpilot ; Loox porte les vrais avis clients. Loox recopie note et
+      volume dans les metafields Shopify standard `reviews.rating` /
+      `reviews.rating_count`, lus avec le **même token Storefront** que le
+      catalogue : aucune clé ni app supplémentaire. Widget TrustBox, liens et
+      variables d'environnement supprimés ; `components/trustpilot.tsx` n'existe
+      plus. Les CTA « Voir nos avis sur Trustpilot » pointent vers la page Avis
+      interne, celui du bas de la page Avis vers la boutique.
+- [x] **Note affichée : 4,9** (`SHOP_RATING`, `lib/social-proof.ts`) au lieu de
+      4,4. Relevé Loox du 24/08/2026 : 78 avis, moyenne pondérée **4,98**
+      (MUSHGLOW 5,0/23 · CALM 5,0/19 · FOCUS 4,9/19 · POWER 5,0/17). On affiche
+      donc **moins** que la réalité, jamais plus : c'est ce qui rend le chiffre
+      défendable au titre de la directive Omnibus et des rich snippets Google.
+      Point de vigilance : relever la valeur si la moyenne réelle passait
+      durablement sous 4,9.
+- [x] **Nombre d'avis réel** — « +100 avis » (invérifiable) devient le total
+      Loox agrégé, lu chez Shopify et revalidé toutes les heures, avec repli sur
+      le dernier chiffre connu si la boutique est injoignable.
+- [x] **Balisage `AggregateRating` aligné** — la fiche produit annonçait un
+      « 5 » forfaitaire ; elle publie maintenant la note et le volume réels du
+      produit chez Loox, seule façon de garder l'étoile en résultat Google.
+- [x] **Photo de la popup de bienvenue** — remplacée par le shooting lifestyle
+      « Prélude ». Réencodée en WebP 900 px (34 Ko contre 10 Mo pour le JPEG
+      d'origine en 3981×5972) : le panneau ne dépasse jamais 384 px de large.
+
+### Vérifié
+
+- [x] **Code promo `WELCOMETOBIEN10`** — testé en direct contre l'API Storefront
+      (panier MUSHGLOW + application du code) : Shopify répond
+      `applicable: true` et le sous-total passe de 49 € à 44,10 €, soit −10 %
+      réels. Le code est stocké **dans Shopify** (section Réductions) et repris
+      en dur côté site dans `components/newsletter-popup.tsx` (`PROMO_CODE`) :
+      c'est un code fixe, pas un code unique par visiteur, et il est révélé à
+      l'écran. À réserver donc à une remise que la marque assume publiquement.
+      Réserve à lever : la popup annonce « Recevez votre code de bienvenue par
+      **mail** » alors que le site l'affiche à l'écran et n'envoie aucun e-mail
+      lui-même — il crée un client Shopify taggé `newsletter`, à charge pour
+      l'app e-mail de Shopify d'envoyer quelque chose.

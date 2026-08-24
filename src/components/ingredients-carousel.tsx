@@ -67,8 +67,17 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
   const measure = useCallback(() => {
     const el = trackRef.current;
     if (!el || el.clientWidth === 0) return;
-    setPages(Math.max(1, Math.round(el.scrollWidth / el.clientWidth)));
-    setPage(Math.round(el.scrollLeft / el.clientWidth));
+    // `ceil` et non `round` : avec 11 fiches affichées 5 par vue, l'arrondi
+    // annonçait 2 pages (11/5 = 2,2) alors qu'il en faut bien 3 pour atteindre
+    // la onzième. La dernière vue est partielle — elle s'arrête en butée de
+    // scroll — mais elle existe, et le compteur doit la compter.
+    const total = Math.max(1, Math.ceil(el.scrollWidth / el.clientWidth));
+    setPages(total);
+    // En butée, `scrollLeft / clientWidth` vaut 1,2 pour la 3ᵉ vue : arrondi à
+    // 1, la dernière puce ne s'allumait jamais. La fin de course *est* la
+    // dernière page.
+    const max = el.scrollWidth - el.clientWidth;
+    setPage(el.scrollLeft >= max - 1 ? total - 1 : Math.round(el.scrollLeft / el.clientWidth));
   }, []);
 
   useEffect(() => {
@@ -80,17 +89,19 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
     return () => ro.disconnect();
   }, [measure]);
 
-  const scroll = (dir: 1 | -1) => {
-    const el = trackRef.current;
-    if (!el) return;
-    el.scrollBy({ left: dir * Math.min(el.clientWidth * 0.8, 600), behavior: "smooth" });
-  };
-
   const goToPage = (i: number) => {
     const el = trackRef.current;
     if (!el) return;
-    el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+    // Borné à la fin de course, sinon la dernière page (partielle) demanderait
+    // un scroll qui n'existe pas et la puce resterait éteinte.
+    const target = Math.min(i * el.clientWidth, el.scrollWidth - el.clientWidth);
+    el.scrollTo({ left: Math.max(0, target), behavior: "smooth" });
   };
+
+  /* Les flèches avancent d'une page entière et non d'une fraction de largeur :
+     autrement leur position de repos ne retombait jamais sur celle des puces,
+     et le compteur sautait des numéros. */
+  const scroll = (dir: 1 | -1) => goToPage(Math.min(Math.max(page + dir, 0), pages - 1));
 
   return (
     <div className="relative mt-12">
@@ -109,16 +120,24 @@ export default function IngredientsCarousel({ lang }: { lang: string }) {
         onScroll={measure}
         /* Sur téléphone, la carte s'aligne au centre et non au bord gauche :
            calée à gauche, l'ingrédient paraissait décalé dans le bloc vert
-           (retour client du 19/08/2026). Le retrait latéral permet à la
-           première et à la dernière carte de se centrer elles aussi. */
-        className="flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 px-[7%] sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+           (retour client du 19/08/2026).
+           L'espace qui permet à la première et à la dernière carte de se
+           centrer est porté par leurs propres marges, PAS par un `px-[7%]` sur
+           la piste : le padding de fin d'un conteneur scrollable n'entre pas
+           dans sa largeur de défilement, donc en butée la dernière carte
+           collait au bord droit — décentrée, avec la fiche précédente qui
+           réapparaissait à gauche (retour client du 24/08/2026).
+           `gap-10` sur mobile : à 8 (2rem) l'écart était plus petit que les 7 %
+           laissés de chaque côté d'une carte centrée, et la voisine mordait
+           dans l'écran. */
+        className="flex gap-10 sm:gap-8 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-4 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {INGREDIENTS.map((ingredient) => {
           const ing = ingredient[en ? "en" : "fr"];
           return (
           <article
             key={ingredient.img}
-            className="snap-center sm:snap-start shrink-0 w-[86%] sm:w-[46%] lg:w-[calc((100%-8rem)/5)] text-center"
+            className="snap-center sm:snap-start shrink-0 w-[86%] sm:w-[46%] lg:w-[calc((100%-8rem)/5)] text-center first:ml-[7%] last:mr-[7%] sm:first:ml-0 sm:last:mr-0"
           >
             <div className="relative aspect-square w-1/2 mx-auto max-w-[150px] rounded-full overflow-hidden ring-1 ring-bien-cream/15 bg-bien-forest/40 group">
               <Image src={ingredient.img} alt={`${ing.name} (${ing.latin})`} fill loading="lazy" sizes="150px" className="object-cover group-hover:scale-105 transition-transform duration-500" />

@@ -4,7 +4,8 @@ import { ShoppingBag } from "lucide-react";
 import { formatPrice, type ShopifyProduct } from "@/lib/shopify-products";
 import { benefitFor, BEST_SELLERS } from "@/lib/shop";
 import StarRating from "./star-rating";
-import { TRUSTPILOT_RATING } from "@/lib/social-proof";
+import { SHOP_RATING } from "@/lib/social-proof";
+import { splitProductTitle } from "@/lib/product-title";
 
 const T = {
   fr: { soldOut: "Épuisé", preorder: "Pré-commande", onlyLeft: (n: number) => `Plus que ${n}`, fallbackTag: "Complément naturel", see: "Voir", preorderCta: "Précommander", bestSeller: "Best-seller" },
@@ -18,6 +19,7 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
   // Le badge « Best-seller » n'existait que sur le carrousel de l'accueil : il
   // manquait sur la page où l'on voit tous les produits (demande client).
   const isBestSeller = p.available && BEST_SELLERS.some((k) => p.title.toUpperCase().includes(k));
+  const { main: titleMain, sub: titleSub } = splitProductTitle(p.title);
   return (
     <article className="group bg-card rounded-3xl ring-1 ring-border hover:ring-bien-leaf/40 hover:-translate-y-1 transition-all bien-shadow-sm overflow-hidden flex flex-col">
       <Link href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
@@ -51,8 +53,18 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
       <div className="p-4 sm:p-5 flex flex-col flex-1">
         {/* Même note que le header (4,4/5) : cinq étoiles pleines en dur
             contredisaient le chiffre affiché partout ailleurs. */}
-        <StarRating value={TRUSTPILOT_RATING} className="h-3.5 w-3.5" />
-        <Link href={href}><h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
+        <StarRating value={SHOP_RATING} className="h-3.5 w-3.5" />
+        {/* Le descriptif qui suit le tiret (« MUSHGLOW - Supermix 6-en-1 »)
+            reste sur la ligne du nom, à sa droite, mais à la moitié de son
+            corps (demande client) : au même corps, il faisait passer le titre
+            sur deux lignes et la carte MUSHGLOW était plus haute que ses
+            voisines. */}
+        <Link href={href}>
+          <h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">
+            {titleMain}
+            {titleSub && <span className="ml-1.5 text-[0.5em] leading-tight font-normal text-black/60">{titleSub}</span>}
+          </h3>
+        </Link>
         <p className="mt-1 text-sm text-black/65 leading-snug flex-1">{benefitFor(p.title, p.tags[0] ?? t.fallbackTag, lang)}</p>
         <div className="mt-4 flex items-center justify-between gap-3">
           <span className="font-display text-lg text-black">{formatPrice(p.price)}</span>

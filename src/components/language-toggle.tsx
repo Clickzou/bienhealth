@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Globe } from "lucide-react";
 
 /**
  * Sélecteur de langue FR/EN. Conserve la page courante en remplaçant
@@ -25,8 +24,9 @@ export default function LanguageToggle({ current }: { current: string }) {
   }
 
   return (
-    <div className="inline-flex items-center gap-1.5">
-      <Globe className="h-3.5 w-3.5 opacity-70" aria-hidden />
+    <div className="inline-flex items-center">
+      {/* Sans icône planète : le client la trouvait superflue à côté des
+          libellés FR/EN, qui se lisent seuls. */}
       <div className="inline-flex rounded-full bg-bien-cream/10 p-0.5">
         {LOCALES.map((loc) => (
           <Link

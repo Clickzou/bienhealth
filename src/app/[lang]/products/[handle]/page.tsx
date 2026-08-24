@@ -21,8 +21,7 @@ import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
 import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
-import { TRUSTPILOT_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
-import { TRUSTPILOT_URL } from "@/components/trustpilot";
+import { SHOP_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
 import StarRating from "@/components/star-rating";
 import MetaViewContent from "@/components/meta-view-content";
 
@@ -746,8 +745,19 @@ export default async function ProductPage({
       availability: `https://schema.org/${availability}`,
       url: `${SITE_URL}/${lang}/products/${handle}`,
     },
-    ...(info.reviews
-      ? { aggregateRating: { "@type": "AggregateRating", ratingValue: "5", bestRating: "5", reviewCount: String(info.reviews) } }
+    // Balisage AggregateRating : note et volume RÉELS du produit chez Loox
+    // (metafields Shopify). Un « 5 » forfaitaire ne correspondait à aucune
+    // source vérifiable — c'est ce que Google exige pour garder l'étoile en
+    // résultat de recherche.
+    ...(product.rating && product.ratingCount
+      ? {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: String(product.rating),
+            bestRating: "5",
+            reviewCount: String(product.ratingCount),
+          },
+        }
       : {}),
     ...(reviewLd.length ? { review: reviewLd } : {}),
   };
@@ -807,23 +817,19 @@ export default async function ProductPage({
           {/* Colonne droite — défile */}
           <div>
             {/* Preuve sociale : la note affichée est celle de la boutique
-                (Trustpilot, identique au header) et le compteur parle de
-                clients, pas d'avis — les avis de CE produit sont plus bas. */}
+                (identique au header) et le compteur parle de clients, pas
+                d'avis — les avis de CE produit sont plus bas. Le libellé mène
+                à la page Avis, qui porte le mur d'avis clients. */}
             <div className="flex items-center gap-2 flex-wrap">
-              <StarRating value={TRUSTPILOT_RATING} className="h-3.5 w-3.5" />
+              <StarRating value={SHOP_RATING} className="h-3.5 w-3.5" />
               <span className="text-sm font-semibold text-black">{ratingLabel(lang)}/5</span>
               <span className="text-black/30">·</span>
-              {/* Le libellé pointe vers Trustpilot, source de la note affichée
-                  juste à gauche : il renvoyait vers la page interne « Avis »,
-                  ce qui donnait un lien qui ne menait pas à la preuve. */}
-              <a
-                href={TRUSTPILOT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/${lang}/avis`}
                 className="text-sm text-black/70 hover:text-black underline-offset-2 hover:underline"
               >
                 {happyClientsLabel(lang)}
-              </a>
+              </Link>
             </div>
             {/* Garantie remontée avec la preuve sociale : sous le CTA, elle
                 séparait le bouton de la réassurance juste en dessous. */}

@@ -4,8 +4,9 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import StarRating from "./star-rating";
-import { TRUSTPILOT_RATING } from "@/lib/social-proof";
+import { SHOP_RATING } from "@/lib/social-proof";
 import { BEST_SELLERS } from "@/lib/shop";
+import { splitProductTitle } from "@/lib/product-title";
 
 export type CarouselProduct = {
   name: string;
@@ -96,6 +97,7 @@ export default function ProductsCarousel({
           // donc pas toujours les mêmes produits d'une page à l'autre. Les
           // produits indisponibles gardent leur propre pastille.
           const showBadge = !p.available || BEST_SELLERS.some((k) => p.name.toUpperCase().includes(k));
+          const title = splitProductTitle(p.name);
           return (
             <article
               key={p.name}
@@ -112,8 +114,18 @@ export default function ProductsCarousel({
               <div className="p-4 sm:p-5 flex flex-col flex-1">
                 {/* Note boutique (la même que le header) plutôt que cinq
                     étoiles pleines en dur, qui contredisaient le 4,4/5. */}
-                <StarRating value={TRUSTPILOT_RATING} className="h-3.5 w-3.5" />
-                <a href={href}><h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">{p.name}</h3></a>
+                <StarRating value={SHOP_RATING} className="h-3.5 w-3.5" />
+                {/* Le descriptif qui suit le tiret (« MUSHGLOW - Supermix
+                    6-en-1 ») reste sur la ligne du nom, à sa droite, mais à la
+                    moitié de son corps (demande client) : au même corps, il
+                    faisait passer le titre sur deux lignes et la carte
+                    dépassait ses voisines. */}
+                <a href={href}>
+                  <h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">
+                    {title.main}
+                    {title.sub && <span className="ml-1.5 text-[0.5em] leading-tight font-normal text-black/60">{title.sub}</span>}
+                  </h3>
+                </a>
                 <p className="mt-1 text-sm text-black/65 leading-snug">{p.tagline}</p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="font-display text-lg text-black">{p.price}</span>

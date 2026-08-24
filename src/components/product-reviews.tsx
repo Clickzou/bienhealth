@@ -1,7 +1,7 @@
 import ReviewForm from "./review-form";
 import ReviewsList, { type Review } from "./reviews-list";
 import StarRating from "./star-rating";
-import { TRUSTPILOT_RATING, ratingLabel } from "@/lib/social-proof";
+import { SHOP_RATING, ratingLabel } from "@/lib/social-proof";
 
 /**
  * Section avis produit (pleine largeur) : note globale + bouton « Écrire un avis »
@@ -111,12 +111,12 @@ export default function ProductReviews({
   const reviews = productKey ? REVIEWS[productKey] ?? [] : [];
   if (reviews.length === 0) return null;
   const en = lang === "en";
-  // Une seule note sur toute la page : celle du header (Trustpilot boutique).
-  // La fiche affichait « 5,0 » avec cinq étoiles pleines pendant que le header
-  // annonçait 4,4 — trois chiffres différents au même endroit (retour client).
+  // Une seule note sur toute la page : celle du header (note boutique). La
+  // fiche affichait « 5,0 » avec cinq étoiles pleines pendant que le header
+  // annonçait autre chose — trois chiffres différents au même endroit.
   const t = en
-    ? { title: "Reviews of this product", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: " for this product", shopRating: "Shop rating on Trustpilot" }
-    : { title: "Les avis sur ce produit", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " sur ce produit", shopRating: "Note de la boutique sur Trustpilot" };
+    ? { title: "Reviews of this product", basedPre: "Based on ", reviewsWord: "reviews", basedSuf: " for this product", shopRating: "Shop rating" }
+    : { title: "Les avis sur ce produit", basedPre: "Basé sur ", reviewsWord: "avis", basedSuf: " sur ce produit", shopRating: "Note de la boutique" };
 
   return (
     <section className="mt-16 sm:mt-24 border-t border-border pt-12 sm:pt-16">
@@ -128,7 +128,7 @@ export default function ProductReviews({
         <div className="flex items-center gap-4">
           <span className="font-display text-5xl text-black leading-none">{ratingLabel(lang)}</span>
           <span>
-            <StarRating value={TRUSTPILOT_RATING} className="h-5 w-5" />
+            <StarRating value={SHOP_RATING} className="h-5 w-5" />
             <span className="mt-1 block text-sm text-black/60">{t.shopRating}</span>
             <span className="block text-sm text-black/60">{t.basedPre}<span className="font-semibold text-black">{reviews.length} {t.reviewsWord}</span>{t.basedSuf}</span>
           </span>

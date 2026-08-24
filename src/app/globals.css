@@ -113,6 +113,14 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Rendu ramené à 90 % (demande cliente du 24/08/2026 : elle consulte le
+       site avec le zoom navigateur à 90 %). `zoom` plutôt qu'un `font-size`
+       réduit : il reprend aussi les ~90 tailles écrites en px « en dur »
+       (bandeaux, cartes, images), qu'une échelle rem laisserait à 100 % — le
+       site se désaccorderait. Les media queries, elles, restent calées sur les
+       largeurs physiques : les breakpoints ne bougent pas. Repasser à 1 pour
+       revenir au rendu d'origine. */
+    zoom: 0.9;
     /* Échelle de base ramenée à 16px : à 18px, le texte et les boutons (dont
        les paddings sont en rem) prenaient trop de place, surtout sur mobile.
        Un cran intermédiaire au-dessus de 1024px garde du confort de lecture
@@ -167,28 +175,16 @@
 .bien-caret { animation: bien-blink 1s steps(1) infinite; }
 
 /*
-  Bandeau de logos presse en défilement continu.
+  Bandeau de logos presse (voir `components/press-marquee.tsx`).
 
-  La piste contient la liste des logos **deux fois** : à -50 % de translation,
-  la seconde copie occupe exactement la place de la première, donc la boucle ne
-  se voit pas. Le défilement s'arrête au survol, sinon un logo cliquable se
-  déroberait sous le curseur.
-
-  Sans animation (préférence système « moins d'animations »), la piste devient
-  simplement défilable au doigt ou à la molette : les logos restent tous
-  atteignables.
+  Le défilement lui-même est piloté en JS par `scrollLeft` : c'est ce qui
+  permet aux flèches de navigation de déplacer la piste, ce qu'une animation
+  sur `transform` interdisait. Ne restent ici que la zone défilable et le
+  masquage de la barre de scroll — la piste contient la liste des logos deux
+  fois, le composant referme la boucle en retranchant la largeur d'une copie.
 */
-@keyframes bien-marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-
 .bien-marquee { overflow-x: auto; scrollbar-width: none; }
 .bien-marquee::-webkit-scrollbar { display: none; }
-
-@media (prefers-reduced-motion: no-preference) {
-  .bien-marquee { overflow-x: hidden; }
-  .bien-marquee-track { animation: bien-marquee 70s linear infinite; }
-  .bien-marquee:hover .bien-marquee-track,
-  .bien-marquee:focus-within .bien-marquee-track { animation-play-state: paused; }
-}
 
 @media (prefers-reduced-motion: no-preference) {
   /* Entrée au chargement */

@@ -3,8 +3,7 @@ import type { Metadata } from "next";
 import { Star, Check, ArrowUpRight, Quote } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
-import { TRUSTPILOT_URL } from "@/components/trustpilot";
-import { TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
+import { SHOP_RATING, getReviewCount, ratingLabel } from "@/lib/social-proof";
 import { pageMetadata } from "@/lib/seo";
 import { accentLastWord } from "@/lib/accent-title";
 
@@ -14,13 +13,13 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "avis",
     title: lang === "en" ? "Customer reviews | BIEN health" : "Avis clients | BIEN health",
-    description: lang === "en" ? "Verified customer reviews of BIEN health supplements: focus, calm, energy, sleep. Rated 4.4/5 across 100+ Trustpilot reviews." : "Les avis vérifiés de nos clients sur les compléments BIEN health : concentration, sérénité, énergie, sommeil. Note 4,4/5 sur plus de 100 avis Trustpilot.",
+    description: lang === "en" ? "Verified customer reviews of BIEN health supplements: focus, calm, energy, sleep. Rated 4.9/5 by our customers." : "Les avis vérifiés de nos clients sur les compléments BIEN health : concentration, sérénité, énergie, sommeil. Note 4,9/5 par nos clients.",
   });
 }
 
 const T = {
-  fr: { eyebrow: "Ils ont testé BIEN", h1: "Vos avis, notre fierté.", reviewsTp: "avis Trustpilot", seeAll: "Voir tous les avis sur Trustpilot", verified: "Vérifié", reply: "Réponse de BIEN" },
-  en: { eyebrow: "They tried BIEN", h1: "Your reviews, our pride.", reviewsTp: "Trustpilot reviews", seeAll: "See all reviews on Trustpilot", verified: "Verified", reply: "Reply from BIEN" },
+  fr: { eyebrow: "Ils ont testé BIEN", h1: "Vos avis, notre fierté.", reviewsTp: "avis clients vérifiés", seeAll: "Découvrir nos produits", verified: "Vérifié", reply: "Réponse de BIEN" },
+  en: { eyebrow: "They tried BIEN", h1: "Your reviews, our pride.", reviewsTp: "verified customer reviews", seeAll: "Discover our products", verified: "Verified", reply: "Reply from BIEN" },
 } as const;
 
 type Review = {
@@ -239,6 +238,8 @@ export default async function AvisPage({
   if (!hasLocale(lang)) notFound();
   const en = lang === "en";
   const t = T[en ? "en" : "fr"];
+  // Nombre d'avis clients réel (Loox, via les metafields Shopify).
+  const reviewCount = await getReviewCount();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -255,16 +256,14 @@ export default async function AvisPage({
             <span className="font-display text-4xl text-black leading-none">{ratingLabel(lang)}</span>
             <span className="h-10 w-px bg-border" />
             <span className="text-left">
-              <StarRow value={4} />
-              <span className="mt-1 block text-sm text-black/65"><span className="font-semibold text-black">+{TRUSTPILOT_REVIEWS}</span> {t.reviewsTp}</span>
+              <StarRow value={Math.round(SHOP_RATING)} />
+              <span className="mt-1 block text-sm text-black/65"><span className="font-semibold text-black">{reviewCount}</span> {t.reviewsTp}</span>
             </span>
           </div>
           <div className="mt-5">
             <a
-              href={TRUSTPILOT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-[#00b67a] text-white px-6 py-3 text-sm font-bold hover:brightness-105 transition"
+              href={`/${lang}/boutique`}
+              className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-3 text-sm font-bold hover:bg-bien-leaf transition-colors"
             >
               {t.seeAll} <ArrowUpRight className="h-4 w-4" />
             </a>
@@ -305,13 +304,12 @@ export default async function AvisPage({
           ))}
         </div>
 
-        {/* CTA Trustpilot après tous les avis */}
+        {/* Le bouton renvoyait vers Trustpilot, où la boutique ne collectait
+            aucun avis. Après le mur d'avis, la suite utile est la boutique. */}
         <div className="mt-10 flex justify-center">
           <a
-            href={TRUSTPILOT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#00b67a] text-white px-7 py-3.5 text-sm font-bold hover:brightness-105 transition"
+            href={`/${lang}/boutique`}
+            className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-7 py-3.5 text-sm font-bold hover:bg-bien-leaf transition-colors"
           >
             {t.seeAll} <ArrowUpRight className="h-4 w-4" />
           </a>

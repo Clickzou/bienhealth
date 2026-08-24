@@ -10,10 +10,10 @@ import IngredientsCarousel from "@/components/ingredients-carousel";
 import HeroCarousel from "@/components/hero-carousel";
 import RevealController from "@/components/reveal-controller";
 import Typewriter from "@/components/typewriter";
-import TrustpilotWidget, { TRUSTPILOT_URL } from "@/components/trustpilot";
 import StarRating from "@/components/star-rating";
-import { TRUSTPILOT_RATING, TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
+import { SHOP_RATING, getShopReviews, ratingLabel } from "@/lib/social-proof";
 import ProductsCarousel from "@/components/products-carousel";
+import PressMarquee from "@/components/press-marquee";
 import SiteHeader from "@/components/site-header";
 import {
   Star, Truck, ShieldCheck, MapPin, RefreshCw, Moon, Brain, Zap,
@@ -21,8 +21,6 @@ import {
   ChevronDown,
 } from "lucide-react";
 
-const TP_BUSINESS_UNIT_ID = process.env.NEXT_PUBLIC_TRUSTPILOT_BUSINESSUNIT_ID;
-const TP_TEMPLATE_ID = process.env.NEXT_PUBLIC_TRUSTPILOT_TEMPLATE_ID;
 
 /** Page d'accueil BIEN — contenu bilingue (FR / EN) co-localisé. */
 
@@ -115,7 +113,8 @@ const CONTENT = {
     press: {
       verified: "Avis Vérifiés",
       certified: "Certifié",
-      seeAllTitle: "Voir tous nos avis sur Trustpilot",
+      purchase: "Achat vérifié",
+      seeAllTitle: "Voir tous les avis de nos clients",
       reviews: "avis",
       featured: "Ils parlent de nous",
       clickHint: "Les logos cliquables renvoient vers l'article ↗",
@@ -135,9 +134,9 @@ const CONTENT = {
     ],
     reviews: {
       basedOnPre: "Basé sur ",
-      basedOnStrong: `+${TRUSTPILOT_REVIEWS} avis Trustpilot`,
+      basedOnStrong: (n: number) => `${n} avis clients vérifiés`,
       verified: "Vérifié",
-      seeAll: "Voir tous nos avis sur Trustpilot",
+      seeAll: "Voir tous les avis clients",
       items: [
         { text: "Bluffée alors que j'y croyais pas. Dès la première prise, j'ai enchaîné une semaine intense de travail créatif en étant hyper focus, lucide, sans m'éparpiller et sans stress.", name: "Elvirash", date: "26 sept. 2024" },
         { text: "Nette amélioration de ma concentration et de ma clarté mentale, plus une vraie sensation de calme et de bien-être. Naturel, je recommande vivement.", name: "Carla", date: "5 nov. 2024" },
@@ -212,7 +211,8 @@ const CONTENT = {
     press: {
       verified: "Verified Reviews",
       certified: "Certified",
-      seeAllTitle: "See all our reviews on Trustpilot",
+      purchase: "Verified purchase",
+      seeAllTitle: "See all our customer reviews",
       reviews: "reviews",
       featured: "As featured in",
       clickHint: "Clickable logos link through to the article ↗",
@@ -232,9 +232,9 @@ const CONTENT = {
     ],
     reviews: {
       basedOnPre: "Based on ",
-      basedOnStrong: `+${TRUSTPILOT_REVIEWS} Trustpilot reviews`,
+      basedOnStrong: (n: number) => `${n} verified customer reviews`,
       verified: "Verified",
-      seeAll: "See all our reviews on Trustpilot",
+      seeAll: "See all customer reviews",
       items: [
         { text: "Blown away, even though I didn't believe in it. From the very first dose, I powered through an intense week of creative work feeling hyper-focused, clear-headed, without scattering and without stress.", name: "Elvirash", date: "Sep 26, 2024" },
         { text: "A clear improvement in my focus and mental clarity, plus a real feeling of calm and wellbeing. Natural, and I highly recommend it.", name: "Carla", date: "Nov 5, 2024" },
@@ -289,26 +289,31 @@ const CONTENT = {
   },
 } as const;
 
-function Bubble({ item, side, note, anim, delay = 0, lang }: {
+function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
   item: { title: string; desc: string; icon: ComponentType<{ className?: string }>; tint: string };
   side: "left" | "right";
-  note: number;
   anim: "left" | "right" | "up" | "down";
   delay?: number;
   lang: string;
+  /** Placement dans la grille desktop (colonne/rangée). */
+  className?: string;
 }) {
   const Icon = item.icon;
   return (
     <div
       style={{ transitionDelay: `${delay}ms` }}
-      className={`group relative z-10 w-full max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"}`}
+      /* Téléphone : carte de carrousel (largeur fixe, aimantée). Les marges
+         des cartes de tête et de queue leur permettent de se centrer elles
+         aussi — un padding sur la piste ne compte pas dans sa largeur de
+         défilement. À partir de `sm`, largeur fluide et pile d'origine. */
+      className={`group relative z-10 w-[82%] shrink-0 snap-center first:ml-[9%] last:mr-[9%] sm:w-full sm:shrink sm:first:ml-0 sm:last:mr-0 max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"} ${className}`}
     >
       <a href={`/${lang}/boutique`} className="block bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
         <h3 className="mt-4 font-display text-xl text-black leading-tight">
-          {item.title}<sup className="text-bien-pink text-xs ml-0.5">{note}</sup>
+          {item.title}
         </h3>
         <p className="mt-2 text-sm text-black/70 leading-relaxed">{item.desc}</p>
         <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
@@ -325,6 +330,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   const c = CONTENT[lang === "en" ? "en" : "fr"];
   const rituals = c.rituals.map((r, i) => ({ ...r, icon: RITUAL_ICONS[i], tint: RITUAL_TINTS[i] }));
+  // Nombre d'avis clients réel (Loox, via les metafields Shopify) : « +100 »
+  // était un ordre de grandeur que rien ne permettait de vérifier.
+  const { count: reviewCount } = await getShopReviews();
 
   // Vrais produits Shopify (repli sur la démo tant que le token n'est pas configuré)
   // On exclut les accessoires (mousseur, tote bag) pour ne garder que les compléments.
@@ -435,37 +443,31 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* 6. Press — placée après les best-sellers : les produits arrivent en premier. */}
       <section id="presse" className="reveal px-4 sm:px-6 lg:px-12 xl:px-16 mt-10 sm:mt-14 scroll-mt-24">
+        {/* Les avis viennent de Loox (achat vérifié, photos), plus de
+            Trustpilot où la boutique ne collectait rien : le bandeau porte donc
+            les étoiles de la marque et non la signature d'un tiers. */}
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 mb-7">
           <div className="inline-flex items-center gap-2">
-            <span className="font-semibold text-[15px] text-black tracking-tight">Trustpilot</span>
-            <span className="inline-flex gap-0.5">
-              {[0, 1, 2, 3, 4].map((i) => (
-                <span key={i} className="grid place-items-center h-5 w-5 rounded-[3px] bg-[#00b67a]">
-                  <Star className="h-3 w-3 fill-white text-white" />
-                </span>
-              ))}
-            </span>
+            <StarRating value={SHOP_RATING} className="h-4 w-4" />
+            <span className="font-semibold text-[15px] text-black tracking-tight">{c.press.verified}</span>
           </div>
           <span className="hidden sm:block h-6 w-px bg-border" />
           <div className="inline-flex items-center gap-2 rounded-full bg-card ring-1 ring-border px-3.5 py-1.5">
             <span className="grid place-items-center h-5 w-5 rounded-full bg-[#2bb3a3] text-white"><Check className="h-3 w-3" /></span>
-            <span className="text-[13px] font-semibold text-black">{c.press.verified}</span>
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-black/55">{c.press.certified}</span>
+            <span className="text-[13px] font-semibold text-black">{c.press.purchase}</span>
           </div>
         </div>
 
         <div className="flex justify-center">
           <a
-            href={TRUSTPILOT_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={`/${lang}/avis`}
             title={c.press.seeAllTitle}
             className="group inline-flex items-center gap-3 sm:gap-4 rounded-full bg-card ring-1 ring-border bien-shadow px-5 sm:px-7 py-3 hover:ring-bien-gold/60 hover:-translate-y-0.5 transition-all"
           >
-            <StarRating value={TRUSTPILOT_RATING} className="h-4 w-4 sm:h-5 sm:w-5" />
+            <StarRating value={SHOP_RATING} className="h-4 w-4 sm:h-5 sm:w-5" />
             <span className="font-display text-xl sm:text-2xl text-black leading-none">{ratingLabel(lang)}/5</span>
             <span className="h-5 w-px bg-border" />
-            <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">+{TRUSTPILOT_REVIEWS}</span> {c.press.reviews}</span>
+            <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">{reviewCount}</span> {c.press.reviews}</span>
             <ArrowUpRight className="h-4 w-4 text-bien-leaf opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
           </a>
         </div>
@@ -480,41 +482,44 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         {/* Défilement continu : vingt logos ne tenaient pas en grille sans
             occuper quatre rangées. La liste est rendue deux fois — la seconde
             copie, invisible pour les lecteurs d'écran, referme la boucle (voir
-            `bien-marquee` dans globals.css). Chaque logo vit dans une case de
-            taille fixe et remplit en `object-contain` : les fichiers n'ont ni
-            la même hauteur ni le même rapport de forme. */}
-        <div className="mt-6 bien-marquee [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]">
-          {/* L'écart entre logos est porté par une marge sur chaque case et non
-              par un `gap` : la largeur d'une copie vaut alors exactement la
-              moitié de la piste, et la boucle se referme sans décalage. */}
-          <div className="bien-marquee-track flex w-max items-center">
-            {[0, 1].map((copy) => (
-              <div key={copy} className="flex items-center" aria-hidden={copy === 1 ? true : undefined}>
-                {PRESS.map((p) => {
-                  const logo = (
-                    <Image src={p.logo} alt={copy === 1 ? "" : p.name} fill sizes="160px" className="object-contain" />
-                  );
-                  const shell = "relative block h-12 sm:h-14 w-28 sm:w-36 shrink-0 mr-8 sm:mr-12 grayscale opacity-65 transition-all";
-                  return p.href && copy === 0 ? (
-                    <a
-                      key={p.name}
-                      href={p.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      title={c.press.readArticle(p.name)}
-                      className={`${shell} hover:grayscale-0 hover:opacity-100`}
-                    >
-                      {logo}
-                    </a>
-                  ) : (
-                    <div key={p.name} className={shell}>
-                      {logo}
-                    </div>
-                  );
-                })}
-              </div>
-            ))}
-          </div>
+            `components/press-marquee.tsx`, qui porte aussi les flèches de
+            navigation manuelle). Chaque logo vit dans une case de taille fixe
+            et remplit en `object-contain` : les fichiers n'ont ni la même
+            hauteur ni le même rapport de forme. */}
+        <div className="mt-6">
+          <PressMarquee>
+            {/* L'écart entre logos est porté par une marge sur chaque case et non
+                par un `gap` : la largeur d'une copie vaut alors exactement la
+                moitié de la piste, et la boucle se referme sans décalage. */}
+            <div className="flex w-max items-center">
+              {[0, 1].map((copy) => (
+                <div key={copy} className="flex items-center" aria-hidden={copy === 1 ? true : undefined}>
+                  {PRESS.map((p) => {
+                    const logo = (
+                      <Image src={p.logo} alt={copy === 1 ? "" : p.name} fill sizes="160px" className="object-contain" />
+                    );
+                    const shell = "relative block h-12 sm:h-14 w-28 sm:w-36 shrink-0 mr-8 sm:mr-12 grayscale opacity-65 transition-all";
+                    return p.href && copy === 0 ? (
+                      <a
+                        key={p.name}
+                        href={p.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        title={c.press.readArticle(p.name)}
+                        className={`${shell} hover:grayscale-0 hover:opacity-100`}
+                      >
+                        {logo}
+                      </a>
+                    ) : (
+                      <div key={p.name} className={shell}>
+                        {logo}
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </PressMarquee>
         </div>
       </section>
 
@@ -565,21 +570,23 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             ))}
           </svg>
 
-          {/* Colonne gauche */}
-          <div className="order-2 lg:order-1 flex flex-col items-center lg:items-start gap-y-16">
-            <Bubble item={rituals[0]} side="left" note={1} anim="left" delay={0} lang={lang} />
-            <Bubble item={rituals[1]} side="left" note={2} anim="down" delay={150} lang={lang} />
-          </div>
-
-          {/* Image centrale */}
-          <div className="order-1 lg:order-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
+          {/* Image centrale — première dans le DOM : sur téléphone elle ouvre
+              la section, au-dessus des bénéfices. */}
+          <div className="lg:col-start-2 lg:row-start-1 lg:row-span-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
             <Image src="/prelude-bien-health.jpg" alt={lang === "en" ? "BIEN health products, benefits" : "Produits BIEN health, bénéfices"} fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
           </div>
 
-          {/* Colonne droite */}
-          <div className="order-3 flex flex-col items-center lg:items-end gap-y-16">
-            <Bubble item={rituals[2]} side="right" note={3} anim="right" delay={300} lang={lang} />
-            <Bubble item={rituals[3]} side="right" note={4} anim="up" delay={450} lang={lang} />
+          {/* Bénéfices — carrousel sur téléphone uniquement (demande client) :
+              empilées, les quatre cartes faisaient quatre écrans de défilement.
+              À partir de `sm` on retrouve la pile, et `lg:contents` fait des
+              cartes des enfants directs de la grille : deux à gauche, deux à
+              droite de la photo, comme avant. La gouttière négative laisse la
+              piste déborder jusqu'aux bords de l'écran. */}
+          <div className="-mx-4 px-4 flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:flex-col sm:items-center sm:gap-y-16 sm:overflow-visible lg:contents">
+            <Bubble item={rituals[0]} side="left" anim="left" delay={0} lang={lang} className="lg:col-start-1 lg:row-start-1" />
+            <Bubble item={rituals[1]} side="left" anim="down" delay={150} lang={lang} className="lg:col-start-1 lg:row-start-2" />
+            <Bubble item={rituals[2]} side="right" anim="right" delay={300} lang={lang} className="lg:col-start-3 lg:row-start-1" />
+            <Bubble item={rituals[3]} side="right" anim="up" delay={450} lang={lang} className="lg:col-start-3 lg:row-start-2" />
           </div>
         </div>
 
@@ -609,24 +616,16 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <div className="text-center lg:text-left lg:border-r lg:border-bien-forest/10 lg:pr-12 shrink-0">
               <div className="font-display text-7xl lg:text-8xl text-black leading-none">{ratingLabel(lang)}</div>
               <div className="mt-3 flex items-center justify-center lg:justify-start">
-                <StarRating value={TRUSTPILOT_RATING} className="h-5 w-5" />
+                <StarRating value={SHOP_RATING} className="h-5 w-5" />
               </div>
-              <p className="mt-3 text-sm text-black/70">{c.reviews.basedOnPre}<span className="font-semibold">{c.reviews.basedOnStrong}</span></p>
+              <p className="mt-3 text-sm text-black/70">{c.reviews.basedOnPre}<span className="font-semibold">{c.reviews.basedOnStrong(reviewCount)}</span></p>
               <a
-                href={TRUSTPILOT_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+                href={`/${lang}/avis`}
                 title={c.reviews.seeAll}
-                className="mt-5 inline-flex items-center gap-2 hover:opacity-80 transition-opacity"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-bien-leaf hover:opacity-80 transition-opacity"
               >
-                <span className="font-semibold text-sm text-black tracking-tight">Trustpilot</span>
-                <span className="inline-flex gap-0.5">
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <span key={i} className="grid place-items-center h-4 w-4 rounded-[3px] bg-[#00b67a]">
-                      <Star className="h-2.5 w-2.5 fill-white text-white" />
-                    </span>
-                  ))}
-                </span>
+                {c.reviews.seeAll}
+                <ArrowUpRight className="h-4 w-4" />
               </a>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
@@ -643,27 +642,12 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </div>
           </div>
 
-          {/* Widget Trustpilot live (rendu dès que les identifiants sont configurés) */}
-          {TP_BUSINESS_UNIT_ID && TP_TEMPLATE_ID && (
-            <div className="mt-8 border-t border-bien-forest/10 pt-8">
-              <TrustpilotWidget templateId={TP_TEMPLATE_ID} businessUnitId={TP_BUSINESS_UNIT_ID} height="140px" />
-            </div>
-          )}
-
           <div className="mt-8 flex justify-center">
             <a
-              href={TRUSTPILOT_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2.5 rounded-full bg-[#00b67a] text-white px-6 py-3 text-sm font-bold hover:brightness-105 transition"
+              href={`/${lang}/avis`}
+              className="group inline-flex items-center gap-2.5 rounded-full bg-bien-forest text-bien-cream px-6 py-3 text-sm font-bold hover:bg-bien-leaf transition-colors"
             >
-              <span className="inline-flex gap-0.5">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <span key={i} className="grid place-items-center h-4 w-4 rounded-[3px] bg-white/25">
-                    <Star className="h-2.5 w-2.5 fill-white text-white" />
-                  </span>
-                ))}
-              </span>
+              <StarRating value={SHOP_RATING} className="h-4 w-4" />
               {c.reviews.seeAll}
               <ArrowUpRight className="h-4 w-4 -translate-x-0.5 group-hover:translate-x-0 transition-transform" />
             </a>

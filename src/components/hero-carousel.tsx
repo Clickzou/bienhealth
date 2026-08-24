@@ -3,7 +3,11 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-/** Carrousel d'images du hero : fondu automatique + points de navigation. */
+/**
+ * Carrousel d'images du hero : fondu automatique toutes les 5 s.
+ * Sans puces de navigation — le client les trouvait parasites sur la photo ;
+ * les images ne portent aucune information qu'on aurait besoin de rappeler.
+ */
 export default function HeroCarousel({ images }: { images: { src: string; alt: string; pos?: string }[] }) {
   const [active, setActive] = useState(0);
 
@@ -27,20 +31,6 @@ export default function HeroCarousel({ images }: { images: { src: string; alt: s
           className={`object-cover ${img.pos ?? "object-center"} transition-opacity duration-1000 ease-in-out ${i === active ? "opacity-100" : "opacity-0"}`}
         />
       ))}
-
-      {images.length > 1 && (
-        <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-          {images.map((img, i) => (
-            <button
-              key={img.src}
-              type="button"
-              onClick={() => setActive(i)}
-              aria-label={`Image ${i + 1}`}
-              className={`h-2 rounded-full bg-white transition-all ${i === active ? "w-6" : "w-2 opacity-50 hover:opacity-80"}`}
-            />
-          ))}
-        </div>
-      )}
     </div>
   );
 }

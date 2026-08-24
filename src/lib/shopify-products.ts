@@ -28,6 +28,10 @@ export type ShopifyProduct = {
   variantId: string | null;
   quantityAvailable: number | null; // stock exact (null si scope inventaire absent)
   currentlyNotInStock: boolean;     // vrai = 0 en stock (mais peut rester vendable en pré-commande)
+  /** Note Loox du produit, recopiée par l'app dans les metafields Shopify
+   *  standard `reviews.*`. `null` = aucun avis (accessoires). */
+  rating: number | null;
+  ratingCount: number;
 };
 
 /* ----------------------------- Storefront API ----------------------------- */
@@ -39,6 +43,7 @@ type ProductNode = {
   priceRange: { minVariantPrice: Money };
   compareAtPriceRange: { minVariantPrice: Money | null };
   variants: { nodes: { id: string; availableForSale: boolean; quantityAvailable: number | null; currentlyNotInStock: boolean }[] };
+  metafields: ({ key: string; value: string } | null)[];
 };
 
 const PRODUCT_FIELDS = `
@@ -48,7 +53,25 @@ const PRODUCT_FIELDS = `
   priceRange { minVariantPrice { amount currencyCode } }
   compareAtPriceRange { minVariantPrice { amount currencyCode } }
   variants(first: 1) { nodes { id availableForSale quantityAvailable currentlyNotInStock } }
+  metafields(identifiers: [
+    { namespace: "reviews", key: "rating" }
+    { namespace: "reviews", key: "rating_count" }
+  ]) { key value }
 `;
+
+/** `reviews.rating` arrive sérialisé : {"scale_min":"1.0","scale_max":"5.0","value":"4.9"}. */
+function parseRating(metafields: ProductNode["metafields"]): { rating: number | null; ratingCount: number } {
+  const raw = metafields?.find((m) => m?.key === "rating")?.value;
+  const count = Number.parseInt(metafields?.find((m) => m?.key === "rating_count")?.value ?? "", 10);
+  if (!raw) return { rating: null, ratingCount: 0 };
+  try {
+    const value = Number((JSON.parse(raw) as { value: string }).value);
+    if (!Number.isFinite(value)) return { rating: null, ratingCount: 0 };
+    return { rating: value, ratingCount: Number.isFinite(count) ? count : 0 };
+  } catch {
+    return { rating: null, ratingCount: 0 };
+  }
+}
 
 function normalizeNode(p: ProductNode): ShopifyProduct {
   const v = p.variants?.nodes?.[0];
@@ -64,6 +87,7 @@ function normalizeNode(p: ProductNode): ShopifyProduct {
     variantId: v?.id ?? null,
     quantityAvailable: v?.quantityAvailable ?? null,
     currentlyNotInStock: v?.currentlyNotInStock ?? false,
+    ...parseRating(p.metafields),
   };
 }
 
@@ -95,6 +119,10 @@ function normalizePublic(p: PublicProduct): ShopifyProduct {
     variantId: v ? String(v.id) : null,
     quantityAvailable: null, // non exposé par products.json public
     currentlyNotInStock: v ? v.available === false : false,
+    // products.json public n'expose pas les metafields : sans avis, le site
+    // n'affiche simplement pas de note produit.
+    rating: null,
+    ratingCount: 0,
   };
 }
 

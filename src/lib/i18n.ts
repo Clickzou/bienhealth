@@ -21,7 +21,6 @@ const DICT = {
       taglineRest: "les rituels adaptogènes qui répondent à chacun de vos besoins",
       offer1: "MUSHGLOW disponible",
       offer2: "1 mousseur offert pour les 100 premières commandes",
-      offerCode: "code",
       // Header / actions
       home: "BIEN health, accueil",
       shop: "Boutique",
@@ -109,7 +108,6 @@ const DICT = {
       taglineRest: "adaptogenic rituals for every one of your needs",
       offer1: "MUSHGLOW in stock",
       offer2: "Free milk frother for the first 100 orders",
-      offerCode: "code",
       home: "BIEN health, home",
       shop: "Shop",
       search: "Search",

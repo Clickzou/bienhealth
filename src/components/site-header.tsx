@@ -5,37 +5,46 @@ import LanguageToggle from "./language-toggle";
 import CartBadge from "./cart-badge";
 import MobileMenu from "./mobile-menu";
 import { ui } from "@/lib/i18n";
-import { TRUSTPILOT_REVIEWS, ratingLabel } from "@/lib/social-proof";
+import { getReviewCount, ratingLabel } from "@/lib/social-proof";
+import { SOCIALS } from "./socials";
 
 /**
  * En-tête global du site (barre d'offre + header sticky avec méga-menu).
  * Partagé entre l'accueil, la conformité, le blog… pour une navigation cohérente.
  */
 
-function InstagramIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
 
-export default function SiteHeader({ lang }: { lang: string }) {
+export default async function SiteHeader({ lang }: { lang: string }) {
   const t = ui(lang).chrome;
+  // Nombre d'avis clients réel (Loox, via les metafields Shopify) : « +100 »
+  // était un ordre de grandeur, invérifiable.
+  const reviews = await getReviewCount();
   return (
     <>
-      {/* Barre d'offre — porte désormais la signature de marque (demande client
-          du 19/08/2026) ; l'accent passe du citrus au pink, autorisé en texte
-          sur fond navy (11:1) et interdit sur fond clair. La note boutique est
-          remontée ici : dans le header elle n'apparaissait qu'au-delà de
-          1536 px, donc jamais sur un 13"/15" — le client la cherchait « sur le
-          bandeau ». */}
+      {/* Barre d'offre — réseaux à gauche, note boutique au centre, langues à
+          droite (demande client du 24/08/2026). La note vivait dans le header,
+          où elle ne s'affichait qu'au-delà de 1536 px : jamais sur un 13"/15",
+          d'où le « toujours pas » du client. */}
       <div className="w-full bg-bien-forest text-bien-cream text-[11px] sm:text-sm">
-        {/* Même gouttière que le header en dessous, sinon la langue et Instagram
-            ne s'alignent plus sur le panier. */}
+        {/* Même gouttière que le header en dessous, sinon les langues ne
+            s'alignent plus sur le panier. Les deux colonnes latérales sont en
+            `flex-1` : sans cela la note serait centrée sur l'espace restant,
+            pas sur l'axe de la page. */}
         <div className="mx-auto max-w-[1600px] px-3 sm:px-6 lg:px-12 xl:px-16 py-2.5 flex items-center gap-2 sm:gap-4">
+          <div className="flex-1 flex items-center gap-3 sm:gap-4">
+            {SOCIALS.map(({ href, label, icon: Icon }) => (
+              <a
+                key={href}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="hover:text-bien-gold transition-colors"
+              >
+                <Icon className="h-4 w-4" />
+              </a>
+            ))}
+          </div>
           <a
             href={`/${lang}/avis`}
             className="shrink-0 flex items-center gap-1.5 hover:opacity-80 transition-opacity"
@@ -43,28 +52,20 @@ export default function SiteHeader({ lang }: { lang: string }) {
           >
             <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-bien-star text-bien-star" />
             <span className="font-semibold">{ratingLabel(lang)}/5</span>
-            <span className="hidden md:inline opacity-70 font-normal">+{TRUSTPILOT_REVIEWS} {t.reviewsBadge}</span>
+            <span className="hidden md:inline opacity-70 font-normal">{reviews} {t.reviewsBadge}</span>
           </a>
-          <span className="flex-1 min-w-0 font-medium text-center leading-snug">
-            <span className="font-bold text-bien-pink">{t.taglineBrand}</span> {t.taglineRest}
-            <span className="hidden lg:inline">
-              <span className="opacity-60 mx-2">·</span>
-              {t.offerCode} <span className="font-bold text-bien-pink tracking-wider">BACKTOMUSH</span>
-            </span>
-          </span>
-          <div className="shrink-0 flex items-center gap-3 sm:gap-4">
+          <div className="flex-1 flex justify-end">
             <LanguageToggle current={lang} />
-            <a
-              href="https://www.instagram.com/bien.health/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram BIEN"
-              className="hover:text-bien-gold transition-colors"
-            >
-              <InstagramIcon className="h-4 w-4" />
-            </a>
           </div>
         </div>
+      </div>
+
+      {/* Signature de marque — second bandeau, rose sur texte noir (demande
+          client) : le pink n'est interdit qu'en *texte* sur fond clair, en
+          aplat sous du noir il monte à 13:1. Elle a quitté la barre navy, qui
+          porte désormais réseaux / note / langues. */}
+      <div className="w-full bg-bien-pink text-black text-[11px] sm:text-sm font-medium text-center leading-snug px-3 py-2">
+        <span className="font-bold">{t.taglineBrand}</span> {t.taglineRest}
       </div>
 
       {/* Header */}
