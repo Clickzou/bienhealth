@@ -14,6 +14,7 @@ import StarRating from "@/components/star-rating";
 import { SHOP_RATING, getShopReviews, ratingLabel } from "@/lib/social-proof";
 import ProductsCarousel from "@/components/products-carousel";
 import PressMarquee from "@/components/press-marquee";
+import BenefitsCarousel from "@/components/benefits-carousel";
 import SiteHeader from "@/components/site-header";
 import {
   Star, Truck, ShieldCheck, MapPin, RefreshCw, Moon, Brain, Zap,
@@ -125,6 +126,8 @@ const CONTENT = {
       eyebrow: "Soutenez votre bien-être",
       title: "Une réponse pour chaque besoin.",
       sub: "Des actifs dosés selon la science, pour cibler ce qui compte vraiment.",
+      prev: "Bénéfice précédent",
+      next: "Bénéfice suivant",
     },
     rituals: [
       { title: "Sérénité & Sommeil", desc: "Apaiser le mental, retrouver un sommeil profond." },
@@ -223,6 +226,8 @@ const CONTENT = {
       eyebrow: "Support your wellbeing",
       title: "A solution for every need.",
       sub: "Active ingredients dosed according to science, to target what really matters.",
+      prev: "Previous benefit",
+      next: "Next benefit",
     },
     rituals: [
       { title: "Calm & Sleep", desc: "Soothe the mind, restore deep sleep." },
@@ -302,21 +307,25 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
   return (
     <div
       style={{ transitionDelay: `${delay}ms` }}
-      /* Téléphone : carte de carrousel (largeur fixe, aimantée). Les marges
-         des cartes de tête et de queue leur permettent de se centrer elles
-         aussi — un padding sur la piste ne compte pas dans sa largeur de
-         défilement. À partir de `sm`, largeur fluide et pile d'origine. */
-      className={`group relative z-10 w-[82%] shrink-0 snap-center first:ml-[9%] last:mr-[9%] sm:w-full sm:shrink sm:first:ml-0 sm:last:mr-0 max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"} ${className}`}
+      /* Téléphone : une carte pleine largeur par vue, aimantée — les flèches
+         sont posées à côté de la piste, donc rien ne recouvre la carte et il
+         n'y a plus d'aperçu de la suivante. `max-w` ne s'applique qu'à partir
+         de `sm`, où la carte reprend sa largeur de pile. */
+      className={`group relative z-10 w-full shrink-0 snap-center sm:shrink sm:max-w-[23rem] reveal-dir reveal-from-${anim} ${side === "left" ? "lg:mr-auto" : "lg:ml-auto"} ${className}`}
     >
-      <a href={`/${lang}/boutique`} className="block bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      {/* `h-full` + colonne : les cartes d'une même rangée (ou d'une même vue
+          de carrousel) finissent à la même hauteur, quel que soit le nombre de
+          lignes du titre. Le descriptif absorbe la différence en `flex-1`, si
+          bien que le « Découvrir » reste aligné d'une carte à l'autre. */}
+      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
         <h3 className="mt-4 font-display text-xl text-black leading-tight">
           {item.title}
         </h3>
-        <p className="mt-2 text-sm text-black/70 leading-relaxed">{item.desc}</p>
-        <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
+        <p className="mt-2 flex-1 text-sm text-black/70 leading-relaxed">{item.desc}</p>
+        <span className="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
           {lang === "en" ? "Discover" : "Découvrir"} <ArrowRight className="h-4 w-4" />
         </span>
       </a>
@@ -559,7 +568,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </ul>
         </div>
 
-        <div className="order-2 mt-10 lg:mt-16 relative grid lg:grid-cols-[1fr_minmax(360px,560px)_1fr] gap-y-14 lg:gap-x-8 items-center">
+        <div className="order-2 mt-10 lg:mt-16 relative grid lg:grid-cols-[1fr_minmax(360px,560px)_1fr] gap-y-14 lg:gap-x-8 items-stretch">
           <svg
             aria-hidden
             viewBox="0 0 1000 680"
@@ -579,24 +588,22 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               format 3/4 elle occupait un écran entier avant d'arriver aux
               bénéfices. À partir de lg elle reprend sa place au centre, entre
               les deux colonnes de cartes. */}
-          <div className="hidden lg:block lg:col-start-2 lg:row-start-1 lg:row-span-2 relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
+          <div className="hidden lg:block lg:col-start-2 lg:row-start-1 lg:row-span-2 lg:self-center relative z-10 aspect-[3/4] w-full max-w-[34rem] mx-auto rounded-[2.25rem] overflow-hidden bien-shadow ring-4 ring-background">
             <Image src="/prelude-bien-health.jpg" alt={lang === "en" ? "BIEN health products, benefits" : "Produits BIEN health, bénéfices"} fill sizes="(max-width:1024px) 80vw, 360px" className="object-cover" />
           </div>
 
           {/* Bénéfices — carrousel sur téléphone uniquement (demande client) :
               empilées, les quatre cartes faisaient quatre écrans de défilement.
-              Sur téléphone la piste ouvre donc la section, la photo étant
-              masquée.
-              À partir de `sm` on retrouve la pile, et `lg:contents` fait des
-              cartes des enfants directs de la grille : deux à gauche, deux à
-              droite de la photo, comme avant. La gouttière négative laisse la
-              piste déborder jusqu'aux bords de l'écran. */}
-          <div className="-mx-4 px-4 flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:mx-0 sm:px-0 sm:flex-col sm:items-center sm:gap-y-16 sm:overflow-visible lg:contents">
+              Sur téléphone la piste ouvre la section, la photo étant masquée.
+              À partir de `sm` on retrouve la pile, et sur lg le composant
+              s'efface (`contents`) : les cartes deviennent enfants directs de
+              la grille, deux à gauche et deux à droite de la photo. */}
+          <BenefitsCarousel prevLabel={c.benefits.prev} nextLabel={c.benefits.next}>
             <Bubble item={rituals[0]} side="left" anim="left" delay={0} lang={lang} className="lg:col-start-1 lg:row-start-1" />
             <Bubble item={rituals[1]} side="left" anim="down" delay={150} lang={lang} className="lg:col-start-1 lg:row-start-2" />
             <Bubble item={rituals[2]} side="right" anim="right" delay={300} lang={lang} className="lg:col-start-3 lg:row-start-1" />
             <Bubble item={rituals[3]} side="right" anim="up" delay={450} lang={lang} className="lg:col-start-3 lg:row-start-2" />
-          </div>
+          </BenefitsCarousel>
         </div>
 
         {/* L'appel au diagnostic était répété ici ET dans le grand bloc

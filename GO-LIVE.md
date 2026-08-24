@@ -619,3 +619,19 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       ensuite. Obtenu par `flex flex-col` + `order` sous 1024 px, sans toucher
       à l'ordre du DOM (donc sans effet sur le desktop ni sur la lecture par un
       lecteur d'écran au-delà de ce point de rupture).
+- [x] **Piste des bénéfices « remontable » au premier chargement (mobile)** —
+      les cartes entrent en scène avec un décalage vertical de 70 px ; dans une
+      piste en `overflow-x: auto`, où le navigateur rend aussi l'axe vertical
+      défilable, ce décalage créait une zone de scroll et la section se laissait
+      tirer vers le haut tant que les cartes n'étaient pas posées. Sous 640 px,
+      l'entrée se limite désormais à un fondu, qui ne déborde de rien.
+- [x] **Flèches sur le carrousel de bénéfices** — une carte pleine largeur par
+      vue, encadrée par deux flèches posées **à côté** de la piste et non
+      par-dessus la carte (demande client). Elles bouclent en fin de piste, et
+      disparaissent dès 640 px où la pile reprend.
+- [x] **Cartes de bénéfices à hauteur égale** — « Concentration & Clarté
+      mentale » passe sur deux lignes et allongeait sa carte. Les cartes
+      s'étirent maintenant sur la hauteur de leur rangée (le descriptif absorbe
+      l'écart), donc le « Découvrir » s'aligne d'une carte à l'autre. Sur
+      desktop, la grille passe de `items-center` à `items-stretch` ; seule la
+      photo centrale reste centrée.

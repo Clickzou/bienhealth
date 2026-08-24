@@ -204,6 +204,17 @@
   .reveal-from-right:not(.in) { transform: translateX(80px); }
   .reveal-from-up:not(.in)    { transform: translateY(-70px); }
   .reveal-from-down:not(.in)  { transform: translateY(70px); }
+
+  /*
+    Sous 640 px, les cartes vivent dans une piste de carrousel : un décalage
+    vertical d'entrée y débordait de la zone de défilement — et `overflow-x`
+    rendant `overflow-y` scrollable, on pouvait « remonter » la piste de 70 px
+    au premier chargement, avant que les cartes ne se posent. Il ne reste que
+    le fondu, qui ne déborde de rien.
+  */
+  @media (max-width: 639px) {
+    .reveal-dir:not(.in) { transform: none; }
+  }
 }
 
 @utility bien-shadow {
