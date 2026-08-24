@@ -171,8 +171,11 @@ export default async function HistoirePage({
             ))}
             <footer className="mt-5 font-display text-black">{t.ceo}</footer>
           </blockquote>
-          <div className="order-1 lg:order-2 relative rounded-3xl overflow-hidden aspect-[4/5] bien-shadow">
-            <Image src="/brand/founder.jpg" alt={t.photos.founder} fill sizes="(max-width:1024px) 100vw, 45vw" className="object-cover" />
+          {/* Portrait borné en largeur : étiré sur toute la demi-colonne, un
+              cadre 4/5 dépassait le millier de pixels de haut sur grand écran,
+              soit trois fois la hauteur de la citation (retour client). */}
+          <div className="order-1 lg:order-2 relative w-full max-w-[20rem] sm:max-w-[22rem] mx-auto lg:justify-self-center rounded-3xl overflow-hidden aspect-[4/5] bien-shadow">
+            <Image src="/brand/founder.jpg" alt={t.photos.founder} fill sizes="(max-width:400px) 90vw, 352px" className="object-cover" />
           </div>
         </div>
       </section>
