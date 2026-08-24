@@ -96,8 +96,11 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
        passaient au-dessus du header sticky (z-40) au défilement. Un contexte
        d'empilement local les confine dans ce bloc. */
     <div className="isolate relative z-0 grid lg:grid-cols-[360px_1fr] rounded-3xl overflow-hidden ring-1 ring-border bien-shadow-sm bg-card">
-      {/* Liste */}
-      <div className="max-h-[320px] lg:max-h-[600px] overflow-y-auto divide-y divide-border">
+      {/* Liste — sous la carte sur téléphone (demande client) : au-dessus, sa
+          zone défilante coupait la page en deux et l'on tombait sur une liste
+          tronquée avant d'avoir vu la carte. L'ordre d'origine revient dès lg,
+          où les deux sont côte à côte. */}
+      <div className="order-2 lg:order-1 max-h-[320px] lg:max-h-[600px] overflow-y-auto divide-y divide-border">
         {resellers.map((r, i) => (
           <button
             key={r.name}
@@ -128,7 +131,7 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
       </div>
 
       {/* Carte */}
-      <div ref={mapEl} className="h-[360px] lg:h-[600px] w-full bg-muted" aria-label="Carte des revendeurs BIEN" />
+      <div ref={mapEl} className="order-1 lg:order-2 h-[360px] lg:h-[600px] w-full bg-muted" aria-label="Carte des revendeurs BIEN" />
     </div>
   );
 }
