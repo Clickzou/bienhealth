@@ -37,11 +37,11 @@ export default function AddToCart({
    */
   daysPerUnit = 30,
   /**
-   * Glissé entre le choix de la cure et le bouton : le client y veut la
-   * disponibilité et la fenêtre de livraison, qui étaient tout en haut de la
-   * colonne.
+   * Glissé JUSTE SOUS le bouton : le client y veut la disponibilité et la
+   * fenêtre de livraison (demande du 24/08/2026). Elles étaient auparavant
+   * au-dessus du bouton, et avant cela tout en haut de la colonne.
    */
-  beforeButton,
+  afterButton,
 }: {
   item: Omit<CartItem, "qty">;
   lang: string;
@@ -50,7 +50,7 @@ export default function AddToCart({
   quantitySelector?: boolean;
   cureSelector?: boolean;
   daysPerUnit?: number;
-  beforeButton?: React.ReactNode;
+  afterButton?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
   const [qty, setQty] = useState(1);
@@ -166,8 +166,6 @@ export default function AddToCart({
         </fieldset>
       )}
 
-      {beforeButton}
-
       <div className={quantitySelector ? "flex items-center gap-3" : "contents"}>
         {quantitySelector && (
           /* 1 à 5 puis « 6+ », qui déplie un menu jusqu'à 15 : le trio 1/2/3
@@ -213,6 +211,8 @@ export default function AddToCart({
           {children}
         </button>
       </div>
+
+      {afterButton}
 
       {open && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-label={t.aria}>

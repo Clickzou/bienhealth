@@ -640,3 +640,8 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       du produit (CALM, FOCUS…) n'arrivait qu'en troisième position. Le nom
       ouvre desormais la fiche et ce bloc se range à sa droite. Sous 640 px la
       colonne reprend : nom d'abord, preuve sociale juste dessous.
+- [x] **« En stock » sous le bouton d'ajout** — la disponibilité et la fenêtre
+      de livraison passent juste SOUS « Ajouter au panier » (elles étaient
+      au-dessus depuis le 19/08, et tout en haut de la colonne avant cela). La
+      prop `beforeButton` d'`add-to-cart` devient `afterButton`. Changement
+      structurel, donc valable sur téléphone comme sur ordinateur.

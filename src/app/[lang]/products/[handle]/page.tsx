@@ -868,10 +868,11 @@ export default async function ProductPage({
             ) : null}
 
             {/* Disponibilité + fenêtre de livraison estimée : pour un
-                complément, elle est passée juste au-dessus du bouton d'ajout,
-                entre le choix de la cure et le CTA (demande client du
-                19/08/2026). Les accessoires la gardent ici, leur bloc d'achat
-                tenant sur une seule ligne. */}
+                complément, elle est passée JUSTE SOUS le bouton d'ajout
+                (demande client du 24/08/2026 ; elle était au-dessus depuis le
+                19/08, et tout en haut de la colonne avant cela). Les
+                accessoires la gardent ici, leur bloc d'achat tenant sur une
+                seule ligne. */}
             {product.available && !key && <DeliveryEstimate lang={lang} inStock={!preorder} />}
 
             {/* Infos clés produit — remontées au-dessus du bloc d'achat : le
@@ -939,7 +940,7 @@ export default async function ProductPage({
                     lang={lang}
                     cureSelector={Boolean(key)}
                     quantitySelector={!key}
-                    beforeButton={key ? <div className="mb-4"><DeliveryEstimate lang={lang} inStock={!preorder} /></div> : undefined}
+                    afterButton={key ? <div className="mt-4"><DeliveryEstimate lang={lang} inStock={!preorder} /></div> : undefined}
                     className={`${key ? "w-full" : "flex-1 sm:flex-none"} inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-8 py-3.5 font-bold hover:brightness-105 transition bien-shadow-sm`}
                   >
                     {ctaLabel}
