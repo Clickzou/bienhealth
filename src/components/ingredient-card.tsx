@@ -14,9 +14,10 @@ const T = {
  *
  * Deux fiches par ligne sur téléphone : le descriptif y est coupé à cinq
  * lignes, sinon les cartes d'une même rangée n'ont plus la même hauteur. Un
- * « Lire plus » ouvre alors le texte entier en plein écran (demande client).
- * Le bouton n'apparaît que si le texte est réellement tronqué — au-dessus de
- * `sm`, où le descriptif est affiché en entier, il disparaît de lui-même.
+ * « Lire plus » ouvre alors le texte entier dans un panneau posé par-dessus la
+ * page (demande client). Le bouton n'apparaît que si le texte est réellement
+ * tronqué — au-dessus de `sm`, où le descriptif est affiché en entier, il
+ * disparaît de lui-même.
  */
 export default function IngredientCard({
   img,
@@ -87,17 +88,19 @@ export default function IngredientCard({
       </article>
 
       {open && (
-        // Plein écran sur téléphone, panneau centré à partir de sm.
+        // Panneau à la hauteur de son texte, centré : en plein écran il laissait
+        // un grand vide sous les fiches courtes (retour client). Le reste de la
+        // page reste visible, flouté, tout autour.
         <div
           onClick={() => setOpen(false)}
-          className="fixed inset-0 z-[130] flex bg-black/50 backdrop-blur-sm sm:items-center sm:justify-center sm:p-6"
+          className="fixed inset-0 z-[130] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 sm:p-6"
         >
           <div
             role="dialog"
             aria-modal="true"
             aria-label={name}
             onClick={(e) => e.stopPropagation()}
-            className="relative flex h-full w-full flex-col overflow-y-auto bg-card p-6 text-center sm:h-auto sm:max-h-[85vh] sm:max-w-md sm:rounded-3xl sm:p-8 bien-shadow"
+            className="relative flex w-full max-w-md max-h-[85vh] flex-col overflow-y-auto rounded-3xl bg-card p-6 sm:p-8 text-center bien-shadow"
           >
             <button
               type="button"
@@ -107,8 +110,8 @@ export default function IngredientCard({
             >
               <X className="h-4 w-4" />
             </button>
-            <div className="relative mx-auto mt-8 h-28 w-28 shrink-0 sm:mt-2">
-              <Image src={img} alt={name} fill sizes="112px" className="object-contain" />
+            <div className="relative mx-auto mt-2 h-24 w-24 sm:h-28 sm:w-28 shrink-0">
+              <Image src={img} alt={name} fill sizes="(max-width:640px) 96px, 112px" className="object-contain" />
             </div>
             <span className="mt-4 text-[10px] font-semibold uppercase tracking-wider text-bien-sage">{family}</span>
             <h2 className="mt-1 font-display text-2xl leading-tight text-black">{name}</h2>
