@@ -162,14 +162,16 @@ export default async function HistoirePage({
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-14 items-center">
           <blockquote className="order-2 lg:order-1 relative">
             <span aria-hidden className="block font-display text-6xl leading-none text-bien-pink">&laquo;</span>
-            {t.story.slice(1, 4).map((para, i, arr) => (
+            {t.story.slice(1, 4).map((para, i) => (
               <p key={i} className={`${i === 0 ? "mt-1" : "mt-4"} text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto`}>
                 {para}
-                {/* Guillemet fermant : la citation n'en portait que l'ouvrant. */}
-                {i === arr.length - 1 && <span aria-hidden className="font-display text-bien-pink">&nbsp;&raquo;</span>}
               </p>
             ))}
-            <footer className="mt-5 font-display text-black">{t.ceo}</footer>
+            {/* Guillemet fermant : même corps que l'ouvrant, mais aligné à
+                droite pour refermer le bloc. Laissé dans le fil du texte, il
+                gardait le corps du paragraphe et passait inaperçu. */}
+            <span aria-hidden className="mt-1 block text-right font-display text-6xl leading-none text-bien-pink">&raquo;</span>
+            <footer className="mt-4 font-display text-black">{t.ceo}</footer>
           </blockquote>
           {/* Portrait borné en largeur : étiré sur toute la demi-colonne, un
               cadre 4/5 dépassait le millier de pixels de haut sur grand écran,
