@@ -31,11 +31,14 @@ export default function AddToCart({
    */
   cureSelector = false,
   /**
-   * Nombre de jours couverts par une unité (60 gummies à 2/jour comme 30
-   * portions de poudre = 30 jours). Sert à ramener le prix à la journée, que
-   * le client trouve plus parlant que le prix au mois.
+   * Diviseur du prix à la journée, que le client trouve plus parlant que le
+   * prix au mois. Fixé à 31 jours — un mois plein — à la demande du client
+   * (24/08/2026), et non aux 30 jours que couvre réellement une unité
+   * (60 gummies à 2/jour, 30 portions de poudre). L'affichage minore donc
+   * légèrement le coût journalier réel : 1,26 € au lieu de 1,30 € pour un
+   * produit à 39 €. Le prix total, lui, reste affiché en clair juste à côté.
    */
-  daysPerUnit = 30,
+  daysPerUnit = 31,
   /**
    * Glissé JUSTE SOUS le bouton : le client y veut la disponibilité et la
    * fenêtre de livraison (demande du 24/08/2026). Elles étaient auparavant

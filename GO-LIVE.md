@@ -663,3 +663,9 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       consommateur, pas de préciser qu'il l'est — et les prix du site sont bien
       ceux de Shopify, TTC. Le format de la cure reste indiqué dans le
       sélecteur (« 1 produit », « 2 produits »…) et dans l'accordéon Posologie.
+- [x] **Prix à la journée calculé sur 31 jours** (demande client) : 1,26 €/jour
+      pour un produit à 39 €, contre 1,30 € auparavant. À surveiller : une
+      unité couvre **30** jours (60 gummies à 2/jour, 30 portions de poudre),
+      pas 31 — l'affichage minore donc de ~3 % le coût journalier réel. Le prix
+      total reste affiché en clair juste à côté, ce qui reste l'information
+      opposable. Diviseur dans `components/add-to-cart.tsx` (`daysPerUnit`).
