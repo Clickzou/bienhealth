@@ -657,3 +657,9 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       (et son équivalent sur chaque fiche) s'ouvre d'emblée. Revient sur le
       repli demandé le 19/08 : il repoussera de nouveau le bouton d'ajout vers
       le bas, ce qui était la raison du repli. Reste refermable.
+- [x] **« Taxes incluses. · Cure d'1 mois : 60 gummies » supprimé** de la fiche
+      produit, sur les compléments comme sur les accessoires. Rien
+      d'obligatoire n'y était : la loi impose d'**afficher** un prix TTC au
+      consommateur, pas de préciser qu'il l'est — et les prix du site sont bien
+      ceux de Shopify, TTC. Le format de la cure reste indiqué dans le
+      sélecteur (« 1 produit », « 2 produits »…) et dans l'accordéon Posologie.

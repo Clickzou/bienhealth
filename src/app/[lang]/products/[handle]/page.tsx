@@ -635,9 +635,6 @@ const UI = {
   fr: {
     allProducts: "Tous les produits",
     happyClients: (n: number) => `+${n} clients satisfaits`,
-    taxIncluded: "Taxes incluses.",
-    cureLabelGummies: "Cure d'1 mois : 60 gummies",
-    cureLabelPowder: "Cure d'1 mois : 30 portions",
     preorderNote: "Pré-commande : expédiée dès réception du stock",
     lowStock: (n: number) => `Bientôt épuisé : plus que ${n} en stock`,
     pressEyebrow: "La presse en parle",
@@ -657,9 +654,6 @@ const UI = {
   en: {
     allProducts: "All products",
     happyClients: (n: number) => `+${n} happy customers`,
-    taxIncluded: "Taxes included.",
-    cureLabelGummies: "1-month course: 60 gummies",
-    cureLabelPowder: "1-month course: 30 servings",
     preorderNote: "Pre-order: ships as soon as stock arrives",
     lowStock: (n: number) => `Almost sold out: only ${n} left in stock`,
     pressEyebrow: "As seen in the press",
@@ -923,12 +917,6 @@ export default async function ProductPage({
                       )}
                   </div>
                 )}
-                <p className={`text-xs text-black/50 ${key ? "" : "mt-1"}`}>
-                  {ui.taxIncluded}
-                  {/* Format de la cure : 60 gummies à 2/jour et 30 portions de
-                      poudre couvrent un mois — l'information manquait près du prix. */}
-                  {key && <> · <span className="font-semibold text-black/70">{isPowder ? ui.cureLabelPowder : ui.cureLabelGummies}</span></>}
-                </p>
               </div>
 
               {/* Largeur du CTA calée sur son libellé (pleine largeur seulement
