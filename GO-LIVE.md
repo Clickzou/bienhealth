@@ -635,3 +635,8 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       l'écart), donc le « Découvrir » s'aligne d'une carte à l'autre. Sur
       desktop, la grille passe de `items-center` à `items-stretch` ; seule la
       photo centrale reste centrée.
+- [x] **Fiche produit : le nom passe en tête** — la note, « +500 clients
+      satisfaits » et la garantie occupaient les deux premières lignes ; le nom
+      du produit (CALM, FOCUS…) n'arrivait qu'en troisième position. Le nom
+      ouvre desormais la fiche et ce bloc se range à sa droite. Sous 640 px la
+      colonne reprend : nom d'abord, preuve sociale juste dessous.
