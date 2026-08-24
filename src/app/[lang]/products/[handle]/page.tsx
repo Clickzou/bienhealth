@@ -202,9 +202,9 @@ const MUSHGLOW_ACCORDIONS: Accordion[] = [
     a: `Lion's Mane, 750 mg : soutient la mémoire, la concentration et la fonction cognitive.
 Cordyceps, 500 mg : booste l'énergie, la vitalité et l'endurance physique.
 Chaga, 500 mg : antioxydant puissant, protège les cellules et soutient l'immunité.
-L-Théanine, 200 mg : apaise sans endormir, améliore la clarté mentale et le focus.
+L-Théanine, 500 mg : apaise sans endormir, améliore la clarté mentale et le focus.
 Maca, 750 mg : équilibre hormonal et bien-être émotionnel, améliore l'humeur.
-Collagène, 450 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
+Collagène, 300 mg : améliore l'hydratation, l'élasticité et l'éclat de la peau.`,
   },
   {
     q: "Quel goût a-t-il ?",
@@ -403,9 +403,9 @@ const MUSHGLOW_ACCORDIONS_EN: Accordion[] = [
     a: `Lion's Mane, 750 mg: supports memory, focus and cognitive function.
 Cordyceps, 500 mg: boosts energy, vitality and physical stamina.
 Chaga, 500 mg: powerful antioxidant, protects cells and supports immunity.
-L-Theanine, 200 mg: calms without drowsiness, improves mental clarity and focus.
+L-Theanine, 500 mg: calms without drowsiness, improves mental clarity and focus.
 Maca, 750 mg: hormonal balance and emotional wellbeing, improves mood.
-Collagen, 450 mg: improves skin hydration, elasticity and radiance.`,
+Collagen, 300 mg: improves skin hydration, elasticity and radiance.`,
   },
   {
     q: "What does it taste like?",
