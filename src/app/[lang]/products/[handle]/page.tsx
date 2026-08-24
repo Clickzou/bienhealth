@@ -816,7 +816,7 @@ export default async function ProductPage({
                 lignes et le nom n'arrivait qu'en troisième position.
                 Sous 640 px la colonne reprend le dessus : le nom en premier,
                 la preuve sociale juste dessous. */}
-            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-6">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-6">
               {/* Le nom Shopify porte souvent un descriptif après un tiret
                   (« MUSHGLOW — Supermix 6-en-1 ») : le descriptif passe en
                   sous-titre plus discret sous le nom, au lieu de s'afficher au
@@ -832,7 +832,7 @@ export default async function ProductPage({
                   (identique au header) et le compteur parle de clients, pas
                   d'avis — les avis de CE produit sont plus bas. Le libellé mène
                   à la page Avis, qui porte le mur d'avis clients. */}
-              <div className="sm:shrink-0 sm:text-right sm:pt-1">
+              <div className="sm:shrink-0 sm:text-right">
                 <div className="flex items-center gap-2 flex-wrap sm:justify-end">
                   <StarRating value={SHOP_RATING} className="h-3.5 w-3.5" />
                   <span className="text-sm font-semibold text-black">{ratingLabel(lang)}/5</span>
@@ -844,9 +844,10 @@ export default async function ProductPage({
                     {happyClientsLabel(lang)}
                   </Link>
                 </div>
-                {/* Garantie remontée avec la preuve sociale : sous le CTA, elle
-                    séparait le bouton de la réassurance juste en dessous. */}
-                <p className="mt-1.5 text-xs text-black/50">{ui.guarantee}</p>
+                {/* Garantie collée à la ligne d'avis : à 1,5 unité d'écart,
+                    elles se lisaient comme deux blocs sans rapport. L'ensemble
+                    est centré sur l'axe du nom du produit. */}
+                <p className="mt-0.5 text-xs text-black/50">{ui.guarantee}</p>
               </div>
             </div>
 
