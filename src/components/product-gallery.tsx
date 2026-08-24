@@ -59,7 +59,8 @@ export default function ProductGallery({
   return (
     /* La bande de miniatures est en position absolue : hors du flux, elle ne
        peut plus imposer sa hauteur à la ligne. La hauteur du bloc est donc celle
-       de l'image (carrée), et `inset-y-0` cale les miniatures dessus. Avec une
+       de l'image (carrée), et `top-0 bottom-5` cale les miniatures dessus, la
+       rangée de puces en moins. Avec une
        hauteur fixe, cinq miniatures dépassaient l'image de ~170px sur mobile et
        repoussaient le texte hors de l'écran. Le padding gauche réserve leur
        colonne. */
@@ -70,7 +71,7 @@ export default function ProductGallery({
     >
       {/* Miniatures verticales à gauche */}
       {hasThumbs && (
-        <div className="absolute inset-y-0 left-0 w-16 sm:w-20 flex flex-col gap-2">
+        <div className="absolute top-0 bottom-5 left-0 w-16 sm:w-20 flex flex-col gap-2">
           {count > 4 && (
             <button onClick={() => pageThumbs(-1)} aria-label="Miniatures précédentes" className="shrink-0 grid place-items-center h-7 rounded-lg bg-card text-black ring-1 ring-border hover:bg-bien-cream transition">
               <ChevronUp className="h-4 w-4" />
@@ -131,14 +132,20 @@ export default function ProductGallery({
             <button onClick={() => go(1)} aria-label="Image suivante" className="absolute right-3 top-1/2 -translate-y-1/2 grid place-items-center h-10 w-10 rounded-full bg-card/85 text-black ring-1 ring-border bien-shadow lg:opacity-0 lg:group-hover:opacity-100 hover:bg-bien-gold transition">
               <ChevronRight className="h-5 w-5" />
             </button>
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {images.map((_, i) => (
-                <button key={i} onClick={() => setActive(i)} aria-label={`Voir l'image ${i + 1}`} className={`h-2 rounded-full transition-all ${i === active ? "w-5 bg-bien-forest" : "w-2 bg-bien-forest/30 hover:bg-bien-forest/60"}`} />
-              ))}
-            </div>
           </>
         )}
       </div>
+
+      {/* Puces de défilement SOUS la photo : posées dessus, elles masquaient le
+          bas des visuels infographiques, dont le texte descend jusqu'au bord
+          (signalé par le client). */}
+      {count > 1 && (
+        <div className="mt-3 flex justify-center gap-1.5">
+          {images.map((_, i) => (
+            <button key={i} onClick={() => setActive(i)} aria-label={`Voir l'image ${i + 1}`} className={`h-2 rounded-full transition-all ${i === active ? "w-5 bg-bien-forest" : "w-2 bg-bien-forest/30 hover:bg-bien-forest/60"}`} />
+          ))}
+        </div>
+      )}
     </div>
   );
 }
