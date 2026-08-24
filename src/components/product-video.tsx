@@ -49,10 +49,10 @@ export default function ProductVideo({
   }
 
   return (
-    /* Le rayon et le fond noir portent sur ce cadre, pas sur la vidéo :
+    /* Le rayon et le fond portent sur ce cadre, pas sur la vidéo :
        appliqués à l'élément <video> lui-même, Safari iOS les composite de
        travers et laisse apparaître la vidéo en mosaïque hors de son cadre. */
-    <div className={`relative overflow-hidden rounded-2xl bg-black ring-1 ring-border ${className}`}>
+    <div className={`relative overflow-hidden rounded-2xl bg-bien-cream ring-1 ring-border ${className}`}>
       <video
         ref={ref}
         src={`${src}#t=${at}`}
@@ -66,9 +66,9 @@ export default function ProductVideo({
           type="button"
           onClick={open}
           aria-label={playLabel}
-          className="absolute inset-0 grid place-items-center bg-black/10 transition hover:bg-black/20"
+          className="group absolute inset-0 grid place-items-center"
         >
-          <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 text-black bien-shadow-sm">
+          <span className="grid place-items-center h-11 w-11 rounded-full bg-white/90 text-black bien-shadow transition group-hover:bg-white group-hover:scale-105">
             <Play className="h-5 w-5 translate-x-px fill-current" />
           </span>
         </button>
