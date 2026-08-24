@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ArrowRight, Leaf } from "lucide-react";
 import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
+import IngredientCard from "@/components/ingredient-card";
 import { pageMetadata } from "@/lib/seo";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
@@ -115,15 +115,15 @@ export default async function IngredientsPage({
           {INGREDIENTS.map((ing) => {
             const loc = en ? ing.en : ing.fr;
             return (
-            <article key={ing.name} className="group bg-card rounded-2xl sm:rounded-3xl ring-1 ring-border bien-shadow-sm p-3 sm:p-6 flex flex-col items-center text-center hover:-translate-y-1 hover:ring-bien-leaf/40 transition-all">
-              <div className="relative h-20 w-20 sm:h-32 sm:w-32 mb-3 sm:mb-4">
-                <Image src={ing.img} alt={ing.name} fill sizes="(max-width:640px) 80px, 128px" className="object-contain group-hover:scale-105 transition-transform duration-500" />
-              </div>
-              <span className="text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-bien-sage">{loc.family}</span>
-              <h2 className="mt-1 font-display text-base sm:text-xl leading-tight text-black">{ing.name}</h2>
-              <p className="mt-1.5 text-xs sm:text-sm font-semibold text-bien-leaf leading-snug">{loc.hook}</p>
-              <p className="mt-2 sm:mt-2.5 text-xs sm:text-sm text-black/70 leading-relaxed line-clamp-5 sm:line-clamp-none">{loc.desc}</p>
-            </article>
+              <IngredientCard
+                key={ing.name}
+                img={ing.img}
+                name={ing.name}
+                family={loc.family}
+                hook={loc.hook}
+                desc={loc.desc}
+                lang={lang}
+              />
             );
           })}
         </div>
