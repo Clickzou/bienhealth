@@ -151,7 +151,7 @@ export default async function PressePage({
         {/* Bandeau raccourci (demande client du 19/08/2026 : seule la page
             d'accueil garde un grand hero). */}
         <div className="relative h-56 sm:h-72 lg:h-[400px] order-1 lg:order-none">
-          <Image src="/brand/presse-hero.webp" alt="BIEN health, Mushglow" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
+          <Image src="/brand/presse-sud-radio.jpeg" alt="BIEN health sur Sud Radio" fill priority sizes="(max-width:1024px) 100vw, 50vw" className="object-cover" />
         </div>
         <div className="px-6 sm:px-10 lg:px-16 py-8 lg:py-12">
           <h1 className="font-hero text-3xl sm:text-4xl lg:text-5xl leading-[1.05] text-black">
