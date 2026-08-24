@@ -111,6 +111,13 @@ const CARD_IMG: Record<string, string> = {
   "Gala": "/brand/presse/gala.jpg",
 };
 
+/** Fac-similé d'une parution.
+ *
+ *  Largeur bornée à la moitié de la demi-colonne (demande client) : étirée,
+ *  la page de magazine dépassait les 1200 px de haut sur grand écran et
+ *  écrasait la citation posée en face. Sous cette borne — donc sur téléphone —
+ *  `w-full` l'emporte et l'image reste pleine largeur.
+ */
 function MagazineCard({ f }: { f: Feature }) {
   return (
     // eslint-disable-next-line @next/next/no-img-element
@@ -118,7 +125,7 @@ function MagazineCard({ f }: { f: Feature }) {
       src={CARD_IMG[f.magazine]}
       alt={`BIEN vu dans ${f.magazine}`}
       loading="lazy"
-      className="w-full h-auto rounded-3xl bien-shadow"
+      className="w-full max-w-md mx-auto h-auto rounded-3xl bien-shadow"
     />
   );
 }
