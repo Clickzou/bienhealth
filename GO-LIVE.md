@@ -597,3 +597,15 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       **mail** » alors que le site l'affiche à l'écran et n'envoie aucun e-mail
       lui-même — il crée un client Shopify taggé `newsletter`, à charge pour
       l'app e-mail de Shopify d'envoyer quelque chose.
+- [x] **Logos presse figés chez certains visiteurs** — deux causes. (1) Le
+      bandeau s'arrêtait pour les téléphones réglés sur « Réduire les
+      animations » (iOS : Accessibilité → Mouvement ; Android : souvent activé
+      par le mode économie d'énergie) : c'était déjà le cas avec l'ancienne
+      animation CSS, donc ces visiteurs ne l'avaient jamais vu bouger. Le
+      client arbitre pour un défilement forcé, réglage système ignoré — le
+      mouvement est lent (41 px/s) et sans clignotement, donc à faible risque
+      vestibulaire. (2) Sur écran tactile, un simple appui émulait un
+      `mouseenter` sans jamais émettre le `mouseleave` correspondant : la pause
+      au survol restait armée pour toute la visite. Elle est désormais réservée
+      aux appareils à vrai pointeur, un geste au doigt ne met en pause que
+      2,5 s, et seul le focus **clavier** (`:focus-visible`) arrête le bandeau.

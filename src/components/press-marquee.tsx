@@ -21,6 +21,13 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 const SPEED = 41;
 /** Pause après une action manuelle, le temps que le défilement doux se termine. */
 const MANUAL_PAUSE_MS = 1200;
+/** Pause après un geste tactile — bornée, pour que le bandeau reparte seul. */
+const TOUCH_PAUSE_MS = 2500;
+
+/** Vrai pointeur (souris/trackpad) : un écran tactile répond `false`. */
+function canHover(): boolean {
+  return typeof window !== "undefined" && window.matchMedia("(hover: hover)").matches;
+}
 
 export default function PressMarquee({ children }: { children: React.ReactNode }) {
   const scroller = useRef<HTMLDivElement>(null);
@@ -30,7 +37,12 @@ export default function PressMarquee({ children }: { children: React.ReactNode }
   useEffect(() => {
     const el = scroller.current;
     if (!el) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Le défilement ignore volontairement `prefers-reduced-motion` (arbitrage
+    // client du 24/08/2026) : sur les téléphones réglés sur « Réduire les
+    // animations » — un réglage qu'énormément de gens ont sans le savoir, le
+    // mode économie d'énergie d'Android l'active — le bandeau restait figé et
+    // la marque paraissait avoir un site cassé. Le mouvement est lent (41 px/s)
+    // et sans clignotement, donc à faible risque vestibulaire.
 
     let raf = 0;
     let last = performance.now();
@@ -66,9 +78,18 @@ export default function PressMarquee({ children }: { children: React.ReactNode }
     <div className="relative">
       <div
         ref={scroller}
-        onMouseEnter={() => (hovered.current = true)}
+        /* La pause au survol est réservée aux appareils à vrai pointeur : sur
+           un écran tactile, un simple appui émule `mouseenter` sans jamais
+           émettre le `mouseleave` correspondant — le bandeau restait figé pour
+           le reste de la visite. Un doigt sur la piste met en pause le temps du
+           geste, puis le défilement repart tout seul. */
+        onMouseEnter={() => { if (canHover()) hovered.current = true; }}
         onMouseLeave={() => (hovered.current = false)}
-        onFocusCapture={() => (hovered.current = true)}
+        onPointerDown={(e) => { if (e.pointerType !== "mouse") pausedUntil.current = performance.now() + TOUCH_PAUSE_MS; }}
+        onTouchMove={() => (pausedUntil.current = performance.now() + TOUCH_PAUSE_MS)}
+        /* Seul le focus clavier met en pause : après un appui sur un logo,
+           `:focus` reste posé sur le lien et gelait le bandeau. */
+        onFocusCapture={(e) => { if (e.target instanceof Element && e.target.matches(":focus-visible")) hovered.current = true; }}
         onBlurCapture={() => (hovered.current = false)}
         className="bien-marquee [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
       >
