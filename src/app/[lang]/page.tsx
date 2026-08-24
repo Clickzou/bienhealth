@@ -281,10 +281,13 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
           de carrousel) finissent à la même hauteur, quel que soit le nombre de
           lignes du titre. Le descriptif absorbe la différence en `flex-1`, si
           bien que le « Découvrir » reste aligné d'une carte à l'autre. */}
-      {/* Pas d'ombre tant que la carte est dans la piste du carrousel : posée sur
-          le fond crème, elle y traînait un liseré gris sous la carte (retour
-          client). Elle revient dès sm, où les cartes redeviennent une pile. */}
-      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      {/* Ni ombre ni contour tant que la carte est dans la piste du carrousel :
+          posée sur le fond crème, l'ombre y traînait un liseré gris sous la
+          carte, et le `ring` gris qui restait était lu comme un reste d'ombre
+          (retour client). La carte blanche se détache alors du crème par son
+          seul fond. Les deux reviennent dès sm, où les cartes redeviennent une
+          pile. */}
+      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-transparent sm:ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
