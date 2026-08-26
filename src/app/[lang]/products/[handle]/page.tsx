@@ -679,6 +679,18 @@ const UI = {
   },
 } as const;
 
+/**
+ * Visuels toujours présents dans Shopify mais volontairement masqués sur la
+ * fiche produit (galerie, données structurées, vignette panier). On les repère
+ * par un fragment de leur nom de fichier sur le CDN, stable d'une version à
+ * l'autre. Retirer l'image dans l'admin Shopify rend l'entrée inutile.
+ */
+const HIDDEN_IMAGES = [
+  "3_7dab6603-c448-4ca0-a6de-a70293b385f9", // MUSHGLOW — visuel « €1.70/JOUR »
+];
+
+const isHidden = (url: string) => HIDDEN_IMAGES.some((f) => url.includes(f));
+
 export default async function ProductPage({
   params,
 }: {
@@ -688,6 +700,7 @@ export default async function ProductPage({
   if (!hasLocale(lang)) notFound();
   const product = await getProduct(handle);
   if (!product) notFound();
+  const images = product.images.filter((i) => !isHidden(i.url));
 
   const en = lang === "en";
   const ui = en ? UI.en : UI.fr;
@@ -705,7 +718,7 @@ export default async function ProductPage({
     title: product.title,
     price: Number(product.price.amount),
     currency: product.price.currencyCode || "EUR",
-    image: product.featuredImage?.url ?? product.images[0]?.url ?? null,
+    image: product.featuredImage?.url ?? images[0]?.url ?? null,
   };
 
   // Stock : pré-commande (0 en stock mais vendable) + stock faible.
@@ -735,7 +748,7 @@ export default async function ProductPage({
     "@context": "https://schema.org",
     "@type": "Product",
     name: product.title,
-    image: product.images.length ? product.images.map((i) => i.url) : product.featuredImage ? [product.featuredImage.url] : [],
+    image: images.length ? images.map((i) => i.url) : product.featuredImage ? [product.featuredImage.url] : [],
     description: (product.description || info.category).slice(0, 320),
     brand: { "@type": "Brand", name: "BIEN health" },
     sku: handle,
@@ -779,8 +792,8 @@ export default async function ProductPage({
     .filter((p) => p.handle !== handle && !EXCLUDE.has(p.handle))
     .slice(0, 2);
 
-  const galleryImages = product.images.length
-    ? product.images
+  const galleryImages = images.length
+    ? images
     : product.featuredImage
       ? [product.featuredImage]
       : [{ url: "/brand/product-mushglow.jpg", altText: product.title }];
