@@ -6,7 +6,17 @@
  */
 import { shopifyFetch, isShopifyConfigured } from "./shopify";
 
-const PUBLIC_STORE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://bien.health").replace(/\/$/, "");
+/**
+ * Domaine de la **boutique** pour le repli public (`products.json`).
+ *
+ * Il visait `NEXT_PUBLIC_SITE_URL` : correct tant que bien.health pointait sur
+ * Shopify, mais depuis la bascule du 28/08/2026 ce domaine sert le site Next et
+ * `/products.json` y répond 404. Le repli tombait donc dans le vide sans bruit,
+ * et le sitemap a perdu les six fiches produit.
+ */
+const PUBLIC_STORE_URL = `https://${
+  process.env.SHOPIFY_STORE_DOMAIN ?? process.env.NEXT_PUBLIC_SHOPIFY_DOMAIN ?? "b3a79e-89.myshopify.com"
+}`;
 
 // Ordre d'affichage préféré sur la home
 const PREFERRED = ["mushglow", "calm", "focus", "power", "mousseur-a-lait", "bien-totebag"];
@@ -180,7 +190,27 @@ export async function getProduct(handle: string): Promise<ShopifyProduct | null>
 }
 
 /** Tous les handles publiés (pour generateStaticParams). */
+/**
+ * Handles de tous les produits — alimente le sitemap.
+ *
+ * Le Storefront API passe en premier : c'est la seule source qui ne renvoie que
+ * les produits réellement publiés sur le canal headless. `products.json` liste
+ * aussi des produits d'autres canaux, qui donneraient des 404 dans le sitemap.
+ */
 export async function getAllHandles(): Promise<string[]> {
+  if (isShopifyConfigured) {
+    try {
+      const data = await shopifyFetch<{ products: { nodes: { handle: string }[] } }>({
+        query: `query Handles { products(first: 250) { nodes { handle } } }`,
+        revalidate: 300,
+      });
+      const handles = data.products.nodes.map((n) => n.handle).filter(Boolean);
+      if (handles.length) return handles;
+      console.error("getAllHandles: le Storefront n'a renvoyé aucun produit");
+    } catch (e) {
+      console.error("getAllHandles(storefront):", e);
+    }
+  }
   return (await fetchPublicProducts()).map((p) => p.handle);
 }
 

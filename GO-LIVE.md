@@ -1135,3 +1135,33 @@ exactement ce qu'il faut faire.
   serveur de développement en cours d'exécution. À faire au calme, suivie d'une
   recette complète du tunnel d'achat.
 - **Content-Security-Policy** : voir plus haut.
+
+### ⚠️ Découvert après déploiement : le sitemap avait perdu toutes les fiches produit
+
+Constaté le 29/08/2026 juste après la mise en ligne : le `sitemap.xml` de production
+ne contenait plus que 45 URLs, **aucune fiche produit**.
+
+Cause — une séquelle de la bascule du 28/08. `getAllHandles()` passait par
+`fetchPublicProducts()`, qui interroge `${NEXT_PUBLIC_SITE_URL}/products.json`.
+Tant que `bien.health` pointait sur Shopify, cette URL renvoyait le catalogue.
+Depuis la bascule, elle sert le site Next et répond **404** — et comme la fonction
+avale l'erreur en renvoyant un tableau vide, les produits ont disparu du sitemap
+sans le moindre message. C'est exactement le genre de panne qu'un `catch` silencieux
+rend invisible.
+
+Correctif :
+- le repli public vise désormais le **domaine de la boutique**
+  (`SHOPIFY_STORE_DOMAIN`) et non celui du site ;
+- `getAllHandles()` interroge d'abord l'**API Storefront**, seule source qui ne
+  renvoie que les produits réellement publiés sur le canal headless, et journalise
+  une erreur si elle ne renvoie rien.
+
+Sitemap après correctif : **55 URLs, dont 10 fiches produit**.
+
+À arbitrer : quatre produits apparaissent qui n'étaient dans aucun sitemap
+auparavant — **BOOST** (62,40 €), **BALANCE** (70,40 €), **FLOW** (62,40 €) et
+**RESET** (93,60 €). Ils sont publiés sur le canal headless, en stock, et leurs
+pages répondent déjà 200 en production. Leurs fiches sont maigres (339 mots, pas de
+contenu SEO dédié, pas de descripteur de titre). Deux possibilités : soit ce sont
+des produits actifs et il faut leur écrire un vrai contenu, soit ce sont des restes
+et il faut les dépublier du canal headless côté Shopify. À trancher avec le client.
