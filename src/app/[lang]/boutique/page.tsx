@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "boutique",
     title: lang === "en" ? "Shop: our natural supplements | BIEN health" : "Boutique : nos compléments naturels | BIEN health",
-    description: lang === "en" ? "Discover the BIEN health range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." : "Découvrez la gamme BIEN health : 3 gummies (CALM, FOCUS, POWER) et la poudre MUSHGLOW. Adaptogènes et champignons fonctionnels, dosés selon la science, fabriqués en France.",
+    description: lang === "en" ? "Discover the BIEN health range: 3 gummies (CALM, FOCUS, POWER) and the MUSHGLOW powder. Adaptogens and functional mushrooms, science-based dosages, made in France." : "Gummies CALM, FOCUS, POWER et poudre MUSHGLOW : adaptogènes et champignons fonctionnels dosés selon la science, fabriqués en France.",
   });
 }
 

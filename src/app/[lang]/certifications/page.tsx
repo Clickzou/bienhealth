@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "certifications",
     title: lang === "en" ? "Certifications & declarations | BIEN health" : "Certifications & déclarations | BIEN health",
-    description: lang === "en" ? "All BIEN health supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." : "Tous les compléments BIEN health sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et enregistrés sur COMPL'ALIM. Numéros de déclaration vérifiables et attestations téléchargeables.",
+    description: lang === "en" ? "All BIEN health supplements are declared to the DGAL (French Ministry of Agriculture) and registered on COMPL'ALIM. Verifiable declaration numbers and downloadable certificates." : "Compléments BIEN health déclarés à la DGAL et enregistrés sur COMPL'ALIM : numéros vérifiables et attestations téléchargeables.",
   });
 }
 

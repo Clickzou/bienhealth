@@ -28,6 +28,29 @@ export const BENEFITS: Record<string, { fr: string; en: string }> = {
   },
 };
 
+/**
+ * Complément de titre SEO par produit.
+ *
+ * « CALM » ou « FOCUS » ne sont pas des mots-clés : personne ne les cherche.
+ * Un <title> de 18 caractères gaspille le principal levier on-page, d'où ce
+ * descripteur accolé au nom de gamme (audit SEO du 29/08/2026, § 3.2).
+ */
+const SEO_SUFFIX: Record<string, { fr: string; en: string }> = {
+  CALM: { fr: "Gummies sérénité & sommeil", en: "Calm & sleep gummies" },
+  FOCUS: { fr: "Gummies concentration & mémoire", en: "Focus & memory gummies" },
+  POWER: { fr: "Gummies énergie & performance", en: "Energy & performance gummies" },
+  MUSHGLOW: { fr: "Supermix beauté & collagène", en: "Beauty & collagen supermix" },
+  MOUSSEUR: { fr: "Mousseur à lait rechargeable", en: "Rechargeable milk frother" },
+  TOTEBAG: { fr: "Tote bag coton bio", en: "Organic cotton tote bag" },
+};
+
+/** Titre de page d'une fiche produit : nom de gamme + bénéfice + marque. */
+export function productPageTitle(name: string, lang = "fr"): string {
+  const key = Object.keys(SEO_SUFFIX).find((k) => name.toUpperCase().includes(k));
+  const suffix = key ? SEO_SUFFIX[key][lang === "en" ? "en" : "fr"] : "";
+  return suffix ? `${name} — ${suffix} | BIEN health` : `${name} | BIEN health`;
+}
+
 export function benefitFor(name: string, fallback: string, lang = "fr"): string {
   const key = Object.keys(BENEFITS).find((k) => name.toUpperCase().includes(k));
   return key ? BENEFITS[key][lang === "en" ? "en" : "fr"] : fallback;
@@ -88,6 +111,9 @@ export type Collection = {
   label: string;
   desc: string;
   en: { eyebrow: string; label: string; desc: string };
+  /** Titre de page, quand le libellé seul est trop court pour le référencement
+   *  (« Gummies | BIEN health » ne cible aucune requête). */
+  seoTitle?: string;
   match: (p: ShopifyProduct) => boolean;
   /** Ordre d'affichage imposé (le plus pertinent d'abord). Sans lui, l'ordre
    *  était celui de Shopify, qui ne suivait pas la logique de la collection. */
@@ -175,6 +201,7 @@ export const COLLECTIONS: Record<string, Collection> = {
     slug: "gummies",
     eyebrow: "Par type de produit",
     label: "Gummies",
+    seoTitle: "Gummies adaptogènes sans sucre",
     desc: "Nos compléments naturels à mâcher : actifs dosés selon la science, sans sucre ajouté ni additifs artificiels et vegan.",
     en: {
       eyebrow: "By product type",
@@ -187,6 +214,7 @@ export const COLLECTIONS: Record<string, Collection> = {
     slug: "nos-poudres",
     eyebrow: "Par type de produit",
     label: "Poudres",
+    seoTitle: "Poudres de champignons adaptogènes",
     desc: "Notre poudre 6-en-1, à intégrer à vos préparations du matin.",
     en: {
       eyebrow: "By product type",
@@ -199,6 +227,7 @@ export const COLLECTIONS: Record<string, Collection> = {
     slug: "nos-accessoires",
     eyebrow: "Par type de produit",
     label: "Accessoires",
+    seoTitle: "Accessoires & mousseur à lait",
     desc: "Les accessoires BIEN pour sublimer votre rituel bien-être au quotidien.",
     en: {
       eyebrow: "By product type",

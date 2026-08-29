@@ -17,7 +17,7 @@ export async function generateMetadata({
     lang,
     path: "diagnostic",
     title: lang === "en" ? "Diagnostic: find your formula in 1 minute | BIEN health" : "Diagnostic : votre formule en 1 minute | BIEN health",
-    description: lang === "en" ? "Answer a few questions about your needs (sleep, focus, energy, skin) and discover the BIEN health formula made for you. Free quiz, under a minute." : "Répondez à quelques questions sur vos besoins (sommeil, concentration, énergie, peau) et découvrez la formule BIEN health faite pour vous. Diagnostic gratuit, moins d'une minute.",
+    description: lang === "en" ? "Answer a few questions about your needs (sleep, focus, energy, skin) and discover the BIEN health formula made for you. Free quiz, under a minute." : "Sommeil, concentration, énergie ou peau : découvrez la formule BIEN health faite pour vous. Diagnostic gratuit, moins d'une minute.",
   });
 }
 

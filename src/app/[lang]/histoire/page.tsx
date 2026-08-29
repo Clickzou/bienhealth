@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "histoire",
     title: lang === "en" ? "Our story | BIEN health" : "Notre histoire | BIEN health",
-    description: lang === "en" ? "BIEN health, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." : "BIEN health, marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels pour les athlètes de la vie.",
+    description: lang === "en" ? "BIEN health, a French brand of natural supplements born from the journey of a former elite athlete. Adaptogens and functional mushrooms for life's athletes." : "Marque française de compléments naturels née du parcours d'une ancienne sportive de haut niveau. Adaptogènes et champignons fonctionnels.",
   });
 }
 

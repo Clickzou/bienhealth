@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "devenir-revendeur",
     title: lang === "en" ? "Become a BIEN health reseller | Trade enquiry" : "Devenir revendeur BIEN health | Demande pro",
-    description: lang === "en" ? "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN health reseller network and offer our natural supplements to your customers." : "Vous êtes un professionnel (café, studio, pharmacie, concept-store…) ? Rejoignez le réseau de revendeurs BIEN health et proposez nos compléments naturels à vos clients.",
+    description: lang === "en" ? "Are you a professional (café, studio, pharmacy, concept store…)? Join the BIEN health reseller network and offer our natural supplements to your customers." : "Café, studio, pharmacie, concept-store : rejoignez le réseau de revendeurs BIEN health et proposez nos compléments naturels.",
   });
 }
 

@@ -17,6 +17,8 @@ import PressMarquee from "@/components/press-marquee";
 import BenefitsCarousel from "@/components/benefits-carousel";
 import SiteHeader from "@/components/site-header";
 import { PRESS } from "@/lib/press";
+import JsonLd from "@/components/json-ld";
+import { SITE_URL } from "@/lib/seo";
 import {
   Star, Truck, ShieldCheck, MapPin, RefreshCw, Moon, Brain, Zap,
   Sparkles, ShoppingBag, Check, ArrowRight, ArrowUpRight, Leaf, HeartPulse,
@@ -332,6 +334,26 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* Déclare le site comme entité nommée et expose la recherche interne :
+          c'est ce qui permet la sitelinks search box dans Google, et ce qui aide
+          les moteurs génératifs à rattacher le contenu à la marque. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "BIEN health",
+          url: `${SITE_URL}/${lang}`,
+          inLanguage: lang === "en" ? "en" : "fr",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: {
+              "@type": "EntryPoint",
+              urlTemplate: `${SITE_URL}/${lang}/boutique?q={search_term_string}`,
+            },
+            "query-input": "required name=search_term_string",
+          },
+        }}
+      />
       <RevealController />
       <SiteHeader lang={lang} />
 
@@ -458,13 +480,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             inégales, se chevauchaient. Chaque logo occupe désormais une cellule
             de hauteur fixe, et le filtre niveaux de gris rattrape leurs
             colorimétries hétérogènes (couleur au survol). */}
-        {/* Défilement continu : vingt logos ne tenaient pas en grille sans
-            occuper quatre rangées. La liste est rendue deux fois — la seconde
+        {/* Défilement continu : trente-trois logos ne tenaient pas en grille sans
+            occuper plusieurs rangées. La liste est rendue deux fois — la seconde
             copie, invisible pour les lecteurs d'écran, referme la boucle (voir
             `components/press-marquee.tsx`, qui porte aussi les flèches de
             navigation manuelle). Chaque logo vit dans une case de taille fixe
-            et remplit en `object-contain` : les fichiers n'ont ni la même
-            hauteur ni le même rapport de forme. */}
+            et remplit en `object-contain` ; les fichiers partagent depuis le
+            29/08/2026 un canevas au rapport de cette case, ce qui aligne leur
+            taille optique malgré des formes très différentes. */}
         <div className="mt-6">
           <PressMarquee>
             {/* L'écart entre logos est porté par une marge sur chaque case et non

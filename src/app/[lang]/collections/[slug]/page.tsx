@@ -5,8 +5,9 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
 import { COLLECTIONS, localizeCollection, sortForCollection, isAccessory } from "@/lib/shop";
+import JsonLd from "@/components/json-ld";
 import { COLLECTION_SEO, localizeCollectionSeo } from "@/lib/collection-seo";
-import { pageMetadata, metaDescription } from "@/lib/seo";
+import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
 import ProductCard from "@/components/product-card";
 import ReassuranceBand from "@/components/reassurance-band";
@@ -30,7 +31,7 @@ export async function generateMetadata({
   return pageMetadata({
     lang,
     path: `collections/${slug}`,
-    title: `${c.label} | BIEN health`,
+    title: `${col.seoTitle ?? c.label} | BIEN health`,
     description: metaDescription(c.desc),
   });
 }
@@ -67,6 +68,23 @@ export default async function CollectionPage({
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* ItemList : dit à Google que la page est une liste de produits ordonnée,
+          et lesquels. Sans ça, une page collection reste un texte parmi d'autres. */}
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "ItemList",
+          name: c.label,
+          description: c.desc,
+          numberOfItems: products.length,
+          itemListElement: products.map((p, i) => ({
+            "@type": "ListItem",
+            position: i + 1,
+            url: `${SITE_URL}/${lang}/products/${p.handle}`,
+            name: p.title,
+          })),
+        }}
+      />
       <SiteHeader lang={lang} />
 
       {/* Hero collection */}
