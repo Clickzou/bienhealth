@@ -3,11 +3,12 @@
  * page « La presse en parle », qui en tire son mur de logos et le lien
  * d'article de chaque parution détaillée.
  *
- * Les logos viennent tous de `public/brand/presse/logos/`, normalisés à 240 px
- * de haut depuis les fichiers d'origine du client : les six premiers étaient
- * enregistrés en deçà de leur taille d'affichage, d'où le flou qu'il nous a
- * signalé. Fond blanc aplati puis détouré pour que les logos s'alignent malgré
- * leurs marges d'origine très inégales.
+ * Les logos viennent tous de `public/brand/presse/logos/`, régénérés le
+ * 29/08/2026 depuis les SVG du client : rendu à haute résolution, marges
+ * d'origine détourées, fond blanc rendu transparent, puis recentrage dans un
+ * canevas commun de 720 × 280 px (le rapport de la case d'affichage). C'est ce
+ * canevas partagé qui donne à tous la même présence à l'écran : sans lui, un
+ * logo carré comme Sud Radio écrasait un logo large comme ELLE.
  *
  * `href` est optionnel : les médias arrivés sans lien d'article sont affichés
  * mais pas cliquables, plutôt que de renvoyer vers une page d'accueil de
@@ -36,6 +37,21 @@ export const PRESS: { name: string; logo: string; href?: string }[] = [
   { name: "Magicmaman", logo: "/brand/presse/logos/magicmaman.webp" },
   { name: "Vital", logo: "/brand/presse/logos/vital.webp" },
   { name: "Côté Santé", logo: "/brand/presse/logos/cote-sante.webp" },
+  // Titres ajoutés avec la livraison de logos du 29/08/2026, également sans URL
+  // d'article communiquée.
+  { name: "Cosmopolitan", logo: "/brand/presse/logos/cosmopolitan.webp" },
+  { name: "Avantages", logo: "/brand/presse/logos/avantages.webp" },
+  { name: "Gazelle", logo: "/brand/presse/logos/gazelle.webp" },
+  { name: "Fraîches", logo: "/brand/presse/logos/fraiches.webp" },
+  { name: "Lyon Capitale", logo: "/brand/presse/logos/lyon-capitale.webp" },
+  { name: "Les Nouvelles Esthétiques", logo: "/brand/presse/logos/nouvelles-esthetiques.webp" },
+  { name: "Psycho Pour Elles", logo: "/brand/presse/logos/psycho-pour-elles.webp" },
+  { name: "Famille Mag", logo: "/brand/presse/logos/famille-mag.webp" },
+  { name: "BiG média", logo: "/brand/presse/logos/big-media.webp" },
+  { name: "Fresh Magazine", logo: "/brand/presse/logos/fresh-magazine.webp" },
+  { name: "TheDreamTeam", logo: "/brand/presse/logos/thedreamteam.webp" },
+  { name: "Mesinfos", logo: "/brand/presse/logos/mesinfos.webp" },
+  { name: "Mag'in France", logo: "/brand/presse/logos/mag-in-france.webp" },
 ];
 
 /** Retrouve un média par son nom, quelle que soit la casse d'écriture — les

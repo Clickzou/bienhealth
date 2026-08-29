@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "presse",
     title: lang === "en" ? "As seen in the press | BIEN health" : "La presse en parle | BIEN health",
-    description: lang === "en" ? "BIEN health in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." : "BIEN health dans la presse : Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Découvrez ce que les médias disent de nos compléments naturels aux adaptogènes.",
+    description: lang === "en" ? "BIEN health in the press: Grazia, Marie Claire, Do It In Paris, L'Officiel, Gala… Discover what the media say about our natural adaptogen supplements." : "Grazia, Marie Claire, Cosmopolitan, L'Officiel, Gala : ce que la presse dit des compléments naturels aux adaptogènes BIEN health.",
   });
 }
 
@@ -279,7 +279,10 @@ export default async function PressePage({
           <div className="mt-7 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-x-6 gap-y-8 items-center">
             {PRESS.map((m) => {
               const logo = (
-                <Image src={m.logo} alt={m.name} width={240} height={60} className="h-6 sm:h-7 w-auto max-w-full object-contain mx-auto opacity-70 hover:opacity-100 transition-opacity" />
+                /* Case de rapport fixe plutôt que `w-auto` : les fichiers portent
+                   depuis le 29/08/2026 un canevas commun (720 × 280), c'est lui qui
+                   règle la taille relative des logos entre eux. */
+                <Image src={m.logo} alt={m.name} width={720} height={280} className="h-9 sm:h-11 w-full object-contain opacity-70 hover:opacity-100 transition-opacity" />
               );
               return m.href ? (
                 <a key={m.name} href={m.href} target="_blank" rel="noopener noreferrer" aria-label={m.name} className="min-w-0">{logo}</a>
