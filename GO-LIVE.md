@@ -1,7 +1,7 @@
 # Checklist de mise en ligne — bien.health
 
 Tout ce qui doit être vérifié, configuré ou décidé **avant** la bascule du site
-headless sur `bien.health`. Dernière mise à jour : 19 août 2026.
+headless sur `bien.health`. Dernière mise à jour : 28 août 2026.
 
 Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision client ·
 `[x]` fait et vérifié.
@@ -39,12 +39,22 @@ Le build affiche des erreurs `ACCESS_DENIED` sur `quantityAvailable`. Conséquen
 les badges de stock (« Bientôt épuisé — plus que N en stock », pré-commande)
 ne fonctionnent pas. → Ajouter le scope à l'app Storefront dans l'admin Shopify.
 
-### [ ] Pixel Meta — ID à renseigner
+### [ ] Pixel Meta — ID à vérifier dans Events Manager
 
-`NEXT_PUBLIC_META_PIXEL_ID` (15-16 chiffres) dans Vercel.
-Meta Events Manager → Sources de données → le pixel → Paramètres → ID du pixel.
-Sans ID, le pixel ne se charge pas du tout. Le code est prêt et n'envoie rien
-avant acceptation des cookies.
+ID fourni par le client le 29/08/2026 : **`1675426639926228`**, inscrit en repli
+dans `src/lib/meta-pixel.ts` (`META_PIXEL_FALLBACK`) et actif automatiquement en
+production, comme GA. Rien à faire dans Vercel ; `NEXT_PUBLIC_META_PIXEL_ID`
+reste prioritaire si on veut le surcharger (ou tester depuis localhost).
+
+⚠️ La capture d'où vient cet ID montrait un compte du gestionnaire de publicités
+(nom du compte, devise EUR, « Aucune campagne active ») : ce sont les marqueurs
+d'un **identifiant de compte publicitaire**, pas d'un pixel — les deux font
+15-16 chiffres et se confondent facilement. À confirmer dans Meta Events Manager
+→ Sources de données → le pixel → Paramètres → ID du pixel. Contrôle en une
+minute : sur bien.health, accepter les cookies puis ouvrir l'onglet Réseau →
+un appel `fbevents.js` doit partir, et l'activité doit apparaître dans Events
+Manager (« Test des évènements »). Si l'ID est celui du compte publicitaire, le
+script se charge mais **aucun évènement n'est reçu** — c'est le seul symptôme.
 
 ### [ ] Événement `Purchase` côté Shopify
 
@@ -669,3 +679,459 @@ Reçus en plusieurs envois le 19/08/2026 et traités le jour même.
       pas 31 — l'affichage minore donc de ~3 % le coût journalier réel. Le prix
       total reste affiché en clair juste à côté, ce qui reste l'information
       opposable. Diviseur dans `components/add-to-cart.tsx` (`daysPerUnit`).
+
+---
+
+## 9. Procédure de bascule sur `bien.health` (28/08/2026)
+
+Le nom de domaine est géré chez **Namecheap** ; l'hébergement du front est le
+projet Vercel `clickzous-projects/bienhealth`.
+
+### Constat du 28/08/2026 — état réel de la configuration
+
+- **Aucune variable d'environnement n'est déclarée sur le projet Vercel.**
+  `vercel env ls` et `vercel env pull --environment=production` ne renvoient que
+  les variables système (`VERCEL_*`, `TURBO_*`). Si des valeurs existent, elles
+  sont dans un groupe partagé au niveau de l'équipe — à vérifier dans le
+  dashboard, onglet *Environment Variables*.
+- **`NEXT_PUBLIC_SHOPIFY_DOMAIN` est confirmé absent du build déployé** : le
+  bundle client de `bienhealth.vercel.app` compile `SHOPIFY_STORE` en
+  `https://bien.health`, la valeur de repli. Aucune occurrence de `myshopify.com`
+  dans les chunks JS. **Le jour où le domaine bascule, « Passer au paiement »
+  enverra les clients sur une page 404 du site headless.** C'est le bloquant n°1
+  de la section 1, et il est vérifié, pas théorique.
+- Le domaine `bien.health` n'apparaît pas dans `vercel domains ls` : il n'est
+  pas encore rattaché au compte.
+- Le site de préprod répond bien en `noindex, nofollow` — le garde-fou de
+  `src/lib/seo.ts` fonctionne.
+
+### Ordre des opérations
+
+1. **Renseigner les variables dans Vercel** (Settings → Environment Variables),
+   en Production **et** Preview, d'après `.env.local.example` — au minimum
+   `SHOPIFY_STORE_DOMAIN`, `SHOPIFY_STOREFRONT_API_TOKEN`,
+   `SHOPIFY_STOREFRONT_API_VERSION`, `NEXT_PUBLIC_SHOPIFY_DOMAIN`,
+   `NEXT_PUBLIC_SITE_URL`, et si disponibles `NEXT_PUBLIC_META_PIXEL_ID`,
+   `NEXT_PUBLIC_GA_ID`, les trois clés Supabase.
+2. **Redéployer** — les `NEXT_PUBLIC_*` sont figées au build : tant qu'il n'y a
+   pas de nouveau déploiement, une variable ajoutée ne change rien.
+3. **Recette sur `bienhealth.vercel.app`** : parcours complet jusqu'au checkout
+   Shopify (l'URL de paiement doit maintenant pointer sur
+   `b3a79e-89.myshopify.com`), section 2 de ce document.
+4. **Libérer le domaine côté Shopify** : dans l'admin, Paramètres → Domaines,
+   `bien.health` doit cesser d'être le domaine principal de la boutique, sinon
+   les deux plateformes le revendiquent. Le checkout continue de tourner sur
+   `b3a79e-89.myshopify.com`.
+5. **Ajouter le domaine dans Vercel** : projet `bienhealth` → Settings →
+   Domains → `bien.health` (+ `www.bien.health` en redirection). Vercel affiche
+   alors les enregistrements DNS exacts à créer.
+6. **DNS chez Namecheap** : Domain List → Manage → *Advanced DNS* (les
+   nameservers doivent être sur « Namecheap BasicDNS »).
+   - Supprimer l'enregistrement `URL Redirect`/parking posé par défaut sur `@`.
+   - `A` · Host `@` · valeur **exactement celle affichée par Vercel**
+     (Namecheap ne gère pas d'ALIAS/ANAME sur l'apex, donc un A record).
+   - `CNAME` · Host `www` · valeur affichée par Vercel.
+   - TTL au minimum le temps de la bascule. Propagation : de quelques minutes à
+     quelques heures.
+7. **Après propagation** : Vercel émet le certificat TLS automatiquement.
+   Vérifier `https://bien.health/robots.txt` (crawl autorisé), le
+   `<meta name="robots">` d'une page (`index, follow`), `/sitemap.xml`, puis
+   soumettre le sitemap dans la Search Console.
+8. **Redirections 301** des anciennes URLs Shopify indexées (section 2) et
+   surveillance de la couverture d'index les jours suivants.
+
+### Fait le 28/08/2026 — étape 1 : variables Vercel
+
+Les cinq variables indispensables sont désormais déclarées sur le projet, en
+Production **et** en Preview (`SHOPIFY_STORE_DOMAIN`,
+`SHOPIFY_STOREFRONT_API_TOKEN`, `SHOPIFY_STOREFRONT_API_VERSION`,
+`NEXT_PUBLIC_SHOPIFY_DOMAIN`, `NEXT_PUBLIC_SITE_URL`), et la production a été
+redéployée. Vérifié dans le bundle client servi par `bienhealth.vercel.app` :
+`SHOPIFY_STORE` compile maintenant en `https://b3a79e-89.myshopify.com` et non
+plus en `https://bien.health`. Le bloquant n°1 est levé côté site.
+
+Restent non renseignées : `NEXT_PUBLIC_META_PIXEL_ID` et `NEXT_PUBLIC_GA_ID`
+(sans conséquence, les deux ont un repli en production depuis le 29/08/2026) et
+les trois clés Supabase — le formulaire revendeur en dépend.
+
+### ⚠️ Le domaine principal Shopify redirige tout vers `bien.health`
+
+Vérifié le 28/08/2026 : `https://b3a79e-89.myshopify.com/cart/` répond **301
+vers `https://bien.health/cart`**. C'est le comportement normal de Shopify, qui
+renvoie tout trafic vers le domaine principal de la boutique.
+
+Conséquence : tant que `bien.health` est le domaine principal côté Shopify, le
+lien de paiement — même construit sur `b3a79e-89.myshopify.com` — sera redirigé
+vers `bien.health`. **À la seconde où le DNS bascule sur Vercel, cette
+redirection amène le client sur le nouveau site, pas sur le checkout.**
+
+Le changement de domaine principal chez Shopify et la bascule DNS doivent donc
+être faits **dans la même fenêtre**, dans cet ordre : Shopify d'abord, DNS
+ensuite. Deux options :
+
+- **Recommandé — un sous-domaine pour la boutique** : `shop.bien.health` (ou
+  `checkout.bien.health`) déclaré domaine principal dans Shopify, avec un CNAME
+  chez Namecheap vers `shops.myshopify.com`. Le client reste sur un domaine de
+  marque au moment de payer, ce qui protège le taux de conversion. Il faut alors
+  passer `NEXT_PUBLIC_SHOPIFY_DOMAIN=shop.bien.health` dans Vercel et
+  redéployer.
+- **Repli** : domaine principal ramené à `b3a79e-89.myshopify.com`. Ça marche,
+  mais le client voit une URL en `myshopify.com` sur la page de paiement.
+
+### Décision client du 28/08/2026 : le checkout part sur `shop.bien.health`
+
+Option A retenue. `bien.health` reste l'adresse du site ; Shopify ne garde que
+la page de paiement, sur le sous-domaine `shop.bien.health`.
+
+Découpage en deux phases pour éviter toute coupure :
+
+**Phase 1 — préparatoire, sans effet sur le site en ligne**
+1. Shopify → Paramètres → Domaines → *Connecter un domaine existant* :
+   `shop.bien.health`. **Ne pas le passer en domaine principal à ce stade** :
+   Shopify redirigerait immédiatement `bien.health` vers lui, sous les yeux des
+   clients.
+2. Namecheap → Domain List → Manage → Advanced DNS → *Add New Record* :
+   `CNAME` · Host `shop` · Value `shops.myshopify.com` · TTL Automatic.
+3. Attendre la vérification côté Shopify, puis ouvrir `https://shop.bien.health`
+   — la boutique actuelle doit s'afficher.
+
+**Phase 2 — jour de la bascule**
+1. Vercel : `NEXT_PUBLIC_SHOPIFY_DOMAIN=shop.bien.health` + redéploiement.
+2. Vercel : ajouter `bien.health` et `www.bien.health` au projet (Settings →
+   Domains) ; Vercel affiche les enregistrements DNS à créer.
+3. Shopify : passer `shop.bien.health` en domaine principal. **Laisser
+   `bien.health` rattaché à Shopify** pendant la propagation : les visiteurs
+   dont le DNS n'est pas encore à jour seront redirigés vers l'ancienne boutique
+   au lieu de tomber sur une erreur. On le détachera 24 à 48 h plus tard.
+4. Namecheap : remplacer l'enregistrement `@` (et `www`) par les valeurs
+   affichées par Vercel, en supprimant l'ancien pointage Shopify.
+5. Vérifications : `robots.txt`, `<meta name="robots">` en `index, follow`,
+   `sitemap.xml`, puis un achat test de bout en bout.
+
+### ⚠️ Le DNS de `bien.health` n'est pas géré dans l'onglet Advanced DNS
+
+Relevé le 28/08/2026 : `bien.health` pointe sur les serveurs de noms
+`dns1.namecheaphosting.com` / `dns2.namecheaphosting.com` — ceux de
+**l'hébergement Namecheap**, pas de « Namecheap BasicDNS ». L'onglet *Advanced
+DNS* du panneau domaine est donc inopérant : la zone DNS vit dans le **cPanel**
+de l'hébergement (*Zone Editor*). C'est là qu'il faut créer le CNAME `shop` et,
+le jour J, modifier l'enregistrement `A` de l'apex.
+
+Ne pas basculer les nameservers vers BasicDNS pour « simplifier » : la zone
+contient aussi les enregistrements de messagerie (MX, SPF, DKIM). Les recréer à
+la main ferait courir un risque de coupure des e-mails de la marque.
+
+L'enregistrement `A` actuel de `bien.health` est `23.227.38.65`, l'IP de
+Shopify — cohérent avec la boutique servie aujourd'hui.
+
+### Phase 1 exécutée le 28/08/2026
+
+`shop.bien.health` est créé côté Shopify et le CNAME est en place dans la zone
+cPanel (`shop` → `shops.myshopify.com`, TTL 14400). Vérifié depuis l'extérieur :
+le serveur autoritaire et le résolveur de Google renvoient tous deux
+`shops.myshopify.com` / `23.227.38.74`. Shopify affiche « Domain is live in all
+regions globally » ; seul le certificat TLS restait en cours d'émission.
+
+Le domaine n'est **pas** passé en principal : il est encore en
+« Redirects to bien.health », ce qui est voulu tant que la bascule n'a pas lieu.
+
+Deux obstacles rencontrés, à connaître pour la suite :
+
+1. **cPanel refusait toute écriture dans la zone.** Trois enregistrements TXT
+   coexistaient sur l'apex avec des TTL différents (`14400` pour
+   `google-site-verification` et le SPF, `3600` pour
+   `klaviyo-site-verification`). cPanel impose un TTL identique pour des
+   enregistrements de même nom et même type, et bloque la sauvegarde de la zone
+   entière tant que ce n'est pas corrigé. Le TTL du TXT Klaviyo a été aligné sur
+   `14400`, contenu inchangé. **Le jour J, la même erreur bloquerait la
+   modification de l'enregistrement A** si un autre déséquilibre du même genre
+   apparaissait : le vérifier avant d'ouvrir la fenêtre de bascule.
+2. **Shopify signale « Multiple issues » à tort.** Le panneau réclame un
+   enregistrement A pour `shop.bien.health` — un sous-domaine en CNAME n'en a
+   pas, et n'en a pas besoin. Le tableau juste en dessous coche le CNAME en
+   vert. Message à ignorer.
+
+### À traiter après la mise en ligne — SPF incomplet
+
+Les MX de `bien.health` pointent sur Google Workspace, mais le SPF de la zone
+est `v=spf1 include:spf.mailjet.com +a +mx +ip4:66.29.132.133
+include:spf.web-hosting.com +ip4:66.29.153.227 ~all` : **`_spf.google.com` n'y
+figure pas**. Les messages envoyés depuis Google Workspace échouent donc à
+l'authentification SPF, ce qui pousse au spam. Un DMARC est publié en `p=none`,
+donc rien n'est rejeté aujourd'hui — mais la délivrabilité en souffre.
+À corriger en ajoutant `include:_spf.google.com` au TXT existant.
+
+### Préparé le 28/08/2026 à 19h30 — runbook de la bascule (prévue 22h)
+
+`bien.health` et `www.bien.health` sont déclarés sur le projet Vercel
+`bienhealth`. Ils y sont marqués « not configured » tant que le DNS pointe
+ailleurs : c'est normal et sans effet sur la boutique en ligne. Valeurs exactes
+renvoyées par `vercel domains inspect` :
+
+| Enregistrement | Valeur actuelle (Shopify) | Valeur cible (Vercel) |
+| --- | --- | --- |
+| `bien.health.` · A | `23.227.38.65` | `76.76.21.21` |
+| `www.bien.health.` · CNAME | `shops.myshopify.com` | `cname.vercel-dns.com` |
+
+Vercel recommande un `A 76.76.21.21` pour `www` aussi ; le CNAME vers
+`cname.vercel-dns.com` est équivalent et se fait en modifiant un seul champ dans
+cPanel, sans changer le type de l'enregistrement. C'est la voie retenue.
+
+**Ordre d'exécution, à 22h :**
+
+0. Vérifier que le TLS de `shop.bien.health` est émis (`https://shop.bien.health`
+   doit répondre ; à 19h30 il ne répondait pas encore, certificat en cours).
+1. Vercel : `NEXT_PUBLIC_SHOPIFY_DOMAIN=shop.bien.health` + redéploiement, puis
+   contrôle dans le bundle client que `SHOPIFY_STORE` compile bien sur ce
+   domaine.
+2. Shopify → Domaines : passer `shop.bien.health` en **domaine principal**.
+   **Laisser `bien.health` et `www.bien.health` rattachés à Shopify** : pendant
+   la propagation, les visiteurs dont le résolveur n'est pas à jour seront
+   redirigés vers la boutique actuelle plutôt que de tomber sur une erreur. On
+   les détachera 24 à 48 h plus tard.
+3. cPanel → Zone Editor : modifier les deux enregistrements du tableau ci-dessus.
+   Si cPanel refuse d'enregistrer, chercher un nouveau déséquilibre de TTL entre
+   enregistrements de même nom et même type (cf. l'incident Klaviyo).
+4. Attendre la propagation, puis vérifier dans l'ordre : `https://bien.health`
+   sert le nouveau site · `robots.txt` autorise le crawl · le
+   `<meta name="robots">` est passé en `index, follow` · `sitemap.xml` répond ·
+   un achat test va jusqu'au paiement sur `shop.bien.health`.
+5. Search Console : soumettre le sitemap.
+
+---
+
+## 10. Bascule exécutée le 28/08/2026 vers 23h
+
+Déroulé réel, dans l'ordre :
+
+1. **Vercel** — `NEXT_PUBLIC_SHOPIFY_DOMAIN=shop.bien.health` en Production et
+   Preview, puis redéploiement. Contrôlé dans le bundle client : `SHOPIFY_STORE`
+   compile bien sur `https://shop.bien.health`.
+2. **Shopify** — `shop.bien.health` passé en **domaine principal** via la carte
+   « Domain target and type » → *Change* → *Primary domain*. Le bouton ne se
+   trouve ni dans le menu « Domain settings » de la fiche (qui n'offre que
+   *Delete subdomain*) ni dans la liste des domaines : c'est ce sélecteur de
+   type qui fait office de « set as primary ». Vérifié ensuite de l'extérieur :
+   `b3a79e-89.myshopify.com` et `bien.health` redirigent tous deux en 301 vers
+   `shop.bien.health`, qui répond 200.
+3. **cPanel** — `bien.health.` A passé de `23.227.38.65` à `76.76.21.21`, et
+   `www.bien.health.` CNAME de `shops.myshopify.com` à `cname.vercel-dns.com`.
+
+Incident sans gravité : la session cPanel a expiré entre deux écrans et le
+premier enregistrement a été refusé par un `401 Unauthorized`. Rien n'avait été
+écrit. Se reconnecter par Namecheap → Hosting List → *Go to cPanel* (connexion
+automatique, sans mot de passe) et refaire la saisie. **Enchaîner les deux
+enregistrements sans pause** : la session cPanel expire vite.
+
+À noter pour la prochaine fois : les serveurs `dns1`/`dns2.namecheaphosting.com`
+ne reflètent pas immédiatement une écriture faite dans le Zone Editor. Il s'est
+écoulé quelques minutes entre le « Save Record » et le moment où les deux
+serveurs autoritaires ont renvoyé la nouvelle valeur. Ne pas conclure trop vite
+à un échec : vérifier d'abord ce qu'affiche le tableau du Zone Editor.
+
+**État à 23h05** : `bien.health` sert le nouveau site en HTTP (307 vers `/fr`,
+donc c'est bien Vercel et non plus Shopify), le certificat TLS de Vercel est en
+cours d'émission, et la synchronisation du CNAME `www` n'est pas encore visible
+sur les serveurs autoritaires.
+
+### Résultat de la bascule — vérifié le 28/08/2026 à 23h30
+
+`https://bien.health` sert le nouveau site. Contrôles passés :
+
+- certificat TLS émis par Vercel en 2 min 40 après la mise à jour du DNS ;
+- `<title>` : « BIEN health | Compléments naturels & adaptogènes » ;
+- `<meta name="robots">` : **`index, follow`** — le site est sorti du noindex ;
+- `robots.txt` : `Allow: /`, `Host: https://bien.health`, sitemap déclaré ;
+- `sitemap.xml` : 200 ;
+- canonique : `https://bien.health/fr` ;
+- `www.bien.health` : 307 vers `/fr`, servi par Vercel.
+
+Propagation à 23h30 : Google, Quad9 et OpenDNS renvoient `76.76.21.21` ;
+Cloudflare gardait encore l'ancienne valeur. L'ancien enregistrement avait un
+TTL de 14400 s, d'où jusqu'à quatre heures de cache résiduel chez les résolveurs
+qui l'avaient déjà lu.
+
+Point à connaître : pendant la fenêtre de bascule, `bien.health` a redirigé vers
+`shop.bien.health` pour les visiteurs dont le DNS n'était pas à jour. Cette
+redirection est émise par Shopify avec `cache-control: private, no-store` —
+elle n'est donc pas mémorisée par les navigateurs, et disparaît d'elle-même dès
+que le résolveur du visiteur se met à jour. Rien à nettoyer.
+
+### Optionnel — nouvelles adresses recommandées par Vercel
+
+Le panneau Domains de Vercel affiche un bandeau « DNS Change Recommended » sur
+les deux domaines et propose `A @ 216.150.1.1` et
+`CNAME www da2595a418c4989d.vercel-dns-016.com`. Vercel précise lui-même que
+les valeurs en place (`76.76.21.21` et `cname.vercel-dns.com`) continuent de
+fonctionner : c'est une extension de leur parc d'adresses, pas une dépréciation.
+
+**Finalement appliqué le soir même, à la demande du client** — et sans risque :
+les deux jeux d'adresses servent le même site, donc un résolveur qui garde
+l'ancienne valeur quelques heures affiche exactement la même chose. Vérifié
+avant saisie : `216.150.1.1` répond 200 en HTTPS, et
+`da2595a418c4989d.vercel-dns-016.com` résout vers `216.150.1.1` et
+`216.150.16.1`.
+
+Zone finale, confirmée sur les deux serveurs autoritaires :
+
+| Enregistrement | Valeur |
+| --- | --- |
+| `bien.health.` · A | `216.150.1.1` |
+| `www.bien.health.` · CNAME | `da2595a418c4989d.vercel-dns-016.com` |
+| `shop.bien.health.` · CNAME | `shops.myshopify.com` (checkout, inchangé) |
+
+Là encore, quelques minutes se sont écoulées entre le « Save Record » du CNAME
+et sa visibilité sur `dns1`/`dns2`. Comportement normal de Namecheap.
+
+---
+
+## 11. Mesure et référencement — état au 29/08/2026 (nuit de la bascule)
+
+| Outil | État |
+| --- | --- |
+| Google Analytics 4 | **Connecté.** `G-GQFWQF5085`, inscrit en repli dans `components/google-analytics.tsx` et actif automatiquement en production. Ne se charge qu'après acceptation des cookies, d'où son absence du code source tant qu'on n'a pas cliqué « Accepter » — ce n'est pas un défaut de configuration. |
+| Search Console | **Propriété de domaine `bien.health` validée** la nuit de la bascule, par enregistrement TXT. Sitemap (51 URLs, toutes en `https://bien.health`) soumis dans la foulée. |
+| Pixel Meta | **Branché, à confirmer.** ID `1675426639926228` (fourni le 29/08/2026), inscrit en repli dans `lib/meta-pixel.ts` et actif automatiquement en production, comme GA — Vercel n'est plus nécessaire. Ne se charge qu'après acceptation des cookies. Reste à vérifier dans Events Manager que cet ID est bien celui du **pixel** et non du compte publicitaire (cf. section 1). |
+
+La zone porte désormais **deux** enregistrements `google-site-verification` sur
+l'apex : l'ancien (`T93BhVQk…`, propriétaire inconnu, probablement l'ancienne
+configuration Shopify) et le nouveau (`iWrX4Tsc…`, la propriété créée cette
+nuit). Ne pas supprimer le premier sans savoir à qui il appartient — un domaine
+peut en porter plusieurs sans conflit.
+
+Rappel du piège, qui s'applique à **tout** ajout futur dans cette zone : un
+nouvel enregistrement sur l'apex doit reprendre le TTL des enregistrements de
+même type déjà présents (`14400`), sinon cPanel refuse d'écrire la zone entière.
+
+---
+
+## 12. Fichiers client du 29/08/2026 — visuels remplacés
+
+### Logos presse (33 titres)
+
+Livraison `logos presse/` : 36 SVG, chacun une image haute résolution enfermée
+dans un canevas carré de 189 px avec des marges très inégales — d'où
+l'impression de tailles incohérentes. Traitement appliqué à chaque fichier :
+rendu à haute résolution, détourage des marges, fond blanc rendu transparent,
+puis recentrage dans un **canevas commun de 720 × 280 px** — le rapport exact de
+la case d'affichage du bandeau. C'est ce canevas partagé qui règle le problème
+de fond : sans lui, un logo carré (Sud Radio) écrasait un logo large (ELLE),
+puisque `object-contain` cale chaque fichier sur sa propre boîte.
+
+Les 20 titres déjà présents ont été remplacés par ces versions ; 13 nouveaux
+médias s'ajoutent, sans lien d'article donc non cliquables : Cosmopolitan,
+Avantages, Gazelle, Fraîches, Lyon Capitale, Les Nouvelles Esthétiques, Psycho
+Pour Elles, Famille Mag, BiG média, Fresh Magazine, TheDreamTeam, Mesinfos,
+Mag'in France. Trois fichiers du dossier n'ont **pas** été intégrés au bandeau
+presse, faute d'être des médias : « Fait en France » (label), « 48 Collagen
+Café » et « My Beauty Factory ». Ils restent disponibles dans le dossier source
+si le client veut les afficher ailleurs (bandeau partenaires, page revendeurs).
+
+Le mur de logos de la page Presse passe lui aussi en case de rapport fixe
+(`h-9 sm:h-11 w-full`) : avec `w-auto`, les nouveaux fichiers auraient paru
+deux fois plus petits que les anciens, la hauteur CSS s'appliquant au canevas
+et non au logo.
+
+### Couvertures des 18 articles de blog
+
+Livraison `IMAGES BLOG/` : 18 PNG de 1535 × 944, nommés d'après le titre de
+l'article — la correspondance avec les 18 `cover:` de `src/lib/blog.ts` est
+donc directe, une par article, sans reste ni manque. Recadrées en 16/9
+(1440 × 810, le rapport des anciennes couvertures), JPEG qualité 82 : 40 à
+250 ko pièce. Les noms de fichiers ne changent pas, `blog.ts` n'a pas bougé.
+
+### Image de partage (Open Graph)
+
+`DEFAULT_OG_IMAGE` passe de `/brand/bien-health.png` (visuel de marque) à
+`/brand/bien-health-complements-champignons-adaptogenes.jpg` — nom porteur de
+sens pour le référencement des images, comme demandé. La photo fournie était
+en portrait 3413 × 5120 ; elle est recadrée en **1200 × 630**, le format
+attendu par Facebook, LinkedIn et WhatsApp, sur la bande qui garde le sachet
+Mushglow et les trois pots entiers (POWER, FOCUS, CALM). Le bas du plateau
+sort du cadre : c'est inévitable, un portrait ne rentre pas dans un format
+deux fois plus large que haut.
+
+⚠️ Facebook, LinkedIn et WhatsApp gardent l'ancienne image en cache pendant
+plusieurs jours. Pour voir la nouvelle tout de suite, passer l'URL dans le
+[Sharing Debugger Facebook](https://developers.facebook.com/tools/debug/) et le
+[Post Inspector LinkedIn](https://www.linkedin.com/post-inspector/), qui
+forcent le rafraîchissement.
+
+---
+
+## 13. Session du 29/08/2026 — correctifs sécurité, SEO et visibilité IA
+
+Tout ce qui suit est appliqué dans le code et vérifié en local. Rien n'est en ligne
+tant que le déploiement n'est pas lancé.
+
+### Sécurité (d'après `docs/securite/audit-securite-2026-08-29.md`)
+
+- **En-têtes de sécurité** posés dans `next.config.ts` : `X-Content-Type-Options`,
+  `Referrer-Policy`, `X-Frame-Options: SAMEORIGIN` (le site n'était protégé contre
+  aucun clickjacking), `Permissions-Policy`, HSTS avec `includeSubDomains`.
+  `poweredByHeader: false` retire l'annonce de la technologie.
+  La **CSP n'est volontairement pas posée** : elle couperait GA, le pixel et Loox
+  en silence si elle était improvisée. Chantier à part, en `Report-Only` d'abord.
+- **Limitation de débit** (`src/lib/rate-limit.ts`) sur les quatre routes publiques :
+  8 tentatives/minute sur la connexion client (c'était le vrai trou : force brute
+  possible sur des comptes réels), 3/minute sur l'inscription, la newsletter et le
+  formulaire revendeur. Vérifié : 429 au 9e essai de connexion, au 4e envoi de
+  newsletter.
+- **Route revendeur** réécrite : champs connus uniquement, types vérifiés, longueurs
+  bornées, e-mail validé. Elle insérait auparavant n'importe quel JSON avec la clé
+  service role, qui contourne les RLS. Les données personnelles ne sont plus
+  journalisées dans les logs Vercel.
+- **JSON-LD** : `<` est désormais échappé. Un titre de produit ou un avis client
+  contenant `</script>` aurait permis une injection.
+
+### SEO on-page
+
+- 6 meta descriptions réécrites (elles dépassaient réellement 160 caractères).
+- Titres des fiches produit et des collections enrichis : « CALM — Gummies sérénité
+  & sommeil » au lieu de « CALM », qui ne cible aucune requête.
+- `ItemList` ajouté sur les collections, `WebSite` + `SearchAction` sur l'accueil.
+
+⚠️ Deux constats du premier passage d'audit étaient de **fausses alertes**, corrigées
+dans le rapport : les « 12 » descriptions trop longues étaient 6 (le comptage
+incluait les entités HTML), et les « 20 images sans alt » de l'accueil sont la
+seconde copie du bandeau presse, `aria-hidden` avec `alt=""` — c'est-à-dire
+exactement ce qu'il faut faire.
+
+### Visibilité dans les IA (GEO)
+
+- `robots.ts` autorise **nommément** GPTBot, OAI-SearchBot, ChatGPT-User,
+  PerplexityBot, Perplexity-User, ClaudeBot, Claude-User, Google-Extended,
+  Applebot-Extended et CCBot, avec les mêmes exclusions que le robot générique.
+- `sameAs` complété : Instagram, TikTok, LinkedIn.
+- **`/llms.txt`** publié : sommaire du site en langage naturel destiné aux moteurs
+  génératifs (gamme, collections, articles, pages de référence), avec les précisions
+  réglementaires pour qu'une citation par une IA reste conforme.
+- **IndexNow** en place : clé servie à la racine, `npm run indexnow` notifie Bing,
+  Yandex, Naver et Seznam. Enjeu réel : **ChatGPT s'appuie sur l'index Bing**, donc
+  être indexé vite chez Bing, c'est devenir citable vite. Google n'y participe pas.
+
+### Reste à faire — côté client, le code ne peut pas le faire
+
+1. **Bing Webmaster Tools** — compte créé le 29/08/2026. Le fichier de vérification
+   `BingSiteAuth.xml` (jeton `9249F5B1…`) est en place dans `public/`, servi à
+   `https://bien.health/BingSiteAuth.xml` : il faut **déployer** avant de cliquer sur
+   « Vérifier » dans Bing, sinon le fichier n'existe pas encore en ligne. Ensuite,
+   soumettre `https://bien.health/sitemap.xml` puis lancer `npm run indexnow`.
+2. ~~**Vercel → Domains** : rediriger `www.bien.health` vers l'apex en 301.~~
+   **Fait le 29/08/2026** — vérifié : 301 sur la racine comme sur les pages profondes,
+   chemin conservé (un backlink vers www/fr/products/calm arrive sur la bonne page).
+3. **Accès Google** : ajouter un compte de service en Lecteur GA4 et en utilisateur
+   Search Console, puis renseigner `GOOGLE_SERVICE_ACCOUNT_JSON` et `GA4_PROPERTY_ID`.
+4. **Shopify** : jeton Admin `read_orders` pour les ventes du tableau de bord.
+5. **Pixel Meta** : confirmer que `1675426639926228` est bien l'ID du pixel (cf. § 1).
+6. Après déploiement : `npm run indexnow` pour notifier Bing des 51 URLs.
+7. Supprimer le contact de test `a@b.co` créé dans Shopify pendant la vérification
+   de la limitation de débit.
+
+### Non traité volontairement
+
+- **Montée en Next.js 16.3.3** (6 avis de sécurité « high » sur 16.2.9, dont un
+  contournement de proxy) : la mise à jour modifie `node_modules` et casserait le
+  serveur de développement en cours d'exécution. À faire au calme, suivie d'une
+  recette complète du tunnel d'achat.
+- **Content-Security-Policy** : voir plus haut.
