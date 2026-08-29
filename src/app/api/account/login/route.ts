@@ -1,8 +1,13 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { login, CUSTOMER_COOKIE as COOKIE } from "@/lib/shopify-customer";
+import { isRateLimited, resetRateLimit, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
+  // Sans ce garde-fou, rien n'empêchait des milliers de tentatives par minute
+  // sur des comptes clients réels (cf. audit sécurité du 29/08/2026, § 2).
+  if (isRateLimited(request, "account-login", 8)) return tooManyRequests();
+
   let email = "", password = "";
   try {
     const b = await request.json();
@@ -22,6 +27,9 @@ export async function POST(request: Request) {
     (await cookies()).set(COOKIE, token, {
       httpOnly: true, secure: process.env.NODE_ENV === "production", sameSite: "lax", path: "/", maxAge,
     });
+    // Connexion réussie : on rend son quota à l'utilisateur légitime qui
+    // s'était trompé une ou deux fois avant.
+    resetRateLimit(request, "account-login");
     return NextResponse.json({ ok: true });
   } catch {
     return NextResponse.json({ ok: false, error: "Connexion indisponible pour le moment." }, { status: 500 });

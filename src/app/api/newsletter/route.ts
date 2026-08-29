@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
+import { isRateLimited, tooManyRequests } from "@/lib/rate-limit";
 
 /**
  * Inscription newsletter (popup −10 %).
@@ -14,6 +15,8 @@ import { getSupabaseAdmin, isSupabaseConfigured } from "@/lib/supabase";
  * du code de bienvenue côté client.
  */
 export async function POST(request: Request) {
+  if (isRateLimited(request, "newsletter", 3)) return tooManyRequests();
+
   let email = "";
   let source = "newsletter_popup";
   try {

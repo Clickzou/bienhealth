@@ -1,8 +1,11 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 import { register, login, CUSTOMER_COOKIE as COOKIE } from "@/lib/shopify-customer";
+import { isRateLimited, tooManyRequests } from "@/lib/rate-limit";
 
 export async function POST(request: Request) {
+  if (isRateLimited(request, "account-register", 3)) return tooManyRequests();
+
   let email = "", password = "", firstName = "", lastName = "", acceptsMarketing = false;
   try {
     const b = await request.json();
