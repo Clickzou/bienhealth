@@ -133,11 +133,20 @@ export default async function SeoDashboard({
             invert
             hint={gsc ? undefined : "Search Console non connectée"}
           />
+          {/* Trois cas bien distincts, parce que les confondre trompe le lecteur :
+              Shopify (le vrai chiffre d'affaires), Analytics seul (ce qu'il a vu
+              passer, souvent une fraction — le paiement quitte le site), ou rien. */}
           <Kpi
             label="Chiffre d'affaires"
             value={sales ? money(sales.current.revenue, sales.current.currency) : commerce?.revenue ? money(commerce.revenue) : "—"}
             delta={sales ? variation(sales.current.revenue, sales.previous.revenue) : undefined}
-            hint={sales ? undefined : "Ventes non connectées"}
+            hint={
+              sales
+                ? undefined
+                : commerce?.revenue
+                  ? `${num(commerce.transactions)} achat${commerce.transactions > 1 ? "s" : ""} vu${commerce.transactions > 1 ? "s" : ""} par Analytics — mesure partielle`
+                  : "Ventes non connectées"
+            }
           />
         </div>
 
@@ -369,12 +378,25 @@ export default async function SeoDashboard({
           />
         )}
 
-        {/* Rappel : ce que le tableau de bord ne peut pas encore mesurer. */}
-        {ga4 && (!commerce || commerce.transactions === 0) && (
+        {/* Rappel affiché tant que Shopify n'alimente pas la section Ventes : sans
+            lui, les chiffres d'achat de cette page sont ceux d'Analytics, qui ne
+            voit qu'une partie du tunnel. Le dire évite de prendre un plancher pour
+            un total. */}
+        {ga4 && !sales && (
           <p className="mt-8 text-[12px] text-white/40 max-w-3xl leading-relaxed">
-            Analytics ne rapporte aucun achat sur cette période. C&apos;est attendu tant que le canal Google du back-office
-            Shopify n&apos;envoie pas les commandes à GA4 : le tunnel de paiement quitte bien.health, la mesure s&apos;arrête donc
-            à l&apos;ajout au panier. Les ventes réelles se lisent dans la section précédente, alimentée par Shopify.
+            {commerce && commerce.transactions > 0 ? (
+              <>
+                Analytics a vu {num(commerce.transactions)} achat{commerce.transactions > 1 ? "s" : ""} sur cette période, pour
+                {" "}{num(commerce.checkouts)} passage{commerce.checkouts > 1 ? "s" : ""} au paiement : la mesure est donc
+                {" "}<strong className="text-white/60">très partielle</strong>. Le paiement se déroule sur Shopify, hors du site,
+                et seule une partie des transactions revient à GA4. Brancher le jeton Shopify Admin donnera le chiffre exact.
+              </>
+            ) : (
+              <>
+                Analytics ne rapporte aucun achat sur cette période. C&apos;est attendu : le tunnel de paiement quitte
+                bien.health, la mesure s&apos;arrête à l&apos;ajout au panier. Brancher le jeton Shopify Admin donnera les ventes réelles.
+              </>
+            )}
           </p>
         )}
 
