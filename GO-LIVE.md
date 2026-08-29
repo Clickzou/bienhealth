@@ -1184,3 +1184,71 @@ dupliquée, 0 description vide, sur l'ensemble des 110 pages.
 À noter au passage : les descriptions des packs tutoient (« t'aide », « ton
 potentiel ») alors que tout le site a été homogénéisé au vouvoiement. Elles
 viennent de Shopify, pas du code — à reprendre dans l'admin de la boutique.
+
+### État au 29/08/2026, fin de journée — branchement du tableau de bord
+
+**Google Analytics 4 — connecté et vérifié.**
+Compte de service `clickzou-ga4-dashboard@clickzou.iam.gserviceaccount.com` ajouté en
+**Lecteur** au niveau du compte GA4 « BIEN health » (la gestion des accès au niveau
+propriété n'était pas exposée dans l'interface ; le compte ne contenant que cette
+propriété, la portée est identique). ID de propriété : **510560620** — lu dans l'URL
+d'administration (`…/a373009813p510560620/admin`), pas le `G-GQFWQF5085` qui identifie
+le flux de données. Testé en réel : 302 visiteurs, 484 sessions, 1 129 pages vues sur
+28 jours, et le rapport temps réel répond.
+
+**Search Console — connectée et vérifiée.**
+Même adresse, autorisation **Complète** sur `sc-domain:bien.health`. Testé : 4 clics,
+33 impressions, CTR 12,1 %, position moyenne 10,8. Deux requêtes rapportées à ce
+stade : « bien health » (position 1) et « be healthy » (position 55,5).
+
+⚠️ **Ne pas interpréter les comparaisons de périodes avant fin septembre.** La période
+courante contient 27 jours de l'ancien site Shopify et un seul du nouveau : le
+« −51,8 % » affiché compare deux plateformes, pas deux mois de trafic.
+
+**Ventes Shopify — bloquées à l'installation de l'app.**
+
+Ce qui a changé et qu'il faut savoir avant de reprendre : depuis le **1er janvier 2026**,
+Shopify a supprimé les « legacy custom apps » et, avec elles, **le jeton `shpat_…`
+affiché dans l'admin**. La documentation et les tutoriels qui décrivent
+« Paramètres → Applications → Développer des applications → Installer → révéler le
+jeton » ne s'appliquent plus.
+
+Le nouveau mécanisme : une app créée dans le **Dev Dashboard** expose un **Client ID**
+et un **Client Secret**, qu'on échange contre un jeton valable 24 h via le
+*client credentials grant* :
+
+```
+POST https://b3a79e-89.myshopify.com/admin/oauth/access_token
+grant_type=client_credentials&client_id=…&client_secret=…
+```
+
+État actuel :
+- app **« Tableau de bord Clickzou »** créée dans le Dev Dashboard de l'organisation
+  Bien Health (`dev.shopify.com/dashboard/128222147/apps/416841170945`) ;
+- version `lecture-commandes-dashboard` publiée et active, scopes
+  `read_orders,read_products` ;
+- Client ID `3ecbb40794537313b81795cdda1ce1ce` et secret renseignés dans `.env.local`
+  (non versionné) ;
+- l'échange de jeton répond **`app_not_installed`** : le secret est donc bon (un secret
+  faux renvoie `invalid_request`, vérifié), mais **l'app n'est pas installée sur la
+  boutique**.
+
+À reprendre : page **Home** de l'app dans le Dev Dashboard → descendre → **Install app**
+→ choisir la boutique Bien Health → Install. Puis vérifier qu'elle apparaît dans
+l'admin (Paramètres → Apps → Installed) et relancer le test.
+
+**Travail de code restant, une fois l'installation faite** : `src/lib/seo-dashboard/shopify-sales.ts`
+attend aujourd'hui un jeton statique `SHOPIFY_ADMIN_API_TOKEN`. Il faudra le faire
+passer au *client credentials grant* — obtenir le jeton depuis `SHOPIFY_APP_CLIENT_ID`
+et `SHOPIFY_APP_CLIENT_SECRET`, le garder en mémoire et le renouveler avant ses 24 h.
+Une trentaine de lignes, sur le modèle de `google.ts` qui fait déjà exactement ça pour
+les API Google.
+
+**Fausse piste écartée** : l'erreur `failed_grant_with_invalid_scopes` obtenue en
+tentant `/admin/oauth/install?client_id=…` n'a rien à voir avec les *protected customer
+data*. Réponse officielle de Shopify : les apps custom installées sur la boutique de
+leur propre organisation obtiennent cet accès automatiquement, sans demande.
+
+**Variables Vercel renseignées ce jour** : `GA4_PROPERTY_ID` et
+`GOOGLE_SERVICE_ACCOUNT_JSON`, redéploiement effectué, tableau de bord en ligne
+alimenté par GA4 et Search Console.
