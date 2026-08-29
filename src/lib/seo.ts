@@ -33,8 +33,11 @@ function hostOf(url: string): string {
   }
 }
 
-/** Image Open Graph par défaut (visuel de marque). */
-export const DEFAULT_OG_IMAGE = "/brand/bien-health.png";
+/** Image Open Graph par défaut : photo de la gamme (Mushglow, POWER, FOCUS,
+ *  CALM) fournie par le client le 29/08/2026, recadrée en 1200x630 — le format
+ *  attendu par Facebook, LinkedIn et WhatsApp. Nom de fichier porteur de sens
+ *  pour le référencement des images. */
+export const DEFAULT_OG_IMAGE = "/brand/bien-health-complements-champignons-adaptogenes.jpg";
 
 /** Pages statiques indexables (hors pages privées panier/compte). */
 export const STATIC_PATHS = [
