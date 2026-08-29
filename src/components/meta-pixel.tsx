@@ -12,7 +12,8 @@ import { META_PIXEL_ID, trackMeta } from "@/lib/meta-pixel";
  * les cookies de mesure, et le choix est pris en compte en direct via
  * CONSENT_EVENT (sans rechargement).
  *
- * ID : NEXT_PUBLIC_META_PIXEL_ID. Absent → le composant ne rend rien.
+ * ID : NEXT_PUBLIC_META_PIXEL_ID, sinon repli sur l'ID public en production
+ * (voir lib/meta-pixel.ts). Sans ID, le composant ne rend rien.
  *
  * Le PageView initial est envoyé par le script d'init ; les navigations
  * suivantes (App Router, côté client) sont suivies via `usePathname`.
