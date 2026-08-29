@@ -1165,3 +1165,22 @@ pages répondent déjà 200 en production. Leurs fiches sont maigres (339 mots, 
 contenu SEO dédié, pas de descripteur de titre). Deux possibilités : soit ce sont
 des produits actifs et il faut leur écrire un vrai contenu, soit ce sont des restes
 et il faut les dépublier du canal headless côté Shopify. À trancher avec le client.
+
+### Rapport Bing du 29/08/2026 — les 3 erreurs, corrigées
+
+Bing Webmaster Tools a scanné le site dès la vérification de la propriété et
+remonté 28 erreurs sur 3 types. Toutes reproduites en local sur les 110 pages
+(`/fr` + `/en`) et corrigées :
+
+| Erreur Bing | Gravité | Pages | Cause réelle |
+|---|---|---|---|
+| `Title too long` | Élevée | 2 | **Régression introduite le matin même** : « MUSHGLOW - Supermix 6-en-1 » porte déjà son descripteur dans son nom Shopify, et l'ajout du suffixe SEO faisait 70 caractères. `productPageTitle` borne désormais à 60 : quand ça ne tient pas, le nom du produit prime sur le bénéfice ajouté. |
+| `The <h1> tag is missing` | Élevée | 3 | `cart-view.tsx` faisait `if (!ready) return null` : le panier vivant dans le localStorage, le composant ne rendait **rien** côté serveur — donc aucun H1 dans le HTML servi aux robots, sur `/fr/cart` et `/en/cart`. Le titre est maintenant rendu dès le serveur, avec une ligne « chargement ». |
+| `Too many pages with identical meta descriptions` | Modérée | 23 | Les six produits sans contenu éditorial traduit (packs BOOST, FLOW, BALANCE, RESET et les deux accessoires) retombaient sur la description Shopify, rédigée en français : `/fr` et `/en` servaient donc la même. Descriptions anglaises dédiées ajoutées (`EN_META` dans `shop.ts`). |
+
+Vérification après correctifs : 0 titre > 60 caractères, 0 page sans H1, 0 description
+dupliquée, 0 description vide, sur l'ensemble des 110 pages.
+
+À noter au passage : les descriptions des packs tutoient (« t'aide », « ton
+potentiel ») alors que tout le site a été homogénéisé au vouvoiement. Elles
+viennent de Shopify, pas du code — à reprendre dans l'admin de la boutique.

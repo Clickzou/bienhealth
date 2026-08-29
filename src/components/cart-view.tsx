@@ -12,14 +12,14 @@ import { trackMeta } from "@/lib/meta-pixel";
 
 const T = {
   fr: {
-    cart: "Panier", empty: "Votre panier est vide.", discover: "Découvrir la boutique",
+    cart: "Panier", empty: "Votre panier est vide.", discover: "Découvrir la boutique", loading: "Chargement de votre panier…",
     yourCart: "Votre panier", removeOne: "Retirer un", addOne: "Ajouter un", remove: "Retirer",
     summary: "Récapitulatif", subtotal: "Sous-total", shipping: "Livraison", shippingCalc: "Calculée au paiement",
     total: "Total", checkout: "Passer au paiement", secure: "Paiement sécurisé · Satisfaits ou remboursés sous 30 jours.",
     continue: "Continuer mes achats", savings: "Remise quantité",
   },
   en: {
-    cart: "Cart", empty: "Your cart is empty.", discover: "Discover the shop",
+    cart: "Cart", empty: "Your cart is empty.", discover: "Discover the shop", loading: "Loading your cart…",
     yourCart: "Your cart", removeOne: "Remove one", addOne: "Add one", remove: "Remove",
     summary: "Summary", subtotal: "Subtotal", shipping: "Shipping", shippingCalc: "Calculated at checkout",
     total: "Total", checkout: "Proceed to checkout", secure: "Secure payment · 30-day money-back guarantee.",
@@ -51,7 +51,18 @@ export default function CartView({ lang }: { lang: string }) {
   const total = cartTotal(items);
   const fmt = (n: number, c = "EUR") => new Intl.NumberFormat(lang === "en" ? "en-IE" : "fr-FR", { style: "currency", currency: c }).format(n);
 
-  if (!ready) return null;
+  // Avant l'hydratation, le contenu du panier est inconnu (il vit dans le
+  // localStorage) — mais le titre, lui, est connu. Rendre `null` privait la page
+  // de son H1 dans le HTML servi : les robots voyaient une page sans titre de
+  // niveau 1 (signale par Bing le 29/08/2026).
+  if (!ready) {
+    return (
+      <div className="py-8">
+        <h1 className="font-hero text-[clamp(1.76rem,4.4vw,2.64rem)] leading-[1] text-black">{t.yourCart}</h1>
+        <p className="mt-3 text-sm text-black/50">{t.loading}</p>
+      </div>
+    );
+  }
 
   // Panier vide
   if (items.length === 0) {

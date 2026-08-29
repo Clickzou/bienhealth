@@ -44,11 +44,50 @@ const SEO_SUFFIX: Record<string, { fr: string; en: string }> = {
   TOTEBAG: { fr: "Tote bag coton bio", en: "Organic cotton tote bag" },
 };
 
-/** Titre de page d'une fiche produit : nom de gamme + bénéfice + marque. */
+/**
+ * Titre de page d'une fiche produit : nom de gamme + bénéfice + marque.
+ *
+ * Borné à 60 caractères, la limite au-delà de laquelle Google et Bing tronquent.
+ * Le cas qui l'impose : « MUSHGLOW - Supermix 6-en-1 » porte déjà son descripteur
+ * dans son nom Shopify, et l'ajout du suffixe faisait 70 caractères — signalé par
+ * Bing le 29/08/2026. Quand ça ne tient pas, on garde le nom et la marque : le
+ * nom du produit prime toujours sur le bénéfice ajouté.
+ */
+/**
+ * Meta description anglaise des produits sans contenu éditorial traduit.
+ *
+ * Les fiches CALM, FOCUS, POWER et MUSHGLOW ont leur version anglaise dans
+ * PRODUCT_SEO. Les six autres — les packs et les accessoires — retombaient sur
+ * la description Shopify, rédigée en français : /fr et /en servaient donc la
+ * même meta description, ce que Bing a signalé le 29/08/2026.
+ *
+ * Volontairement sobre : on ne nomme la composition d'un pack que là où la fiche
+ * française la nomme elle-même, pour ne rien affirmer d'invérifiable.
+ */
+const EN_META: Record<string, string> = {
+  boost:
+    "BOOST: mental clarity and physical energy in one adaptogenic routine — no caffeine, no jitters, no crash. Sugar-free, vegan, made in France.",
+  flow:
+    "FLOW: calm concentration for busy minds that need to move forward without being overwhelmed. Adaptogenic supplements, sugar-free and made in France.",
+  balance:
+    "BALANCE pairs CALM and MUSHGLOW: an evening ritual to slow down, breathe and glow. Adaptogenic supplements, sugar-free, vegan and made in France.",
+  reset:
+    "RESET: the complete adaptogenic routine to restore your mental, physical and emotional balance. Sugar-free, vegan supplements made in France.",
+  "mousseur-a-lait":
+    "The BIEN frother blends our wellbeing powders smoothly into coffee, milk or plant-based drinks. The essential tool for your daily adaptogenic ritual.",
+  "bien-totebag":
+    "The BIEN tote bag: a generous format, long comfortable handles and a quality finish. An everyday basic designed to keep up with your pace.",
+};
+
+/** Meta description anglaise d'un produit, si une version dédiée existe. */
+export function productMetaEn(handle: string): string | null {
+  return EN_META[handle] ?? null;
+}
 export function productPageTitle(name: string, lang = "fr"): string {
   const key = Object.keys(SEO_SUFFIX).find((k) => name.toUpperCase().includes(k));
   const suffix = key ? SEO_SUFFIX[key][lang === "en" ? "en" : "fr"] : "";
-  return suffix ? `${name} — ${suffix} | BIEN health` : `${name} | BIEN health`;
+  const withSuffix = `${name} — ${suffix} | BIEN health`;
+  return suffix && withSuffix.length <= 60 ? withSuffix : `${name} | BIEN health`;
 }
 
 export function benefitFor(name: string, fallback: string, lang = "fr"): string {

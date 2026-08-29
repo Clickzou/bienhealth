@@ -20,7 +20,7 @@ import DeliveryEstimate from "@/components/delivery-estimate";
 import ReassuranceCarousel from "@/components/reassurance-carousel";
 import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
-import { productPageTitle } from "@/lib/shop";
+import { productPageTitle, productMetaEn } from "@/lib/shop";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
 import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
 import { SHOP_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
@@ -42,7 +42,11 @@ export async function generateMetadata({
     path: `products/${handle}`,
     title: productPageTitle(product.title, lang),
     // Description propre au produit, coupée sur une frontière de mot.
-    description: metaDescription(seo?.paragraphs[0] || product.description || seo?.heading || product.title),
+    // En anglais, une description dédiée passe avant la description Shopify, qui
+    // est en français : sans elle, /fr et /en servaient la même meta description.
+    description: metaDescription(
+      (lang === "en" ? productMetaEn(handle) : null) || seo?.paragraphs[0] || product.description || seo?.heading || product.title,
+    ),
     image: product.featuredImage?.url ?? product.images[0]?.url ?? null,
     imageAlt: product.title,
   });
