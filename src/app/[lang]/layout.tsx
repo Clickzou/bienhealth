@@ -90,7 +90,13 @@ export default async function RootLayout({
             logo: `${SITE_URL}/brand/logo-bien.png`,
             email: "info@bien.health",
             telephone: "+33638621213",
-            sameAs: ["https://www.instagram.com/bien.health/"],
+            // sameAs sert autant à Google qu'aux moteurs génératifs : c'est ce qui
+            // relie la marque à ses profils et en fait une entité identifiable.
+            sameAs: [
+              "https://www.instagram.com/bien.health/",
+              "https://www.tiktok.com/@bien.health",
+              "https://fr.linkedin.com/company/bien-health",
+            ],
             address: {
               "@type": "PostalAddress",
               streetAddress: "100 Rue du Verbial",
