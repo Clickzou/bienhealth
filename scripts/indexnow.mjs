@@ -25,16 +25,37 @@ const host = new URL(SITE).host;
 /** Récupère les URLs du sitemap publié — source de vérité, plutôt que de
  *  recomposer la liste à la main et d'oublier la moitié du catalogue. */
 async function urlsFromSitemap() {
-  const res = await fetch(`${SITE}/sitemap.xml`);
-  if (!res.ok) throw new Error(`sitemap: HTTP ${res.status}`);
+  // Un 403 ici ne vient pas du sitemap : c'est le pare-feu Vercel qui a mis
+  // l'adresse IP appelante au défi, après trop de requêtes automatisées depuis
+  // le même poste. Le site répond normalement aux visiteurs — il suffit
+  // d'attendre que le défi retombe, ou de vérifier dans Vercel → Firewall
+  // qu'aucun mode de challenge n'a été activé à la main.
+  const res = await fetch(`${SITE}/sitemap.xml`, {
+    headers: { "User-Agent": "Clickzou-IndexNow/1.0 (+https://bien.health)" },
+  });
+  if (res.status === 403) {
+    const body = await res.text().catch(() => "");
+    throw new Error(
+      /Security Checkpoint|challenge/i.test(body)
+        ? "le pare-feu Vercel a mis cette adresse IP au défi (403). Le site reste accessible aux visiteurs. Réessayez plus tard, ou passez les URLs en argument : npm run indexnow -- /fr /fr/boutique"
+        : "sitemap : HTTP 403",
+    );
+  }
+  if (!res.ok) throw new Error(`sitemap : HTTP ${res.status}`);
   const xml = await res.text();
   return [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
 }
 
 const args = process.argv.slice(2);
-const urlList = args.length
-  ? args.map((a) => (a.startsWith("http") ? a : `${SITE}${a.startsWith("/") ? a : `/${a}`}`))
-  : await urlsFromSitemap();
+let urlList;
+try {
+  urlList = args.length
+    ? args.map((a) => (a.startsWith("http") ? a : `${SITE}${a.startsWith("/") ? a : `/${a}`}`))
+    : await urlsFromSitemap();
+} catch (e) {
+  console.error(`IndexNow : ${e.message}`);
+  process.exit(1);
+}
 
 if (!urlList.length) {
   console.error("Aucune URL à soumettre.");
