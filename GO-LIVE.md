@@ -1252,3 +1252,81 @@ leur propre organisation obtiennent cet accès automatiquement, sans demande.
 **Variables Vercel renseignées ce jour** : `GA4_PROPERTY_ID` et
 `GOOGLE_SERVICE_ACCOUNT_JSON`, redéploiement effectué, tableau de bord en ligne
 alimenté par GA4 et Search Console.
+
+---
+
+## 14. Chantier éditorial du blog — état au 30/08/2026
+
+L'audit avait mesuré **221 mots de contenu réel par article** en moyenne (le crawl
+initial annonçait 610 : il comptait le menu et le pied de page). Sur des requêtes
+santé, où les pages du top 10 font 1 500 à 3 000 mots, c'est sept fois trop court.
+S'y ajoutait un manque plus grave encore : **aucune source externe sur les 18
+articles**, alors que Google traite ces sujets en YMYL.
+
+Correction de l'audit initial, à retenir : le maillage interne, que j'avais décrit
+comme inexistant, est en réalité correct — 5,7 liens par article dont 3,5 vers des
+produits ou collections. Les pages à 18 liens que j'avais relevées étaient des pages
+utilitaires (contact, CGV, livraison), aucun article de blog. La conclusion avait été
+généralisée à tort.
+
+### Gabarit appliqué à chaque réécriture
+
+1. réponse directe dès l'introduction, puis le mécanisme avant les solutions ;
+2. protocoles chiffrés là où ils existent, jamais de conseil vague ;
+3. au moins deux sources externes (Inserm, ANSES, PubMed, registre européen des
+   allégations, DGCCRF) en `target="_blank" rel="noopener noreferrer"` ;
+4. une section **« quand consulter un professionnel de santé »** — dire où s'arrête
+   le périmètre d'un complément ;
+5. mentions réglementaires explicites et formulations conformes au règlement
+   CE 1924/2006 : « contribue à », « participe à », jamais d'effet thérapeutique ;
+6. FAQ portée à 6 questions ;
+7. version anglaise réécrite à l'identique, pour ne pas laisser `/en` appauvri.
+
+### Fait — 6 articles sur 18
+
+| Article | Avant | Après | Sources |
+|---|---|---|---|
+| `gerer-le-stress-naturellement` | 317 | **1 468** | 4 |
+| `ameliorer-sa-concentration` | 230 | **1 123** | 3 |
+| `retrouver-de-l-energie-naturellement` | 201 | **941** | 2 |
+| `collagene-bienfaits-peau` | 213 | **880** | 2 |
+| `quest-ce-quun-adaptogene` | 202 | **848** | 3 |
+| `champignons-adaptogenes-guide-complet` | 127 | **824** | 2 |
+
+⚠️ **Écart assumé** : le référentiel fixe 1 500 mots minimum (2 500 pour un pilier).
+Seul l'article sur le stress atteint la cible. Les cinq autres, entre 820 et 1 120
+mots, ont gagné un facteur 4 à 6 mais restent sous la barre. Arbitrage validé avec le
+client : relever d'abord tout le socle, enrichir ensuite — un article à 900 mots bien
+sourcé vaut mieux qu'un article à 200 mots, et il en reste douze dans cet état.
+
+### Reste à faire — 12 articles
+
+`lions-mane` · `ashwagandha` · `reishi-cordyceps-chaga` · `mieux-dormir-naturellement`
+· `cortisol-stress` · `brouillard-mental` · `alternative-cafe-focus` ·
+`fatigue-chronique-solution` · `complement-recuperation-sport` ·
+`complement-peau-guide` · `gummies-vs-gelules` · `cafe-champignons-mushroom-coffee`
+
+Puis une passe d'enrichissement sur les six déjà traités qui sont sous 1 500 mots.
+
+### Demandé par le client, à faire en fin de chantier
+
+**Vérifier que toutes les pages et tous les articles ont bien leur version
+anglaise** — de façon systématique et outillée, pas au jugé : comparer les champs
+`en` de chaque article et de chaque page, et signaler tout contenu qui retomberait
+sur le français par défaut.
+
+### Méthode de travail (pour reprendre sans chercher)
+
+Les réécritures passent par deux scripts du dossier de travail temporaire :
+`article-<sujet>.js` contient le contenu sous forme de deux littéraux (`article` et
+`enPart`), et `apply-article.js` l'insère dans `src/lib/blog.ts` :
+
+```
+node apply-article.js <fichier> <slug-a-remplacer> <slug-suivant-dans-le-fichier>
+```
+
+Deux pièges rencontrés : `blog.ts` est en CRLF (le remplacement se fait ligne à
+ligne, jamais par index de caractères), et le gabarit est lu sans être évalué — les
+`\\"` doivent donc être ramenés à `\"`. Le dernier article du tableau
+(`cafe-champignons-mushroom-coffee`) n'a pas de slug suivant : il faudra borner sur
+la fin du tableau.
