@@ -1482,11 +1482,18 @@ exceptions près, toutes examinées.
 
 - **Adresse postale et téléphone** du pied de page, identiques par nature.
 - **Un avis client rédigé en anglais**, affiché tel quel dans les deux langues.
-- **La page presse** : dix-neuf extraits d'articles restent en français. C'est un
-  choix délibéré, déjà commenté dans le code, avec la mention « Excerpt from the
-  original French article » côté anglais. **À trancher par le client** : un lecteur
-  anglophone y trouve quatre paragraphes qu'il ne comprend pas, sur une page dont la
-  fonction est la preuve sociale.
+- **L'adresse canadienne** d'un prestataire, citée dans les mentions légales.
+
+La **page presse**, elle, a été traduite dans la foulée : ses dix-neuf extraits
+d'articles restaient en français, choix d'abord assumé dans le code. Le client ayant
+demandé que tout soit traduit, chaque parution porte désormais ses extraits anglais
+(`paragraphsEn`) et la mention devient « Translated from the original French
+article » — le lecteur qui suit le lien sait qu'il tombera sur un article français.
+Le champ `heading`, qui n'était affiché nulle part, a été retiré au passage.
+
+⚠️ **À vérifier côté client** : ces extraits citent des promotions datées — le code
+`GALA20` « valable jusqu'au 31/12 » et une remise de 20 % au pop-up DO IT. Fidèles à
+l'article d'origine, mais un visiteur peut essayer le code et se heurter à un refus.
 
 Un vrai défaut a été trouvé et corrigé : le titre de page de **MUSHGLOW** était
 identique en français et en anglais (« MUSHGLOW - Supermix 6-en-1 »). En cause, la
