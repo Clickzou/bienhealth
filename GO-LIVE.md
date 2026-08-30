@@ -1330,3 +1330,86 @@ ligne, jamais par index de caractères), et le gabarit est lu sans être évalu�
 `\\"` doivent donc être ramenés à `\"`. Le dernier article du tableau
 (`cafe-champignons-mushroom-coffee`) n'a pas de slug suivant : il faudra borner sur
 la fin du tableau.
+
+---
+
+## 15. Session du 30/08/2026 — tableau de bord SEO : thème clair, libellés, ventes réelles
+
+### Passage en thème clair
+
+Le tableau de bord `/seo` était sur fond sombre ; il est désormais sur fond blanc, à
+la demande du client. Fond, en-tête, cartes, tableaux et champs de saisie repris, avec
+une échelle de gris lisible sur blanc. Les couleurs des courbes ont été assombries :
+le bleu ciel (`#7ccdf4`) et le rose (`#ffb2ce`) de la charte sont calibrés pour du
+fond sombre et disparaissent en trait de 2 px sur blanc — remplacés par `#1379b0`,
+`#238f5e` et `#d4568e`.
+
+Code couleur demandé ensuite par le client, et appliqué à l'ensemble des blocs
+concernés : **tuiles de chiffres en bleu** (`#eaf5fc`, filet bleu de marque) et
+**bandeau temps réel en rose** (`#fdeef4`), seul bloc qui se rafraîchit tout seul.
+
+### Statistiques rendues lisibles — `src/app/seo/labels.ts`
+
+Le client ne comprenait pas les tableaux : Google ne renvoie que des chemins d'URL,
+des codes pays ISO et des noms de canaux anglais. Nouveau module de traduction :
+
+- `/fr/products/calm` devient « Produit — Calm » avec un badge FR, le chemin restant
+  affiché en petit dessous ; `(not set)` devient « Page non identifiée par Analytics » ;
+- les articles de blog affichent leur **vrai titre**, lu dans `blog.ts` (résolution
+  faite dans `PageCell`, composant serveur — la mettre dans `labels.ts` embarquerait
+  tout le blog dans le bundle client le jour où un composant client l'importerait) ;
+- canaux (« Organic Search » → « Recherche naturelle »), pays (`fra` → France, y
+  compris les codes ISO à trois lettres que `Intl.DisplayNames` ne sait pas lire) et
+  appareils (`MOBILE` → Téléphone) traduits ;
+- deux glossaires d'une ligne sous les tuiles (sessions/visiteurs/rebond/engagement,
+  impressions/clics/CTR/position) et en-têtes de colonnes explicités ;
+- la section « Référencement Google » affiche la **période réellement couverte** par
+  Search Console, calculée sur les jours renvoyés, et non la période demandée.
+
+### Ventes réelles Shopify — `src/lib/seo-dashboard/shopify-sales.ts`
+
+Nouvelle section « Ventes » : chiffre d'affaires, commandes, panier moyen, taux de
+conversion, produits vendus, et une courbe « Commandes » ajoutée au graphique de
+trafic (« Trafic et ventes jour par jour »). Les commandes annulées et les commandes
+de test sont exclues, l'agrégation par jour se fait en heure de Paris.
+
+**Le blocage de l'installation, résolu.** La version publiée de l'app portait
+`use_legacy_install_flow = true`, qui impose l'ancien flux OAuth : c'est alors à
+l'app d'accorder les scopes via ses propres routes de redirection. Cette app n'étant
+qu'un lecteur d'API, elle n'en a aucune — d'où `failed_grant_with_invalid_scopes` à
+l'installation et `app_not_installed` sur le grant. Correctif : Dev Dashboard →
+Versions → Create version → **décocher « Use legacy install flow »** → Release, puis
+Overview → Install app. Vérifié en réel le 30/08/2026 : 6 commandes, 531,40 €,
+panier moyen 88,57 € sur les 28 jours arrêtés au 29/08.
+
+Deux fausses pistes, écartées seulement après coup : les *protected customer data*
+(la documentation les dit « always available » pour les apps custom) et la
+*distribution* (ce Dev Dashboard n'a pas d'écran Distribution, la boutique appartient
+déjà à l'organisation). Le seul indice utile était la ligne « Use legacy install
+flow : true » dans le détail de la version active.
+
+**Historique complet obtenu le 30/08/2026.** `read_orders` seul ne donne accès qu'aux
+soixante derniers jours ; le client voulait douze mois. `read_all_orders` a donc été
+ajouté aux scopes d'une nouvelle version, puis **l'installation a dû être refaite** —
+publier une version ne met pas à jour les autorisations déjà accordées, et c'est ce
+second geste qui manquait au premier essai. Résultat vérifié : 12 mois = 149 commandes
+et 9 386,00 € ; 3 mois = 20 commandes et 1 534,75 €.
+
+Le module ne présume rien de ces autorisations : il interroge
+`currentAppInstallation { accessScopes }` et élargit la fenêtre seulement si
+`read_all_orders` est réellement accordé (`hasFullOrderHistory`). Sans lui, les
+périodes longues sont tronquées à soixante jours et l'écran le dit. La pagination est
+bornée à 25 pages de 100 commandes ; si elle butait sur cette borne, `capped` le
+signale à l'écran plutôt que d'afficher un total partiel comme s'il était complet.
+
+**Écart normal avec l'accueil Shopify** : l'admin affiche « 30 derniers jours » en
+incluant le jour en cours, le tableau de bord s'arrête à la veille (les journées
+incomplètes faussent les comparaisons) et exclut les commandes annulées. Deux
+commandes d'écart au 30/08/2026 s'expliquent ainsi.
+
+### Reste à faire
+
+- [ ] `SHOPIFY_APP_CLIENT_ID` et `SHOPIFY_APP_CLIENT_SECRET` dans Vercel
+      (Production et Preview) : sans elles, la production affiche la procédure
+      d'installation là où le local affiche déjà les ventes.
+- [ ] Commit et déploiement de l'ensemble (thème clair, libellés, ventes Shopify).

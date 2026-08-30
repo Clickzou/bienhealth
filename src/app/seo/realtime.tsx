@@ -13,6 +13,9 @@ import { useRouter } from "next/navigation";
  *     `router.refresh()`. Les consolider plus souvent ne changerait rien :
  *     Analytics agrège à l'heure, Search Console avec deux jours de retard.
  *
+ * Seule carte rose du tableau de bord : c'est le seul bloc qui bouge tout seul,
+ * la couleur sert de repère pour le retrouver d'un coup d'œil.
+ *
  * L'onglet mis en arrière-plan suspend les deux : inutile de tirer sur les
  * quotas d'API pour un écran que personne ne regarde. Le retour au premier plan
  * relance une lecture immédiate.
@@ -95,28 +98,28 @@ export default function RealtimePanel({ enabled }: { enabled: boolean }) {
   const max = Math.max(...minutes, 1);
 
   return (
-    <section className="rounded-2xl bg-white/[0.04] ring-1 ring-white/10 p-5 sm:p-6">
+    <section className="rounded-2xl bg-[#fdeef4] ring-1 ring-bien-pink/70 shadow-[0_1px_2px_rgba(0,17,43,0.05)] p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
         <span className="relative flex h-2.5 w-2.5">
-          {live && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-70" />}
-          <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${live ? "bg-emerald-400" : "bg-white/30"}`} />
+          {live && <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-500 opacity-70" />}
+          <span className={`relative inline-flex h-2.5 w-2.5 rounded-full ${live ? "bg-emerald-500" : "bg-black/20"}`} />
         </span>
-        <h2 className="text-[15px] font-semibold text-white tracking-tight">En ce moment sur le site</h2>
-        <span className="text-[11px] text-white/40">
+        <h2 className="text-[15px] font-semibold text-[#00112b] tracking-tight">En ce moment sur le site</h2>
+        <span className="text-[11px] text-[#818a97]">
           {updatedAt ? `actualisé il y a ${ago} s` : "lecture en cours…"} · toutes les 20 s
         </span>
         <div className="ml-auto flex gap-1">
           <button
             type="button"
             onClick={() => load()}
-            className="rounded-full px-3 py-1.5 text-[12px] bg-white/[0.06] text-white/60 hover:text-white transition"
+            className="rounded-full px-3 py-1.5 text-[12px] bg-white/70 text-[#7a4a60] hover:text-[#00112b] transition"
           >
             Actualiser
           </button>
           <button
             type="button"
             onClick={() => setLive((v) => !v)}
-            className="rounded-full px-3 py-1.5 text-[12px] bg-white/[0.06] text-white/60 hover:text-white transition"
+            className="rounded-full px-3 py-1.5 text-[12px] bg-white/70 text-[#7a4a60] hover:text-[#00112b] transition"
           >
             {live ? "Mettre en pause" : "Reprendre"}
           </button>
@@ -124,14 +127,14 @@ export default function RealtimePanel({ enabled }: { enabled: boolean }) {
       </div>
 
       {data && !data.configured ? (
-        <p className="mt-4 text-sm text-white/45">Analytics n&apos;est pas encore relié : le compteur temps réel s&apos;allumera en même temps que le reste.</p>
+        <p className="mt-4 text-sm text-[#77808e]">Analytics n&apos;est pas encore relié : le compteur temps réel s&apos;allumera en même temps que le reste.</p>
       ) : data?.error ? (
-        <p className="mt-4 text-sm text-white/45">Analytics n&apos;a pas répondu à la dernière lecture. Nouvelle tentative dans quelques secondes.</p>
+        <p className="mt-4 text-sm text-[#77808e]">Analytics n&apos;a pas répondu à la dernière lecture. Nouvelle tentative dans quelques secondes.</p>
       ) : (
         <div className="mt-4 grid gap-5 lg:grid-cols-[auto_1fr_1fr]">
           <div>
-            <p className="text-5xl font-semibold text-white tabular-nums leading-none">{users}</p>
-            <p className="mt-1.5 text-[11px] text-white/45">
+            <p className="text-5xl font-semibold text-[#00112b] tabular-nums leading-none">{users}</p>
+            <p className="mt-1.5 text-[11px] text-[#77808e]">
               visiteur{users > 1 ? "s" : ""} actif{users > 1 ? "s" : ""}
               <br />
               (30 dernières minutes)
@@ -139,40 +142,40 @@ export default function RealtimePanel({ enabled }: { enabled: boolean }) {
           </div>
 
           <div>
-            <p className="text-[11px] uppercase tracking-[0.12em] text-white/40 mb-2">Minute par minute</p>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[#9a6580] mb-2">Minute par minute</p>
             <div className="flex items-end gap-[3px] h-16">
               {minutes.map((v, i) => (
                 <div
                   key={i}
                   title={`il y a ${29 - i} min : ${v}`}
-                  className="flex-1 rounded-sm bg-bien-sky/70 min-h-[2px]"
+                  className="flex-1 rounded-sm bg-[#d4568e]/70 min-h-[2px]"
                   style={{ height: `${Math.max(4, (v / max) * 100)}%` }}
                 />
               ))}
-              {!minutes.length && <p className="text-sm text-white/30">Aucun visiteur sur les trente dernières minutes.</p>}
+              {!minutes.length && <p className="text-sm text-[#98a0ac]">Aucun visiteur sur les trente dernières minutes.</p>}
             </div>
-            <div className="flex justify-between text-[10px] text-white/30 mt-1">
+            <div className="flex justify-between text-[10px] text-[#98a0ac] mt-1">
               <span>il y a 30 min</span>
               <span>maintenant</span>
             </div>
           </div>
 
           <div>
-            <p className="text-[11px] uppercase tracking-[0.12em] text-white/40 mb-2">Pages consultées</p>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-[#9a6580] mb-2">Pages consultées</p>
             {data?.pages?.length ? (
               <ul className="space-y-1">
                 {data.pages.slice(0, 5).map((p) => (
                   <li key={p.label} className="flex justify-between gap-3 text-[13px]">
-                    <span className="text-white/75 truncate">{p.label || "(sans titre)"}</span>
-                    <span className="text-white tabular-nums shrink-0">{p.users}</span>
+                    <span className="text-[#33415a] truncate">{p.label || "(sans titre)"}</span>
+                    <span className="text-[#00112b] tabular-nums shrink-0">{p.users}</span>
                   </li>
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-white/30">—</p>
+              <p className="text-sm text-[#98a0ac]">—</p>
             )}
             {!!data?.countries?.length && (
-              <p className="mt-3 text-[11px] text-white/40">
+              <p className="mt-3 text-[11px] text-[#818a97]">
                 {data.countries.slice(0, 3).map((c) => `${c.label} (${c.users})`).join(" · ")}
               </p>
             )}

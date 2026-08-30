@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 export default function SeoLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={`${body.variable} h-full`}>
-      <body className="min-h-full bg-[#050d1c] text-white antialiased" style={{ fontFamily: "var(--font-moderat), ui-sans-serif, system-ui, sans-serif" }}>
+      <body className="min-h-full bg-white text-[#00112b] antialiased" style={{ fontFamily: "var(--font-moderat), ui-sans-serif, system-ui, sans-serif" }}>
         {children}
       </body>
     </html>

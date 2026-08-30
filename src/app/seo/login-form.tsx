@@ -38,13 +38,13 @@ export default function LoginForm() {
   }
 
   return (
-    <main className="min-h-screen grid place-items-center px-4">
-      <form onSubmit={submit} className="w-full max-w-sm rounded-2xl bg-white/[0.04] ring-1 ring-white/10 p-7">
-        <p className="text-[11px] uppercase tracking-[0.2em] text-bien-sky">Clickzou</p>
-        <h1 className="mt-1 text-2xl font-semibold text-white tracking-tight">SEO by Clickzou</h1>
-        <p className="mt-1.5 text-sm text-white/50">Tableau de bord de performance — bien.health</p>
+    <main className="min-h-screen grid place-items-center px-4 bg-[#f6f7f9]">
+      <form onSubmit={submit} className="w-full max-w-sm rounded-2xl bg-white ring-1 ring-black/[0.07] shadow-[0_10px_30px_rgba(0,17,43,0.08)] p-7">
+        <p className="text-[11px] uppercase tracking-[0.2em] text-[#1379b0]">Clickzou</p>
+        <h1 className="mt-1 text-2xl font-semibold text-[#00112b] tracking-tight">SEO by Clickzou</h1>
+        <p className="mt-1.5 text-sm text-[#6b7482]">Tableau de bord de performance — bien.health</p>
 
-        <label className="block mt-6 text-[13px] text-white/60" htmlFor="seo-user">
+        <label className="block mt-6 text-[13px] text-[#5a6472]" htmlFor="seo-user">
           Identifiant
         </label>
         <input
@@ -53,10 +53,10 @@ export default function LoginForm() {
           onChange={(e) => setUser(e.target.value)}
           autoComplete="username"
           autoFocus
-          className="mt-1 w-full rounded-lg bg-black/30 ring-1 ring-white/15 focus:ring-bien-sky outline-none px-3 py-2.5 text-[15px] text-white"
+          className="mt-1 w-full rounded-lg bg-white ring-1 ring-black/15 focus:ring-[#1379b0] outline-none px-3 py-2.5 text-[15px] text-[#00112b]"
         />
 
-        <label className="block mt-4 text-[13px] text-white/60" htmlFor="seo-pass">
+        <label className="block mt-4 text-[13px] text-[#5a6472]" htmlFor="seo-pass">
           Mot de passe
         </label>
         <input
@@ -65,10 +65,10 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="current-password"
-          className="mt-1 w-full rounded-lg bg-black/30 ring-1 ring-white/15 focus:ring-bien-sky outline-none px-3 py-2.5 text-[15px] text-white"
+          className="mt-1 w-full rounded-lg bg-white ring-1 ring-black/15 focus:ring-[#1379b0] outline-none px-3 py-2.5 text-[15px] text-[#00112b]"
         />
 
-        {error && <p className="mt-3 text-[13px] text-rose-400">{error}</p>}
+        {error && <p className="mt-3 text-[13px] text-rose-600">{error}</p>}
 
         <button
           type="submit"

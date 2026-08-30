@@ -69,6 +69,9 @@ export type Ga4Data = {
   previousTotals: Ga4Totals;
   /** Une entrée par jour : date ISO, sessions, utilisateurs. */
   timeseries: { date: string; sessions: number; users: number }[];
+  /** Une entrée par jour côté commerce, alignée sur les mêmes dates que
+   *  `timeseries`. Vide si la propriété ne remonte pas d'événements d'achat. */
+  commerceSeries: { date: string; addToCarts: number; checkouts: number; transactions: number; revenue: number }[];
   /** path, titre, vues, utilisateurs, taux de rebond %, durée moyenne s. */
   topPages: NamedRow[];
   /** canal, sessions, utilisateurs, taux d'engagement %. */
@@ -199,6 +202,21 @@ export async function fetchGa4(period: Period): Promise<Ga4Data | null> {
     ],
   });
 
+  // Troisième appel, isolé lui aussi : la courbe commerce jour par jour. La
+  // greffer sur le rapport de tendance du premier lot ferait tomber toute
+  // l'audience si `addToCarts` n'existait pas sur la propriété.
+  const daily = await googleFetch<BatchResponse>(url, SCOPE, {
+    requests: [
+      {
+        dateRanges: cur,
+        dimensions: [{ name: "date" }],
+        metrics: m(["addToCarts", "checkouts", "transactions", "purchaseRevenue"]),
+        orderBys: [{ dimension: { dimensionName: "date" } }],
+        limit: 400,
+      },
+    ],
+  });
+
   return {
     totals: totalsFrom(core.reports[0]),
     previousTotals: totalsFrom(core.reports[1]),
@@ -206,6 +224,13 @@ export async function fetchGa4(period: Period): Promise<Ga4Data | null> {
       date: dimension(row, 0),
       sessions: metric(row, 0),
       users: metric(row, 1),
+    })),
+    commerceSeries: (daily?.reports?.[0]?.rows ?? []).map((row) => ({
+      date: dimension(row, 0),
+      addToCarts: metric(row, 0),
+      checkouts: metric(row, 1),
+      transactions: metric(row, 2),
+      revenue: metric(row, 3),
     })),
     topPages: named(core.reports[3], 4, true),
     channels: named(core.reports[4], 3),
