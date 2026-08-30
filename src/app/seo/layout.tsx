@@ -12,17 +12,10 @@ import "../globals.css";
  * Ce fichier est donc un second layout racine (il porte `<html>` et `<body>`),
  * le premier étant celui du site public dans `[lang]/layout.tsx`.
  */
-const display = localFont({
-  src: "../fonts/Dahlia-MediumCondensed.otf",
-  variable: "--font-dahlia",
-  weight: "500",
-  display: "swap",
-});
-
 const body = localFont({
   src: [
-    { path: "../fonts/Moderat-Regular.otf", weight: "400", style: "normal" },
-    { path: "../fonts/Moderat-Bold.otf", weight: "700", style: "normal" },
+    { path: "../fonts/Moderat-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/Moderat-Bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-moderat",
   display: "swap",
@@ -36,7 +29,7 @@ export const metadata: Metadata = {
 
 export default function SeoLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className={`${display.variable} ${body.variable} h-full`}>
+    <html lang="fr" className={`${body.variable} h-full`}>
       <body className="min-h-full bg-[#050d1c] text-white antialiased" style={{ fontFamily: "var(--font-moderat), ui-sans-serif, system-ui, sans-serif" }}>
         {children}
       </body>

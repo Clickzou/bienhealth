@@ -13,18 +13,20 @@ import MetaPixel from "@/components/meta-pixel";
 
 // Fontes de la charte « Brand Refresh V2 » — auto-hébergées via next/font/local.
 // Licences dans src/app/fonts/LICENSES/.
-// Dahlia Medium Condensed (H1) — source otf, next/font génère le woff2.
-const display = localFont({
-  src: "../fonts/Dahlia-MediumCondensed.otf",
-  variable: "--font-dahlia",
-  weight: "500",
-  display: "swap",
-});
+// Les fichiers d'origine étaient des .otf de 72 à 102 ko, tous préchargés dans le
+// <head> : 469 ko à télécharger avant le premier rendu, soit plus d'une seconde sur
+// la 4G lente que mesure Lighthouse. Convertis en woff2 (fonttools, sans perte de
+// glyphes), ils sont divisés par deux.
+//
+// Dahlia Medium Condensed n'est plus chargée : `--font-dahlia` n'était référencée
+// par aucun utilitaire — `font-hero` comme `font-display` pointent sur Season Serif.
+// Elle coûtait 43 ko de préchargement pour rien. Le fichier reste dans
+// src/app/fonts/ si la charte veut la réintroduire un jour.
 
 // Season Serif Regular — police display de la marque, utilisée en poids 500
 // (hero H1, titres de section H2/H3, titres sous icônes).
 const title = localFont({
-  src: "../fonts/SeasonSerif-Regular.otf",
+  src: "../fonts/SeasonSerif-Regular.woff2",
   variable: "--font-season",
   weight: "500",
   display: "swap",
@@ -33,9 +35,9 @@ const title = localFont({
 // Moderat (H4, corps de texte, boutons) — Regular / Italic / Bold.
 const body = localFont({
   src: [
-    { path: "../fonts/Moderat-Regular.otf", weight: "400", style: "normal" },
-    { path: "../fonts/Moderat-Regular-Italic.otf", weight: "400", style: "italic" },
-    { path: "../fonts/Moderat-Bold.otf", weight: "700", style: "normal" },
+    { path: "../fonts/Moderat-Regular.woff2", weight: "400", style: "normal" },
+    { path: "../fonts/Moderat-Regular-Italic.woff2", weight: "400", style: "italic" },
+    { path: "../fonts/Moderat-Bold.woff2", weight: "700", style: "normal" },
   ],
   variable: "--font-moderat",
   display: "swap",
@@ -78,7 +80,7 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${display.variable} ${title.variable} ${body.variable} h-full`}>
+    <html lang={lang} className={`${title.variable} ${body.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-background text-foreground">
         <JsonLd
           data={{

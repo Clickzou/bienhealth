@@ -73,7 +73,8 @@
 
     Les fontes officielles de la charte, auto-hébergées via next/font/local
     (fichiers dans src/app/fonts/, licences dans src/app/fonts/LICENSES/) :
-      Dahlia Medium Condensed → --font-dahlia (H1, display condensé)
+      Dahlia Medium Condensed → plus chargée : aucun utilitaire ne la référençait,
+                                elle coûtait 43 ko de préchargement pour rien.
       Season Serif Regular    → --font-season (serif éditoriale, H2/H3)
       Moderat                 → --font-moderat (grotesque neutre, corps/boutons)
 
