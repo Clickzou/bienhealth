@@ -48,3 +48,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Rapports d'audit exportés (MDN Observatory, securityheaders, PageSpeed, Lighthouse)
+# — des sorties d'outils, pas du code : elles n'ont pas à vivre dans le dépôt.
+*.pdf
+!src/app/fonts/LICENSES/*.pdf
