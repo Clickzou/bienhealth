@@ -7,9 +7,11 @@
  * depuis un composant client.
  */
 import type { ShopifyProduct } from "./shopify-products";
+import { splitProductTitle } from "./product-title";
 
 /* --- Bienfaits courts par produit --- */
-export const BENEFITS: Record<string, { fr: string; en: string }> = {
+
+const BENEFITS: Record<string, { fr: string; en: string }> = {
   CALM: {
     fr: "Sérénité & sommeil : apaise le stress et favorise un sommeil réparateur.",
     en: "Calm & sleep: soothes stress and promotes restorative sleep.",
@@ -86,8 +88,18 @@ export function productMetaEn(handle: string): string | null {
 export function productPageTitle(name: string, lang = "fr"): string {
   const key = Object.keys(SEO_SUFFIX).find((k) => name.toUpperCase().includes(k));
   const suffix = key ? SEO_SUFFIX[key][lang === "en" ? "en" : "fr"] : "";
+  if (!suffix) return `${name} | BIEN health`;
+
   const withSuffix = `${name} — ${suffix} | BIEN health`;
-  return suffix && withSuffix.length <= 60 ? withSuffix : `${name} | BIEN health`;
+  if (withSuffix.length <= 60) return withSuffix;
+
+  // Trop long : le nom Shopify porte déjà son propre descriptif — et celui-ci
+  // est en français. Le garder tel quel donnait « MUSHGLOW - Supermix 6-en-1 »
+  // en anglais comme en français. On remplace donc ce descriptif par celui de
+  // la langue demandée, ce qui traduit le titre et le raccourcit du même coup.
+  const { main } = splitProductTitle(name);
+  const replaced = `${main} — ${suffix} | BIEN health`;
+  return replaced.length <= 60 ? replaced : `${main} | BIEN health`;
 }
 
 export function benefitFor(name: string, fallback: string, lang = "fr"): string {

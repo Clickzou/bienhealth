@@ -1425,3 +1425,73 @@ importerait `ui.tsx` embarquerait le catalogue du blog dans le bundle du navigat
 - [x] `SHOPIFY_APP_CLIENT_ID` et `SHOPIFY_APP_CLIENT_SECRET` renseignées dans Vercel.
 - [x] Déploiement de l'ensemble : thème clair, libellés lisibles, ventes Shopify,
       graphiques interactifs. Vérifié par le client sur `bien.health/seo`.
+
+---
+
+## 16. Chantier éditorial du blog — terminé le 30/08/2026
+
+Les **dix-huit articles** sont au gabarit : **25 197 mots** en français, six questions
+et au moins deux sources externes chacun, plus une version anglaise réécrite à
+l'identique. Le point de départ était de 221 mots de contenu réel par article et
+**aucune source** sur les dix-huit.
+
+| Article | Avant | Après |
+| --- | --- | --- |
+| `gerer-le-stress-naturellement` | 317 | 1 787 |
+| `mieux-dormir-naturellement` | 415 | 1 599 |
+| `lions-mane` | 317 | 1 529 |
+| `cortisol-stress` | 336 | 1 505 |
+| `fatigue-chronique-solution` | 362 | 1 499 |
+| `ashwagandha` | 230 | 1 486 |
+| `brouillard-mental` | 338 | 1 477 |
+| `reishi-cordyceps-chaga` | 240 | 1 455 |
+| `ameliorer-sa-concentration` | 230 | 1 439 |
+| `complement-peau-guide` | 316 | 1 424 |
+| `alternative-cafe-focus` | 349 | 1 380 |
+| `gummies-vs-gelules` | 374 | 1 365 |
+| `complement-recuperation-sport` | 324 | 1 327 |
+| `cafe-champignons-mushroom-coffee` | 376 | 1 292 |
+| `retrouver-de-l-energie-naturellement` | 201 | 1 242 |
+| `collagene-bienfaits-peau` | 213 | 1 170 |
+| `quest-ce-quun-adaptogene` | 202 | 1 130 |
+| `champignons-adaptogenes-guide-complet` | 127 | 1 091 |
+
+### Pagination du blog
+
+Le bouton « Voir plus d'articles » chargeait la suite en JavaScript : les articles
+au-delà de la première page n'étaient reliés à l'index par **aucun lien explorable**,
+et Google ne les atteignait que par le sitemap. L'index est passé à de vraies URL
+statiques — `/blog`, puis `/blog/page/2` — avec liens numérotés, `rel` prev/next,
+canonique propre à chaque page, ajout au sitemap et 404 hors bornes.
+
+Piège consigné dans `lib/blog-pages.ts` : la taille de page était exportée depuis le
+composant de listing, qui porte `"use client"`. Next remplace **tous** les exports
+d'un module client par des références côté serveur — la constante ne valait donc pas
+9 mais un proxy, le nombre de pages tombait à `NaN`, et la pagination disparaissait
+du HTML **sans la moindre erreur**.
+
+### Vérification des versions anglaises — demande client honorée
+
+Contrôle outillé sur **47 pages** (pages statiques, 18 articles, pagination, 4 fiches
+produit, 4 collections) : le texte visible de `/fr/X` est comparé à celui de `/en/X`,
+et toute phrase identique de plus de six mots est signalée. Le script vit dans le
+dossier de travail (`check-en.mjs`) et se relance à volonté.
+
+Résultat : **aucun contenu ne retombe silencieusement sur le français**, à trois
+exceptions près, toutes examinées.
+
+- **Adresse postale et téléphone** du pied de page, identiques par nature.
+- **Un avis client rédigé en anglais**, affiché tel quel dans les deux langues.
+- **La page presse** : dix-neuf extraits d'articles restent en français. C'est un
+  choix délibéré, déjà commenté dans le code, avec la mention « Excerpt from the
+  original French article » côté anglais. **À trancher par le client** : un lecteur
+  anglophone y trouve quatre paragraphes qu'il ne comprend pas, sur une page dont la
+  fonction est la preuve sociale.
+
+Un vrai défaut a été trouvé et corrigé : le titre de page de **MUSHGLOW** était
+identique en français et en anglais (« MUSHGLOW - Supermix 6-en-1 »). En cause, la
+borne à 60 caractères de `productPageTitle` : quand le suffixe traduit ne tenait pas,
+la fonction gardait le nom Shopify — lequel est en français. Elle remplace désormais
+le descriptif du nom par celui de la langue demandée, ce qui traduit le titre et le
+raccourcit : « MUSHGLOW — Beauty & collagen supermix » en anglais, « MUSHGLOW —
+Supermix beauté & collagène » en français, 51 caractères.
