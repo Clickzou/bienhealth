@@ -13,42 +13,17 @@
 import type { ReactNode } from "react";
 
 import { getArticle, localizeArticle } from "@/lib/blog";
+import { nf1, num } from "./format";
 import { pageLabel } from "./labels";
 
 /* ------------------------------------------------------------------ format */
 
-const nf = new Intl.NumberFormat("fr-FR");
-const nf1 = new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-
-export function num(value: number): string {
-  return nf.format(Math.round(value));
-}
-
-export function pct(value: number): string {
-  return `${nf1.format(value)} %`;
-}
-
-export function money(value: number, currency = "EUR"): string {
-  return new Intl.NumberFormat("fr-FR", { style: "currency", currency, maximumFractionDigits: 0 }).format(value);
-}
-
-export function duration(seconds: number): string {
-  const s = Math.round(seconds);
-  const m = Math.floor(s / 60);
-  return m > 0 ? `${m} min ${String(s % 60).padStart(2, "0")} s` : `${s} s`;
-}
-
-export function shortDate(isoDate: string): string {
-  // GA4 renvoie « 20260829 », Search Console « 2026-08-29 ».
-  const clean = isoDate.includes("-") ? isoDate : `${isoDate.slice(0, 4)}-${isoDate.slice(4, 6)}-${isoDate.slice(6, 8)}`;
-  const d = new Date(`${clean}T00:00:00Z`);
-  return new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "short", timeZone: "UTC" }).format(d);
-}
-
-export function longDate(isoDate: string): string {
-  const d = new Date(`${isoDate}T00:00:00Z`);
-  return new Intl.DateTimeFormat("fr-FR", { day: "2-digit", month: "long", year: "numeric", timeZone: "UTC" }).format(d);
-}
+/* Le formatage vit dans `format.ts`, sans dépendance : le graphique, devenu un
+   composant client, en a besoin lui aussi et ne peut pas importer ce fichier —
+   il embarquerait le catalogue du blog dans le bundle du navigateur. On le
+   réexporte ici pour que les appelants gardent un point d'entrée unique. */
+export { duration, longDate, money, num, pct, shortDate } from "./format";
+export { LineChart, type Series } from "./line-chart";
 
 /* -------------------------------------------------------------- conteneurs */
 
@@ -162,71 +137,6 @@ export function PageCell({ path, title }: { path: string; title?: string }) {
       </span>
       <span className="block truncate text-[11px] text-[#98a0ac]">{clean}</span>
     </span>
-  );
-}
-
-/* ------------------------------------------------------------------ courbe */
-
-export type Series = { label: string; color: string; points: number[] };
-
-/**
- * Courbe multi-séries. Chaque série est normalisée sur sa propre échelle :
- * superposer des impressions (milliers) et des clics (dizaines) sur un axe
- * commun écraserait la seconde courbe sur la ligne du bas.
- */
-export function LineChart({ labels, series, height = 160 }: { labels: string[]; series: Series[]; height?: number }) {
-  const width = 900;
-  const pad = { top: 10, right: 8, bottom: 22, left: 8 };
-  const innerW = width - pad.left - pad.right;
-  const innerH = height - pad.top - pad.bottom;
-  const count = labels.length;
-
-  if (count < 2) {
-    return <p className="text-sm text-[#818a97] py-6 text-center">Pas assez de jours sur cette période pour tracer une courbe.</p>;
-  }
-
-  const x = (i: number) => pad.left + (i / (count - 1)) * innerW;
-
-  const paths = series.map((s) => {
-    const max = Math.max(...s.points, 1);
-    const y = (v: number) => pad.top + innerH - (v / max) * innerH;
-    const d = s.points.map((v, i) => `${i === 0 ? "M" : "L"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ");
-    const area = `${d} L${x(count - 1).toFixed(1)},${(pad.top + innerH).toFixed(1)} L${x(0).toFixed(1)},${(pad.top + innerH).toFixed(1)} Z`;
-    return { ...s, d, area, max };
-  });
-
-  // Quatre repères de date au maximum : au-delà, ils se chevauchent sur mobile.
-  const ticks = [0, Math.floor((count - 1) / 3), Math.floor((2 * (count - 1)) / 3), count - 1].filter(
-    (v, i, arr) => arr.indexOf(v) === i,
-  );
-
-  return (
-    <div>
-      <svg viewBox={`0 0 ${width} ${height}`} className="w-full" role="img" aria-label={series.map((s) => s.label).join(", ")}>
-        {[0.25, 0.5, 0.75].map((r) => (
-          <line key={r} x1={pad.left} x2={width - pad.right} y1={pad.top + innerH * r} y2={pad.top + innerH * r} stroke="rgba(0,17,43,0.09)" strokeWidth={1} />
-        ))}
-        {paths.map((p) => (
-          <g key={p.label}>
-            <path d={p.area} fill={p.color} opacity={0.12} />
-            <path d={p.d} fill="none" stroke={p.color} strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-          </g>
-        ))}
-        {ticks.map((i) => (
-          <text key={i} x={x(i)} y={height - 6} textAnchor={i === 0 ? "start" : i === count - 1 ? "end" : "middle"} fontSize={11} fill="rgba(0,17,43,0.45)">
-            {shortDate(labels[i])}
-          </text>
-        ))}
-      </svg>
-      <div className="flex flex-wrap gap-4 mt-2">
-        {paths.map((p) => (
-          <span key={p.label} className="inline-flex items-center gap-1.5 text-[11px] text-[#5a6472]">
-            <span className="h-2 w-2 rounded-full" style={{ background: p.color }} />
-            {p.label} <span className="text-[#8c94a1]">(max {num(p.max)})</span>
-          </span>
-        ))}
-      </div>
-    </div>
   );
 }
 
