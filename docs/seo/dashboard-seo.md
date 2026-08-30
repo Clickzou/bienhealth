@@ -62,15 +62,32 @@ branchement — jamais de chiffres de démonstration.
      domaine (par défaut : `sc-domain:bien.health`).
 6. Redéployer.
 
-## Pourquoi pas les ventes
+## Les ventes (depuis le 30/08/2026)
 
-Les commandes et le chiffre d'affaires **ne figurent pas** dans ce tableau de bord,
-et c'est un choix : ils se lisent dans l'admin Shopify, en temps réel et mieux
-présentés. Cet outil couvre ce que Shopify ne sait pas dire — d'où viennent les
-visiteurs, sur quelles requêtes le site ressort, quelles pages travaillent.
+Le site ne peut pas mesurer son chiffre d'affaires : le paiement se conclut sur
+`shop.bien.health`, hors du domaine suivi par Analytics. La mesure faite par le site
+s'arrête donc à l'**ajout au panier**. Les ventes affichées viennent d'ailleurs — de
+l'API d'administration Shopify, via `shopify-sales.ts`.
 
-La mesure s'arrête donc à l'**ajout au panier**, dernière action que le site voit
-lui-même : au-delà, le visiteur est chez Shopify.
+Configuration : `SHOPIFY_APP_CLIENT_ID` et `SHOPIFY_APP_CLIENT_SECRET` (Dev Dashboard
+→ App settings → Credentials), plus l'app **installée sur la boutique**. Le jeton
+statique `shpat_…` n'existe plus depuis janvier 2026 : l'authentification passe par un
+**client credentials grant**, un jeton de 24 h renouvelé automatiquement.
+
+Deux pièges rencontrés, tous deux résolus dans la configuration de l'app :
+
+- `use_legacy_install_flow = true` sur la version publiée impose l'ancien flux OAuth,
+  où c'est à l'app d'accorder les scopes via ses propres routes de redirection. Cette
+  app n'en a aucune : Shopify refusait l'installation avec
+  `failed_grant_with_invalid_scopes`. Décocher « Use legacy install flow » à la
+  création d'une version rétablit l'installation gérée par Shopify.
+- `read_orders` seul plafonne l'historique à **soixante jours**. `read_all_orders` le
+  lève — mais publier une version ne met pas à jour les autorisations déjà accordées :
+  **il faut réinstaller l'app** pour que le nouveau scope prenne effet.
+
+Le module ne présume rien de tout cela : il lit
+`currentAppInstallation { accessScopes }` et n'élargit la fenêtre que si le scope est
+réellement accordé. Sans lui, les périodes longues sont tronquées et l'écran le dit.
 
 ## Architecture
 
@@ -81,13 +98,17 @@ src/app/seo/
 ├── login-form.tsx    écran de connexion (client)
 ├── realtime.tsx      bandeau temps réel + rafraîchissement automatique (client)
 ├── keyword-table.tsx tableau des mots-clés : filtre, tri, export CSV (client)
-└── ui.tsx            cartes, KPI, courbes SVG, tableaux
+├── line-chart.tsx    courbes SVG : survol, lecture figée, légende cliquable (client)
+├── format.ts         nombres et dates — sans dépendance, partagé serveur/client
+├── labels.ts         chemins, canaux, pays et appareils traduits en clair
+└── ui.tsx            cartes, KPI, tableaux
 
 src/lib/seo-dashboard/
 ├── auth.ts           identifiants, session signée
 ├── google.ts         jeton OAuth d'un compte de service (JWT RS256, sans dépendance)
 ├── ga4.ts            rapports Analytics (lots) + rapport temps réel
 ├── gsc.ts            Search Analytics + positions comparées
+├── shopify-sales.ts  commandes réelles (client credentials, jeton 24 h)
 └── periods.ts        périodes et comparaisons (Europe/Paris)
 
 src/app/api/seo/       login · logout · realtime
@@ -101,3 +122,10 @@ src/app/api/seo/       login · logout · realtime
   l'API et non du tableau de bord.
 - Search Console limite l'export à 100 mots-clés par requête ici ; suffisant à ce
   stade du site, à augmenter quand le volume grandira.
+- La lecture des commandes Shopify est bornée à 25 pages de 100 commandes. Si elle
+  butait sur cette borne, l'écran le signale plutôt que de présenter un total partiel
+  comme complet — mais il faudra alors relever la limite.
+- `format.ts` existe pour une raison précise : le graphique est un composant client,
+  et importer `ui.tsx` (qui lit le catalogue du blog pour nommer les articles)
+  embarquerait tous les articles dans le bundle du navigateur. Ne pas replier ces
+  fonctions dans `ui.tsx`.

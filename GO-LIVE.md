@@ -1407,9 +1407,21 @@ incluant le jour en cours, le tableau de bord s'arrête à la veille (les journ�
 incomplètes faussent les comparaisons) et exclut les commandes annulées. Deux
 commandes d'écart au 30/08/2026 s'expliquent ainsi.
 
-### Reste à faire
+### Graphiques lisibles
 
-- [ ] `SHOPIFY_APP_CLIENT_ID` et `SHOPIFY_APP_CLIENT_SECRET` dans Vercel
-      (Production et Preview) : sans elles, la production affiche la procédure
-      d'installation là où le local affiche déjà les ventes.
-- [ ] Commit et déploiement de l'ensemble (thème clair, libellés, ventes Shopify).
+Dernier retour client de la session : les valeurs des courbes n'étaient lisibles nulle
+part. Le graphique est passé en composant client (`line-chart.tsx`) — survol qui pose
+un repère sur le jour et affiche la valeur de chaque série, clic qui fige la lecture
+(il n'y a pas de survol sur écran tactile), et **légende cliquable** pour masquer ou
+réafficher une courbe. Utile ici : avec quatre séries dont les maximums vont de 2 à
+67, les commandes rampent au ras de l'axe ; isolée, la courbe se redéploie sur toute
+la hauteur, chaque série étant normalisée sur sa propre échelle.
+
+Le formatage a été sorti dans `format.ts` à cette occasion : un composant client qui
+importerait `ui.tsx` embarquerait le catalogue du blog dans le bundle du navigateur.
+
+### Fait — vérifié en ligne le 30/08/2026
+
+- [x] `SHOPIFY_APP_CLIENT_ID` et `SHOPIFY_APP_CLIENT_SECRET` renseignées dans Vercel.
+- [x] Déploiement de l'ensemble : thème clair, libellés lisibles, ventes Shopify,
+      graphiques interactifs. Vérifié par le client sur `bien.health/seo`.
