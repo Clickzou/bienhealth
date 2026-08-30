@@ -106,7 +106,9 @@ export default async function RootLayout({
             },
           }}
         />
-        <div className="flex-1">{children}</div>
+        {/* <main> et non <div> : c'est le repère principal attendu par les
+            lecteurs d'écran pour sauter directement au contenu. */}
+        <main className="flex-1">{children}</main>
         <SiteFooter lang={lang} />
         <NewsletterPopup />
         <CookieBanner lang={lang} />

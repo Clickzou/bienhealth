@@ -59,7 +59,7 @@ export default function NewsletterForm({ lang }: { lang: string }) {
           {status === "loading" ? t.newsletterLoading : (<>{t.newsletterCta} <ArrowRight className="h-4 w-4" /></>)}
         </button>
       </div>
-      <p className="mt-2.5 text-[11px] text-bien-cream/45 leading-relaxed max-w-md">{t.newsletterConsent}</p>
+      <p className="mt-2.5 text-[11px] text-bien-cream/70 leading-relaxed max-w-md">{t.newsletterConsent}</p>
     </form>
   );
 }

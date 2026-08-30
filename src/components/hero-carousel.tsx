@@ -25,8 +25,13 @@ export default function HeroCarousel({ images }: { images: { src: string; alt: s
           src={img.src}
           alt={img.alt}
           fill
-          priority={i === 0}
-          loading={i === 0 ? undefined : "lazy"}
+          /* `preload` et non `priority` : depuis Next 16 cette dernière est dépréciée
+             et sans effet. L'image du hero — l'élément LCP — partait donc sans
+             préchargement, d'où un LCP à 3,5 s au relevé Lighthouse du 29/08/2026.
+             La documentation déconseille de combiner `preload` avec `loading` ou
+             `fetchPriority` ; les images suivantes restent simplement en lazy, qui
+             est le défaut. */
+          preload={i === 0}
           sizes="(max-width:1024px) 100vw, 50vw"
           className={`object-cover ${img.pos ?? "object-center"} transition-opacity duration-1000 ease-in-out ${i === active ? "opacity-100" : "opacity-0"}`}
         />

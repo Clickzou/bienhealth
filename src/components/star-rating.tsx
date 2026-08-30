@@ -31,7 +31,10 @@ export default function StarRating({
     ));
 
   return (
-    <span className="relative inline-flex align-middle leading-none" aria-label={`${value} / 5`}>
+    /* role="img" est requis pour qu'aria-label soit valide : sans rôle, un span
+       est ignoré des technologies d'assistance et l'attribut est signalé comme
+       interdit (audit Lighthouse du 29/08/2026). */
+    <span className="relative inline-flex align-middle leading-none" role="img" aria-label={`${value} / 5`}>
       <span className="flex leading-none">{stars("text-bien-star/30")}</span>
       <span
         className="absolute inset-y-0 left-0 flex overflow-hidden leading-none"

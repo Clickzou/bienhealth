@@ -55,7 +55,8 @@ export default function Typewriter({
   const done = shown >= text.length;
 
   return (
-    <span ref={ref} className={className} aria-label={text}>
+    <span ref={ref} className={className}>
+      <span className="sr-only">{text}</span>
       <span className="underline decoration-bien-leaf decoration-2 underline-offset-[6px]" aria-hidden>
         {text.slice(0, shown)}
       </span>

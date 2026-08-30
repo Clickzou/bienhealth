@@ -58,8 +58,10 @@ export default function SiteFooter({ lang }: { lang: string }) {
             <div className="mt-6 text-sm text-bien-cream/70 space-y-1.5">
               <p className="font-semibold text-bien-cream">SAS BIEN HEALTH FRANCE</p>
               <p>100 Rue du Verbial, 81000 Albi</p>
-              <p><a href="tel:+33638621213" className="hover:text-bien-gold">+33 6 38 62 12 13</a></p>
-              <p><a href="mailto:info@bien.health" className="hover:text-bien-gold">info@bien.health</a></p>
+              {/* inline-block + padding vertical : en ligne nue, ces deux liens
+                  offraient une cible tactile sous les 24 px recommandés. */}
+              <p><a href="tel:+33638621213" className="inline-block py-1.5 hover:text-bien-gold">+33 6 38 62 12 13</a></p>
+              <p><a href="mailto:info@bien.health" className="inline-block py-1.5 hover:text-bien-gold">info@bien.health</a></p>
             </div>
           </div>
           <div>
