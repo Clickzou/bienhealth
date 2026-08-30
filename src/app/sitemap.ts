@@ -3,6 +3,7 @@ import { SITE_URL, STATIC_PATHS } from "@/lib/seo";
 import { getAllHandles } from "@/lib/shopify-products";
 import { COLLECTIONS } from "@/lib/shop";
 import { ARTICLES } from "@/lib/blog";
+import { blogPageCount } from "@/lib/blog-pages";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const handles = await getAllHandles().catch(() => [] as string[]);
@@ -12,6 +13,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...Object.keys(COLLECTIONS).map((slug) => `collections/${slug}`),
     ...handles.map((h) => `products/${h}`),
     ...ARTICLES.map((a) => `blog/${a.slug}`),
+    // Pages 2 et suivantes de l'index : sans elles, le sitemap ignorerait les
+    // pages qui portent les liens vers les articles les plus anciens.
+    ...Array.from({ length: blogPageCount() - 1 }, (_, i) => `blog/page/${i + 2}`),
   ];
 
   const now = new Date();

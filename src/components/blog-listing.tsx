@@ -3,7 +3,9 @@
 import { useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clock, Search, ChevronDown, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, Clock, Search, ChevronDown, X } from "lucide-react";
+
+import { BLOG_PAGE_SIZE } from "@/lib/blog-pages";
 
 export type BlogItem = {
   slug: string;
@@ -15,7 +17,8 @@ export type BlogItem = {
   cover: string;
 };
 
-const PAGE_SIZE = 6;
+/* La taille de page vient de `lib/blog-pages` : exportée d'ici, elle serait
+   illisible depuis un composant serveur (voir le commentaire de ce module). */
 
 function fmtDate(iso: string, lang: string) {
   try {
@@ -26,15 +29,29 @@ function fmtDate(iso: string, lang: string) {
 }
 
 const T = {
-  fr: { search: "Rechercher un article…", clear: "Effacer", filterCat: "Filtrer par catégorie", allCats: "Toutes les catégories", sortAria: "Trier les articles", recent: "Plus récents", older: "Plus anciens", az: "Ordre alphabétique", all: "Tout", article: "article", articles: "articles", none: "Aucun article ne correspond à votre recherche.", read: "Lire l'article", seeMore: "Voir plus d'articles" },
-  en: { search: "Search an article…", clear: "Clear", filterCat: "Filter by category", allCats: "All categories", sortAria: "Sort articles", recent: "Most recent", older: "Oldest", az: "Alphabetical", all: "All", article: "article", articles: "articles", none: "No article matches your search.", read: "Read the article", seeMore: "See more articles" },
+  fr: { search: "Rechercher un article…", clear: "Effacer", filterCat: "Filtrer par catégorie", allCats: "Toutes les catégories", sortAria: "Trier les articles", recent: "Plus récents", older: "Plus anciens", az: "Ordre alphabétique", all: "Tout", article: "article", articles: "articles", none: "Aucun article ne correspond à votre recherche.", read: "Lire l'article", pagination: "Pages du journal", previous: "Précédent", next: "Suivant", pageLabel: "Page" },
+  en: { search: "Search an article…", clear: "Clear", filterCat: "Filter by category", allCats: "All categories", sortAria: "Sort articles", recent: "Most recent", older: "Oldest", az: "Alphabetical", all: "All", article: "article", articles: "articles", none: "No article matches your search.", read: "Read the article", pagination: "Journal pages", previous: "Previous", next: "Next", pageLabel: "Page" },
 } as const;
 
-export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: string }) {
+/** Adresse d'une page de l'index : la première n'est pas numérotée. */
+function pageHref(lang: string, page: number): string {
+  return page <= 1 ? `/${lang}/blog` : `/${lang}/blog/page/${page}`;
+}
+
+export default function BlogListing({
+  items,
+  lang,
+  page = 1,
+  totalPages = 1,
+}: {
+  items: BlogItem[];
+  lang: string;
+  page?: number;
+  totalPages?: number;
+}) {
   const t = T[lang === "en" ? "en" : "fr"];
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<"recent" | "ancien" | "az">("recent");
-  const [visible, setVisible] = useState(PAGE_SIZE);
 
   const categories = useMemo(() => Array.from(new Set(items.map((i) => i.category))), [items]);
   const [category, setCategory] = useState<string>("");
@@ -52,20 +69,14 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
       return a.date < b.date ? 1 : -1; // recent
     });
     return list;
-  }, [items, query, category, sort]);
+  }, [items, query, category, sort, lang]);
 
-  const shown = filtered.slice(0, visible);
-  const hasMore = visible < filtered.length;
-
-  // Réinitialise la pagination quand la recherche/filtre change.
-  function resetAndSet<T>(setter: (v: T) => void) {
-    return (v: T) => {
-      setter(v);
-      setVisible(PAGE_SIZE);
-    };
-  }
-
-  const setCat = resetAndSet(setCategory);
+  // Une recherche, un filtre ou un tri manuel portent sur la totalité des
+  // articles et sortent donc de la pagination : découper un résultat de
+  // recherche en pages dont les URL ne correspondraient plus au contenu servi
+  // tromperait le visiteur comme le moteur.
+  const browsing = !query.trim() && !category && sort === "recent";
+  const shown = browsing ? filtered.slice((page - 1) * BLOG_PAGE_SIZE, page * BLOG_PAGE_SIZE) : filtered;
 
   return (
     <>
@@ -78,12 +89,12 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
             <input
               type="search"
               value={query}
-              onChange={(e) => resetAndSet(setQuery)(e.target.value)}
+              onChange={(e) => setQuery(e.target.value)}
               placeholder={t.search}
               className="w-full rounded-full ring-1 ring-border bg-background pl-11 pr-10 py-3 text-sm text-black placeholder:text-black/40 focus:outline-none focus:ring-2 focus:ring-bien-leaf/50"
             />
             {query && (
-              <button onClick={() => resetAndSet(setQuery)("")} aria-label={t.clear} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-bien-cream">
+              <button onClick={() => setQuery("")} aria-label={t.clear} className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-full hover:bg-bien-cream">
                 <X className="h-4 w-4 text-black/50" />
               </button>
             )}
@@ -107,7 +118,7 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
         {/* Ligne 2 : catégories en pastilles */}
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <button
-            onClick={() => setCat("")}
+            onClick={() => setCategory("")}
             className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${category === "" ? "bg-bien-forest text-bien-cream" : "ring-1 ring-border text-black/70 hover:bg-bien-cream"}`}
           >
             {t.all}
@@ -115,7 +126,7 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
           {categories.map((c) => (
             <button
               key={c}
-              onClick={() => setCat(c)}
+              onClick={() => setCategory(c)}
               className={`rounded-full px-3.5 py-1.5 text-sm font-medium transition ${category === c ? "bg-bien-forest text-bien-cream" : "ring-1 ring-border text-black/70 hover:bg-bien-cream"}`}
             >
               {c}
@@ -127,7 +138,18 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
       {/* Compteur de résultats */}
       <p className="mb-6 text-sm text-black/55">
         {filtered.length} {filtered.length > 1 ? t.articles : t.article}
-        {category && <> · <span className="font-medium text-black/75">{category}</span></>}
+        {category && (
+          <>
+            {" "}
+            · <span className="font-medium text-black/75">{category}</span>
+          </>
+        )}
+        {browsing && totalPages > 1 && (
+          <>
+            {" "}
+            · {t.pageLabel} {page}/{totalPages}
+          </>
+        )}
       </p>
 
       {shown.length === 0 ? (
@@ -158,16 +180,49 @@ export default function BlogListing({ items, lang }: { items: BlogItem[]; lang: 
         </div>
       )}
 
-      {hasMore && (
-        <div className="mt-12 flex justify-center">
-          <button
-            onClick={() => setVisible((v) => v + PAGE_SIZE)}
-            className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-7 py-3.5 text-sm font-semibold hover:brightness-110 transition bien-shadow-sm"
-          >
-            {t.seeMore}
-            <span className="text-bien-cream/60">({filtered.length - visible})</span>
-          </button>
-        </div>
+      {browsing && totalPages > 1 && (
+        <nav aria-label={t.pagination} className="mt-14 flex flex-wrap items-center justify-center gap-2">
+          {page > 1 && (
+            <Link
+              href={pageHref(lang, page - 1)}
+              rel="prev"
+              className="inline-flex items-center gap-1.5 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-medium text-black/70 hover:bg-bien-cream transition"
+            >
+              <ArrowLeft className="h-4 w-4" /> {t.previous}
+            </Link>
+          )}
+
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((n) =>
+            n === page ? (
+              <span
+                key={n}
+                aria-current="page"
+                className="inline-flex h-10 min-w-10 items-center justify-center rounded-full bg-bien-forest px-3.5 text-sm font-semibold text-bien-cream"
+              >
+                {n}
+              </span>
+            ) : (
+              <Link
+                key={n}
+                href={pageHref(lang, n)}
+                aria-label={`${t.pageLabel} ${n}`}
+                className="inline-flex h-10 min-w-10 items-center justify-center rounded-full ring-1 ring-border px-3.5 text-sm font-medium text-black/70 hover:bg-bien-cream transition"
+              >
+                {n}
+              </Link>
+            ),
+          )}
+
+          {page < totalPages && (
+            <Link
+              href={pageHref(lang, page + 1)}
+              rel="next"
+              className="inline-flex items-center gap-1.5 rounded-full bg-bien-forest text-bien-cream px-4 py-2.5 text-sm font-semibold hover:brightness-110 transition"
+            >
+              {t.next} <ArrowRight className="h-4 w-4" />
+            </Link>
+          )}
+        </nav>
       )}
     </>
   );
