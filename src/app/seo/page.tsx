@@ -4,14 +4,12 @@ import { isValidSession, SEO_COOKIE } from "@/lib/seo-dashboard/auth";
 import { DEFAULT_PERIOD, PERIODS, isPeriodKey, resolvePeriod, variation, type PeriodKey } from "@/lib/seo-dashboard/periods";
 import { fetchGa4, isGa4Configured, ga4PropertyId } from "@/lib/seo-dashboard/ga4";
 import { fetchGsc, isGscConfigured, gscSiteUrl } from "@/lib/seo-dashboard/gsc";
-import { fetchSales, isSalesConfigured } from "@/lib/seo-dashboard/shopify-sales";
 import LoginForm from "./login-form";
 import KeywordTable from "./keyword-table";
 import RealtimePanel from "./realtime";
 import {
   BarList,
   Card,
-  Empty,
   Kpi,
   LineChart,
   NotConnected,
@@ -20,7 +18,6 @@ import {
   Table,
   duration,
   longDate,
-  money,
   num,
   pct,
 } from "./ui";
@@ -28,10 +25,9 @@ import {
 /**
  * Tableau de bord « SEO by Clickzou ».
  *
- * Trois sources, interrogées en parallèle et indépendantes les unes des autres :
- * Google Analytics 4 (audience, pages, canaux), Search Console (mots-clés et
- * positions) et l'Admin Shopify (ventes réelles, le checkout étant hébergé chez
- * Shopify). Chaque source absente affiche sa procédure de branchement — on
+ * Deux sources, interrogées en parallèle et indépendantes l'une de l'autre :
+ * Google Analytics 4 (audience, pages, canaux) et Search Console (mots-clés et
+ * positions). Une source absente affiche sa procédure de branchement — on
  * n'affiche jamais de chiffres de démonstration, qui donneraient l'illusion
  * d'un suivi qui n'existe pas.
  */
@@ -52,7 +48,7 @@ export default async function SeoDashboard({
   const key: PeriodKey = isPeriodKey(periodParam) ? periodParam : DEFAULT_PERIOD;
   const period = resolvePeriod(key);
 
-  const [ga4, gsc, sales] = await Promise.all([fetchGa4(period), fetchGsc(period), fetchSales(period)]);
+  const [ga4, gsc] = await Promise.all([fetchGa4(period), fetchGsc(period)]);
 
   const t = ga4?.totals;
   const p = ga4?.previousTotals;
@@ -98,7 +94,6 @@ export default async function SeoDashboard({
             </p>
             <StatusDot ok={!!ga4} label="Analytics" />
             <StatusDot ok={!!gsc} label="Search Console" />
-            <StatusDot ok={!!sales} label="Ventes Shopify" />
           </div>
         </div>
       </header>
@@ -133,20 +128,13 @@ export default async function SeoDashboard({
             invert
             hint={gsc ? undefined : "Search Console non connectée"}
           />
-          {/* Trois cas bien distincts, parce que les confondre trompe le lecteur :
-              Shopify (le vrai chiffre d'affaires), Analytics seul (ce qu'il a vu
-              passer, souvent une fraction — le paiement quitte le site), ou rien. */}
+          {/* Dernier repère de la ligne : l'ajout au panier, dernière action que le
+              site mesure lui-même. Au-delà, le visiteur est chez Shopify. */}
           <Kpi
-            label="Chiffre d'affaires"
-            value={sales ? money(sales.current.revenue, sales.current.currency) : commerce?.revenue ? money(commerce.revenue) : "—"}
-            delta={sales ? variation(sales.current.revenue, sales.previous.revenue) : undefined}
-            hint={
-              sales
-                ? undefined
-                : commerce?.revenue
-                  ? `${num(commerce.transactions)} achat${commerce.transactions > 1 ? "s" : ""} vu${commerce.transactions > 1 ? "s" : ""} par Analytics — mesure partielle`
-                  : "Ventes non connectées"
-            }
+            label="Ajouts au panier"
+            value={commerce ? num(commerce.addToCarts) : "—"}
+            delta={commerce && ga4?.previousCommerce ? variation(commerce.addToCarts, ga4.previousCommerce.addToCarts) : undefined}
+            hint={commerce ? undefined : "Analytics non connecté"}
           />
         </div>
 
@@ -309,96 +297,19 @@ export default async function SeoDashboard({
           />
         )}
 
-        {/* --------------------------------------------------------- ventes */}
-        <SectionTitle hint="Source : Shopify Admin — le tunnel de paiement étant hébergé par Shopify, c'est la seule mesure fiable des ventes">
-          Ventes
-        </SectionTitle>
-        {sales ? (
-          <>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <Kpi label="Commandes" value={num(sales.current.orders)} delta={variation(sales.current.orders, sales.previous.orders)} />
-              <Kpi
-                label="Chiffre d'affaires"
-                value={money(sales.current.revenue, sales.current.currency)}
-                delta={variation(sales.current.revenue, sales.previous.revenue)}
-              />
-              <Kpi
-                label="Panier moyen"
-                value={money(sales.current.averageOrder, sales.current.currency)}
-                delta={variation(sales.current.averageOrder, sales.previous.averageOrder)}
-              />
-              <Kpi label="Articles vendus" value={num(sales.current.items)} delta={variation(sales.current.items, sales.previous.items)} />
-            </div>
-
-            {sales.current.truncated && (
-              <p className="mt-2 text-[11px] text-amber-300">
-                Plus de 1 000 commandes sur la période : les totaux ci-dessus sont plafonnés à ce nombre. Choisir une période plus courte pour un total exact.
-              </p>
-            )}
-
-            <div className="grid lg:grid-cols-2 gap-3 mt-3">
-              <Card title="Chiffre d'affaires jour par jour">
-                {sales.daily.length > 1 ? (
-                  <LineChart
-                    labels={sales.daily.map((d) => d.date)}
-                    series={[
-                      { label: "CA (€)", color: CHART_GREEN, points: sales.daily.map((d) => d.revenue) },
-                      { label: "Commandes", color: CHART_BLUE, points: sales.daily.map((d) => d.orders) },
-                    ]}
-                  />
-                ) : (
-                  <Empty>Pas assez de commandes sur la période pour tracer une courbe.</Empty>
-                )}
-              </Card>
-              <Card title="Produits les plus vendus" subtitle="Par quantité">
-                <Table
-                  head={["Produit", "Quantité", "CA"]}
-                  rows={sales.products.map((row) => [
-                    <span key="p" className="block truncate">
-                      {row.title}
-                    </span>,
-                    num(row.quantity),
-                    money(row.revenue, sales.current.currency),
-                  ])}
-                />
-              </Card>
-            </div>
-          </>
-        ) : (
-          <NotConnected
-            title="Les ventes ne sont pas encore reliées au tableau de bord"
-            why="Le paiement se fait sur Shopify : ni le site ni Analytics ne voient passer les commandes. Il faut donc lire les ventes directement dans l'admin Shopify, avec un jeton différent de celui qui sert déjà à afficher les produits."
-            steps={[
-              "Dans l'admin Shopify → Paramètres → <strong>Applications et canaux de vente</strong> → Développer des applications → Créer une application.",
-              "Onglet <strong>Configuration</strong> → Admin API : cocher le scope <code>read_orders</code> (et <code>read_products</code> si l'on veut détailler les produits).",
-              "Installer l'application, puis copier le jeton <code>shpat_…</code>.",
-              "Le renseigner dans Vercel sous <code>SHOPIFY_ADMIN_API_TOKEN</code>, puis redéployer.",
-              `État actuel : jeton d'administration ${isSalesConfigured() ? "présent, mais l'API n'a rien renvoyé — vérifier le scope <code>read_orders</code>" : "<strong>absent</strong>"}.`,
-            ]}
-          />
-        )}
-
-        {/* Rappel affiché tant que Shopify n'alimente pas la section Ventes : sans
-            lui, les chiffres d'achat de cette page sont ceux d'Analytics, qui ne
-            voit qu'une partie du tunnel. Le dire évite de prendre un plancher pour
-            un total. */}
-        {ga4 && !sales && (
-          <p className="mt-8 text-[12px] text-white/40 max-w-3xl leading-relaxed">
-            {commerce && commerce.transactions > 0 ? (
-              <>
-                Analytics a vu {num(commerce.transactions)} achat{commerce.transactions > 1 ? "s" : ""} sur cette période, pour
-                {" "}{num(commerce.checkouts)} passage{commerce.checkouts > 1 ? "s" : ""} au paiement : la mesure est donc
-                {" "}<strong className="text-white/60">très partielle</strong>. Le paiement se déroule sur Shopify, hors du site,
-                et seule une partie des transactions revient à GA4. Brancher le jeton Shopify Admin donnera le chiffre exact.
-              </>
-            ) : (
-              <>
-                Analytics ne rapporte aucun achat sur cette période. C&apos;est attendu : le tunnel de paiement quitte
-                bien.health, la mesure s&apos;arrête à l&apos;ajout au panier. Brancher le jeton Shopify Admin donnera les ventes réelles.
-              </>
-            )}
-          </p>
-        )}
+        {/* Pas de section « Ventes » : le chiffre d'affaires se lit dans l'admin
+            Shopify, en temps réel et mieux présenté. Ce tableau de bord couvre ce
+            que Shopify ne sait pas dire — d'où viennent les visiteurs, sur quelles
+            requêtes le site ressort, quelles pages travaillent. */}
+        <p className="mt-10 text-[12px] text-white/40 max-w-3xl leading-relaxed">
+          Les commandes et le chiffre d&apos;affaires se consultent dans l&apos;admin Shopify. Le tunnel de paiement
+          quittant bien.health, la mesure s&apos;arrête ici à l&apos;ajout au panier
+          {commerce
+            ? ` : ${num(commerce.addToCarts)} sur la période, dont ${num(commerce.checkouts)} passage${
+                commerce.checkouts > 1 ? "s" : ""
+              } au paiement.`
+            : "."}
+        </p>
 
         <footer className="mt-12 pt-6 border-t border-white/10 text-[11px] text-white/35">
           SEO by Clickzou — compteur temps réel toutes les 20 secondes, tableaux rechargés toutes les 5 minutes,

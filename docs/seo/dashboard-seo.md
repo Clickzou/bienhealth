@@ -25,10 +25,9 @@ par adresse IP.
 | Bloc | Source | Fraîcheur |
 |---|---|---|
 | **En ce moment** : visiteurs actifs, minute par minute, pages consultées, pays | GA4 Realtime API | 20 secondes |
-| Vue d'ensemble : visiteurs, clics Google, position moyenne, CA | GA4 + Search Console + Shopify | 5 minutes |
+| Vue d'ensemble : visiteurs, clics Google, position moyenne, ajouts au panier | GA4 + Search Console | 5 minutes |
 | Audience : sessions, nouveaux visiteurs, pages vues, rebond, engagement, durée, ajouts au panier, courbe jour par jour, canaux, pays, appareils, top pages, pages d'entrée SEO | GA4 Data API | 5 minutes |
 | Référencement : clics, impressions, CTR, position moyenne, courbe, **mots-clés avec évolution de position**, pages qui rapportent des clics | Search Console | 5 minutes |
-| Ventes : commandes, chiffre d'affaires, panier moyen, articles, courbe, top produits | Shopify Admin API | 5 minutes |
 
 Périodes : 7 jours, 28 jours, 3 mois, 12 mois. Chaque chiffre est comparé à la
 période précédente de même durée. Le tableau des mots-clés se filtre, se trie et
@@ -43,7 +42,7 @@ affiche une chute de trafic qui n'existe pas.
 Tant qu'une source n'est pas connectée, son bloc affiche sa procédure de
 branchement — jamais de chiffres de démonstration.
 
-### 1. Google Analytics 4 + Search Console (un seul compte de service pour les deux)
+### Google Analytics 4 + Search Console (un seul compte de service pour les deux)
 
 1. Sur [console.cloud.google.com](https://console.cloud.google.com), créer un projet,
    puis activer **Google Analytics Data API** et **Google Search Console API**.
@@ -63,23 +62,22 @@ branchement — jamais de chiffres de démonstration.
      domaine (par défaut : `sc-domain:bien.health`).
 6. Redéployer.
 
-### 2. Ventes Shopify
+## Pourquoi pas les ventes
 
-1. Admin Shopify → Paramètres → **Applications et canaux de vente** → Développer des
-   applications → Créer une application.
-2. Onglet Configuration → Admin API : cocher le scope **`read_orders`**.
-3. Installer l'application, copier le jeton `shpat_…`.
-4. Le renseigner dans Vercel sous `SHOPIFY_ADMIN_API_TOKEN`, puis redéployer.
+Les commandes et le chiffre d'affaires **ne figurent pas** dans ce tableau de bord,
+et c'est un choix : ils se lisent dans l'admin Shopify, en temps réel et mieux
+présentés. Cet outil couvre ce que Shopify ne sait pas dire — d'où viennent les
+visiteurs, sur quelles requêtes le site ressort, quelles pages travaillent.
 
-Ce jeton est **différent** du jeton Storefront déjà en place : celui-ci lit le
-catalogue, celui-là lit les commandes.
+La mesure s'arrête donc à l'**ajout au panier**, dernière action que le site voit
+lui-même : au-delà, le visiteur est chez Shopify.
 
 ## Architecture
 
 ```
 src/app/seo/
 ├── layout.tsx        racine autonome (pas d'en-tête site, pas de mesure)
-├── page.tsx          composition des blocs, lecture des trois sources en parallèle
+├── page.tsx          composition des blocs, lecture des deux sources en parallèle
 ├── login-form.tsx    écran de connexion (client)
 ├── realtime.tsx      bandeau temps réel + rafraîchissement automatique (client)
 ├── keyword-table.tsx tableau des mots-clés : filtre, tri, export CSV (client)
@@ -90,7 +88,6 @@ src/lib/seo-dashboard/
 ├── google.ts         jeton OAuth d'un compte de service (JWT RS256, sans dépendance)
 ├── ga4.ts            rapports Analytics (lots) + rapport temps réel
 ├── gsc.ts            Search Analytics + positions comparées
-├── shopify-sales.ts  commandes, CA, top produits
 └── periods.ts        périodes et comparaisons (Europe/Paris)
 
 src/app/api/seo/       login · logout · realtime
@@ -98,8 +95,6 @@ src/app/api/seo/       login · logout · realtime
 
 ## Limites connues
 
-- Les commandes sont plafonnées à 1 000 par période : au-delà, le tableau le signale
-  plutôt que d'afficher un total faux.
 - La limitation de débit de la connexion vit en mémoire : elle ne survit pas à un
   redémarrage d'instance et n'est pas partagée entre régions.
 - Le rapport temps réel de GA4 couvre 30 minutes glissantes, c'est une limite de
