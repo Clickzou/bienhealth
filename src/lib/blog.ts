@@ -39,172 +39,137 @@ export const ARTICLES: Article[] = [
   {
     slug: "champignons-adaptogenes-guide-complet",
     title: "Champignons adaptogènes : bienfaits et guide complet",
-    metaTitle: "Champignons adaptogènes : bienfaits & guide",
+    metaTitle: "Champignons adaptogènes : le guide complet",
     metaDescription:
-      "Champignons adaptogènes : définition, bienfaits, Lion's Mane, Reishi, Cordyceps, Chaga… Le guide complet pour bien les choisir et les consommer au quotidien.",
+      "Lion's mane, reishi, cordyceps, chaga : ce que fait chaque champignon adaptogène, comment le choisir, à quelle dose et avec quelles précautions.",
     excerpt:
-      "Définition, bienfaits, principaux champignons et conseils d'utilisation : tout ce qu'il faut savoir sur les champignons adaptogènes pour soutenir énergie, concentration et sérénité.",
+      "Lion's mane, reishi, cordyceps, chaga : bienfaits, différences, dosages et précautions. Le guide complet pour choisir le bon champignon adaptogène.",
     category: "Ingrédients & science",
-    date: "2026-07-06",
-    readingMinutes: 8,
+    date: "2026-07-28",
+    readingMinutes: 10,
     cover: "/brand/blog/cover-adaptogenes.jpg",
     intro:
-      "Les <strong>champignons adaptogènes</strong> connaissent un engouement grandissant, et ce n'est pas un hasard. Utilisés depuis des siècles dans les médecines traditionnelles, ces champignons fonctionnels aident l'organisme à mieux s'adapter au stress, tout en soutenant l'énergie, la concentration et l'équilibre général. Dans ce guide complet, on vous explique ce que sont les champignons adaptogènes, leurs bienfaits, les plus étudiés (Lion's Mane, Reishi, Cordyceps, Chaga) et comment les intégrer simplement à votre routine.",
+      "Les <strong>champignons adaptogènes</strong> — lion's mane, reishi, cordyceps, chaga — sont des champignons dits fonctionnels : on ne les mange pas pour leur goût mais pour les composés qu'ils contiennent. Chacun a son terrain de prédilection, et les confondre est l'erreur la plus courante. Ce guide explique ce que fait chacun, comment reconnaître un extrait de qualité, à quelle dose et pendant combien de temps, et où s'arrête ce qu'on peut honnêtement en dire.",
     blocks: [
-      { h2: "Qu'est-ce qu'un champignon adaptogène ?" },
-      {
-        p: "Un <strong>adaptogène</strong> est une substance naturelle (plante ou champignon) qui aide le corps à résister aux différents stress (physique, mental, environnemental) en favorisant un retour à l'équilibre, sans surstimuler l'organisme. Les <strong>champignons adaptogènes</strong> sont une catégorie de champignons fonctionnels reconnus pour cette capacité à soutenir la résilience de l'organisme.",
-      },
-      {
-        p: "Contrairement à un excitant comme la caféine, un adaptogène agit en douceur et sur la durée : il module la réponse au stress plutôt que de la forcer. C'est pourquoi ces champignons se prennent idéalement en cure régulière, pour des effets progressifs et durables.",
-      },
-      { h2: "Quels sont les bienfaits des champignons adaptogènes ?" },
-      {
-        p: "Selon le champignon, les bénéfices varient, mais on retrouve plusieurs grands axes soutenus par un nombre croissant d'études :",
-      },
-      {
-        ul: [
-          "<strong>Gestion du stress et de l'anxiété</strong> : en aidant à réguler la réponse au stress.",
-          "<strong>Concentration et clarté mentale</strong> : soutien de la fonction cognitive et de la mémoire.",
-          "<strong>Énergie et endurance</strong> : meilleure tolérance à l'effort, sans contre-coup.",
-          "<strong>Immunité</strong> : richesse en composés antioxydants et bêta-glucanes.",
-          "<strong>Beauté de la peau</strong> : protection cellulaire face au stress oxydatif.",
-        ],
-      },
-      {
-        p: "Ces effets ne sont pas ceux d'un « produit miracle » : ils s'installent avec la régularité et une bonne hygiène de vie. Les compléments alimentaires à base de champignons adaptogènes viennent en soutien, pas en substitut, d'une alimentation variée.",
-      },
-      { h2: "Les 4 champignons adaptogènes les plus étudiés" },
-      { h3: "Lion's Mane (Hericium erinaceus)" },
-      {
-        p: "Surnommé « crinière de lion », le <strong>Lion's Mane</strong> est le champignon de la concentration par excellence. Il est étudié pour son soutien de la mémoire, de la clarté mentale et de la fonction cognitive. C'est l'un des actifs clés de nos gummies <a href=\"" +
-          l("/products/focus") +
-          "\">FOCUS</a> et de la poudre <a href=\"" +
-          l("/products/mushglow") +
-          "\">MushGlow</a>.",
-      },
-      { h3: "Reishi (Ganoderma lucidum)" },
-      {
-        p: "Le <strong>Reishi</strong>, ou « champignon de l'immortalité » dans la tradition asiatique, est réputé pour favoriser la détente, l'équilibre émotionnel et un meilleur sommeil. On le retrouve dans nos gummies <a href=\"" +
-          l("/products/calm") +
-          "\">CALM</a>, aux côtés de l'ashwagandha et du safran.",
-      },
-      { h3: "Cordyceps" },
-      {
-        p: "Le <strong>Cordyceps</strong> est le champignon de l'énergie et de l'endurance. Prisé des sportifs, il soutient la vitalité et la tolérance à l'effort. Il est au cœur de nos gummies <a href=\"" +
-          l("/products/power") +
-          "\">POWER</a>.",
-      },
-      { h3: "Chaga" },
-      {
-        p: "Le <strong>Chaga</strong> est un puissant antioxydant, qui aide à protéger les cellules du stress oxydatif et soutient l'immunité et l'éclat de la peau. Il fait partie du supermix <a href=\"" +
-          l("/products/mushglow") +
-          "\">MushGlow</a>.",
-      },
-      {
-        p: "À noter : tous les adaptogènes ne sont pas des champignons. Des plantes comme l'<strong>ashwagandha</strong>, la <strong>rhodiola</strong> ou le <strong>ginseng</strong> sont aussi des adaptogènes de référence, souvent associés aux champignons pour un effet synergique. Retrouvez le détail de nos actifs sur la page <a href=\"" +
-          l("/ingredients") +
-          "\">Ingrédients</a>.",
-      },
-      { h2: "Comment consommer les champignons adaptogènes ?" },
-      {
-        p: "Il existe plusieurs formats, à choisir selon votre mode de vie :",
-      },
+      { h2: "Ce qu'est un champignon adaptogène" },
+      { p: "Un <a href=\"" + l("/blog/quest-ce-quun-adaptogene") + "\">adaptogène</a> est une substance naturelle qui aide l'organisme à mieux composer avec les contraintes, en favorisant un retour à l'équilibre plutôt qu'en stimulant. Appliqué aux champignons, le terme désigne une poignée d'espèces non comestibles au sens culinaire, utilisées depuis des siècles en Asie et consommées aujourd'hui sous forme d'extraits." },
+      { p: "Leur particularité tient à leur paroi cellulaire, riche en <strong>bêta-glucanes</strong> — des polysaccharides qui font l'objet de recherches, notamment sur l'immunité. C'est d'ailleurs sur leur teneur en bêta-glucanes que se juge la qualité d'un extrait, bien plus que sur le poids affiché." },
+
+      { h2: "Lion's mane : la mémoire et la clarté mentale" },
+      { p: "<em>Hericium erinaceus</em>, ou crinière de lion, est le plus étudié sur le versant cognitif. Les travaux référencés sur <a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=hericium+erinaceus\" target=\"_blank\" rel=\"noopener noreferrer\">PubMed</a> s'intéressent à ses composés, hericénones et érinacines, sur des protocoles de huit à seize semaines." },
+      { p: "C'est celui qu'on associe à la concentration et à la clarté d'esprit. Il se prend le matin ou en début d'après-midi, sans effet stimulant de type caféine. Détails et dosages dans notre fiche <a href=\"" + l("/blog/lions-mane") + "\">Lion's Mane</a>." },
+
+      { h2: "Reishi : la détente et le sommeil" },
+      { p: "<em>Ganoderma lucidum</em> est appelé « champignon de l'immortalité » dans la tradition chinoise. Amer, impossible à consommer en cuisine, il se prend en extrait ou en infusion, plutôt le soir." },
+      { p: "C'est le champignon de la fin de journée : on l'associe à l'apaisement et à la préparation au sommeil, souvent en complément d'une plante comme l'ashwagandha. Il entre dans notre formule <a href=\"" + l("/products/calm") + "\">CALM</a>." },
+
+      { h2: "Cordyceps : l'endurance et le souffle" },
+      { p: "<em>Cordyceps sinensis</em>, aujourd'hui cultivé sous la forme <em>Cordyceps militaris</em>, est traditionnellement associé à l'endurance et à l'oxygénation des tissus. C'est le plus étudié des quatre sur le terrain de la performance physique." },
+      { p: "Il se prend le matin ou avant l'effort, jamais le soir. C'est l'actif principal de nos gummies <a href=\"" + l("/products/power") + "\">POWER</a>, et il est détaillé dans notre comparatif <a href=\"" + l("/blog/reishi-cordyceps-chaga") + "\">Reishi, Cordyceps, Chaga</a>." },
+
+      { h2: "Chaga : l'antioxydant" },
+      { p: "<em>Inonotus obliquus</em> pousse sur les bouleaux des forêts boréales. Il présente une teneur remarquable en composés antioxydants, ce qui explique sa place dans les formules orientées beauté et vitalité — dont notre supermix <a href=\"" + l("/products/mushglow") + "\">MUSHGLOW</a>." },
+      { p: "Un point de vigilance rarement mentionné : le chaga est riche en oxalates, ce qui le déconseille aux personnes ayant des antécédents de calculs rénaux." },
+
+      { h2: "Comment reconnaître un extrait de qualité" },
+      { p: "C'est là que se joue l'essentiel, et c'est là que les produits diffèrent le plus. Quatre critères permettent de trancher :" },
       {
         ul: [
-          "<strong>En gummies</strong> : pratiques, gourmands et faciles à intégrer, ils offrent une meilleure observance que les gélules. Découvrez nos <a href=\"" +
-            l("/collections/gummies") +
-            "\">gummies adaptogènes</a>.",
-          "<strong>En poudre</strong> : un format tout-en-un à mélanger dans un café, un matcha ou un smoothie, comme notre <a href=\"" +
-            l("/collections/nos-poudres") +
-            "\">poudre MushGlow</a>.",
-          "<strong>En infusion ou café</strong> : pour ceux qui aiment les rituels chauds.",
+          "<strong>La partie utilisée</strong> : le carpophore (le champignon lui-même) plutôt que le mycélium sur grain, beaucoup moins concentré en bêta-glucanes.",
+          "<strong>Le taux de bêta-glucanes</strong>, affiché en pourcentage. S'il n'est pas indiqué, c'est rarement bon signe.",
+          "<strong>Le ratio d'extraction</strong> (10:1, 15:1…) : il dit combien de matière première a servi à produire l'extrait.",
+          "<strong>L'origine et les analyses</strong> : les champignons concentrent les métaux lourds du substrat, d'où l'importance des contrôles. Les nôtres sont documentés sur la page <a href=\"" + l("/certifications") + "\">conformité</a>.",
         ],
       },
-      {
-        p: "Dans tous les cas, la <strong>régularité prime</strong> : comptez une cure d'au moins 30 jours pour ressentir pleinement les bienfaits. Privilégiez des produits aux <strong>dosages transparents</strong>, à base d'actifs de qualité et fabriqués selon des normes strictes, comme les compléments <strong>BIEN health</strong>, formulés et fabriqués en France.",
-      },
-      { h2: "Y a-t-il des précautions à prendre ?" },
-      {
-        p: "Les champignons adaptogènes sont généralement bien tolérés. Par prudence, ils sont <strong>déconseillés aux femmes enceintes ou allaitantes</strong> et aux personnes sous traitement médical sans avis d'un professionnel de santé. Respectez toujours la dose journalière recommandée et tenez les produits hors de portée des enfants.",
-      },
-      { h2: "Par où commencer avec BIEN ?" },
-      {
-        p: "Le meilleur point de départ dépend de votre besoin : sérénité et sommeil, concentration, énergie ou beauté. Pas sûr de votre choix ? Faites notre <a href=\"" +
-          l("/diagnostic") +
-          "\">diagnostic gratuit en 1 minute</a> : il vous oriente vers la formule la plus adaptée à votre rythme. Vous pouvez aussi parcourir directement l'ensemble de notre <a href=\"" +
-          l("/boutique") +
-          "\">gamme de compléments naturels</a>.",
-      },
+      { p: "Méfiez-vous de la mention « poudre de champignon » sans autre précision : elle recouvre aussi bien un extrait concentré qu'un substrat broyé contenant très peu d'actifs." },
+
+      { h2: "Dosage, durée, moment de la prise" },
+      { p: "Les protocoles d'étude portent le plus souvent sur des prises quotidiennes de huit à douze semaines. En pratique, une cure d'un mois minimum est le seuil en deçà duquel il ne se passe généralement rien de perceptible." },
+      { p: "Le moment compte : lion's mane et cordyceps le matin, reishi le soir, chaga indifféremment. Et la régularité prime sur la dose — mieux vaut une prise quotidienne modeste qu'une forte dose deux fois par semaine." },
+
+      { h2: "Ce que la réglementation permet d'affirmer" },
+      { p: "Les allégations de santé sont encadrées par le règlement européen (CE) n° 1924/2006, et celles portant sur les plantes et champignons restent <strong>en attente d'évaluation</strong> par l'EFSA — consultables au <a href=\"https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/\" target=\"_blank\" rel=\"noopener noreferrer\">registre européen des allégations</a>." },
+      { p: "Concrètement : un complément alimentaire ne peut revendiquer aucune propriété de prévention, de traitement ou de guérison. Les formulations honnêtes parlent de contribution au fonctionnement normal de l'organisme. Toute marque qui promet de « soigner » quoi que ce soit est en infraction." },
+
+      { h2: "Précautions" },
+      { p: "Les champignons adaptogènes sont déconseillés aux femmes enceintes et allaitantes. Le reishi peut interagir avec les traitements anticoagulants et antihypertenseurs ; le chaga est déconseillé en cas d'antécédents de calculs rénaux et avec les anticoagulants. En cas de traitement en cours ou de maladie auto-immune, demandez l'avis d'un professionnel de santé." },
+      { p: "Ils ne remplacent ni une alimentation variée et équilibrée, ni un mode de vie sain, ni un avis médical." },
+
+      { h2: "Lequel choisir pour commencer" },
+      { p: "Partez du besoin : clarté mentale et concentration → lion's mane ; sommeil et tension nerveuse → reishi ; énergie physique et endurance → cordyceps ; peau et vitalité → chaga, associé au collagène." },
+      { p: "Si vous hésitez, le <a href=\"" + l("/diagnostic") + "\">diagnostic BIEN</a> vous oriente en une minute, et la <a href=\"" + l("/boutique") + "\">boutique</a> présente les quatre formules avec leur composition détaillée." },
     ],
     faq: [
-      {
-        q: "Les champignons adaptogènes sont-ils efficaces ?",
-        a: "Un nombre croissant d'études soutiennent leurs bienfaits sur le stress, la concentration, l'énergie et l'immunité. Ce ne sont pas des produits miracles : les effets s'installent avec la régularité, sur une cure d'au moins 30 jours, en complément d'une bonne hygiène de vie.",
-      },
-      {
-        q: "Quel champignon adaptogène choisir ?",
-        a: "Lion's Mane pour la concentration, Reishi pour la détente et le sommeil, Cordyceps pour l'énergie, Chaga pour l'immunité et la peau. En cas de besoins multiples, un supermix comme MushGlow combine plusieurs actifs en une seule prise.",
-      },
-      {
-        q: "Peut-on prendre des champignons adaptogènes tous les jours ?",
-        a: "Oui, ils sont conçus pour un usage quotidien et révèlent d'ailleurs tout leur potentiel avec la régularité. Respectez la dose recommandée et demandez conseil à un professionnel de santé en cas de traitement, de grossesse ou d'allaitement.",
-      },
-      {
-        q: "Champignons adaptogènes ou plantes adaptogènes ?",
-        a: "Les deux appartiennent à la famille des adaptogènes. Les champignons (Lion's Mane, Reishi, Cordyceps, Chaga) sont souvent associés à des plantes comme l'ashwagandha ou la rhodiola pour un effet synergique, ce que font les formules BIEN.",
-      },
+      { q: "Quel est le meilleur champignon adaptogène ?", a: "Il n'y en a pas : chacun a son terrain. Lion's mane pour la clarté mentale, reishi pour la détente et le sommeil, cordyceps pour l'endurance, chaga pour son apport antioxydant. Le bon choix part du besoin." },
+      { q: "Peut-on prendre plusieurs champignons ensemble ?", a: "Oui, c'est la logique des formules combinées. Évitez seulement de cumuler plusieurs produits contenant le même actif, pour ne pas dépasser les doses journalières." },
+      { q: "Combien de temps dure une cure ?", a: "Un à trois mois, suivis d'une pause. En dessous d'un mois, il ne se passe généralement rien de perceptible : les études portent sur huit à douze semaines." },
+      { q: "Comment reconnaître un bon extrait ?", a: "Carpophore plutôt que mycélium sur grain, taux de bêta-glucanes affiché, ratio d'extraction indiqué, et analyses de métaux lourds disponibles. L'absence de ces informations est en soi un signal." },
+      { q: "Les champignons adaptogènes sont-ils dangereux ?", a: "Non aux doses usuelles, mais ils ne sont pas anodins : déconseillés pendant la grossesse et l'allaitement, interactions possibles avec les anticoagulants pour le reishi et le chaga, prudence en cas de maladie auto-immune." },
+      { q: "À quel moment de la journée les prendre ?", a: "Lion's mane et cordyceps le matin, reishi le soir, chaga indifféremment. La régularité compte davantage que la dose." },
     ],
     en: {
       title: "Adaptogenic mushrooms: benefits and complete guide",
-      metaTitle: "Adaptogenic mushrooms: benefits & guide",
-      metaDescription: "Adaptogenic mushrooms: definition, benefits, Lion's Mane, Reishi, Cordyceps, Chaga… The complete guide to choosing and using them every day.",
-      excerpt: "Definition, benefits, main mushrooms and usage tips: everything to know about adaptogenic mushrooms to support energy, focus and calm.",
+      metaTitle: "Adaptogenic mushrooms: the complete guide",
+      metaDescription: "Lion's mane, reishi, cordyceps, chaga: what each adaptogenic mushroom does, how to choose one, at what dose and with which precautions.",
+      excerpt: "Lion's mane, reishi, cordyceps, chaga: benefits, differences, doses and precautions. The complete guide to choosing the right adaptogenic mushroom.",
       category: "Ingredients & science",
-      intro:
-        "<strong>Adaptogenic mushrooms</strong> are enjoying growing popularity, and it's no coincidence. Used for centuries in traditional medicine, these functional mushrooms help the body adapt better to stress, while supporting energy, focus and overall balance. In this complete guide, we explain what adaptogenic mushrooms are, their benefits, the most studied ones (Lion's Mane, Reishi, Cordyceps, Chaga) and how to easily add them to your routine.",
+      intro: "<strong>Adaptogenic mushrooms</strong> — lion's mane, reishi, cordyceps, chaga — are so-called functional mushrooms: you don't eat them for their taste but for the compounds they contain. Each has its own ground, and confusing them is the most common mistake. This guide explains what each one does, how to recognise a quality extract, at what dose and for how long, and where honest claims stop.",
       blocks: [
-        { h2: "What is an adaptogenic mushroom?" },
-        { p: "An <strong>adaptogen</strong> is a natural substance (plant or mushroom) that helps the body resist different kinds of stress (physical, mental, environmental) by promoting a return to balance, without over-stimulating the body. <strong>Adaptogenic mushrooms</strong> are a category of functional mushrooms recognised for this ability to support the body's resilience." },
-        { p: "Unlike a stimulant such as caffeine, an adaptogen acts gently and over time: it modulates the stress response rather than forcing it. That's why these mushrooms are ideally taken as a regular course, for gradual, lasting effects." },
-        { h2: "What are the benefits of adaptogenic mushrooms?" },
-        { p: "Depending on the mushroom, the benefits vary, but several broad areas are supported by a growing body of studies:" },
-        { ul: [
-          "<strong>Stress and anxiety management</strong>: by helping regulate the stress response.",
-          "<strong>Focus and mental clarity</strong>: support for cognitive function and memory.",
-          "<strong>Energy and stamina</strong>: better tolerance to effort, without the rebound.",
-          "<strong>Immunity</strong>: rich in antioxidant compounds and beta-glucans.",
-          "<strong>Skin beauty</strong>: cellular protection against oxidative stress.",
-        ] },
-        { p: "These effects are not those of a \"miracle product\": they build up with regularity and a good lifestyle. Adaptogenic mushroom supplements come as support, not a substitute, for a varied diet." },
-        { h2: "The 4 most studied adaptogenic mushrooms" },
-        { h3: "Lion's Mane (Hericium erinaceus)" },
-        { p: "Nicknamed \"lion's mane\", <strong>Lion's Mane</strong> is the focus mushroom par excellence. It is studied for its support of memory, mental clarity and cognitive function. It's one of the key actives in our <a href=\"" + le("/products/focus") + "\">FOCUS</a> gummies and the <a href=\"" + le("/products/mushglow") + "\">MushGlow</a> powder." },
-        { h3: "Reishi (Ganoderma lucidum)" },
-        { p: "<strong>Reishi</strong>, or the \"mushroom of immortality\" in Asian tradition, is renowned for promoting relaxation, emotional balance and better sleep. You'll find it in our <a href=\"" + le("/products/calm") + "\">CALM</a> gummies, alongside ashwagandha and saffron." },
-        { h3: "Cordyceps" },
-        { p: "<strong>Cordyceps</strong> is the mushroom of energy and stamina. Prized by athletes, it supports vitality and tolerance to effort. It's at the heart of our <a href=\"" + le("/products/power") + "\">POWER</a> gummies." },
-        { h3: "Chaga" },
-        { p: "<strong>Chaga</strong> is a powerful antioxidant that helps protect cells from oxidative stress and supports immunity and skin radiance. It's part of the <a href=\"" + le("/products/mushglow") + "\">MushGlow</a> supermix." },
-        { p: "Note: not all adaptogens are mushrooms. Plants such as <strong>ashwagandha</strong>, <strong>rhodiola</strong> or <strong>ginseng</strong> are also reference adaptogens, often combined with mushrooms for a synergistic effect. See the details of our actives on the <a href=\"" + le("/ingredients") + "\">Ingredients</a> page." },
-        { h2: "How to take adaptogenic mushrooms?" },
-        { p: "There are several formats, to choose according to your lifestyle:" },
-        { ul: [
-          "<strong>As gummies</strong>: practical, tasty and easy to fit in, they offer better adherence than capsules. Discover our <a href=\"" + le("/collections/gummies") + "\">adaptogenic gummies</a>.",
-          "<strong>As a powder</strong>: an all-in-one format to mix into a coffee, matcha or smoothie, like our <a href=\"" + le("/collections/nos-poudres") + "\">MushGlow powder</a>.",
-          "<strong>As an infusion or coffee</strong>: for those who love warm rituals.",
-        ] },
-        { p: "In all cases, <strong>regularity is key</strong>: allow a course of at least 30 days to fully feel the benefits. Favour products with <strong>transparent dosages</strong>, made from quality actives to strict standards, like <strong>BIEN health</strong> supplements, formulated and made in France." },
-        { h2: "Are there any precautions?" },
-        { p: "Adaptogenic mushrooms are generally well tolerated. As a precaution, they are <strong>not recommended for pregnant or breastfeeding women</strong> or people on medical treatment without a healthcare professional's advice. Always respect the recommended daily dose and keep products out of reach of children." },
-        { h2: "Where to start with BIEN?" },
-        { p: "The best starting point depends on your need: calm and sleep, focus, energy or beauty. Not sure of your choice? Take our <a href=\"" + le("/diagnostic") + "\">free 1-minute quiz</a>: it points you to the formula best suited to your lifestyle. You can also browse our full <a href=\"" + le("/boutique") + "\">range of natural supplements</a>." },
+        { h2: "What an adaptogenic mushroom is" },
+        { p: "An <a href=\"" + le("/blog/quest-ce-quun-adaptogene") + "\">adaptogen</a> is a natural substance that helps the body cope with demands, favouring a return to balance rather than stimulating. Applied to mushrooms, the term covers a handful of species that aren't culinary, used for centuries in Asia and consumed today as extracts." },
+        { p: "Their particularity lies in their cell wall, rich in <strong>beta-glucans</strong> — polysaccharides under research, notably for immunity. Extract quality is judged on beta-glucan content far more than on the weight printed on the label." },
+
+        { h2: "Lion's mane: memory and mental clarity" },
+        { p: "<em>Hericium erinaceus</em>, or lion's mane, is the most studied on the cognitive side. The work indexed on <a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=hericium+erinaceus\" target=\"_blank\" rel=\"noopener noreferrer\">PubMed</a> looks at its compounds, hericenones and erinacines, over eight to sixteen week protocols." },
+        { p: "It's the one associated with focus and mental clarity. Take it in the morning or early afternoon; it has no caffeine-like stimulant effect. Details and doses in our page on <a href=\"" + le("/blog/lions-mane") + "\">Lion's Mane</a>." },
+
+        { h2: "Reishi: relaxation and sleep" },
+        { p: "<em>Ganoderma lucidum</em> is called the «\u00a0mushroom of immortality\u00a0» in Chinese tradition. Bitter and impossible to cook with, it's taken as an extract or infusion, rather in the evening." },
+        { p: "It's the end-of-day mushroom: associated with calming and preparing for sleep, often alongside a plant such as ashwagandha. It's part of our <a href=\"" + le("/products/calm") + "\">CALM</a> formula." },
+
+        { h2: "Cordyceps: endurance and breath" },
+        { p: "<em>Cordyceps sinensis</em>, today grown as <em>Cordyceps militaris</em>, is traditionally associated with endurance and tissue oxygenation. It's the most studied of the four on physical performance." },
+        { p: "Take it in the morning or before exercise, never in the evening. It's the main active in our <a href=\"" + le("/products/power") + "\">POWER</a> gummies, and is covered in our comparison of <a href=\"" + le("/blog/reishi-cordyceps-chaga") + "\">Reishi, Cordyceps and Chaga</a>." },
+
+        { h2: "Chaga: the antioxidant" },
+        { p: "<em>Inonotus obliquus</em> grows on birches in boreal forests. It has a remarkable antioxidant compound content, which explains its place in beauty and vitality formulas — including our <a href=\"" + le("/products/mushglow") + "\">MUSHGLOW</a> supermix." },
+        { p: "One rarely mentioned caveat: chaga is high in oxalates, which makes it unsuitable for people with a history of kidney stones." },
+
+        { h2: "How to recognise a quality extract" },
+        { p: "This is where most of it is decided, and where products differ most. Four criteria settle the question:" },
+        {
+          ul: [
+            "<strong>The part used</strong>: the fruiting body rather than grain-grown mycelium, which is far less concentrated in beta-glucans.",
+            "<strong>The beta-glucan content</strong>, shown as a percentage. If it isn't stated, that's rarely a good sign.",
+            "<strong>The extraction ratio</strong> (10:1, 15:1…): it tells you how much raw material went into the extract.",
+            "<strong>Origin and testing</strong>: mushrooms concentrate heavy metals from their substrate, hence the importance of controls. Ours are documented on our <a href=\"" + le("/certifications") + "\">compliance</a> page.",
+          ],
+        },
+        { p: "Be wary of «\u00a0mushroom powder\u00a0» with no further detail: it covers both a concentrated extract and ground substrate containing very little active material." },
+
+        { h2: "Dose, duration, timing" },
+        { p: "Study protocols mostly involve daily intake over eight to twelve weeks. In practice, a one-month course is the threshold below which nothing perceptible generally happens." },
+        { p: "Timing matters: lion's mane and cordyceps in the morning, reishi in the evening, chaga any time. And regularity beats dose — a modest daily intake does more than a large dose twice a week." },
+
+        { h2: "What regulation allows you to claim" },
+        { p: "Health claims are governed by EU regulation (EC) No 1924/2006, and those relating to plants and mushrooms remain <strong>pending evaluation</strong> by EFSA — searchable in the <a href=\"https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/\" target=\"_blank\" rel=\"noopener noreferrer\">EU register of claims</a>." },
+        { p: "In practice: a food supplement cannot claim any property of preventing, treating or curing. Honest wording speaks of contributing to the normal function of the body. Any brand promising to «\u00a0cure\u00a0» anything is in breach." },
+
+        { h2: "Precautions" },
+        { p: "Adaptogenic mushrooms are not advised during pregnancy or breastfeeding. Reishi may interact with anticoagulant and antihypertensive treatments; chaga is not advised with a history of kidney stones or alongside anticoagulants. With ongoing treatment or an autoimmune condition, seek advice from a healthcare professional." },
+        { p: "They replace neither a varied, balanced diet, nor a healthy lifestyle, nor medical advice." },
+
+        { h2: "Which one to start with" },
+        { p: "Start from the need: mental clarity and focus → lion's mane; sleep and nervous tension → reishi; physical energy and endurance → cordyceps; skin and vitality → chaga, paired with collagen." },
+        { p: "If you're hesitating, the <a href=\"" + le("/diagnostic") + "\">BIEN quiz</a> points you in a minute, and the <a href=\"" + le("/boutique") + "\">shop</a> shows the four formulas with their full composition." },
       ],
       faq: [
-        { q: "Are adaptogenic mushrooms effective?", a: "A growing number of studies support their benefits on stress, focus, energy and immunity. They're not miracle products: the effects build with regularity, over a course of at least 30 days, alongside a good lifestyle." },
-        { q: "Which adaptogenic mushroom should I choose?", a: "Lion's Mane for focus, Reishi for relaxation and sleep, Cordyceps for energy, Chaga for immunity and skin. For multiple needs, a supermix like MushGlow combines several actives in one serving." },
-        { q: "Can you take adaptogenic mushrooms every day?", a: "Yes, they're designed for daily use and in fact reveal their full potential with regularity. Respect the recommended dose and ask a healthcare professional if you're on treatment, pregnant or breastfeeding." },
-        { q: "Adaptogenic mushrooms or adaptogenic plants?", a: "Both belong to the adaptogen family. Mushrooms (Lion's Mane, Reishi, Cordyceps, Chaga) are often combined with plants like ashwagandha or rhodiola for a synergistic effect, which is what BIEN formulas do." },
+        { q: "Which adaptogenic mushroom is best?", a: "There isn't one: each has its ground. Lion's mane for mental clarity, reishi for calm and sleep, cordyceps for endurance, chaga for its antioxidant contribution. The right choice starts from the need." },
+        { q: "Can you take several mushrooms together?", a: "Yes, that's the logic of combined formulas. Just avoid stacking several products containing the same active, so as not to exceed daily doses." },
+        { q: "How long should a course last?", a: "One to three months, followed by a break. Below a month, nothing perceptible usually happens: studies run eight to twelve weeks." },
+        { q: "How do you spot a good extract?", a: "Fruiting body rather than grain-grown mycelium, stated beta-glucan content, published extraction ratio, and available heavy-metal testing. The absence of that information is itself a signal." },
+        { q: "Are adaptogenic mushrooms dangerous?", a: "Not at usual doses, but they aren't harmless: not advised during pregnancy and breastfeeding, possible interactions with anticoagulants for reishi and chaga, and caution with autoimmune conditions." },
+        { q: "When in the day should you take them?", a: "Lion's mane and cordyceps in the morning, reishi in the evening, chaga any time. Regularity matters more than dose." },
       ],
     },
   },
@@ -666,61 +631,129 @@ export const ARTICLES: Article[] = [
     title: "Qu'est-ce qu'un adaptogène ? Définition, plantes et bienfaits",
     metaTitle: "Qu'est-ce qu'un adaptogène ? Définition",
     metaDescription:
-      "Qu'est-ce qu'un adaptogène ? Définition, mode d'action, principales plantes adaptogènes (ashwagandha, rhodiola, ginseng) et bienfaits sur le stress, l'énergie et la concentration.",
+      "Définition d'un adaptogène, critères historiques, plantes et champignons concernés, ce que dit la réglementation européenne et comment les utiliser.",
     excerpt:
-      "Définition, mode d'action et principales plantes : tout comprendre sur les adaptogènes, ces actifs naturels qui aident le corps à mieux s'adapter au stress.",
+      "Définition, critères, plantes concernées : tout comprendre aux adaptogènes, ces végétaux qui aident l'organisme à faire face aux contraintes.",
     category: "Ingrédients & science",
-    date: "2026-07-02",
-    readingMinutes: 6,
+    date: "2026-05-20",
+    readingMinutes: 8,
     cover: "/brand/blog/cover-adaptogene-def.jpg",
     intro:
-      "On les retrouve partout dans les rayons bien-être, mais <strong>qu'est-ce qu'un adaptogène</strong>, au juste ? Derrière ce terme se cachent des plantes et des champignons capables d'aider l'organisme à mieux résister au stress. Définition, mode d'action et principales plantes adaptogènes : voici tout ce qu'il faut savoir.",
+      "Un <strong>adaptogène</strong> est une substance naturelle — plante ou champignon — qui aide l'organisme à mieux faire face aux contraintes physiques, mentales ou environnementales, en favorisant un retour à l'équilibre plutôt qu'en stimulant. C'est cette nuance qui fait toute la différence avec un excitant, et c'est elle qu'on va détailler ici : d'où vient le terme, quels critères une plante doit remplir, lesquelles sont concernées, et ce que la réglementation autorise à en dire.",
     blocks: [
-      { h2: "Définition d'un adaptogène" },
-      { p: "Un <strong>adaptogène</strong> est une substance naturelle qui augmente la capacité de l'organisme à s'adapter aux stress de toute nature (physique, mental ou environnemental) en favorisant un retour à l'équilibre. Pour mériter ce nom, un actif doit être non toxique, agir de façon non spécifique et aider à normaliser les fonctions de l'organisme." },
-      { h2: "Comment agissent-ils ?" },
-      { p: "Contrairement à un stimulant qui pousse l'organisme, l'adaptogène le régule. Il agit notamment sur l'axe du stress et la production de cortisol, aidant le corps à mieux encaisser les pics de tension puis à récupérer. D'où une action douce, progressive et durable." },
-      { h2: "Les principales plantes adaptogènes" },
-      { h3: "Ashwagandha" },
-      { p: "L'une des plus étudiées, réputée pour son action apaisante sur le stress et le cortisol. On la retrouve dans nos gummies <a href=\"" + l("/products/calm") + "\">CALM</a>." },
-      { h3: "Rhodiola Rosea" },
-      { p: "Adaptogène anti-fatigue, appréciée pour soutenir l'énergie et la clarté mentale. Présente dans <a href=\"" + l("/products/focus") + "\">FOCUS</a> et <a href=\"" + l("/products/power") + "\">POWER</a>." },
-      { h3: "Ginseng" },
-      { p: "Référence traditionnelle de la vitalité et de l'endurance, au cœur de nos gummies POWER." },
-      { h2: "Et les champignons adaptogènes ?" },
-      { p: "Les champignons fonctionnels (Lion's Mane, Reishi, Cordyceps, Chaga) font aussi partie de la famille des adaptogènes. Pour tout savoir, lisez notre <a href=\"" + l("/blog/champignons-adaptogenes-guide-complet") + "\">guide des champignons adaptogènes</a>. Retrouvez le détail de nos actifs sur la page <a href=\"" + l("/ingredients") + "\">Ingrédients</a>." },
+      { h2: "La définition, et d'où elle vient" },
+      { p: "Le mot a été forgé en 1947 par le pharmacologue russe Nikolaï Lazarev, puis précisé en 1968 par Israel Brekhman. Trois critères devaient être réunis pour qu'une substance soit dite adaptogène : être non toxique aux doses usuelles, augmenter la résistance non spécifique de l'organisme — c'est-à-dire face à des contraintes de nature variée — et exercer une action normalisatrice, qui ramène vers l'équilibre plutôt qu'elle ne pousse dans un sens." },
+      { p: "Ce troisième critère est le plus intéressant. Un stimulant pousse toujours dans la même direction, quel que soit votre état. Un adaptogène est décrit comme modulateur : le même actif est associé à un apaisement chez une personne tendue et à un soutien du tonus chez une personne épuisée." },
+      { p: "Il faut être clair sur un point : « adaptogène » est un terme issu de la pharmacologie, pas une catégorie réglementaire européenne. Aucune définition juridique ne l'encadre dans l'Union, ce qui explique qu'on le trouve sur des produits très inégaux." },
+
+      { h2: "Comment ils agissent, en l'état des connaissances" },
+      { p: "Le mécanisme le plus documenté concerne l'axe hypothalamo-hypophyso-surrénalien, celui qui pilote la réponse au stress et la sécrétion de cortisol. Plusieurs adaptogènes sont étudiés pour leur influence sur cet axe : les travaux référencés sur <a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=adaptogen+stress+response\" target=\"_blank\" rel=\"noopener noreferrer\">PubMed</a> portent surtout sur l'ashwagandha, la rhodiola et l'éleuthérocoque." },
+      { p: "S'y ajoutent, selon les espèces, des composés antioxydants et, pour les champignons, des bêta-glucanes — des polysaccharides de paroi qui font l'objet de recherches sur l'immunité. La qualité des preuves est très variable d'un actif à l'autre : solide sur certains, préliminaire sur d'autres. Un article honnête doit le dire." },
+      { p: "Dernier point : leur action est <strong>progressive</strong>. Rien ne se passe en trois jours. Les protocoles d'étude s'étalent généralement sur huit à douze semaines, ce qui explique la recommandation d'usage en cure d'au moins un mois." },
+
+      { h2: "Les plantes et champignons les plus étudiés" },
+      { h3: "Ashwagandha (Withania somnifera)" },
+      { p: "La plus documentée sur le stress et le cortisol. Racine utilisée en médecine ayurvédique, aujourd'hui standardisée en withanolides. Détails, formes et contre-indications dans notre fiche <a href=\"" + l("/blog/ashwagandha") + "\">ashwagandha</a>." },
+      { h3: "Rhodiola rosea" },
+      { p: "Étudiée sur la fatigue mentale et les périodes de charge soutenue. À prendre le matin, car elle peut gêner l'endormissement." },
+      { h3: "Panax ginseng" },
+      { p: "Le tonique le plus anciennement documenté, employé pour le tonus général. À éviter en association avec certains traitements sans avis médical." },
+      { h3: "Les champignons fonctionnels" },
+      { p: "Reishi, cordyceps, chaga et lion's mane forment la famille des champignons dits adaptogènes ou fonctionnels. Ils sont comparés en détail dans notre <a href=\"" + l("/blog/champignons-adaptogenes-guide-complet") + "\">guide des champignons adaptogènes</a> et, pour les trois principaux, dans <a href=\"" + l("/blog/reishi-cordyceps-chaga") + "\">Reishi, Cordyceps, Chaga</a>." },
+      { h3: "Safran, éleuthérocoque, schisandra" },
+      { p: "Moins connus du grand public, ils complètent la famille. Le safran est étudié sur l'humeur et présente l'avantage d'être actif à faible dose." },
+
+      { h2: "Ce que la réglementation permet d'en dire" },
+      { p: "C'est le point que la plupart des articles passent sous silence. Dans l'Union européenne, les allégations de santé sont encadrées par le règlement (CE) n° 1924/2006 : seules celles inscrites au <a href=\"https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/\" target=\"_blank\" rel=\"noopener noreferrer\">registre européen</a> peuvent être utilisées." },
+      { p: "Or les allégations portant sur les plantes — les « botaniques » — sont toujours <strong>en attente d'évaluation</strong> par l'EFSA. Elles sont tolérées dans leur formulation déposée, ce qui interdit de les reformuler librement et explique la prudence de langage des marques sérieuses : on lit « contribue à » ou « participe à », jamais « soigne » ni « traite »." },
+      { p: "Un complément alimentaire n'est pas un médicament. Il ne peut, par définition légale, revendiquer aucune propriété de prévention, de traitement ou de guérison d'une maladie. Une marque qui l'affirme est en infraction, et la <a href=\"https://www.economie.gouv.fr/dgccrf\" target=\"_blank\" rel=\"noopener noreferrer\">DGCCRF</a> contrôle ce champ." },
+
+      { h2: "Comment les utiliser concrètement" },
+      {
+        ul: [
+          "<strong>En cure</strong> d'un à trois mois, suivie d'une pause : c'est le schéma le plus courant.",
+          "<strong>Au bon moment</strong> : rhodiola et ginseng le matin, reishi et ashwagandha plutôt le soir.",
+          "<strong>Sur un extrait standardisé</strong> quand il existe : c'est ce qui garantit une teneur constante en actifs, contrairement à une poudre de plante brute.",
+          "<strong>Avec régularité</strong> plutôt qu'à forte dose : les études portent sur des prises quotidiennes, pas sur des pics.",
+        ],
+      },
+      { p: "Le format compte moins que l'observance : la meilleure forme est celle que vous prendrez tous les jours pendant un mois. C'est le sujet de notre comparatif <a href=\"" + l("/blog/gummies-vs-gelules") + "\">gummies ou gélules</a>." },
+
+      { h2: "Précautions et contre-indications" },
+      { p: "Non toxique ne signifie pas anodin. Les adaptogènes sont déconseillés aux femmes enceintes et allaitantes, et demandent un avis médical en cas de traitement en cours — en particulier thyroïdien, anticoagulant, antidiabétique, anxiolytique ou immunosuppresseur. L'ashwagandha est également déconseillée en cas de maladie auto-immune." },
+      { p: "Respectez la dose journalière indiquée, ne cumulez pas plusieurs produits contenant le même actif, et signalez toute prise à votre médecin ou pharmacien, au même titre qu'un médicament." },
+
+      { h2: "Par où commencer" },
+      { p: "Partez du besoin, pas de l'ingrédient. Sommeil et tension nerveuse orientent vers l'ashwagandha, le reishi et le safran ; concentration vers le lion's mane et la rhodiola ; énergie physique vers le cordyceps et le ginseng. Le <a href=\"" + l("/diagnostic") + "\">diagnostic BIEN</a> fait ce tri en une minute, et la page <a href=\"" + l("/ingredients") + "\">ingrédients</a> détaille chaque actif utilisé dans nos formules." },
     ],
     faq: [
-      { q: "Quelle est la différence entre un adaptogène et un stimulant ?", a: "Un stimulant force l'organisme (comme la caféine), avec un effet immédiat mais souvent suivi d'un contrecoup. Un adaptogène régule la réponse au stress, avec une action plus douce et durable." },
-      { q: "Quels sont les adaptogènes les plus connus ?", a: "L'ashwagandha, la rhodiola et le ginseng côté plantes ; le Lion's Mane, le reishi et le cordyceps côté champignons." },
-      { q: "Les adaptogènes ont-ils des effets secondaires ?", a: "Ils sont généralement bien tolérés. Par précaution, demandez conseil à un professionnel de santé en cas de grossesse, d'allaitement ou de traitement médical." },
+      { q: "Qu'est-ce qu'un adaptogène, simplement ?", a: "Une plante ou un champignon qui aide l'organisme à mieux résister aux contraintes — stress, fatigue, effort — en favorisant un retour à l'équilibre, sans effet stimulant direct comme la caféine." },
+      { q: "Quels sont les adaptogènes les plus connus ?", a: "L'ashwagandha, la rhodiola, le panax ginseng, l'éleuthérocoque et le safran côté plantes ; le reishi, le cordyceps, le chaga et le lion's mane côté champignons." },
+      { q: "Combien de temps faut-il pour ressentir les effets ?", a: "Comptez trois à quatre semaines de prise régulière. Les études cliniques s'étalent le plus souvent sur huit à douze semaines : rien ne se joue en quelques jours." },
+      { q: "Les adaptogènes sont-ils reconnus scientifiquement ?", a: "Le terme vient de la pharmacologie et plusieurs actifs font l'objet d'essais cliniques, avec une qualité de preuve variable selon les espèces. En revanche, « adaptogène » n'est pas une catégorie réglementaire européenne, et les allégations sur les plantes restent en attente d'évaluation par l'EFSA." },
+      { q: "Peut-on prendre plusieurs adaptogènes ensemble ?", a: "Oui, c'est même la logique des formules combinées, qui associent des actifs complémentaires. Évitez en revanche de cumuler plusieurs produits contenant le même actif, pour ne pas dépasser les doses." },
+      { q: "Y a-t-il des contre-indications ?", a: "Grossesse, allaitement, traitements thyroïdiens, anticoagulants, antidiabétiques, anxiolytiques ou immunosuppresseurs, et maladies auto-immunes pour l'ashwagandha. Demandez l'avis d'un professionnel de santé." },
     ],
     en: {
       title: "What is an adaptogen? Definition, plants and benefits",
       metaTitle: "What is an adaptogen? Definition",
-      metaDescription: "What is an adaptogen? Definition, how it works, main adaptogenic plants (ashwagandha, rhodiola, ginseng) and benefits for stress, energy and focus.",
-      excerpt: "Definition, how they work and the main plants: everything to understand about adaptogens, the natural actives that help the body adapt better to stress.",
+      metaDescription: "The definition of an adaptogen, its historical criteria, the plants and mushrooms involved, what EU regulation allows, and how to use them.",
+      excerpt: "Definition, criteria, plants involved: understanding adaptogens, the botanicals that help the body cope with demands.",
       category: "Ingredients & science",
-      intro: "They're everywhere in the wellness aisles, but <strong>what is an adaptogen</strong>, exactly? Behind the term are plants and mushrooms able to help the body resist stress better. Definition, mode of action and main adaptogenic plants: here's everything you need to know.",
+      intro: "An <strong>adaptogen</strong> is a natural substance — plant or mushroom — that helps the body cope with physical, mental or environmental demands, by favouring a return to balance rather than by stimulating. That nuance is what separates it from a stimulant, and it's what we'll unpack here: where the term comes from, which criteria a plant must meet, which ones qualify, and what regulation allows you to say about them.",
       blocks: [
-        { h2: "Definition of an adaptogen" },
-        { p: "An <strong>adaptogen</strong> is a natural substance that increases the body's ability to adapt to stress of all kinds (physical, mental or environmental) by promoting a return to balance. To earn the name, an active must be non-toxic, act non-specifically and help normalise the body's functions." },
-        { h2: "How do they work?" },
-        { p: "Unlike a stimulant that pushes the body, an adaptogen regulates it. It acts in particular on the stress axis and cortisol production, helping the body cope better with tension peaks and then recover. Hence a gentle, gradual and lasting action." },
-        { h2: "The main adaptogenic plants" },
-        { h3: "Ashwagandha" },
-        { p: "One of the most studied, renowned for its soothing action on stress and cortisol. You'll find it in our <a href=\"" + le("/products/calm") + "\">CALM</a> gummies." },
-        { h3: "Rhodiola Rosea" },
-        { p: "An anti-fatigue adaptogen, valued for supporting energy and mental clarity. Present in <a href=\"" + le("/products/focus") + "\">FOCUS</a> and <a href=\"" + le("/products/power") + "\">POWER</a>." },
-        { h3: "Ginseng" },
-        { p: "A traditional benchmark for vitality and stamina, at the heart of our POWER gummies." },
-        { h2: "And adaptogenic mushrooms?" },
-        { p: "Functional mushrooms (Lion's Mane, Reishi, Cordyceps, Chaga) are also part of the adaptogen family. To learn everything, read our <a href=\"" + le("/blog/champignons-adaptogenes-guide-complet") + "\">guide to adaptogenic mushrooms</a>. See the details of our actives on the <a href=\"" + le("/ingredients") + "\">Ingredients</a> page." },
+        { h2: "The definition, and where it comes from" },
+        { p: "The word was coined in 1947 by the Russian pharmacologist Nikolai Lazarev, then refined in 1968 by Israel Brekhman. Three criteria had to be met: being non-toxic at usual doses, increasing the body's non-specific resistance — that is, to demands of varied nature — and having a normalising action that returns towards balance rather than pushing in one direction." },
+        { p: "That third criterion is the interesting one. A stimulant always pushes the same way, whatever your state. An adaptogen is described as a modulator: the same active is associated with calming in a tense person and with supporting vitality in an exhausted one." },
+        { p: "One point must be clear: «\u00a0adaptogen\u00a0» is a pharmacology term, not an EU regulatory category. No legal definition frames it in the Union, which is why you find it on wildly uneven products." },
+
+        { h2: "How they work, as far as we know" },
+        { p: "The best-documented mechanism concerns the hypothalamic-pituitary-adrenal axis, which drives the stress response and cortisol secretion. Several adaptogens are studied for their influence on it: the work indexed on <a href=\"https://pubmed.ncbi.nlm.nih.gov/?term=adaptogen+stress+response\" target=\"_blank\" rel=\"noopener noreferrer\">PubMed</a> focuses mainly on ashwagandha, rhodiola and eleuthero." },
+        { p: "Depending on the species, antioxidant compounds are added and, for mushrooms, beta-glucans — cell-wall polysaccharides under research for immunity. The quality of evidence varies a great deal between actives: solid for some, preliminary for others. An honest article has to say so." },
+        { p: "One last point: their action is <strong>gradual</strong>. Nothing happens in three days. Study protocols generally run eight to twelve weeks, which is why a course of at least a month is recommended." },
+
+        { h2: "The most studied plants and mushrooms" },
+        { h3: "Ashwagandha (Withania somnifera)" },
+        { p: "The best documented on stress and cortisol. A root used in Ayurvedic medicine, now standardised in withanolides. Forms and contraindications in our page on <a href=\"" + le("/blog/ashwagandha") + "\">ashwagandha</a>." },
+        { h3: "Rhodiola rosea" },
+        { p: "Studied for mental fatigue and demanding periods. Take it in the morning, as it can interfere with falling asleep." },
+        { h3: "Panax ginseng" },
+        { p: "The longest-documented tonic, used for general vitality. Avoid combining it with certain treatments without medical advice." },
+        { h3: "Functional mushrooms" },
+        { p: "Reishi, cordyceps, chaga and lion's mane form the family of so-called adaptogenic or functional mushrooms. They're compared in detail in our <a href=\"" + le("/blog/champignons-adaptogenes-guide-complet") + "\">guide to adaptogenic mushrooms</a> and, for the main three, in <a href=\"" + le("/blog/reishi-cordyceps-chaga") + "\">Reishi, Cordyceps and Chaga</a>." },
+        { h3: "Saffron, eleuthero, schisandra" },
+        { p: "Less known to the public, they complete the family. Saffron is studied for mood and has the advantage of being active at low doses." },
+
+        { h2: "What regulation allows you to say" },
+        { p: "This is the part most articles skip. In the European Union, health claims are governed by regulation (EC) No 1924/2006: only those listed in the <a href=\"https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/\" target=\"_blank\" rel=\"noopener noreferrer\">EU register</a> may be used." },
+        { p: "Claims relating to plants — «\u00a0botanicals\u00a0» — are still <strong>pending evaluation</strong> by EFSA. They are tolerated in their filed wording, which forbids rephrasing them freely and explains the careful language of serious brands: you read «\u00a0contributes to\u00a0» or «\u00a0supports\u00a0», never «\u00a0cures\u00a0» or «\u00a0treats\u00a0»." },
+        { p: "A food supplement is not a medicine. By legal definition it cannot claim any property of preventing, treating or curing a disease. A brand that says otherwise is in breach, and France's <a href=\"https://www.economie.gouv.fr/dgccrf\" target=\"_blank\" rel=\"noopener noreferrer\">DGCCRF</a> enforces this field." },
+
+        { h2: "How to use them, concretely" },
+        {
+          ul: [
+            "<strong>In courses</strong> of one to three months, followed by a break: that's the usual pattern.",
+            "<strong>At the right time</strong>: rhodiola and ginseng in the morning, reishi and ashwagandha rather in the evening.",
+            "<strong>On a standardised extract</strong> where one exists: it guarantees a constant active content, unlike raw plant powder.",
+            "<strong>With regularity</strong> rather than at high doses: studies are built on daily intake, not on peaks.",
+          ],
+        },
+        { p: "Format matters less than adherence: the best form is the one you'll actually take every day for a month. That's the subject of our comparison, <a href=\"" + le("/blog/gummies-vs-gelules") + "\">gummies or capsules</a>." },
+
+        { h2: "Precautions and contraindications" },
+        { p: "Non-toxic doesn't mean harmless. Adaptogens are not advised during pregnancy or breastfeeding, and require medical advice alongside ongoing treatment — particularly thyroid, anticoagulant, antidiabetic, anxiolytic or immunosuppressant. Ashwagandha is also not advised in autoimmune conditions." },
+        { p: "Respect the stated daily dose, don't stack several products containing the same active, and mention what you take to your doctor or pharmacist, exactly as you would a medicine." },
+
+        { h2: "Where to start" },
+        { p: "Start from the need, not the ingredient. Sleep and nervous tension point to ashwagandha, reishi and saffron; focus to lion's mane and rhodiola; physical energy to cordyceps and ginseng. The <a href=\"" + le("/diagnostic") + "\">BIEN quiz</a> sorts this in a minute, and the <a href=\"" + le("/ingredients") + "\">ingredients</a> page details every active used in our formulas." },
       ],
       faq: [
-        { q: "What's the difference between an adaptogen and a stimulant?", a: "A stimulant forces the body (like caffeine), with an immediate effect but often followed by a rebound. An adaptogen regulates the stress response, with a gentler, longer-lasting action." },
-        { q: "What are the best-known adaptogens?", a: "Ashwagandha, rhodiola and ginseng among plants; Lion's Mane, reishi and cordyceps among mushrooms." },
-        { q: "Do adaptogens have side effects?", a: "They're generally well tolerated. As a precaution, seek advice from a healthcare professional if pregnant, breastfeeding or on medical treatment." },
+        { q: "What is an adaptogen, simply put?", a: "A plant or mushroom that helps the body resist demands — stress, fatigue, effort — by favouring a return to balance, without the direct stimulant effect of caffeine." },
+        { q: "Which adaptogens are best known?", a: "Ashwagandha, rhodiola, panax ginseng, eleuthero and saffron among plants; reishi, cordyceps, chaga and lion's mane among mushrooms." },
+        { q: "How long before you feel the effects?", a: "Allow three to four weeks of regular use. Clinical studies usually run eight to twelve weeks: nothing is decided in a few days." },
+        { q: "Are adaptogens scientifically recognised?", a: "The term comes from pharmacology and several actives are the subject of clinical trials, with evidence quality varying by species. However, «\u00a0adaptogen\u00a0» is not an EU regulatory category, and claims on plants remain pending EFSA evaluation." },
+        { q: "Can you take several adaptogens together?", a: "Yes — that's the logic of combined formulas, which pair complementary actives. Avoid stacking several products containing the same active, so as not to exceed doses." },
+        { q: "Are there contraindications?", a: "Pregnancy, breastfeeding, thyroid, anticoagulant, antidiabetic, anxiolytic or immunosuppressant treatments, and autoimmune conditions for ashwagandha. Seek advice from a healthcare professional." },
       ],
     },
   },
