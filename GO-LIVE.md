@@ -1,7 +1,7 @@
 # Checklist de mise en ligne — bien.health
 
 Tout ce qui doit être vérifié, configuré ou décidé **avant** la bascule du site
-headless sur `bien.health`. Dernière mise à jour : 28 août 2026.
+headless sur `bien.health`. Dernière mise à jour : 31 août 2026.
 
 Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision client ·
 `[x]` fait et vérifié.
@@ -1502,3 +1502,50 @@ la fonction gardait le nom Shopify — lequel est en français. Elle remplace d�
 le descriptif du nom par celui de la langue demandée, ce qui traduit le titre et le
 raccourcit : « MUSHGLOW — Beauty & collagen supermix » en anglais, « MUSHGLOW —
 Supermix beauté & collagène » en français, 51 caractères.
+
+---
+
+## 17. Mise à jour Next.js 16.2.9 → 16.3.3 (31/08/2026)
+
+Faite sur la branche `chore/next-16.3.3` après accord explicite du client.
+`npm audit` passe de **9 vulnérabilités « high » à zéro**.
+
+L'audit était plus large que le seul `sharp` retenu au départ : neuf avis
+concernaient **Next lui-même** — contournement du proxy/middleware en App Router
+avec une locale unique, déni de service sur les Server Actions, SSRF dans les
+rewrites via un hôte de destination contrôlé par l'attaquant, confusion de cache
+sur les réponses à requêtes avec corps, déni de service de l'API d'optimisation
+d'images via des SVG, divulgation des points d'entrée internes des Server
+Functions. S'y ajoutaient `postcss` (lecture de fichier arbitraire via
+`sourceMappingURL`), `sharp` 0.35.0 (CVE libvips) et, côté outillage seulement,
+`brace-expansion`, `js-yaml` et `nanoid`.
+
+Versions **épinglées** comme le faisait déjà le projet (`npm install` avait écrit
+`^16.3.3`) : `next` et `eslint-config-next` en `16.3.3`, `sharp` en `0.35.4`.
+
+### Recette
+
+- **Build** : succès, TypeScript sans erreur, 115 pages générées. Les seules
+  erreurs du log restent les `ACCESS_DENIED` Shopify sur `quantityAvailable`,
+  déjà connues (scope manquant, section 1).
+- **Images** — le composant qui bouge, donc vérifié en premier sur le serveur de
+  production local : AVIF servi en 640/1200/2048 px, WebP quand le navigateur ne
+  prend pas l'AVIF, repli JPEG sans en-tête `Accept`, et les images distantes
+  `cdn.shopify.com` passent aussi. Les garde-fous répondent toujours `400` sur
+  une largeur hors `deviceSizes` et sur un hôte non listé dans `remotePatterns`.
+- **Pages** : les 4 fiches produit, la boutique FR/EN, le blog et sa page 2, la
+  presse, le panier, le sitemap et `robots.txt` répondent `200`.
+- **Proxy (middleware)** : `/` → `/fr`, `/boutique` → `/fr/boutique`, et la 301
+  de l'ancienne URL Shopify `/collections/accessories` → `/fr/boutique` sont
+  intactes — c'est la zone visée par l'avis « Middleware / Proxy bypass ».
+- **Checkout** : `SHOPIFY_STORE` est toujours inliné depuis
+  `NEXT_PUBLIC_SHOPIFY_DOMAIN` dans le bundle client. Le passage en caisse réel
+  reste à refaire dans un navigateur sur le déploiement de test.
+
+### Point d'attention
+
+`npm run lint` remonte 24 problèmes (apostrophes non échappées, `<a>` au lieu de
+`<Link>`, `setState` dans un effet). **Ce n'est pas une régression** : vérifié en
+réinstallant `eslint-config-next@16.2.9`, le compte est identique avant et après.
+Dette préexistante, sans effet sur le build — Next 16 ne lance plus ESLint au
+build.
