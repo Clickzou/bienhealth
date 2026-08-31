@@ -10,7 +10,7 @@ Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision cl
 
 ## 1. Bloquants — le site ne doit pas être mis en ligne sans ça
 
-### [ ] Domaine du checkout Shopify (risque de tunnel de vente cassé)
+### [x] Domaine du checkout Shopify — vérifié le 31/08/2026
 
 `src/lib/cart.ts` construit l'URL de paiement à partir de
 `NEXT_PUBLIC_SHOPIFY_DOMAIN`. **Si cette variable est absente**, le code retombe
@@ -22,7 +22,7 @@ clients sur une page inexistante du site headless au lieu du checkout.
 (Production **et** Preview) et tester un passage en caisse de bout en bout.
 Cette variable manque aussi dans `.env.local.example`.
 
-### [ ] Passage du site en indexable
+### [x] Passage du site en indexable — fait le 28/08, revérifié le 31/08/2026
 
 Le site est volontairement en `noindex` tant qu'il tourne sur `*.vercel.app`
 (protection contre le contenu dupliqué). Après branchement du domaine :
@@ -33,13 +33,13 @@ Le site est volontairement en `noindex` tant qu'il tourne sur `*.vercel.app`
 - vérifier le `<meta name="robots">` d'une page → doit être `index, follow` ;
 - vérifier `https://bien.health/sitemap.xml`.
 
-### [ ] Scope Shopify manquant : `unauthenticated_read_product_inventory`
+### [x] Scope Shopify `unauthenticated_read_product_inventory` — accordé le 31/08/2026
 
 Le build affiche des erreurs `ACCESS_DENIED` sur `quantityAvailable`. Conséquence :
 les badges de stock (« Bientôt épuisé — plus que N en stock », pré-commande)
 ne fonctionnent pas. → Ajouter le scope à l'app Storefront dans l'admin Shopify.
 
-### [ ] Pixel Meta — ID à vérifier dans Events Manager
+### [x] Pixel Meta — ID confirmé et corrigé le 31/08/2026
 
 ID fourni par le client le 29/08/2026 : **`1675426639926228`**, inscrit en repli
 dans `src/lib/meta-pixel.ts` (`META_PIXEL_FALLBACK`) et actif automatiquement en
@@ -56,7 +56,7 @@ un appel `fbevents.js` doit partir, et l'activité doit apparaître dans Events
 Manager (« Test des évènements »). Si l'ID est celui du compte publicitaire, le
 script se charge mais **aucun évènement n'est reçu** — c'est le seul symptôme.
 
-### [ ] Événement `Purchase` côté Shopify
+### [x] Événement `Purchase` côté Shopify — déjà en place, constaté le 31/08/2026
 
 Le tunnel de paiement est sur Shopify : le site ne peut pas mesurer les ventes.
 Sans configuration côté Shopify (canal Facebook & Instagram dans l'admin), Meta
@@ -1613,3 +1613,31 @@ que la moitié « parcours » du signal, celle que cette correction rétablit.
 - **1 produit rejeté** sur 10 dans le catalogue Facebook (vu dans l'app,
   « Product Status : Approved 9 / Rejected 1 ») — à identifier, un produit refusé
   ne peut être ni vendu ni promu sur Facebook et Instagram.
+
+---
+
+## 19. Badges de stock débloqués (31/08/2026)
+
+Le scope `unauthenticated_read_product_inventory` a été coché par le client dans
+Shopify → Sales channels → **Headless** → *Bien Health Site Next.js* → **Storefront
+API** → Manage. Le jeton n'a pas changé, aucune variable Vercel à toucher.
+
+Build de contrôle : **zéro `ACCESS_DENIED`**, contre une erreur par produit
+auparavant. Les quantités remontent (relevé du jour) : MUSHGLOW 247, FOCUS 156,
+POWER et BOOST 153, CALM / FLOW / BALANCE / RESET 133, LE MOUSSEUR 384,
+LE TOTE BAG 56.
+
+⚠️ **Aucun badge ne s'affichera pour autant** : `LOW_STOCK_THRESHOLD` vaut 10
+(`src/app/[lang]/products/[handle]/page.tsx`, et 10 en dur dans
+`components/product-card.tsx`). Sur des stocks de 56 à 384, le seuil ne sera
+jamais atteint. Le mécanisme est réparé mais dormant — il s'activera de lui-même
+quand une référence descendra. Question ouverte pour le client : relever le seuil
+n'aurait de sens que s'il reste crédible ; « plus que 50 en stock » ne crée aucune
+urgence et sonne faux. À laisser à 10, sauf demande contraire.
+
+### Section 1 soldée
+
+Les cinq bloquants de la section 1 sont désormais tous cochés : domaine du
+checkout (test client en caisse réelle), indexabilité (`robots.txt` autorise le
+crawl, `<meta name="robots">` sur `index, follow`), scope inventaire, ID du pixel
+et événement `Purchase`.
