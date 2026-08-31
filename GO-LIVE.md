@@ -85,10 +85,8 @@ faussée. Demande un accès à l'admin Shopify.
       (`isCustomerAuthConfigured`). Vérifier connexion, inscription, commandes.
 - [ ] **Newsletter + formulaire revendeur** : dépendent de Supabase. Tester un
       envoi réel et vérifier la réception côté base.
-- [ ] **Redirections des anciennes URLs Shopify** : seule
-      `/collections/accessories` → `/boutique` est traitée. Auditer les URLs
-      indexées de l'ancien site (Search Console / export Shopify) et ajouter les
-      301 manquantes dans `next.config.ts`.
+- [x] **Redirections des anciennes URLs Shopify** — table complète livrée le
+      31/08/2026, vérifiée en production (voir section 21).
 - [ ] **Search Console** : soumettre le sitemap après bascule, vérifier la
       couverture et les rich results (Product, Review, FAQ, Breadcrumb).
 - [ ] **Bannière cookies** : vérifier que refuser bloque bien GA **et** le pixel
@@ -1725,5 +1723,9 @@ régression sur les pages existantes.
 
 Scan du 29/08 : 95 pages, **0 erreur réelle**. Les « 4 pages bloquées par
 robots.txt » sont voulues (panier, compte, tableau de bord SEO). Restent
-**2 images sans attribut `alt`** — à corriger, c'est de l'accessibilité et un
-signal SEO mineur.
+**2 images sans attribut `alt`** — **non retrouvées** : aucune balise `<img>`
+dépourvue d'`alt` sur les treize pages FR et EN inspectées après coup. Les 33
+`alt=""` de la page d'accueil sont des images décoratives, et un `alt` vide est
+la bonne pratique d'accessibilité, pas un défaut. Soit le scan (29/08) précède
+les corrections du 30, soit Bing les signale à tort. À trancher en relançant un
+Site Scan ; sans objet en attendant.
