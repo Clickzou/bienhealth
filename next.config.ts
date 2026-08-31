@@ -103,12 +103,80 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  /**
+   * Redirections des URL de l'ancienne boutique Shopify.
+   *
+   * Inventaire fait le 31/08/2026 en interrogeant l'API Storefront (collections,
+   * pages, blogs) puis en testant chaque URL en production. Les collections dont
+   * le handle a été repris à l'identique répondaient déjà — seules celles qui ont
+   * disparu, **toutes** les pages `/pages/*`, les blogs et les URL de compte
+   * tombaient en 404. Ce sont précisément les adresses que Google et Bing ont en
+   * mémoire : un 404 y perd le visiteur et l'autorité accumulée.
+   *
+   * Toutes en 301 (`permanent`) : le contenu a bougé pour de bon, c'est ce qui
+   * transfère le classement à la nouvelle adresse.
+   *
+   * Les destinations visent `/fr/…` sans passer par le proxy de langue : ces URL
+   * venaient d'une boutique française, et un seul saut vaut mieux qu'une chaîne.
+   */
   async redirects() {
+    const page = (from: string, to: string) => [
+      { source: `/pages/${from}`, destination: `/fr/${to}`, permanent: true },
+      { source: `/:lang(fr|en)/pages/${from}`, destination: `/:lang/${to}`, permanent: true },
+    ];
+    const collection = (from: string, to: string) => [
+      { source: `/collections/${from}`, destination: `/fr/${to}`, permanent: true },
+      { source: `/:lang(fr|en)/collections/${from}`, destination: `/:lang/${to}`, permanent: true },
+    ];
+
     return [
-      // Ancien slug hérité du template Shopify : « accessories » désignait en
-      // réalité toute la gamme. Une seule URL boutique désormais : /[lang]/boutique.
-      { source: "/:lang(fr|en)/collections/accessories", destination: "/:lang/boutique", permanent: true },
-      { source: "/collections/accessories", destination: "/fr/boutique", permanent: true },
+      // --- Pages Shopify : les neuf existantes, aucune ne répondait ---------
+      ...page("contact", "contact"),
+      ...page("faq-1", "faq"),
+      ...page("ingredients", "ingredients"),
+      ...page("diagnostic", "diagnostic"),
+      ...page("presse", "presse"),
+      ...page("nos-revendeurs", "revendeurs"),
+      // « Trouver un magasin » : c'est la carte des points de vente, portée par
+      // la page revendeurs.
+      ...page("trouver-un-magasin", "revendeurs"),
+      // « BEHIND BIEN » racontait la marque : c'est devenu la page Histoire.
+      ...page("behind-bien", "histoire"),
+      ...page("medical-terms-and-conditions", "cgv"),
+
+      // --- Collections disparues -------------------------------------------
+      // « accessories » désignait en réalité toute la gamme dans le template.
+      ...collection("accessories", "boutique"),
+      ...collection("all", "boutique"),
+      ...collection("nos-produits", "boutique"),
+      ...collection("packs", "boutique"),
+      ...collection("easygift-all-products", "boutique"),
+      // « energie » a été renommée en cours de route.
+      ...collection("energie", "collections/performance-et-vitalite"),
+      // La collection « frontpage » ne contenait que MUSHGLOW : la fiche produit
+      // est l'équivalent le plus proche, pas la boutique entière.
+      ...collection("frontpage", "products/mushglow"),
+
+      // --- Blogs Shopify ----------------------------------------------------
+      // Sept blogs existaient (news, learn, lions-mane, microdosing…), tous vides
+      // côté API : impossible de faire correspondre les articles un à un. L'index
+      // du blog est la destination la plus pertinente qui reste.
+      { source: "/blogs/:blog", destination: "/fr/blog", permanent: true },
+      { source: "/blogs/:blog/:article", destination: "/fr/blog", permanent: true },
+      { source: "/:lang(fr|en)/blogs/:blog", destination: "/:lang/blog", permanent: true },
+      { source: "/:lang(fr|en)/blogs/:blog/:article", destination: "/:lang/blog", permanent: true },
+
+      // --- Espace client ----------------------------------------------------
+      { source: "/account", destination: "/fr/compte", permanent: true },
+      { source: "/account/:path*", destination: "/fr/compte", permanent: true },
+
+      // --- Pages de politique générées par Shopify --------------------------
+      { source: "/policies/refund-policy", destination: "/fr/retours", permanent: true },
+      { source: "/policies/privacy-policy", destination: "/fr/confidentialite", permanent: true },
+      { source: "/policies/terms-of-service", destination: "/fr/cgv", permanent: true },
+      { source: "/policies/legal-notice", destination: "/fr/mentions-legales", permanent: true },
+      { source: "/policies/shipping-policy", destination: "/fr/livraison", permanent: true },
+      { source: "/policies/:path*", destination: "/fr/mentions-legales", permanent: true },
     ];
   },
 };

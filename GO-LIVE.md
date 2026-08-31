@@ -1683,3 +1683,47 @@ correctement (`/products/focus` → `/fr/products/focus`).
 
 Les deux sitemaps morts ont été supprimés par le client le 31/08/2026 : Bing ne
 connaît plus que `bien.health/sitemap.xml`, resoumis le même jour.
+
+---
+
+## 21. Redirections des anciennes URL Shopify (31/08/2026)
+
+Point ouvert de la section 2 depuis le 31/07, enfin traité — et il était plus
+large que « seule `/collections/accessories` est faite ».
+
+**Méthode** : l'export de Bing (Site Explorer) ne rend que le niveau racine,
+inutilisable. L'inventaire a donc été fait en interrogeant l'**API Storefront**
+(`collections`, `pages`, `blogs`), puis en testant chaque URL en production.
+
+**Constat** : les collections dont le handle a été repris à l'identique
+répondaient déjà (`serenite`, `concentration`, `gummies`, `nos-poudres`,
+`nos-accessoires`, `performance-et-vitalite`, `beaute-et-bien-etre`), tout comme
+les fiches produit et `/cart`. En revanche tombaient en **404** :
+
+- **les neuf pages `/pages/*`** — contact, presse, ingrédients, FAQ, diagnostic,
+  revendeurs, trouver-un-magasin, behind-bien, medical-terms-and-conditions ;
+- **six collections** disparues — `all`, `nos-produits`, `packs`,
+  `easygift-all-products`, `energie` (renommée), `frontpage` ;
+- **les sept blogs** `/blogs/*` et leurs articles ;
+- `/account*` et `/policies/*`.
+
+Ce sont exactement les adresses que Google et Bing ont en mémoire : chacune
+perdait le visiteur **et** l'autorité accumulée.
+
+**Correctif** : `next.config.ts` porte désormais la table complète, en 301
+(`permanent`), avec deux variantes par entrée (avec et sans préfixe de langue).
+Choix de destination notables : `frontpage` ne contenait que MUSHGLOW → sa fiche
+produit plutôt que la boutique ; `trouver-un-magasin` → la page revendeurs, qui
+porte la carte ; `behind-bien` → la page Histoire. Les blogs Shopify étant vides
+côté API, aucun article ne pouvait être apparié un à un : ils pointent tous vers
+l'index du blog.
+
+**Recette locale** : les 28 URL testées redirigent et aboutissent en 200, sans
+régression sur les pages existantes.
+
+### Reste du Site Scan de Bing
+
+Scan du 29/08 : 95 pages, **0 erreur réelle**. Les « 4 pages bloquées par
+robots.txt » sont voulues (panier, compte, tableau de bord SEO). Restent
+**2 images sans attribut `alt`** — à corriger, c'est de l'accessibilité et un
+signal SEO mineur.
