@@ -18,7 +18,14 @@ declare global {
   }
 }
 
-const META_PIXEL_FALLBACK = "1675426639926228";
+// Dataset Meta « Bien.Health NEW » (propriété du Business Manager Bien.ai),
+// relevé le 31/08/2026 dans Shopify → canal Facebook & Instagram → Settings.
+// C'est le même dataset que celui alimenté par la Conversions API de Shopify
+// depuis le checkout : le site et Shopify doivent écrire au même endroit, sinon
+// Meta ne peut pas relier une visite produit à la vente qui en découle.
+// L'ancienne valeur (1675426639926228) était un identifiant de compte
+// publicitaire, pas un pixel — les évènements du site partaient dans le vide.
+const META_PIXEL_FALLBACK = "848968707348964";
 
 export const META_PIXEL_ID =
   process.env.NEXT_PUBLIC_META_PIXEL_ID || (process.env.NODE_ENV === "production" ? META_PIXEL_FALLBACK : "");

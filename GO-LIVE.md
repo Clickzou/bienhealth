@@ -1574,3 +1574,42 @@ côté Shopify. La vérification va donc plus loin que le simple passage en cais
 la **remise de quantité calculée par le front** (`src/lib/discounts.ts`) est bien
 reprise par Shopify, prix et total identiques des deux côtés. Le tunnel d'achat
 est validé sur la version 16.3.3.
+
+---
+
+## 18. Pixel Meta — le bon dataset enfin identifié (31/08/2026)
+
+Relevé dans Shopify → **Sales channels** → Facebook & Instagram → **Open app** →
+**Settings**, section « Behavior will be tracked with this dataset » :
+
+> **Bien.Health NEW** — Bien.ai Official BM owns this — **ID : 848968707348964**
+
+L'ID fourni par le client le 29/08 (`1675426639926228`) était donc bien, comme le
+soupçonnait la section 1, un **identifiant de compte publicitaire** et non un
+pixel. Le site l'utilisait en repli depuis : ses `PageView`, `ViewContent`,
+`AddToCart` et `InitiateCheckout` partaient à une adresse qui n'était pas celle
+alimentée par Shopify. Meta recevait donc les ventes sans jamais le parcours qui
+y menait — impossible de reconnaître le profil d'un bon client.
+
+`META_PIXEL_FALLBACK` corrigé en `848968707348964`. **Aucun risque de double
+comptage** : `MetaEvent` n'inclut pas `Purchase`, le site ne mesure jamais les
+ventes ; c'est la Conversions API de Shopify qui s'en charge.
+
+### L'événement `Purchase` était déjà en place
+
+Le premier bloquant de la section 1 tombe également. La même page affiche le
+partage de données sur **« Maximum »** — « Customer activity data is shared using
+the Meta Pixel, advanced matching **and Conversions API** » — et la liste des
+pixels de **Customer events** montre le canal Facebook & Instagram avec les deux
+voyants **Server** et **Web** au vert, `Data: Optimized`. L'accès a été accordé le
+3 juin 2026. Les ventes du checkout remontent donc déjà à Meta ; il ne manquait
+que la moitié « parcours » du signal, celle que cette correction rétablit.
+
+### À vérifier ensuite
+
+- Dans Meta Events Manager, dataset `848968707348964` → « Test des évènements » :
+  les `ViewContent` et `AddToCart` doivent maintenant arriver depuis bien.health,
+  aux côtés des `Purchase` déjà envoyés par Shopify.
+- **1 produit rejeté** sur 10 dans le catalogue Facebook (vu dans l'app,
+  « Product Status : Approved 9 / Rejected 1 ») — à identifier, un produit refusé
+  ne peut être ni vendu ni promu sur Facebook et Instagram.
