@@ -10,7 +10,7 @@ Convention : `[ ]` à faire · `[~]` en attente d'une info ou d'une décision cl
 
 ## 1. Bloquants — le site ne doit pas être mis en ligne sans ça
 
-### [x] Domaine du checkout Shopify — vérifié le 31/08/2026
+### [x] Domaine du checkout Shopify — vérifié le 31/08/2026, domaine réel confirmé le 31/08/2026
 
 `src/lib/cart.ts` construit l'URL de paiement à partir de
 `NEXT_PUBLIC_SHOPIFY_DOMAIN`. **Si cette variable est absente**, le code retombe
@@ -18,9 +18,15 @@ sur `NEXT_PUBLIC_SITE_URL` (= `https://bien.health`) — or ce domaine sera occu
 par le nouveau front. Le bouton « Passer au paiement » enverrait alors les
 clients sur une page inexistante du site headless au lieu du checkout.
 
-→ Définir `NEXT_PUBLIC_SHOPIFY_DOMAIN=b3a79e-89.myshopify.com` dans Vercel
-(Production **et** Preview) et tester un passage en caisse de bout en bout.
-Cette variable manque aussi dans `.env.local.example`.
+→ Définir `NEXT_PUBLIC_SHOPIFY_DOMAIN` dans Vercel (Production **et** Preview)
+et tester un passage en caisse de bout en bout.
+
+**Valeur réellement déployée : `shop.bien.health`** (et non `b3a79e-89.myshopify.com`
+comme indiqué initialement ici). Vérifié dans le bundle de production : le bouton
+« Passer au paiement » construit ses URL sur `https://shop.bien.health/cart/…`.
+C'est le meilleur choix — un domaine de marque au checkout rassure davantage que
+`*.myshopify.com`. `.env.local.example` cite encore le domaine myshopify : sans
+conséquence en local, mais à garder en tête.
 
 ### [x] Passage du site en indexable — fait le 28/08, revérifié le 31/08/2026
 
@@ -1729,3 +1735,40 @@ dépourvue d'`alt` sur les treize pages FR et EN inspectées après coup. Les 33
 la bonne pratique d'accessibilité, pas un défaut. Soit le scan (29/08) précède
 les corrections du 30, soit Bing les signale à tort. À trancher en relançant un
 Site Scan ; sans objet en attendant.
+
+---
+
+## 22. Domaines Shopify — nettoyage des restes de l'ancienne boutique (31/08/2026)
+
+L'admin Shopify affichait une alerte **« DNS non valides »** sur
+`www.bien.health`, avec une invitation à remettre ses propres enregistrements
+(`CNAME www → shops.myshopify.com`, `A @ → 23.227.38.x`).
+
+**Ce n'était pas une panne, mais un reste de la bascule du 28/08.** Shopify tenait
+toujours `bien.health` et `www.bien.health` dans ses domaines connectés alors que
+ces deux domaines pointent désormais chez Vercel. De son point de vue les DNS
+étaient « cassés » ; du nôtre ils étaient exactement où ils devaient être.
+
+⚠️ **Piège à ne jamais retomber dedans** : suivre l'invitation de Shopify (bouton
+« J'ai mis à jour les enregistrements DNS » et valeurs proposées) aurait renvoyé
+`bien.health` sur l'ancienne boutique et mis le site headless hors ligne.
+
+DNS constatés avant intervention, tous corrects :
+
+| Domaine | Cible réelle | Réponse |
+| --- | --- | --- |
+| `bien.health` (A `@`) | `216.150.1.1` → Vercel | 307 → `/fr` |
+| `www.bien.health` (CNAME) | `da2595a418c4….vercel-dns-016.com` | 301 → `bien.health` |
+| `shop.bien.health` (CNAME) | `shops.myshopify.com` | 200 |
+
+**Correctif appliqué** : suppression de `bien.health` et `www.bien.health` de
+*Paramètres › Domaines* dans l'admin Shopify. Restent `shop.bien.health`
+(**Primary**, le checkout) et `b3a79e-89.myshopify.com` (domaine technique de la
+boutique, non supprimable). Alerte disparue.
+
+**Revérifié après suppression** : site et paiement intacts — `bien.health` 307 →
+`/fr` en 200, `www` 301, `shop.bien.health` et `shop.bien.health/cart` en 200.
+
+Au passage, la section 1 affirmait que `NEXT_PUBLIC_SHOPIFY_DOMAIN` valait
+`b3a79e-89.myshopify.com`. Le bundle de production dit `shop.bien.health` : la
+section a été corrigée.
