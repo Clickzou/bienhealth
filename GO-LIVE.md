@@ -1657,8 +1657,8 @@ Trois entrées connues de Bing, dont deux mortes :
 | Sitemap | État réel (vérifié) | Décision |
 | --- | --- | --- |
 | `bien.health/sitemap.xml` | vivant, **56 URL** ; Bing en avait vu **51** au crawl du 29/08 | resoumis |
-| `bien.health/sitemap_index.xml` | **404** — ancien sitemap Shopify de 2024 | à supprimer |
-| `www.bien.health/sitemap.xml` | 301 vers le précédent, doublon | à supprimer |
+| `bien.health/sitemap_index.xml` | **404** — ancien sitemap Shopify de 2024 | supprimé |
+| `www.bien.health/sitemap.xml` | 301 vers le précédent, doublon | supprimé |
 
 Les cinq URL manquantes sont celles ajoutées le 30/08 en fin de chantier blog :
 Bing n'était simplement pas repassé depuis.
@@ -1680,3 +1680,6 @@ réponses de ChatGPT et Copilot.
 
 Vérifié au passage : les anciennes URL Shopify sans préfixe de langue redirigent
 correctement (`/products/focus` → `/fr/products/focus`).
+
+Les deux sitemaps morts ont été supprimés par le client le 31/08/2026 : Bing ne
+connaît plus que `bien.health/sitemap.xml`, resoumis le même jour.
