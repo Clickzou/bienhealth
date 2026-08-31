@@ -1641,3 +1641,42 @@ Les cinq bloquants de la section 1 sont désormais tous cochés : domaine du
 checkout (test client en caisse réelle), indexabilité (`robots.txt` autorise le
 crawl, `<meta name="robots">` sur `index, follow`), scope inventaire, ID du pixel
 et événement `Purchase`.
+
+---
+
+## 20. Bing — le compte existait déjà, c'est l'alimentation qui manquait (31/08/2026)
+
+Bing Webmaster Tools était **déjà configuré** sur `bien.health`, avec de
+l'historique (24 clics, 156 impressions). Le chantier n'était donc pas
+« inscrire le site » mais « le réalimenter après la bascule ».
+
+### Sitemaps
+
+Trois entrées connues de Bing, dont deux mortes :
+
+| Sitemap | État réel (vérifié) | Décision |
+| --- | --- | --- |
+| `bien.health/sitemap.xml` | vivant, **56 URL** ; Bing en avait vu **51** au crawl du 29/08 | resoumis |
+| `bien.health/sitemap_index.xml` | **404** — ancien sitemap Shopify de 2024 | à supprimer |
+| `www.bien.health/sitemap.xml` | 301 vers le précédent, doublon | à supprimer |
+
+Les cinq URL manquantes sont celles ajoutées le 30/08 en fin de chantier blog :
+Bing n'était simplement pas repassé depuis.
+
+### IndexNow — le vrai trou
+
+Le service était actif, mais toutes les soumissions portaient `Source: Shopify`
+et l'**ancien format d'URL** (`/products/focus`, sans préfixe de langue), la plus
+récente datant de février 2026. Autrement dit : c'est l'ancienne boutique qui
+alimentait IndexNow, et depuis la bascule du 28/08 **plus rien n'était soumis**
+(0 URL sur les 13 dernières heures).
+
+`npm run indexnow` exécuté : **HTTP 200 pour 56 URL**. La clé
+(`e5ab3fc25ec9f37c2716696a4efe4cb1.txt`) est bien servie par le site.
+
+À relancer après chaque publication d'article — c'est ce qui fait passer le délai
+de découverte de plusieurs semaines à quelques heures, et Bing alimente les
+réponses de ChatGPT et Copilot.
+
+Vérifié au passage : les anciennes URL Shopify sans préfixe de langue redirigent
+correctement (`/products/focus` → `/fr/products/focus`).
