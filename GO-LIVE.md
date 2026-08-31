@@ -1567,3 +1567,10 @@ aboutit sur `shop.bien.health` (domaine principal de la boutique Shopify, vers
 lequel `b3a79e-89.myshopify.com` redirige), avec le bon produit, le bon prix et
 PayPal proposé. Test fait sur la version précédente du site, quelques minutes
 avant la bascule ; le code du panier n'a pas changé entre les deux.
+
+**Recette du tunnel refaite après la bascule** (capture client) : trois MUSHGLOW,
+147,00 € barrés → **132,30 €**, remise « MUSHGLOW 3 MOIS (−14,70 €) » affichée
+côté Shopify. La vérification va donc plus loin que le simple passage en caisse :
+la **remise de quantité calculée par le front** (`src/lib/discounts.ts`) est bien
+reprise par Shopify, prix et total identiques des deux côtés. Le tunnel d'achat
+est validé sur la version 16.3.3.
