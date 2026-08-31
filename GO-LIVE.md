@@ -1549,3 +1549,21 @@ Versions **épinglées** comme le faisait déjà le projet (`npm install` avait 
 réinstallant `eslint-config-next@16.2.9`, le compte est identique avant et après.
 Dette préexistante, sans effet sur le build — Next 16 ne lance plus ESLint au
 build.
+
+### Mise en production — 31/08/2026
+
+Fusionnée dans `main` (`55afea7`) et déployée. Le client a choisi la mise en
+ligne directe plutôt qu'une recette sur la preview, le filet étant le
+*Promote to Production* d'un déploiement antérieur dans Vercel, instantané.
+
+Contrôle après déploiement sur `https://bien.health` : accueil, boutique, fiche
+POWER, panier, blog et sa page 2, version anglaise, sitemap et `robots.txt`
+répondent `200` ; l'optimisation d'images sert bien de l'AVIF ; les redirections
+`/` → `/fr` et la 301 `/collections/accessories` → `/fr/boutique` sont intactes.
+
+**Le domaine du checkout est confirmé** — premier bloquant de la section 1, resté
+ouvert depuis le 31/07. Le client a fait un passage en caisse réel : le tunnel
+aboutit sur `shop.bien.health` (domaine principal de la boutique Shopify, vers
+lequel `b3a79e-89.myshopify.com` redirige), avec le bon produit, le bon prix et
+PayPal proposé. Test fait sur la version précédente du site, quelques minutes
+avant la bascule ; le code du panier n'a pas changé entre les deux.
