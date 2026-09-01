@@ -138,7 +138,11 @@ export default async function CertificationsPage({
 
       {/* Espacements resserrés (recos client) : la page tenait sur trop de
           hauteur avant d'arriver aux attestations. */}
-      <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-12 xl:px-16 py-10 lg:py-14">
+      {/* Pleine largeur avec 100 px de marge sur grand écran (demande client du
+          01/09/2026) : dans un conteneur de 1280 px, les cartes d'attestation
+          étaient trop étroites pour leurs deux boutons, et « Attestation PDF »
+          arrivait tronqué sur ordinateur. */}
+      <main className="px-4 sm:px-6 lg:px-12 xl:px-[100px] py-10 lg:py-14">
         {/* Intro */}
         <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">
           <MapPin className="h-4 w-4" /> {t.eyebrow}
@@ -201,12 +205,16 @@ export default async function CertificationsPage({
                   <ActivesList lines={a.actifs[en ? "en" : "fr"]} />
                 </div>
 
-                <div className="mt-auto pt-3 sm:pt-5 flex gap-2 sm:gap-3">
+                {/* Les deux boutons ne se partagent une ligne que si chacun a la
+                    place d'afficher son libelle en entier (~14 rem) ; sinon ils
+                    passent l'un sous l'autre. Sur un portable 1440, la carte reste
+                    trop etroite pour les tenir cote a cote. */}
+                <div className="mt-auto pt-3 sm:pt-5 flex flex-nowrap sm:flex-wrap gap-2 sm:gap-3">
                   <a
                     href={a.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-leaf text-white px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-semibold hover:brightness-110 transition flex-1 min-w-0"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-leaf text-white px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-semibold hover:brightness-110 transition flex-1 min-w-0 sm:basis-56"
                   >
                     <ExternalLink className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" /> <span className="truncate">{t.verify}</span>
                   </a>
@@ -214,7 +222,7 @@ export default async function CertificationsPage({
                     href={a.pdf}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-gold text-black px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-bold hover:brightness-105 transition flex-1 min-w-0"
+                    className="inline-flex items-center justify-center gap-1.5 sm:gap-2 rounded-full bg-bien-gold text-black px-2.5 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-sm font-bold hover:brightness-105 transition flex-1 min-w-0 sm:basis-56"
                   >
                     <FileText className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" /> <span className="truncate">{t.pdf}</span>
                   </a>
