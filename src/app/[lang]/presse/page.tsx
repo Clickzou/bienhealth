@@ -286,6 +286,216 @@ const FEATURES: Feature[] = [
     note: "POWER, 39 € la cure d’un mois",
     noteEn: "POWER, €39 for a one-month course",
   },
+  {
+    magazine: "Paris Match",
+    product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
+    quote: "Tous sous champi !",
+    quoteEn: "Everyone’s on mushrooms!",
+    paragraphs: [
+      "Les sportifs ne jurent plus que par eux. Les reishi, chaga ou shiitaké sont les dernières substances licites hautement recommandées pour être en bonne santé. Ces complexes fongiques aident le corps à mieux répondre au stress.",
+      "Carla Debard, fondatrice de BIEN, marque spécialisée dans les compléments adaptogènes, met en lumière un champion de la détox : le chaga. « Exceptionnellement riche en antioxydants, il neutralise les radicaux libres, réduit le stress oxydatif et soutient les défenses naturelles », résume-t-elle.",
+      "Elle le considère aussi comme un allié digestif précieux, capable d’apaiser le système gastro-intestinal et d’accompagner les phases de surcharge alimentaire. Son action sur le foie en fait un ingrédient de choix pour les protocoles détox ou les périodes de grande préparation sportive.",
+      "À tester : Mushglow Supermix 6-en-1, un cocktail clean à base de champignons adaptogènes et de collagène pour soutenir la détox et booster la concentration et l’énergie.",
+    ],
+    paragraphsEn: [
+      "Athletes swear by them. Reishi, chaga and shiitake are the latest legal substances highly recommended for good health. These fungal complexes help the body respond better to stress.",
+      "Carla Debard, founder of BIEN, a brand specialising in adaptogenic supplements, highlights a detox champion: chaga. “Exceptionally rich in antioxidants, it neutralises free radicals, reduces oxidative stress and supports natural defences,” she sums up.",
+      "She also sees it as a valuable digestive ally, able to soothe the gastro-intestinal system and support periods of dietary overload. Its action on the liver makes it a prime ingredient for detox protocols or intense training phases.",
+      "Worth trying: Mushglow Supermix 6-in-1, a clean blend of adaptogenic mushrooms and collagen to support detox and boost focus and energy.",
+    ],
+    note: "Paris Match, 5 au 11 mars 2026 — Mushglow, 49 € le sachet de 30 portions",
+    noteEn: "Paris Match, 5–11 March 2026 — Mushglow, €49 for 30 servings",
+  },
+  {
+    magazine: "Closer",
+    product: { src: "/prelude-bien-health.jpg", alt: "La gamme BIEN health au complet" },
+    quote: "Rituels bien-être",
+    quoteEn: "Wellbeing rituals",
+    paragraphs: [
+      "BIEN est une marque de compléments naturels fabriquée en France. Elle propose 4 produits naturels et efficaces (3 gummies sans sucre et une poudre), faciles à intégrer au quotidien : Focus pour la concentration, la clarté mentale et la mémoire, Calm pour la sérénité, la gestion du stress et le sommeil, Power pour l’énergie et l’endurance, et Mushglow, un supermix 6-en-1 en poudre pour un boost cognitif, la résilience au stress et un éclat naturel, pour rayonner.",
+      "Vegan, sans sucre, sans colorants artificiels ni gluten.",
+    ],
+    paragraphsEn: [
+      "BIEN is a natural supplement brand made in France. It offers four effective natural products (three sugar-free gummies and a powder), easy to fit into daily life: Focus for concentration, mental clarity and memory, Calm for serenity, stress management and sleep, Power for energy and endurance, and Mushglow, a 6-in-1 powder supermix for a cognitive boost, stress resilience and natural radiance.",
+      "Vegan, sugar-free, with no artificial colouring and no gluten.",
+    ],
+  },
+  {
+    magazine: "Voici",
+    product: { src: "/calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
+    quote: "Quand la nuit porte conseil",
+    quoteEn: "When the night knows best",
+    paragraphs: [
+      "Pendant votre sommeil, la peau se régénère… et bien plus encore, surtout si vous suivez notre guide !",
+      "Le trio spécial bien-être — reishi, ashwagandha et safran — calme la charge mentale, chasse l’anxiété et favorise la détente.",
+      "La bonne dose : deux gummies par jour. La cure fait effet au bout de 10 jours.",
+    ],
+    paragraphsEn: [
+      "While you sleep, your skin regenerates… and much more besides, especially if you follow our guide!",
+      "The wellbeing trio — reishi, ashwagandha and saffron — calms mental load, clears anxiety and encourages relaxation.",
+      "The right dose: two gummies a day. The course takes effect after ten days.",
+    ],
+    note: "Calm, Sérénité Sommeil, 60 gummies, 39 €",
+    noteEn: "Calm, Serenity & Sleep, 60 gummies, €39",
+  },
+  {
+    magazine: "Public",
+    product: { src: "/approch-globale-sante.jpg", alt: "Gummies BIEN health dans une coupelle" },
+    quote: "Cortisol, quand le stress veut ta peau",
+    quoteEn: "Cortisol: when stress comes for your skin",
+    paragraphs: [
+      "Le cortisol ne tape pas que les nerfs. Cette hormone du stress met la beauté sous pression. Zoom sur les soins qui assurent la paix intérieure autant que le calme cutané.",
+      "Le stress prolongé agit comme un accélérateur de fatigue sur la peau. Cortisol élevé rime souvent avec traits froissés, cernes plus visibles, teint plus terne, risque d’inflammations et d’imperfections. C’est un terreau fertile du vieillissement cutané.",
+      "La beauté anticortisol mise autant sur les compléments alimentaires que sur les soins topiques. Ashwagandha, rhodiola, magnésium, L-théanine ou reishi figurent parmi les actifs stars.",
+    ],
+    paragraphsEn: [
+      "Cortisol does not only hit the nerves. The stress hormone puts beauty under pressure too. A look at the products that deliver inner peace as much as calm skin.",
+      "Prolonged stress acts as a fatigue accelerator on the skin. High cortisol often means a crumpled look, more visible dark circles, a duller complexion, and a higher risk of inflammation and blemishes — fertile ground for skin ageing.",
+      "Anti-cortisol beauty relies on supplements as much as on topical care. Ashwagandha, rhodiola, magnesium, L-theanine and reishi are among the star actives.",
+    ],
+    note: "Sélection « Beauté in » — Gummies Calm, BIEN, cure de 1 mois, 39 €",
+    noteEn: "“Beauty in” selection — Calm gummies, BIEN, one-month course, €39",
+  },
+  {
+    magazine: "Femme Actuelle",
+    product: { src: "/gamme-courte-ciblee.jpg", alt: "Les gummies FOCUS, POWER et CALM de BIEN health" },
+    quote: "La gamme BIEN dans la sélection bien-être",
+    quoteEn: "The BIEN range in the wellbeing selection",
+    paragraphs: [
+      "Les compléments BIEN figurent parmi la sélection bien-être du magazine : trois gummies ciblés sans sucre — Focus, Calm et Power — et le supermix Mushglow en poudre.",
+      "Des formules à base de champignons et de plantes adaptogènes, fabriquées en France, pensées pour s’intégrer simplement à une routine quotidienne.",
+    ],
+    paragraphsEn: [
+      "BIEN supplements feature in the magazine’s wellbeing selection: three targeted sugar-free gummies — Focus, Calm and Power — and the Mushglow powder supermix.",
+      "Formulas built on adaptogenic mushrooms and plants, made in France, designed to slot simply into a daily routine.",
+    ],
+  },
+  {
+    magazine: "Côté Santé",
+    product: { src: "/power.jpg", alt: "BIEN health POWER, gummies énergie & endurance" },
+    quote: "Les pouvoirs cachés des champignons",
+    quoteEn: "The hidden powers of mushrooms",
+    paragraphs: [
+      "Fatigue persistante, motivation en berne, besoin d’un vrai coup de boost ? Ces gummies à base de Cordyceps, un champignon adaptogène, associé à la Rhodiola et au Panax Ginseng, aide à retrouver tonus et vitalité sans caféine et sans fébrilité.",
+    ],
+    paragraphsEn: [
+      "Lingering fatigue, flagging motivation, in need of a real lift? These gummies built on Cordyceps, an adaptogenic mushroom, combined with Rhodiola and Panax Ginseng, help restore tone and vitality without caffeine and without the jitters.",
+    ],
+    note: "Coup de pouce n° 1 — Gummies POWER, BIEN, 39 € / 60 gummies",
+    noteEn: "Pick no. 1 — POWER gummies, BIEN, €39 / 60 gummies",
+  },
+  {
+    magazine: "Pleine Vie",
+    product: { src: "/brand/bien-health-complements-champignons-adaptogenes.jpg", alt: "La gamme BIEN health" },
+    quote: "Mieux-être quotidien",
+    quoteEn: "Everyday wellbeing",
+    paragraphs: [
+      "BIEN est une marque de compléments naturels, fabriquée en France. Elle propose 4 produits efficaces (3 gummies sans sucre et une poudre), faciles à intégrer au quotidien : FOCUS pour la concentration, la clarté mentale et la mémoire, CALM pour la sérénité, la gestion du stress et le sommeil, POWER pour l’énergie et l’endurance, sans caféine, et MUSHGLOW, un supermix 6-en-1 en poudre pour un boost cognitif, la résilience au stress et un éclat naturel, pour rayonner.",
+      "Vegan, sans sucre, sans colorants artificiels ni gluten.",
+    ],
+    paragraphsEn: [
+      "BIEN is a natural supplement brand made in France. It offers four effective products (three sugar-free gummies and a powder), easy to fit into daily life: FOCUS for concentration, mental clarity and memory, CALM for serenity, stress management and sleep, POWER for caffeine-free energy and endurance, and MUSHGLOW, a 6-in-1 powder supermix for a cognitive boost, stress resilience and natural radiance.",
+      "Vegan, sugar-free, with no artificial colouring and no gluten.",
+    ],
+    note: "Pleine Vie n° 478, avril 2026",
+    noteEn: "Pleine Vie no. 478, April 2026",
+  },
+  {
+    magazine: "Magicmaman",
+    product: { src: "/calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
+    quote: "Calme intérieur",
+    quoteEn: "Inner calm",
+    paragraphs: [
+      "Pour les mamans pressées du matin, les fatiguées chroniques, celles qui rêvent de cocooning ou celles qui veulent rayonner même avec trois heures de sommeil !",
+      "Ces gummies goût mûres réduisent le stress, stabilisent l’humeur et favorisent un sommeil plus profond.",
+    ],
+    paragraphsEn: [
+      "For mums in a morning rush, the chronically tired, those dreaming of cocooning — or those who want to shine on three hours’ sleep!",
+      "These blackberry-flavoured gummies reduce stress, steady mood and encourage deeper sleep.",
+    ],
+    note: "Calm, Sérénité & sommeil, BIEN, cure de 30 jours, 39 €",
+    noteEn: "Calm, Serenity & Sleep, BIEN, 30-day course, €39",
+  },
+  {
+    magazine: "Lyon Capitale",
+    product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
+    quote: "Routine bien-être",
+    quoteEn: "A wellbeing routine",
+    paragraphs: [
+      "Vous vous sentez fatigué, stressé, surmené ? Il est temps de tester les champignons et plantes adaptogènes, véritables coups de pouce pour mieux gérer son équilibre émotionnel.",
+      "En format poudre à intégrer dans sa boisson ou son yaourt, ce complément naturel au goût légèrement vanillé est développé dans un laboratoire français et fabriqué en Dordogne. À consommer si vous souhaitez booster votre énergie et votre clarté mentale, illuminer votre peau et diminuer votre stress.",
+    ],
+    paragraphsEn: [
+      "Feeling tired, stressed, overworked? Time to try adaptogenic mushrooms and plants — real helpers for managing emotional balance.",
+      "In powder form, to stir into a drink or a yoghurt, this natural supplement with a lightly vanilla taste is developed in a French laboratory and made in the Dordogne. For anyone wanting to boost energy and mental clarity, brighten the skin and lower stress.",
+    ],
+    note: "Lyon Capitale n° 863, mars 2026 — Mushglow, 49 € les 30 doses",
+    noteEn: "Lyon Capitale no. 863, March 2026 — Mushglow, €49 for 30 servings",
+  },
+  {
+    magazine: "Famille Mag",
+    product: { src: "/power.jpg", alt: "BIEN health POWER, gummies énergie & endurance" },
+    quote: "La nouvelle génération de compléments aux champignons adaptogènes",
+    quoteEn: "The new generation of adaptogenic mushroom supplements",
+    paragraphs: [
+      "Face à un quotidien toujours plus intense, stress chronique, fatigue mentale, surcharge informationnelle, la quête d’un bien-être naturel et durable n’a jamais été aussi forte. C’est dans ce contexte que s’inscrit BIEN, une marque française qui remet les champignons adaptogènes au cœur de l’équilibre corps et esprit.",
+      "Développées en laboratoire français, les formules BIEN associent champignons adaptogènes, plantes fonctionnelles hautement dosées et actifs premium, sans agents de charge ni caféine. La fabrication est française, réalisée en Dordogne, avec une exigence élevée en matière de traçabilité et de qualité.",
+      "Parmi les quatre références de la gamme, les gummies POWER s’adressent à celles et ceux qui ressentent une fatigue persistante ou une baisse de motivation : Cordyceps (10:1) 50 mg pour stimuler la production d’ATP, Rhodiola Rosea (8:1) 8 mg pour la récupération mentale et physique, Panax Ginseng (8:1) 15 mg pour l’énergie globale et la vitalité.",
+    ],
+    paragraphsEn: [
+      "In an ever more intense daily life — chronic stress, mental fatigue, information overload — the search for natural, lasting wellbeing has never been stronger. That is the context BIEN steps into, a French brand putting adaptogenic mushrooms back at the heart of body-mind balance.",
+      "Developed in a French laboratory, BIEN formulas combine adaptogenic mushrooms, highly dosed functional plants and premium actives, with no bulking agents and no caffeine. Manufacturing is French, in the Dordogne, with high standards of traceability and quality.",
+      "Among the range’s four products, the POWER gummies are for those facing lingering fatigue or flagging motivation: Cordyceps (10:1) 50 mg to stimulate ATP production, Rhodiola Rosea (8:1) 8 mg for mental and physical recovery, Panax Ginseng (8:1) 15 mg for overall energy and vitality.",
+    ],
+    note: "Famille Mag n° 92 — POWER, 2 gummies par jour, 60 gummies, 39 €",
+    noteEn: "Famille Mag no. 92 — POWER, 2 gummies a day, 60 gummies, €39",
+  },
+  {
+    magazine: "Psycho Pour Elles",
+    product: { src: "/focus.jpg", alt: "BIEN health FOCUS, gummies concentration & mémoire" },
+    quote: "Et si vous pouviez donner un coup de fouet à votre mémoire ?",
+    quoteEn: "What if you could give your memory a lift?",
+    paragraphs: [
+      "Les gummies Focus de la marque BIEN associent champignons adaptogènes, plantes fonctionnelles et L-théanine pour stimuler mémoire, concentration et clarté mentale tout en réduisant le stress perçu.",
+      "Une solution pratique à intégrer à votre routine quotidienne, qui accompagne votre esprit surchargé avec douceur et efficacité, pour une journée plus lucide, plus vive… plus légère.",
+    ],
+    paragraphsEn: [
+      "BIEN’s Focus gummies combine adaptogenic mushrooms, functional plants and L-theanine to support memory, concentration and mental clarity while reducing perceived stress.",
+      "A practical addition to a daily routine, supporting an overloaded mind gently and effectively, for a clearer, sharper — lighter — day.",
+    ],
+    note: "FOCUS concentration et mémoire, 39 € le mois",
+    noteEn: "FOCUS concentration and memory, €39 a month",
+  },
+  {
+    magazine: "Vital",
+    product: { src: "/athletes-bien-health.jpg", alt: "BIEN health, du sport de haut niveau au quotidien" },
+    quote: "Des champignons qui vous veulent du BIEN",
+    quoteEn: "Mushrooms that mean you well",
+    paragraphs: [
+      "Les champignons adaptogènes sont la nouvelle tendance dans le monde des compléments alimentaires. BIEN s’engouffre donc dans la brèche avec ses trois recettes de gummies dont les effets sont censés être bénéfiques pour la concentration comme pour la gestion du stress ou l’endurance.",
+    ],
+    paragraphsEn: [
+      "Adaptogenic mushrooms are the new trend in the supplement world. BIEN steps straight into it with three gummy recipes whose effects are meant to benefit concentration as much as stress management or endurance.",
+    ],
+    note: "Power, 39 € (30 jours), BIEN",
+    noteEn: "Power, €39 (30 days), BIEN",
+  },
+  {
+    magazine: "Avantages",
+    product: { src: "/prelude-bien-health.jpg", alt: "La gamme BIEN health au complet" },
+    quote: "Adoptez chaque jour une dose de BIEN",
+    quoteEn: "A daily dose of BIEN",
+    paragraphs: [
+      "Découvrez la gamme de compléments naturels BIEN à base de champignons et de plantes adaptogènes : 3 gummies ciblés sans sucre ni lactose — Focus pour la clarté mentale et la concentration, Power pour l’énergie et la performance, Calm pour la sérénité, le sommeil et la gestion du stress — et la poudre Mushglow 6-en-1 au goût légèrement vanillé pour un boost cognitif, à ajouter dans une boisson ou un yaourt.",
+      "Ces compléments alimentaires associent champignons, plantes adaptogènes et collagène pour booster l’énergie, la concentration et la sérénité au quotidien. Sans sucre, sans colorants artificiels ni gluten, fabrication française.",
+    ],
+    paragraphsEn: [
+      "Discover the BIEN range of natural supplements based on adaptogenic mushrooms and plants: three targeted gummies with no sugar and no lactose — Focus for mental clarity and concentration, Power for energy and performance, Calm for serenity, sleep and stress management — plus the 6-in-1 Mushglow powder with its light vanilla taste for a cognitive boost, to stir into a drink or a yoghurt.",
+      "These supplements combine mushrooms, adaptogenic plants and collagen to boost energy, focus and calm day to day. Sugar-free, with no artificial colouring and no gluten, made in France.",
+    ],
+    note: "Opération lectrices — 4 packs BIEN d’une valeur de 166 €",
+    noteEn: "Reader giveaway — four BIEN packs worth €166",
+  },
 ];
 
 const UI = {
