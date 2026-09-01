@@ -1881,3 +1881,62 @@ popups, cadrage, geste à deux doigts sur mobile — est inchangé.
 De fines lignes blanches apparaissent entre les tuiles sur les grandes étendues
 de mer. **Ce défaut préexistait avec CARTO** (vérifié par capture de la
 production avant bascule) : ce n'est pas une régression du changement de fond.
+
+## 25. Page presse — logos complétés, vraies photos, 14 parutions (01/09/2026)
+
+Trois retours client sur `/presse`, traités ensemble.
+
+**Les trois logos manquants.** Le client en comptait 36 dans son dossier, le
+site en affichait 33. Les fichiers sources sont des SVG simplement numérotés :
+il a fallu les rendre en planche pour les identifier. Manquaient `1.svg`
+**Fait en France**, `22.svg` **48 Collagen Café** et `35.svg` **My Beauty
+Factory** — trois entrées qui ne sont pas des titres de presse (un label, un
+café partenaire, un institut), ce qui explique sans doute leur mise à l'écart le
+29/08. Le client les veut : elles figurent dans son `PRESSE.docx` au même titre
+que les autres.
+
+Repris au même traitement que les 33 autres. Deux pièges :
+
+- le détourage du fond blanc doit se faire **par remplissage depuis les bords**,
+  jamais sur toute l'image : le logo chromé de 48 Collagen Café est plein de
+  reflets blancs qui seraient devenus des trous ;
+- My Beauty Factory est un logo **carré**. Dans le canevas commun 720 × 280, il
+  tombait à 280 px de large quand les autres en font 720, et devenait illisible.
+  Il est recadré sur son seul bloc de texte (bbox des pixels sombres).
+
+**Les visuels de droite.** Le client ne les aimait pas ; le problème allait
+au-delà du goût :
+
+- `/brand/product-calm.jpg` et consorts sont des **images générées** montrant un
+  flacon blanc à couvercle doré **qui n'existe pas au catalogue** — les vrais
+  pots sont des dégradés colorés siglés BIEN. La page presse montrait donc un
+  produit imaginaire ;
+- les vignettes libellées « La parution » n'étaient **pas des scans** mais des
+  cartes fabriquées : fond dégradé rose-violet, logo du magazine, texte de
+  l'article retapé par-dessus. Le lien promettait la parution et ouvrait une
+  reconstitution.
+
+Les deux sont retirées. Chaque parution porte maintenant une photo du shooting
+de la marque, choisie selon le produit dont parle l'article.
+
+⚠️ Les faux packshots restent utilisés ailleurs : `FALLBACK_PRODUCTS` de la page
+d'accueil, et le repli d'image des pages produit et panier. Ils ne s'affichent
+que si Shopify ne répond pas — mais ce jour-là, l'accueil montrera quatre
+produits qui n'existent pas. À remplacer par les vraies photos.
+
+**Les parutions : 5 → 14.** Le `PRESSE.docx` compte 36 entrées, mais la plupart
+pointent vers des dossiers Google Drive (parutions papier), inaccessibles depuis
+l'environnement de travail. Les articles en ligne ont été relevés et rédigés :
+Psychologies, BIBA, Beauté test, Les Nouvelles Esthétiques, TheDreamTeam, Fresh
+Magazine, BiG média (Bpifrance), Mesinfos (Affiches Parisiennes) et Gazelle.
+Leurs URL manquaient à `press.ts` : ces neuf logos sont désormais cliquables.
+
+Restent à traiter, **quand les scans auront été déposés dans le projet** :
+Paris Match, Voici, Closer, Public, Femme Actuelle, Côté Santé, Pleine Vie,
+Vital, Cosmopolitan, Avantages, Magicmaman, Famille Mag, Psycho Pour Elles,
+Lyon Capitale, ELLE et Fraîches.
+
+Deux détails relevés au passage : `bigmedia.bpifrance.fr` écrit « Bien » et non
+« BIEN », d'où une détection à zéro au premier passage ; et Marie Claire a un
+**second** article (sélection ashwagandha, BIEN en 8ᵉ position) qui n'a pas été
+ajouté — deux entrées du même titre casseraient la clé React de la liste.
