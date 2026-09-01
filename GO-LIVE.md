@@ -1822,6 +1822,38 @@ inscrits retombent de toute façon dans les segments d'optins.
 `https://bien.health/api/newsletter` → `{"ok":true,"klaviyo":true}`, profil
 visible dans la liste Klaviyo dans la foulée (1242 → 1243).
 
+### Le mail de bienvenue partait déjà — il n'avait plus personne à qui parler
+
+Le popup promet le code par mail. En cherchant à créer le flow qui l'envoie, on
+a découvert qu'il **existait déjà**, actif et correctement réglé depuis mars :
+
+**`SHOPIFY SE - Welcome Series Sign Up Form`** — déclencheur « ajouté à la liste
+EMAIL - New optins website sign-up form », trois e-mails avec tracking UTM :
+
+| Jour | E-mail |
+| --- | --- |
+| 0 | `SE - Welcome Email #1 - FR` — « Bienvenue chez Bien 🍄 », porte le code `WELCOMETOBIEN10` |
+| 7 | `SE - Welcome Email #2 - FR` — « Quel rituel bien-être est fait pour toi ? » |
+| 12 | `SE - Welcome Email #3 - FR` — « Dernière chance pour profiter de -10% 💙 » |
+
+Il n'envoyait plus rien depuis des mois pour une seule raison : **plus personne
+n'entrait dans la liste**, le site n'y écrivant plus. Le branchement du matin l'a
+réveillé — le test avec `jc@clickzou.fr` a déclenché le mail #1, reçu en boîte de
+réception (pas en spam), code lisible, expéditeur `BIEN Health info@bien.health`.
+
+Un second flow créé le matin même (`Bienvenue site - code -10%`, un seul e-mail
+bâti sur le modèle « Welcome 1 ») faisait alors doublon : deux mails de bienvenue
+pour un inscrit. Il a été **repassé en brouillon** — la série existante, plus
+riche, reste seule en service. Ne pas la réactiver.
+
+⚠️ Deux points laissés ouverts sur le mail #1, à traiter côté Klaviyo :
+- la mention « offre valable pendant 2 semaines » n'est vérifiée nulle part côté
+  Shopify : soit le code n'expire jamais et la mention est fausse, soit il expire
+  et il faut s'assurer que ce soit bien 2 semaines après réception ;
+- le pied de page affiche l'adresse en double (`info@bien.health` puis
+  `@bien.health`), et la série n'existe qu'en français alors que le popup est
+  aussi servi en anglais.
+
 **Reste à faire** : créer dans Klaviyo le flow « Welcome » qui envoie
 réellement le code `WELCOMETOBIEN10` — le popup le promet par mail, aujourd'hui
 seul l'affichage à l'écran le délivre.
