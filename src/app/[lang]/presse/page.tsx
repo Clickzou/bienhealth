@@ -45,6 +45,11 @@ type Feature = {
   note?: string;
   noteEn?: string;
   product?: { src: string; alt: string };
+  /** Photo de la parution papier ouverte, fournie par le client (dossier
+   *  « POUR SITE »). Seules les vraies pages de magazine sont reprises : les
+   *  visuels du meme dossier qui ne sont que le texte de l'article recompose
+   *  sur un fond degrade ne prouvent rien et ont ete ecartes. */
+  clipping?: { src: string; alt: string };
 };
 
 const FEATURES: Feature[] = [
@@ -152,6 +157,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "BIBA",
+    clipping: { src: "/brand/presse/parutions/biba.webp", alt: "La page BIBA consacrée à Mushglow" },
     product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
     quote: "Adieu le café : cette boisson à base de champignons réveille sans doper le cortisol",
     quoteEn: "Goodbye coffee: this mushroom-based drink wakes you up without spiking cortisol",
@@ -288,6 +294,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "Paris Match",
+    clipping: { src: "/brand/presse/parutions/paris-match.webp", alt: "La double page de Paris Match consacrée aux champignons adaptogènes" },
     product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
     quote: "Tous sous champi !",
     quoteEn: "Everyone’s on mushrooms!",
@@ -308,6 +315,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "Closer",
+    clipping: { src: "/brand/presse/parutions/closer.webp", alt: "La page Closer « Rituels bien-être »" },
     product: { src: "/prelude-bien-health.jpg", alt: "La gamme BIEN health au complet" },
     quote: "Rituels bien-être",
     quoteEn: "Wellbeing rituals",
@@ -358,6 +366,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "Femme Actuelle",
+    clipping: { src: "/brand/presse/parutions/femme-actuelle.webp", alt: "La sélection bien-être de Femme Actuelle" },
     product: { src: "/gamme-courte-ciblee.jpg", alt: "Les gummies FOCUS, POWER et CALM de BIEN health" },
     quote: "La gamme BIEN dans la sélection bien-être",
     quoteEn: "The BIEN range in the wellbeing selection",
@@ -372,6 +381,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "Côté Santé",
+    clipping: { src: "/brand/presse/parutions/cote-sante.webp", alt: "Le dossier champignons de Côté Santé" },
     product: { src: "/power.jpg", alt: "BIEN health POWER, gummies énergie & endurance" },
     quote: "Les pouvoirs cachés des champignons",
     quoteEn: "The hidden powers of mushrooms",
@@ -402,6 +412,7 @@ const FEATURES: Feature[] = [
   },
   {
     magazine: "Magicmaman",
+    clipping: { src: "/brand/presse/parutions/magicmaman.webp", alt: "La « magic liste » de Magicmaman" },
     product: { src: "/calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
     quote: "Calme intérieur",
     quoteEn: "Inner calm",
@@ -496,6 +507,38 @@ const FEATURES: Feature[] = [
     note: "Opération lectrices — 4 packs BIEN d’une valeur de 166 €",
     noteEn: "Reader giveaway — four BIEN packs worth €166",
   },
+  {
+    magazine: "Cosmopolitan",
+    product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
+    quote: "Adoptez chaque jour une dose de BIEN",
+    quoteEn: "A daily dose of BIEN",
+    paragraphs: [
+      "Adoptez chaque jour une dose de BIEN avec les gummies Focus, Calm, Power et la poudre Mushglow.",
+      "Ces compléments alimentaires associent champignons adaptogènes et collagène pour booster l’énergie, la concentration et la sérénité au quotidien. Végans, sans sucre, sans colorants artificiels ni gluten, fabrication française.",
+    ],
+    paragraphsEn: [
+      "Add a daily dose of BIEN with the Focus, Calm and Power gummies and the Mushglow powder.",
+      "These supplements combine adaptogenic mushrooms and collagen to boost energy, focus and calm day to day. Vegan, sugar-free, with no artificial colouring and no gluten, made in France.",
+    ],
+    note: "Cosmopolitan, février 2026 — opération lectrices, 3 packs BIEN d’une valeur de 170 €",
+    noteEn: "Cosmopolitan, February 2026 — reader giveaway, three BIEN packs worth €170",
+  },
+  {
+    magazine: "Fait en France",
+    product: { src: "/calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
+    quote: "La santé made in France mise sur la qualité, la traçabilité et l’expertise",
+    quoteEn: "French-made health betting on quality, traceability and expertise",
+    paragraphs: [
+      "Laboratoires, marques engagées et innovations locales : la santé made in France mise sur la qualité, la traçabilité et l’expertise pour prendre soin de vous en toute confiance.",
+      "Dans cette sélection figurent les gummies CALM de BIEN — reishi, ashwagandha et safran — pour la sérénité et le sommeil.",
+    ],
+    paragraphsEn: [
+      "Laboratories, committed brands and local innovation: French-made health is betting on quality, traceability and expertise to look after you with confidence.",
+      "The selection includes BIEN’s CALM gummies — reishi, ashwagandha and saffron — for serenity and sleep.",
+    ],
+    note: "Fait en France n° 25, printemps-été 2026 — CALM, 60 gummies, 39 €",
+    noteEn: "Fait en France no. 25, Spring–Summer 2026 — CALM, 60 gummies, €39",
+  },
 ];
 
 const UI = {
@@ -505,6 +548,7 @@ const UI = {
     featuresTitle: "Ce que la presse a écrit",
     read: "Lire l'article",
     print: "Parution papier",
+    clipping: "Voir la page",
     inFrench: null as string | null,
   },
   en: {
@@ -513,6 +557,7 @@ const UI = {
     featuresTitle: "What the press wrote",
     read: "Read the article",
     print: "Print feature",
+    clipping: "See the page",
     // Les extraits sont traduits, mais la parution reste française : la mention
     // le dit, pour qu'un lecteur qui suivrait le lien ne soit pas surpris de
     // tomber sur un article en français.
@@ -599,6 +644,16 @@ function Feature({ f, i, lang }: { f: Feature; i: number; lang: string }) {
             <div className="relative h-28 w-28 shrink-0 lg:h-auto lg:w-full lg:aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
               <Image src={f.product.src} alt={f.product.alt} fill sizes="(max-width:1024px) 112px, 272px" className="object-cover" />
             </div>
+          )}
+          {f.clipping && (
+            <a href={f.clipping.src} target="_blank" rel="noopener noreferrer" className="group/clip min-w-0 flex-1 lg:flex-none">
+              <span className="relative block h-28 lg:h-auto lg:aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
+                <Image src={f.clipping.src} alt={f.clipping.alt} fill sizes="(max-width:1024px) 112px, 272px" className="object-cover transition-transform duration-500 group-hover/clip:scale-105" />
+              </span>
+              <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-bien-leaf group-hover/clip:gap-2.5 transition-all">
+                {t.clipping} <ArrowUpRight className="h-3.5 w-3.5" />
+              </span>
+            </a>
           )}
         </div>
       </div>

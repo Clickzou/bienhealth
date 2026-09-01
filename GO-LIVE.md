@@ -1931,10 +1931,37 @@ Psychologies, BIBA, Beauté test, Les Nouvelles Esthétiques, TheDreamTeam, Fres
 Magazine, BiG média (Bpifrance), Mesinfos (Affiches Parisiennes) et Gazelle.
 Leurs URL manquaient à `press.ts` : ces neuf logos sont désormais cliquables.
 
-Restent à traiter, **quand les scans auront été déposés dans le projet** :
-Paris Match, Voici, Closer, Public, Femme Actuelle, Côté Santé, Pleine Vie,
-Vital, Cosmopolitan, Avantages, Magicmaman, Famille Mag, Psycho Pour Elles,
-Lyon Capitale, ELLE et Fraîches.
+**Les scans du Drive étaient accessibles.** Les dossiers du `PRESSE.docx` sont
+partagés publiquement : il suffit de lister chaque dossier (le blob
+`window['_DRIVE_ivd']` de la page HTML donne id, nom et type de chaque entrée)
+puis de tirer les fichiers par `uc?export=download&id=`. Aucun compte n'est
+nécessaire. **Ne pas conclure trop vite qu'un partage Drive est hors d'atteinte.**
+
+Piège du premier passage : le dossier « presse » contient **28 sous-dossiers**,
+et le script sautait les entrées de type `application/vnd.google-apps.folder`.
+Il n'en ramenait que les 7 fichiers de la racine. Il faut descendre récursivement.
+
+97 fichiers récupérés. Quatorze parutions papier transcrites depuis ces scans :
+Paris Match (« Tous sous champi ! », citation de la fondatrice sur le chaga),
+Closer, Voici, Public, Femme Actuelle, Côté Santé, Pleine Vie, Magicmaman, Lyon
+Capitale, Famille Mag (dosages exacts de POWER), Psycho Pour Elles, Vital,
+Avantages, Cosmopolitan et Fait en France. **La page compte 29 parutions.**
+
+Pour les PDF, `PyMuPDF` (déjà installé) extrait la couche texte quand elle
+existe — plus fiable et plus économe qu'une lecture d'image. `pdftoppm` n'est pas
+disponible sur la machine ; le rendu d'une page en PNG passe par `get_pixmap()`.
+
+**Les vignettes venaient du client.** Le dossier Drive « POUR SITE » contient
+19 visuels 1080 × 1350 : c'est de là que sortaient les cinq « fac-similés »
+retirés plus haut — ils n'avaient donc pas été fabriqués côté agence, contrairement
+à ce qui était écrit ici. Douze d'entre eux ne sont que le texte de l'article
+recomposé sur un fond dégradé ; sept montrent un **vrai magazine ouvert**. Ces
+derniers sont désormais posés sous la photo produit des parutions papier
+concernées (Paris Match, Closer, Femme Actuelle, Côté Santé, Magicmaman, BIBA),
+avec un lien « Voir la page ».
+
+Restent sans fiche : **ELLE** (story Instagram) et **Fraîches** (reel) — aucun
+texte à reprendre, ils gardent leur logo dans le mur du haut.
 
 Deux détails relevés au passage : `bigmedia.bpifrance.fr` écrit « Bien » et non
 « BIEN », d'où une détection à zéro au premier passage ; et Marie Claire a un
