@@ -1772,3 +1772,46 @@ boutique, non supprimable). Alerte disparue.
 Au passage, la section 1 affirmait que `NEXT_PUBLIC_SHOPIFY_DOMAIN` valait
 `b3a79e-89.myshopify.com`. Le bundle de production dit `shop.bien.health` : la
 section a été corrigée.
+
+## 23. Inscriptions newsletter — les emails n'arrivaient nulle part (01/09/2026)
+
+Constat client : les adresses saisies dans le popup « offre de bienvenue
+−10 % » n'apparaissent pas dans le CRM **Klaviyo**.
+
+**Klaviyo n'a jamais été branché dans le code.** La route
+`src/app/api/newsletter/route.ts` — utilisée par le popup, le formulaire du
+footer et le quiz diagnostic — visait deux destinations, toutes deux muettes :
+
+| Destination | État réel |
+| --- | --- |
+| Shopify (`POST /contact`, `form_type=customer`) | **403** sur `b3a79e-89.myshopify.com` *et* sur `shop.bien.health` — Shopify refuse les POST server-side sans session |
+| Supabase (table `leads`) | variables absentes des env de production → bloc jamais exécuté |
+| Klaviyo | aucun appel dans le code |
+
+L'échec était invisible : les trois blocs sont en `try/catch` silencieux et la
+route répond toujours `{ ok: true }`. Le popup affichait donc « C'est tout bon
+— il t'est aussi envoyé par mail » alors que **rien n'était enregistré et
+qu'aucun mail ne partait**. Tous les emails collectés depuis la mise en ligne
+sont perdus (aucune trace côté site).
+
+**Correctif appliqué :**
+
+- nouveau module `src/lib/klaviyo.ts` — inscription via l'endpoint
+  `POST https://a.klaviyo.com/client/subscriptions/`, qui ne demande que la clé
+  **publique** du compte (aucun secret côté serveur) et respecte le réglage
+  opt-in de la liste ;
+- la route appelle Klaviyo en premier et renvoie `{ ok: true, klaviyo: bool }`
+  pour rendre l'état vérifiable ;
+- Shopify passe en miroir best-effort, avec le code HTTP désormais **loggué**
+  au lieu d'être avalé ;
+- deux variables à renseigner : `KLAVIYO_COMPANY_ID` (Settings › API keys ›
+  Public API key / Site ID) et `KLAVIYO_LIST_ID` (Audience › Lists & Segments ›
+  la liste › Settings).
+
+⚠️ **Tant que ces deux variables ne sont pas ajoutées sur Vercel (Production),
+la collecte reste sans effet.** Le log serveur le dit explicitement :
+`[newsletter] Klaviyo non configuré`.
+
+**Reste à faire** : créer dans Klaviyo le flow « Welcome » qui envoie
+réellement le code `WELCOMETOBIEN10` — le popup le promet par mail, aujourd'hui
+seul l'affichage à l'écran le délivre.
