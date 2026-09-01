@@ -48,7 +48,7 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
           </span>
         ) : null}
         <Image
-          src={p.featuredImage?.url ?? "/brand/product-mushglow.jpg"}
+          src={p.featuredImage?.url ?? "/mushglow.jpg"}
           alt={p.title}
           fill
           loading="lazy"

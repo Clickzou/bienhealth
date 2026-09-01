@@ -56,7 +56,7 @@ export default async function CartPage({
                   <li key={p.id} className="flex items-center gap-4 p-4 hover:bg-bien-cream/40 transition-colors">
                     <Link href={href} className="relative h-20 w-20 shrink-0 rounded-2xl overflow-hidden bg-bien-cream ring-1 ring-border">
                       <Image
-                        src={p.featuredImage?.url ?? "/brand/product-mushglow.jpg"}
+                        src={p.featuredImage?.url ?? "/mushglow.jpg"}
                         alt={p.title}
                         fill
                         sizes="80px"

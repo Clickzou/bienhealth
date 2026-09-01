@@ -45,11 +45,17 @@ const KEYPOINT_TINTS = [
   "bg-bien-leaf text-bien-cream",
 ];
 
+/**
+ * Repli quand Shopify ne repond pas. Les photos sont celles du shooting de la
+ * marque : les anciens `/brand/product-*.jpg` etaient des images generees, un
+ * flacon blanc a couvercle dore absent du catalogue. Le repli ne s'affiche que
+ * lors d'une panne — raison de plus pour qu'il montre les vrais produits.
+ */
 const FALLBACK_PRODUCTS = [
-  { name: "CALM", img: "/brand/product-calm.jpg", price: "39 €" },
-  { name: "FOCUS", img: "/brand/product-focus.jpg", price: "39 €" },
-  { name: "POWER", img: "/brand/product-power.jpg", price: "39 €" },
-  { name: "MUSHGLOW", img: "/brand/product-mushglow.jpg", price: "49 €" },
+  { name: "CALM", img: "/calm.jpg", price: "39 €" },
+  { name: "FOCUS", img: "/focus.jpg", price: "39 €" },
+  { name: "POWER", img: "/power.jpg", price: "39 €" },
+  { name: "MUSHGLOW", img: "/mushglow.jpg", price: "49 €" },
 ];
 
 const CONTENT = {
@@ -326,7 +332,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         // en gardait une copie française en dur, qui restait en français sur /en.
         tagline: benefitFor(p.title, p.tags[0] ?? c.best.fallbackTag, lang),
         price: formatPrice(p.price),
-        img: p.featuredImage?.url ?? "/brand/product-mushglow.jpg",
+        img: p.featuredImage?.url ?? "/mushglow.jpg",
         handle: p.handle as string | null,
         available: p.available,
       }))

@@ -801,7 +801,7 @@ export default async function ProductPage({
     ? images
     : product.featuredImage
       ? [product.featuredImage]
-      : [{ url: "/brand/product-mushglow.jpg", altText: product.title }];
+      : [{ url: "/mushglow.jpg", altText: product.title }];
 
   const reassuranceIcons = [Truck, ShieldCheck, MapPin];
   const reassurance = ui.reassurance.map((label, i) => ({ icon: reassuranceIcons[i], label }));
@@ -1045,7 +1045,7 @@ export default async function ProductPage({
                     return (
                       <li key={p.id} className="flex items-center gap-4 rounded-2xl ring-1 ring-border bg-card p-3.5">
                         <Link href={href} tabIndex={-1} aria-hidden className="relative h-16 w-16 shrink-0 rounded-xl overflow-hidden bg-bien-cream ring-1 ring-border">
-                          <Image src={p.featuredImage?.url ?? "/brand/product-mushglow.jpg"} alt={p.title} fill sizes="64px" className="object-cover" />
+                          <Image src={p.featuredImage?.url ?? "/mushglow.jpg"} alt={p.title} fill sizes="64px" className="object-cover" />
                         </Link>
                         <div className="min-w-0 flex-1">
                           <Link href={href}><h3 className="font-display text-black leading-tight hover:text-bien-leaf transition-colors">{p.title}</h3></Link>
