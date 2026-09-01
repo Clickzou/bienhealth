@@ -1068,7 +1068,12 @@ export default async function ProductPage({
         {productSeo && (
           <section className="mt-16 sm:mt-24 rounded-3xl lg:rounded-[2.5rem] bg-bien-cream/50 ring-1 ring-border p-7 sm:p-12 lg:p-16">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{ui.aboutEyebrow}</p>
-            <h2 className="mt-3 font-display tracking-tighter text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
+            {/* `tracking-tighter` (-0,05 em) resserre aussi l'espace : dans la
+                Season Serif, « MushGlow, la poudre » se lisait « MushGlow,la
+                poudre » (retour client du 01/09/2026). Ces titres commencent
+                tous par le nom du produit suivi d'une virgule — d'où
+                `tracking-tight`, qui garde le resserrement sans coller. */}
+            <h2 className="mt-3 font-display tracking-tight text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
             <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
               {productSeo.paragraphs.map((para, i) => (
                 <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{para}</p>

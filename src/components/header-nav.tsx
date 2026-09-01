@@ -26,6 +26,7 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
   const BY_TYPE = [
     { label: t.gummies, href: `/${lang}/collections/gummies` },
+    { label: t.packs, href: `/${lang}/collections/packs` },
     { label: t.powders, href: `/${lang}/collections/nos-poudres` },
     { label: t.accessories, href: `/${lang}/collections/nos-accessoires` },
     { label: t.allProducts, href: `/${lang}/boutique` },

@@ -708,10 +708,11 @@ export default async function PressePage({
           <div className="mt-7 grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-7 gap-x-6 gap-y-8 items-center">
             {PRESS.map((m) => {
               const logo = (
-                /* Case de rapport fixe plutôt que `w-auto` : les fichiers portent
-                   depuis le 29/08/2026 un canevas commun (720 × 280), c'est lui qui
-                   règle la taille relative des logos entre eux. */
-                <Image src={m.logo} alt={m.name} width={720} height={280} className="h-9 sm:h-11 w-full object-contain opacity-70 hover:opacity-100 transition-opacity" />
+                /* Hauteur commune, largeur propre à chaque logo : leur taille
+                   relative est réglée à la génération du fichier (aire du dessin
+                   normalisée), pas par un canevas partagé qui laissait des blancs
+                   latéraux très inégaux. */
+                <Image src={m.logo} alt={m.name} width={m.w} height={m.h} className="h-9 sm:h-11 w-auto mx-auto opacity-70 hover:opacity-100 transition-opacity" />
               );
               return m.href ? (
                 <a key={m.name} href={m.href} target="_blank" rel="noopener noreferrer" aria-label={m.name} className="min-w-0">{logo}</a>

@@ -1967,3 +1967,50 @@ Deux détails relevés au passage : `bigmedia.bpifrance.fr` écrit « Bien » et
 « BIEN », d'où une détection à zéro au premier passage ; et Marie Claire a un
 **second** article (sélection ashwagandha, BIEN en 8ᵉ position) qui n'a pas été
 ajouté — deux entrées du même titre casseraient la clé React de la liste.
+
+## 26. Logos, packs et typographie — retours client du 01/09/2026 (soir)
+
+**Les écarts entre logos.** Le canevas commun 720 × 280 posé le 29/08 alignait
+la taille optique mais laissait des blancs latéraux très inégaux : un logo large
+touchait les bords, un logo carré n'occupait que 280 px sur 720 et gardait
+220 px de vide de chaque côté. Dans le bandeau défilant de l'accueil, l'écart
+apparent doublait d'un logo à l'autre.
+
+Les 36 fichiers sont régénérés avec une **hauteur commune (280) et une largeur
+ajustée au dessin**. L'écart est alors porté par la seule marge CSS, donc
+constant. La taille optique reste équilibrée en normalisant l'**aire** du
+contenu (`h = √(aire / ratio)`, plafonnée à 200 px) et non sa hauteur : à
+hauteur égale, un logo carré paraît deux fois plus lourd qu'un logo large.
+
+Chaque entrée de `PRESS` porte désormais `w` et `h` — sans quoi le navigateur ne
+peut pas réserver la place avant chargement, et la bande sauterait.
+
+⚠️ Les 36 logos étaient bien en ligne : le client les croyait manquants parce
+que le bandeau défile et n'en montre que sept à la fois.
+
+**L'espace avalé dans les titres produit.** `tracking-tighter` (-0,05 em)
+resserre aussi l'espace : dans la Season Serif, « MushGlow, la poudre » se
+lisait « MushGlow,la poudre ». Les quatre titres de la section « À propos »
+commencent tous par le nom du produit suivi d'une virgule. Passé en
+`tracking-tight` (-0,025 em), vérifié en rendant la fonte réelle côte à côte.
+
+**Les packs n'apparaissaient nulle part.** BOOST, FLOW, BALANCE et RESET ne
+citent aucun produit dans leur titre, et tout le filtrage des collections se
+faisait sur le titre : ils ne sortaient donc ni dans « gummies », ni dans
+« poudres », ni dans les pages par besoin — seulement sur `/boutique`.
+
+Une table `PACKS` déclare leur composition (BOOST = FOCUS + POWER, FLOW =
+FOCUS + CALM, BALANCE = CALM + MUSHGLOW, RESET = FOCUS + POWER + CALM), et le
+filtre lit désormais le contenu réel. Conséquences : nouvelle collection
+`/collections/packs` (« Packs & duos », au menu desktop et mobile), et les
+quatre pages par besoin listent les packs correspondants, après les formules
+seules.
+
+⚠️ Deux pièges rencontrés :
+- `/collections/packs` était **redirigé en 301 vers la boutique** par la table
+  des anciennes URL Shopify (31/08). La redirection est retirée : la collection
+  existe maintenant côté site. Vérifier `next.config.ts` avant de créer une
+  collection dont le slug figure dans cette table.
+- sans bénéfice déclaré, la carte produit retombe sur le premier tag Shopify :
+  BOOST s'annonçait « badge_-20% ». Les quatre packs ont leur phrase dans
+  `BENEFITS`.

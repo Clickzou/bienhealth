@@ -490,10 +490,11 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             occuper plusieurs rangées. La liste est rendue deux fois — la seconde
             copie, invisible pour les lecteurs d'écran, referme la boucle (voir
             `components/press-marquee.tsx`, qui porte aussi les flèches de
-            navigation manuelle). Chaque logo vit dans une case de taille fixe
-            et remplit en `object-contain` ; les fichiers partagent depuis le
-            29/08/2026 un canevas au rapport de cette case, ce qui aligne leur
-            taille optique malgré des formes très différentes. */}
+            navigation manuelle). Chaque logo garde sa largeur propre, à hauteur
+            commune : l'écart entre deux logos est alors porté par la seule
+            marge et reste constant. Les fichiers sont tous hauts de 280 px et
+            larges de ce que demande leur dessin, la taille optique étant
+            équilibrée à la génération (aire normalisée, pas hauteur). */}
         <div className="mt-6">
           <PressMarquee>
             {/* L'écart entre logos est porté par une marge sur chaque case et non
@@ -504,9 +505,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <div key={copy} className="flex items-center" aria-hidden={copy === 1 ? true : undefined}>
                   {PRESS.map((p) => {
                     const logo = (
-                      <Image src={p.logo} alt={copy === 1 ? "" : p.name} fill sizes="160px" className="object-contain" />
+                      <Image src={p.logo} alt={copy === 1 ? "" : p.name} width={p.w} height={p.h} sizes="200px" className="h-full w-auto" />
                     );
-                    const shell = "relative block h-12 sm:h-14 w-28 sm:w-36 shrink-0 mr-8 sm:mr-12 grayscale opacity-65 transition-all";
+                    const shell = "block h-12 sm:h-14 w-auto shrink-0 mr-8 sm:mr-12 grayscale opacity-65 transition-all";
                     return p.href && copy === 0 ? (
                       <a
                         key={p.name}

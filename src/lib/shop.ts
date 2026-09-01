@@ -28,6 +28,24 @@ const BENEFITS: Record<string, { fr: string; en: string }> = {
     fr: "Beauté & éclat : peau, cheveux et vitalité, 6-en-1.",
     en: "Beauty & glow: skin, hair and vitality, 6-in-1.",
   },
+  // Les packs n'avaient pas de bénéfice : la carte produit retombait alors sur
+  // le premier tag Shopify, et BOOST s'annonçait « badge_-20% ».
+  BOOST: {
+    fr: "Clarté mentale & énergie physique : FOCUS et POWER en synergie.",
+    en: "Mental clarity & physical energy: FOCUS and POWER in synergy.",
+  },
+  FLOW: {
+    fr: "Concentration calme : FOCUS le matin, CALM le soir.",
+    en: "Calm focus: FOCUS in the morning, CALM in the evening.",
+  },
+  BALANCE: {
+    fr: "Rituel du soir : CALM pour le sommeil, MUSHGLOW pour l'éclat.",
+    en: "Evening ritual: CALM for sleep, MUSHGLOW for glow.",
+  },
+  RESET: {
+    fr: "La routine complète : FOCUS, POWER et CALM.",
+    en: "The complete routine: FOCUS, POWER and CALM.",
+  },
 };
 
 /**
@@ -112,7 +130,7 @@ export function benefitFor(name: string, fallback: string, lang = "fr"): string 
 export const BEST_SELLERS = ["MUSHGLOW", "CALM"];
 
 /* --- Type de produit --- */
-export type ProductType = "gummies" | "poudres" | "accessoires";
+export type ProductType = "gummies" | "poudres" | "packs" | "accessoires";
 
 /**
  * Accessoires connus, par handle. Ce garde-fou reste là pour le mousseur, qui
@@ -123,9 +141,36 @@ export type ProductType = "gummies" | "poudres" | "accessoires";
 export const ACCESSOIRES = new Set(["mousseur-a-lait", "bien-totebag"]);
 const ACCESSORY_TAGS = ["accessories", "accessoires", "accessoire", "accessory"];
 
-/** Noms de la gamme. Un pack en cite un ou plusieurs dans son titre. */
+/** Noms de la gamme. */
 const GUMMY_NAMES = ["CALM", "FOCUS", "POWER"];
 const POWDER_NAMES = ["MUSHGLOW"];
+
+/**
+ * Composition des packs, par handle.
+ *
+ * Les packs s'appellent BOOST, FLOW, BALANCE et RESET : leur titre ne cite
+ * aucun produit de la gamme. Un filtrage sur le seul titre les faisait donc
+ * disparaître de toutes les collections — ni gummies, ni poudres, ni « par
+ * besoin » — et ils n'étaient visibles que sur /boutique (retour client du
+ * 01/09/2026). Cette table rattache chaque pack à ce qu'il contient
+ * réellement, d'après sa fiche Shopify.
+ */
+export const PACKS: Record<string, string[]> = {
+  boost: ["FOCUS", "POWER"],
+  flow: ["FOCUS", "CALM"],
+  balance: ["CALM", "MUSHGLOW"],
+  reset: ["FOCUS", "POWER", "CALM"],
+};
+
+export const isPack = (p: Classifiable) => p.handle in PACKS;
+
+/** Ce que contient un produit : son propre nom, ou le contenu du pack. */
+const contents = (p: Classifiable): string[] =>
+  PACKS[p.handle] ?? [p.title.toUpperCase()];
+
+/** Le produit contient-il au moins un des noms demandés (pack compris) ? */
+export const includesAny = (p: Classifiable, names: string[]) =>
+  contents(p).some((c) => names.some((k) => c.includes(k)));
 
 type Classifiable = { handle: string; title: string; tags?: string[] };
 
@@ -145,12 +190,13 @@ export function isAccessory(p: Classifiable): boolean {
  * ne cite aucun nom de la gamme n'apparaît dans aucune des deux plutôt que de
  * tomber par défaut dans les gummies.
  */
-export const hasGummies = (p: Classifiable) => !isAccessory(p) && named(p, GUMMY_NAMES);
-export const hasPowder = (p: Classifiable) => !isAccessory(p) && named(p, POWDER_NAMES);
+export const hasGummies = (p: Classifiable) => !isAccessory(p) && includesAny(p, GUMMY_NAMES);
+export const hasPowder = (p: Classifiable) => !isAccessory(p) && includesAny(p, POWDER_NAMES);
 
 /** Famille principale d'un produit (badge, tri, libellés). */
 export function typeOf(p: Classifiable): ProductType {
   if (isAccessory(p)) return "accessoires";
+  if (isPack(p)) return "packs";
   if (named(p, POWDER_NAMES)) return "poudres";
   return "gummies";
 }
@@ -171,8 +217,12 @@ export type Collection = {
   order?: string[];
 };
 
-const byName = (keys: string[]) => (p: ShopifyProduct) =>
-  keys.some((k) => p.title.toUpperCase().includes(k));
+/**
+ * Filtre d'une collection : le produit lui-même, ou un pack qui le contient.
+ * Sans cela, BALANCE (CALM + MUSHGLOW) n'apparaissait ni dans « Sérénité »
+ * ni dans « Beauté », alors qu'il répond aux deux besoins.
+ */
+const byName = (keys: string[]) => (p: ShopifyProduct) => includesAny(p, keys);
 
 /** Renvoie les champs localisés (eyebrow/label/desc) d'une collection. */
 export function localizeCollection(col: Collection, lang: string) {
@@ -206,7 +256,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Boost your physical and mental performance with natural supplements tailored to your energy and vitality needs.",
     },
     match: byName(["MUSHGLOW", "FOCUS", "POWER"]),
-    order: ["POWER", "FOCUS", "MUSHGLOW"],
+    order: ["POWER", "FOCUS", "MUSHGLOW", "BOOST", "RESET", "FLOW", "BALANCE"],
   },
   "serenite": {
     slug: "serenite",
@@ -219,7 +269,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Soothe the mind, release tension and restore deep, restorative sleep.",
     },
     match: byName(["CALM", "MUSHGLOW"]),
-    order: ["CALM", "MUSHGLOW"],
+    order: ["CALM", "MUSHGLOW", "BALANCE", "FLOW", "RESET"],
   },
   "concentration": {
     slug: "concentration",
@@ -232,7 +282,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Support memory, focus and mental clarity, without jitters or dips.",
     },
     match: byName(["FOCUS", "MUSHGLOW"]),
-    order: ["FOCUS", "MUSHGLOW"],
+    order: ["FOCUS", "MUSHGLOW", "FLOW", "BOOST", "RESET", "BALANCE"],
   },
   "beaute-et-bien-etre": {
     slug: "beaute-et-bien-etre",
@@ -245,7 +295,7 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Skin, hair and natural hormonal balance, thanks to science-based active ingredients.",
     },
     match: byName(["MUSHGLOW", "CALM"]),
-    order: ["MUSHGLOW", "CALM"],
+    order: ["MUSHGLOW", "CALM", "BALANCE", "FLOW", "RESET"],
   },
   // Par type (slugs SEO du live)
   "gummies": {
@@ -260,6 +310,20 @@ export const COLLECTIONS: Record<string, Collection> = {
       desc: "Our natural chewable supplements: science-based dosages, no added sugar, no artificial additives and vegan.",
     },
     match: hasGummies,
+  },
+  "packs": {
+    slug: "packs",
+    eyebrow: "Par type de produit",
+    label: "Packs & duos",
+    seoTitle: "Packs et duos de compléments adaptogènes",
+    desc: "Nos formules réunies en rituels complets : deux ou trois produits qui travaillent en synergie, à prix doux.",
+    en: {
+      eyebrow: "By product type",
+      label: "Packs & duos",
+      desc: "Our formulas brought together as complete rituals: two or three products working in synergy, at a better price.",
+    },
+    match: isPack,
+    order: ["BOOST", "FLOW", "BALANCE", "RESET"],
   },
   "nos-poudres": {
     slug: "nos-poudres",

@@ -149,7 +149,9 @@ const nextConfig: NextConfig = {
       ...collection("accessories", "boutique"),
       ...collection("all", "boutique"),
       ...collection("nos-produits", "boutique"),
-      ...collection("packs", "boutique"),
+      // « packs » n'est plus une collection disparue : elle existe sur le site
+      // depuis le 01/09/2026 (BOOST, FLOW, BALANCE, RESET). La rediriger vers
+      // la boutique renvoyait le menu « Packs & duos » sur la gamme entière.
       ...collection("easygift-all-products", "boutique"),
       // « energie » a été renommée en cours de route.
       ...collection("energie", "collections/performance-et-vitalite"),
