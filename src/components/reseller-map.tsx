@@ -53,9 +53,18 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
     if (touch) map.getContainer().style.touchAction = "pan-x pan-y";
     mapRef.current = map;
 
-    L.tileLayer("https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png", {
-      attribution: '&copy; OpenStreetMap &copy; CARTO',
-      subdomains: "abcd",
+    // Fond de carte gris clair. CARTO (`basemaps.cartocdn.com/light_all`) a été
+    // abandonné le 01/09/2026 : le service exige désormais une clé d'API et
+    // sert aux appels anonymes une tuile barrée « API KEY REQUIRED », visible
+    // en plein milieu de la carte des revendeurs. Le fond Esri « Light Gray »
+    // rend la même chose et ne demande pas de clé. Les libellés de villes sont
+    // sur une couche séparée, à poser par-dessus le fond.
+    const esri = "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas";
+    L.tileLayer(`${esri}/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
+      attribution: "&copy; Esri &copy; OpenStreetMap",
+      maxZoom: 19,
+    }).addTo(map);
+    L.tileLayer(`${esri}/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
       maxZoom: 19,
     }).addTo(map);
 

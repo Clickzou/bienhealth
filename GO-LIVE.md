@@ -1857,3 +1857,27 @@ riche, reste seule en service. Ne pas la réactiver.
 **Reste à faire** : créer dans Klaviyo le flow « Welcome » qui envoie
 réellement le code `WELCOMETOBIEN10` — le popup le promet par mail, aujourd'hui
 seul l'affichage à l'écran le délivre.
+
+## 24. Carte des revendeurs — CARTO ferme ses fonds de carte (01/09/2026)
+
+La carte de `/revendeurs` affichait **« API KEY REQUIRED »** en travers, répété
+sur chaque tuile. Rien n'avait changé côté site : CARTO exige désormais une clé
+d'API pour ses fonds de carte et sert aux appels anonymes une tuile barrée de ce
+filigrane. Le service répond toujours 200, l'échec est donc purement visuel — un
+test HTTP ne l'aurait pas détecté, il faut regarder l'image.
+
+**Correctif** : `src/components/reseller-map.tsx` passe au fond **Esri « World
+Light Gray »**, qui ne demande pas de clé et rend le même gris clair. Les
+libellés de villes y sont sur une couche séparée (`World_Light_Gray_Reference`),
+posée par-dessus le fond — sans elle, la carte n'affiche que les pays.
+
+⚠️ Attention à l'ordre des coordonnées : ArcGIS sert ses tuiles en
+`/tile/{z}/{y}/{x}`, **pas** `{z}/{x}/{y}` comme la plupart des fournisseurs.
+
+Si le rendu exact de CARTO redevenait nécessaire, une clé gratuite suffit
+(compte CARTO, paramètre `?api_key=`). Le reste de la carte — marqueurs,
+popups, cadrage, geste à deux doigts sur mobile — est inchangé.
+
+De fines lignes blanches apparaissent entre les tuiles sur les grandes étendues
+de mer. **Ce défaut préexistait avec CARTO** (vérifié par capture de la
+production avant bascule) : ce n'est pas une régression du changement de fond.
