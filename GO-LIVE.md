@@ -1804,13 +1804,23 @@ sont perdus (aucune trace côté site).
   pour rendre l'état vérifiable ;
 - Shopify passe en miroir best-effort, avec le code HTTP désormais **loggué**
   au lieu d'être avalé ;
-- deux variables à renseigner : `KLAVIYO_COMPANY_ID` (Settings › API keys ›
-  Public API key / Site ID) et `KLAVIYO_LIST_ID` (Audience › Lists & Segments ›
-  la liste › Settings).
+- deux variables ajoutées sur Vercel (Production) le 01/09/2026 :
+  `KLAVIYO_COMPANY_ID` = `TVsaPf` (clé publique du compte « Bien Health »,
+  autorisée sur tous les domaines) et `KLAVIYO_LIST_ID` = `WDRQ2y`.
 
-⚠️ **Tant que ces deux variables ne sont pas ajoutées sur Vercel (Production),
-la collecte reste sans effet.** Le log serveur le dit explicitement :
-`[newsletter] Klaviyo non configuré`.
+**Liste cible : « EMAIL - New optins website sign-up form »** (1242 membres
+avant branchement, créée le 28/09/2023) — celle qui recevait déjà les
+inscriptions par formulaire du site. Pas de double opt-in : le profil apparaît
+immédiatement dans les membres.
+
+⚠️ Ne pas viser un **segment** (`EMAIL - All optins email`, `EMAIL - Optins
+actifs 12 mois`…) : un segment est recalculé à partir de règles, Klaviyo refuse
+qu'on y inscrive un profil. Seule une **Liste** a une porte d'entrée. Les
+inscrits retombent de toute façon dans les segments d'optins.
+
+**Vérifié de bout en bout le 01/09/2026** : inscription en local puis sur
+`https://bien.health/api/newsletter` → `{"ok":true,"klaviyo":true}`, profil
+visible dans la liste Klaviyo dans la foulée (1242 → 1243).
 
 **Reste à faire** : créer dans Klaviyo le flow « Welcome » qui envoie
 réellement le code `WELCOMETOBIEN10` — le popup le promet par mail, aujourd'hui
