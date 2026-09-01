@@ -50,6 +50,7 @@ type Feature = {
 const FEATURES: Feature[] = [
   {
     magazine: "Grazia",
+    product: { src: "/gamme-courte-ciblee.jpg", alt: "Les gummies FOCUS, POWER et CALM de BIEN health" },
     quote: "La science est formelle : ces plantes méconnues permettent de dire adieu au stress",
     quoteEn: "Science is clear: these little-known plants let you say goodbye to stress",
     paragraphs: [
@@ -77,10 +78,11 @@ const FEATURES: Feature[] = [
       "Other research suggests improved sleep quality, increased energy and even support for cognitive function.",
       "Ashwagandha may also help regulate blood sugar and support thyroid function. The scientific community, however, calls for further research.",
     ],
-    product: { src: "/brand/product-calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
+    product: { src: "/approch-globale-sante.jpg", alt: "Gummies BIEN health dans une coupelle" },
   },
   {
     magazine: "Do It in Paris",
+    product: { src: "/prelude-bien-health.jpg", alt: "La gamme BIEN health au complet" },
     quote: "Pour soutenir énergie, clarté mentale et équilibre émotionnel",
     quoteEn: "To support energy, mental clarity and emotional balance",
     paragraphs: [
@@ -110,10 +112,11 @@ const FEATURES: Feature[] = [
     ],
     note: "FOCUS, 39 € le pot de 60 gummies",
     noteEn: "FOCUS, €39 for a jar of 60 gummies",
-    product: { src: "/brand/product-focus.jpg", alt: "BIEN health FOCUS, gummies concentration & mémoire" },
+    product: { src: "/focus.jpg", alt: "BIEN health FOCUS, gummies concentration & mémoire" },
   },
   {
     magazine: "Gala",
+    product: { src: "/power.jpg", alt: "BIEN health POWER, gummies énergie & endurance" },
     quote: "Des champignons pour booster et retrouver l'équilibre",
     quoteEn: "Mushrooms to boost energy and restore balance",
     paragraphs: [
@@ -129,16 +132,161 @@ const FEATURES: Feature[] = [
       "For the festive season, enjoy 20% off with the code GALA20, valid until 31/12. Try it, savour it, perform!",
     ],
   },
+  {
+    magazine: "Psychologies",
+    product: { src: "/bien-health-bien-etre.jpg", alt: "Un pot BIEN health en main" },
+    quote: "Le nouvel allié anti-stress dont tout le monde parle (et ce n’est pas du magnésium)",
+    quoteEn: "The new anti-stress ally everyone is talking about (and it is not magnesium)",
+    paragraphs: [
+      "En France, selon l’Ifop, 95 % des Français se disaient anxieux et stressés en 2022. Les conséquences du stress chronique sont pourtant lourdes : troubles dépressifs, surcharge émotionnelle, problèmes cardiaques, risques de diabète de type 2 ou d’hypertension.",
+      "La marque BIEN s’est attaquée à ce problème et a trouvé la solution pour aider les Français à réduire leur anxiété, mais surtout à accéder à une sérénité et un épanouissement durables et stables. Comment ? En proposant des compléments alimentaires à base de champignons adaptogènes et de plantes fonctionnelles.",
+      "Selon les champignons adaptogènes, les effets varient : l’ashwagandha et la rhodiola assurent une réduction du stress de 30 à 42 %, et l’ashwagandha réduit aussi l’anxiété de 28 à 41 %.",
+      "« J’utilise ces plantes depuis une dizaine d’années et elles m’ont vraiment aidée, que ce soit dans ma vie professionnelle, sportive ou même personnelle », confie Carla Debard, fondatrice de BIEN.",
+    ],
+    paragraphsEn: [
+      "In France, according to Ifop, 95% of people described themselves as anxious and stressed in 2022. The consequences of chronic stress are heavy: depressive disorders, emotional overload, heart problems, and a higher risk of type 2 diabetes or hypertension.",
+      "BIEN took on that problem and found a way to help people lower their anxiety and, above all, reach a lasting, stable sense of calm — through supplements built on adaptogenic mushrooms and functional plants.",
+      "Effects vary from one adaptogen to another: ashwagandha and rhodiola deliver a 30% to 42% reduction in stress, and ashwagandha also reduces anxiety by 28% to 41%.",
+      "“I have used these plants for about ten years and they have genuinely helped me — professionally, in sport and personally,” says Carla Debard, founder of BIEN.",
+    ],
+  },
+  {
+    magazine: "BIBA",
+    product: { src: "/mushglow.jpg", alt: "Mushglow, le supermix en poudre de BIEN health" },
+    quote: "Adieu le café : cette boisson à base de champignons réveille sans doper le cortisol",
+    quoteEn: "Goodbye coffee: this mushroom-based drink wakes you up without spiking cortisol",
+    paragraphs: [
+      "Le café, on l’aime… jusqu’au moment où il ne fait plus vraiment le job. Nervosité, coup de fatigue en milieu de matinée, esprit un peu trop agité pour être vraiment concentrée. De plus en plus de femmes cherchent autre chose pour démarrer la journée : pas un énième booster, mais une énergie plus stable, plus douce, qui ne joue pas aux montagnes russes.",
+      "Là où le café agit vite — parfois trop vite — Mushglow joue la carte de la régularité. Une cuillère par jour dans une boisson chaude, un smoothie ou un yaourt, et le rituel s’installe sans bouleverser les habitudes : concentration plus fluide, moins de fatigue mentale, énergie plus constante. Sans nervosité, sans cœur qui s’emballe, sans dépendance.",
+      "Autre différence notable avec le café : l’impact sur la peau. En intégrant du collagène et des actifs antioxydants, Mushglow s’inscrit aussi dans une logique de beauté de l’intérieur. Un effet discret, progressif, mais bien réel pour celles qui tiennent la cure sur plusieurs semaines.",
+    ],
+    paragraphsEn: [
+      "We love coffee… until it stops doing the job. Jitters, a mid-morning slump, a mind too busy to actually focus. More and more women are looking for another way to start the day: not yet another booster, but steadier, gentler energy without the rollercoaster.",
+      "Where coffee acts fast — sometimes too fast — Mushglow plays the long game. One spoonful a day in a hot drink, a smoothie or a yoghurt, and the ritual settles in without upending your habits: smoother focus, less mental fatigue, steadier energy. No jitters, no racing heart, no dependency.",
+      "Another notable difference from coffee: the effect on skin. With collagen and antioxidant actives, Mushglow also works as beauty from within — a discreet, gradual, but very real effect for those who keep the course going for several weeks.",
+    ],
+    note: "Mushglow, supermix 6-en-1, 30 doses, 49 €",
+    noteEn: "Mushglow, 6-in-1 supermix, 30 servings, €49",
+  },
+  {
+    magazine: "Beauté test",
+    product: { src: "/calm.jpg", alt: "BIEN health CALM, gummies sérénité & sommeil" },
+    quote: "J’ai testé ces gummies anti-stress sans mélatonine qui apaisent vraiment",
+    quoteEn: "I tried these melatonin-free anti-stress gummies that genuinely calm you down",
+    paragraphs: [
+      "Charge mentale qui déborde, nervosité diffuse, sommeil trop léger… Quand le stress s’invite jusque dans nos nuits, on cherche souvent une solution rapide. Mais entre les compléments trop dosés, la mélatonine mal tolérée et les formules peu transparentes, difficile de s’y retrouver.",
+      "C’est précisément sur ce terrain que la marque BIEN a décidé d’intervenir avec CALM, des gummies adaptogènes pensés pour apaiser durablement le système nerveux — sans mélatonine, sans accoutumance, et sans effet « coup de massue » en journée.",
+      "Reishi pour aider à réguler le cortisol, ashwagandha pour la résistance au stress, safran pour l’humeur et la clarté mentale : la formule agit sur la gestion du stress sans forcer l’endormissement ni perturber les cycles naturels du sommeil.",
+      "Avec CALM, BIEN propose une vision plus moderne du complément anti-stress : moins intrusive, plus respectueuse du corps, et réellement agréable à consommer.",
+    ],
+    paragraphsEn: [
+      "Mental load spilling over, a diffuse restlessness, sleep that never quite deepens… When stress follows us into the night, we tend to look for a quick fix. But between over-dosed supplements, poorly tolerated melatonin and opaque formulas, it is hard to know where to turn.",
+      "That is exactly where BIEN stepped in with CALM, adaptogenic gummies designed to settle the nervous system for the long run — no melatonin, no habituation, and no knocked-out feeling during the day.",
+      "Reishi to help regulate cortisol, ashwagandha for stress resilience, saffron for mood and mental clarity: the formula works on stress management without forcing sleep or disrupting natural sleep cycles.",
+      "With CALM, BIEN offers a more modern take on the anti-stress supplement: less intrusive, gentler on the body, and genuinely pleasant to take.",
+    ],
+  },
+  {
+    magazine: "Les Nouvelles Esthétiques",
+    product: { src: "/brand/bien-health-complements-champignons-adaptogenes.jpg", alt: "La gamme BIEN health" },
+    quote: "Quand les plantes adaptogènes réinventent le bien-être",
+    quoteEn: "When adaptogenic plants reinvent everyday wellbeing",
+    paragraphs: [
+      "Pour formuler ses compléments, Carla a challengé de nombreux laboratoires afin d’en faire ressortir les formules les plus hautement dosées possibles, développées avec des médecins et des naturopathes.",
+      "« Les adaptogènes sont utilisés depuis des décennies, mais ce n’était pas exploité, explique-t-elle. Pour la petite anecdote, le Cordyceps, un champignon contenu dans nos gummies Power, a été consommé en 1993 par l’équipe chinoise pour la préparation aux Jeux Olympiques. Les résultats ont été si élevés qu’on a cru à un dopage. »",
+      "« Proposer des blends d’actifs permet d’en optimiser les effets. Nous avons régularisé les quantités d’actifs pour que cela soit optimal », détaille la fondatrice. Les compléments BIEN Health sont fabriqués en France et 100 % naturels.",
+      "Un choix qui convainc : les clients rachètent dans 80 % des cas.",
+    ],
+    paragraphsEn: [
+      "To formulate her supplements, Carla challenged a long list of laboratories to push the dosages as high as possible, working with doctors and naturopaths.",
+      "“Adaptogens have been used for decades, but nobody was making the most of them,” she explains. “As an aside: Cordyceps, one of the mushrooms in our Power gummies, was taken by the Chinese team in 1993 while preparing for the Olympics. The results were so high that people suspected doping.”",
+      "“Blending actives optimises their effects. We standardised the quantities so that the balance is optimal,” the founder explains. BIEN Health supplements are made in France and 100% natural.",
+      "The approach convinces: 80% of customers reorder.",
+    ],
+  },
+  {
+    magazine: "TheDreamTeam",
+    product: { src: "/gamme-courte-ciblee.jpg", alt: "Les trois gummies BIEN health" },
+    quote: "Les champignons adaptogènes révolutionnent « BIEN » notre équilibre quotidien",
+    quoteEn: "Adaptogenic mushrooms are quietly revolutionising our daily balance",
+    paragraphs: [
+      "Stress chronique, fatigue persistante, troubles du sommeil… Dans une société où près de 6 Français sur 10 se déclarent stressés, les solutions naturelles pour retrouver un équilibre corps-esprit gagnent en popularité. BIEN mise sur le pouvoir des champignons adaptogènes et des plantes fonctionnelles pour répondre à ces enjeux modernes.",
+      "Les actifs utilisés dans les produits BIEN sont soutenus par des études cliniques reconnues : le Lion’s Mane améliore la mémoire et réduit le stress perçu de 28 %, tandis que le Reishi renforce l’immunité en augmentant les cellules NK de 30 %.",
+      "Disponibles en pharmacies, sur bien.health et dans certains studios de Pilates et concept stores, les produits BIEN offrent une réponse naturelle aux défis du quotidien.",
+    ],
+    paragraphsEn: [
+      "Chronic stress, lingering fatigue, disrupted sleep… In a country where nearly 6 in 10 people describe themselves as stressed, natural ways to restore body-mind balance are gaining ground. BIEN bets on adaptogenic mushrooms and functional plants to answer those modern pressures.",
+      "The actives used in BIEN products are backed by recognised clinical studies: Lion’s Mane improves memory and reduces perceived stress by 28%, while Reishi supports immunity by increasing NK cells by 30%.",
+      "Available in pharmacies, on bien.health and in selected Pilates studios and concept stores, BIEN products offer a natural answer to everyday demands.",
+    ],
+  },
+  {
+    magazine: "Fresh Magazine",
+    product: { src: "/prelude-bien-health.jpg", alt: "La gamme BIEN health au complet" },
+    quote: "La gamme BIEN à la recherche du bien-être moderne",
+    quoteEn: "The BIEN range, in search of modern wellbeing",
+    paragraphs: [
+      "Selon une étude publiée par la Fondation Ramsay Santé, 59 % des Français déclarent être stressés en 2025, contre 51 % en 2017. Parmi eux, 31 % ont déjà eu recours à des plantes adaptogènes pour mieux gérer leur équilibre émotionnel.",
+      "Au-delà d’une simple marque, BIEN incarne une philosophie du bien-être. En alliant science et traditions ancestrales, elle mise sur une approche naturelle et complète, sans promesses irréalistes : champignons adaptogènes, plantes fonctionnelles hautement dosées, collagène et antioxydants premium.",
+      "Soutenue par un laboratoire scientifique français, la marque a pour mission d’offrir l’opportunité d’affronter les défis du quotidien de manière naturelle, simple, avec des résultats concrets — une cure de 1 à 3 mois, pour des effets visibles dès 10 jours.",
+      "« Parce que le vrai bien-être, ce n’est pas tout changer. C’est être toi, en mieux. »",
+    ],
+    paragraphsEn: [
+      "According to a study published by the Ramsay Santé Foundation, 59% of French people described themselves as stressed in 2025, up from 51% in 2017. Among them, 31% have already turned to adaptogenic plants to manage their emotional balance.",
+      "More than a brand, BIEN embodies a philosophy of wellbeing. Combining science and ancestral traditions, it takes a natural, complete approach with no unrealistic promises: adaptogenic mushrooms, highly dosed functional plants, premium collagen and antioxidants.",
+      "Backed by a French scientific laboratory, the brand aims to let people meet everyday challenges naturally and simply, with concrete results — a one to three month course, with visible effects from day ten.",
+      "“Real wellbeing isn’t about changing everything. It’s about being you, at your best.”",
+    ],
+  },
+  {
+    magazine: "BiG média",
+    product: { src: "/brand/founder.jpg", alt: "Carla Debard, fondatrice de BIEN health" },
+    quote: "Bien, la marque de plantes adaptogènes qui pilote votre forme",
+    quoteEn: "Bien, the adaptogenic plant brand that steers your form",
+    paragraphs: [
+      "À 25 ans, Carla Debard lance BIEN, une marque de compléments alimentaires à base de champignons adaptogènes. Forte de son passé de sportive de haut niveau, elle mise sur l’efficacité, le goût et l’expérience client pour s’affirmer sur un marché encore émergent en France.",
+      "« Dans le cadre de ma préparation, les spécialistes me conseillaient les champignons adaptogènes. Un jour, j’ai rencontré un entrepreneur qui avait lancé sa marque aux Pays-Bas, où ce genre de produits sont déjà bien plus développés qu’en France. Ici, on en est encore aux balbutiements », se souvient-elle.",
+      "« Quand je prenais des compléments alimentaires, j’avais l’impression d’être malade et de prendre un médicament. Il était donc essentiel pour moi de travailler le marketing de mon produit pour le rendre le plus désirable possible. » Six mois de recherche et développement et un démarchage laboratoire par laboratoire auront été nécessaires.",
+    ],
+    paragraphsEn: [
+      "At 25, Carla Debard launched BIEN, a supplement brand built on adaptogenic mushrooms. Drawing on her past as an elite athlete, she bets on efficacy, taste and customer experience to stand out in a market still emerging in France.",
+      "“During my training, specialists recommended adaptogenic mushrooms. One day I met an entrepreneur who had launched his brand in the Netherlands, where these products are far more developed than in France. Here, we are still at the very beginning,” she recalls.",
+      "“When I took supplements, I felt like I was ill, taking medicine. So it was essential for me to work on the marketing and make the product as desirable as possible.” It took six months of R&D and a laboratory-by-laboratory search.",
+    ],
+  },
+  {
+    magazine: "Mesinfos",
+    product: { src: "/athletes-bien-health.jpg", alt: "BIEN health, du sport de haut niveau au quotidien" },
+    quote: "BIEN Health veut démocratiser le pouvoir des champignons et adaptogènes",
+    quoteEn: "BIEN Health wants to bring the power of mushrooms and adaptogens to everyone",
+    paragraphs: [
+      "Après avoir dû mettre fin à sa carrière sportive pour des raisons de santé, Carla Debard, CEO de BIEN Health, a choisi de transformer cette épreuve en opportunité. Son ambition : proposer des solutions naturelles, efficaces, accessibles et fabriquées dans l’Hexagone.",
+      "« Nous travaillons avec un laboratoire basé dans le sud de la France. Cette collaboration nous permet de mener des recherches continues avec des équipes scientifiques afin d’améliorer constamment nos formules. »",
+      "« Nous ne sommes pas malades : notre objectif est simplement d’être une meilleure version de nous-mêmes. Nous avons donc conçu des produits efficaces, mais aussi plaisants à consommer. Il est important d’écouter son corps : Calm peut être pris le soir, tandis que les autres produits sont plutôt conseillés en début de journée. »",
+    ],
+    paragraphsEn: [
+      "After having to end her sporting career for health reasons, Carla Debard, CEO of BIEN Health, chose to turn the setback into an opportunity. Her ambition: natural, effective, accessible solutions, made in France.",
+      "“We work with a laboratory in the south of France. That partnership lets us run continuous research with scientific teams and keep improving our formulas.”",
+      "“We are not ill: our goal is simply to be a better version of ourselves. So we designed products that are effective but also pleasant to take. Listening to your body matters: Calm can be taken in the evening, while the others are better early in the day.”",
+    ],
+  },
+  {
+    magazine: "Gazelle",
+    product: { src: "/power.jpg", alt: "BIEN health POWER, gummies énergie & endurance" },
+    quote: "Un parfait équilibre mental et physique",
+    quoteEn: "A perfect mental and physical balance",
+    paragraphs: [
+      "Ces gummies gourmands ne contiennent pas d’ingrédients controversés comme le sucre et le gluten. Par ailleurs, ils s’adaptent très bien aux régimes végétariens.",
+      "Ils permettent de maintenir un parfait équilibre mental et physique, ainsi qu’une meilleure résistance au stress et à la fatigue.",
+    ],
+    paragraphsEn: [
+      "These moreish gummies contain no controversial ingredients such as sugar or gluten, and they suit vegetarian diets well.",
+      "They help maintain a perfect mental and physical balance, along with better resilience to stress and fatigue.",
+    ],
+    note: "POWER, 39 € la cure d’un mois",
+    noteEn: "POWER, €39 for a one-month course",
+  },
 ];
-
-/** Fac-similés fournis par le client, une page de magazine par parution. */
-const CARD_IMG: Record<string, string> = {
-  "Grazia": "/brand/presse/grazia.jpg",
-  "marie claire": "/brand/presse/marie-claire.jpg",
-  "Do It in Paris": "/brand/presse/do-it-paris.jpg",
-  "L'Officiel": "/brand/presse/officiel.jpg",
-  "Gala": "/brand/presse/gala.jpg",
-};
 
 const UI = {
   fr: {
@@ -147,7 +295,6 @@ const UI = {
     featuresTitle: "Ce que la presse a écrit",
     read: "Lire l'article",
     print: "Parution papier",
-    clipping: "La parution",
     inFrench: null as string | null,
   },
   en: {
@@ -156,7 +303,6 @@ const UI = {
     featuresTitle: "What the press wrote",
     read: "Read the article",
     print: "Print feature",
-    clipping: "The clipping",
     // Les extraits sont traduits, mais la parution reste française : la mention
     // le dit, pour qu'un lecteur qui suivrait le lien ne soit pas surpris de
     // tomber sur un article en français.
@@ -167,15 +313,12 @@ const UI = {
 /**
  * Une parution.
  *
- * Le texte de l'article tient désormais la carte ; le fac-similé n'est plus
- * qu'une vignette de preuve dans la colonne de droite (demande client — en
- * pleine largeur, les pages de magazine faisaient à elles seules tout le
- * contenu de la page, démesurées et illisibles).
+ * Le texte de l'article tient la carte ; la colonne de droite n'accueille plus
+ * qu'une photo du produit dont parle la parution.
  */
 function Feature({ f, i, lang }: { f: Feature; i: number; lang: string }) {
   const t = UI[lang === "en" ? "en" : "fr"];
   const media = pressMedia(f.magazine);
-  const clipping = CARD_IMG[f.magazine];
   const quote = lang === "en" ? f.quoteEn : f.quote;
   const paragraphs = lang === "en" ? f.paragraphsEn : f.paragraphs;
   const note = lang === "en" ? (f.noteEn ?? f.note) : f.note;
@@ -235,25 +378,17 @@ function Feature({ f, i, lang }: { f: Feature; i: number; lang: string }) {
           )}
         </div>
 
-        {/* Colonne de preuve : le produit cité, puis le fac-similé en aperçu.
-            Le dégradé signale que la page est tronquée et invite au clic. */}
+        {/* Colonne de droite : la photo du produit dont parle la parution,
+            prise dans le shooting de la marque. Y vivaient auparavant un
+            packshot généré — un flacon blanc à couvercle doré absent du
+            catalogue — et une vignette « La parution » qui n'était pas un scan
+            mais une carte fabriquée, dégradé et texte retapé (retour client du
+            01/09/2026). */}
         <div className="flex gap-4 px-6 pb-6 sm:px-9 sm:pb-9 lg:flex-col lg:p-11 lg:pl-0">
           {f.product && (
-            <div className="relative h-28 w-28 shrink-0 lg:h-auto lg:w-full lg:aspect-square rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
-              <Image src={f.product.src} alt={f.product.alt} fill sizes="(max-width:1024px) 112px, 240px" className="object-cover" />
+            <div className="relative h-28 w-28 shrink-0 lg:h-auto lg:w-full lg:aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
+              <Image src={f.product.src} alt={f.product.alt} fill sizes="(max-width:1024px) 112px, 272px" className="object-cover" />
             </div>
-          )}
-          {clipping && (
-            <a href={clipping} target="_blank" rel="noopener noreferrer" className="group min-w-0 flex-1 lg:flex-none">
-              <span className="relative block h-28 lg:h-56 rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={clipping} alt={`BIEN vu dans ${f.magazine}`} loading="lazy" className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105" />
-                <span className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-black/45 to-transparent" />
-              </span>
-              <span className="mt-2 inline-flex items-center gap-1.5 text-xs font-semibold text-bien-leaf group-hover:gap-2.5 transition-all">
-                {t.clipping} <ArrowUpRight className="h-3.5 w-3.5" />
-              </span>
-            </a>
           )}
         </div>
       </div>

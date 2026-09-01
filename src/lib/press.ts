@@ -24,6 +24,14 @@ export const PRESS: { name: string; logo: string; href?: string }[] = [
   { name: "BIBA", logo: "/brand/presse/logos/biba.webp", href: "https://www.bibamagazine.fr/lifestyle/sante/adieu-le-cafe-cette-boisson-naturelle-a-base-de-champignons-est-le-secret-pour-se-reveiller-sans-doper-son-cortisol-498845.html" },
   { name: "Sud Radio", logo: "/brand/presse/logos/sud-radio.webp", href: "https://www.sudradio.fr/emission/cest-ca-la-france-378" },
   { name: "Beauté test", logo: "/brand/presse/logos/beaute-test.webp", href: "https://www.beaute-test.com/mag/jai-teste-pour-vous-ces-gummies-anti-stress-sans-melatonine-qui-apaisent-vraiment.php" },
+  { name: "Les Nouvelles Esthétiques", logo: "/brand/presse/logos/nouvelles-esthetiques.webp", href: "https://www.nouvelles-esthetiques.com/articles/sante-medecine/bien-etre/bien-health-quand-les-plantes-adaptogenes-reinventent-le-bien-etre-4629" },
+  { name: "TheDreamTeam", logo: "/brand/presse/logos/thedreamteam.webp", href: "https://thedreamteam.fr/les-champignons-adaptogenes-revolutionnent-bien-notre-equilibre-quotidien/" },
+  { name: "Fresh Magazine", logo: "/brand/presse/logos/fresh-magazine.webp", href: "https://freshmagparis.com/la-gamme-bien-a-la-recherche-du-bien-etre-moderne/" },
+  { name: "BiG média", logo: "/brand/presse/logos/big-media.webp", href: "https://bigmedia.bpifrance.fr/nos-actualites/bien-la-marque-de-plantes-adaptogenes-qui-pilote-votre-forme" },
+  { name: "Mesinfos", logo: "/brand/presse/logos/mesinfos.webp", href: "https://mesinfos.fr/75000-paris/bien-health-veut-democratiser-le-pouvoir-des-champignons-et-adaptogenes-245656.html" },
+  { name: "Gazelle", logo: "/brand/presse/logos/gazelle.webp", href: "https://www.gazellemag.com/selection-dindispensables-pour-prendre-soin-de-soi-et-prevenir-les-petits-maux-du-quotidien" },
+  { name: "Fait en France", logo: "/brand/presse/logos/fait-en-france.webp", href: "https://www.instagram.com/p/DV1A6w3iKpm/" },
+  { name: "My Beauty Factory", logo: "/brand/presse/logos/my-beauty-factory.webp", href: "https://www.instagram.com/p/DVqG1hPjzy-/" },
   { name: "Snake & Twist", logo: "/brand/presse/logos/snake-twist.webp", href: "https://www.instagram.com/p/DUIVTzWjQAn/?igsh=MTU0dXNnZ2hnOTJ6cg%3D%3D" },
   // Parutions papier : le client les a listées « PRINT, cf dossier », sans URL.
   // Elles restent affichées mais non cliquables.
@@ -41,17 +49,12 @@ export const PRESS: { name: string; logo: string; href?: string }[] = [
   // d'article communiquée.
   { name: "Cosmopolitan", logo: "/brand/presse/logos/cosmopolitan.webp" },
   { name: "Avantages", logo: "/brand/presse/logos/avantages.webp" },
-  { name: "Gazelle", logo: "/brand/presse/logos/gazelle.webp" },
   { name: "Fraîches", logo: "/brand/presse/logos/fraiches.webp" },
   { name: "Lyon Capitale", logo: "/brand/presse/logos/lyon-capitale.webp" },
-  { name: "Les Nouvelles Esthétiques", logo: "/brand/presse/logos/nouvelles-esthetiques.webp" },
   { name: "Psycho Pour Elles", logo: "/brand/presse/logos/psycho-pour-elles.webp" },
   { name: "Famille Mag", logo: "/brand/presse/logos/famille-mag.webp" },
-  { name: "BiG média", logo: "/brand/presse/logos/big-media.webp" },
-  { name: "Fresh Magazine", logo: "/brand/presse/logos/fresh-magazine.webp" },
-  { name: "TheDreamTeam", logo: "/brand/presse/logos/thedreamteam.webp" },
-  { name: "Mesinfos", logo: "/brand/presse/logos/mesinfos.webp" },
   { name: "Mag'in France", logo: "/brand/presse/logos/mag-in-france.webp" },
+  { name: "48 Collagen Café", logo: "/brand/presse/logos/48-collagen-cafe.webp" },
 ];
 
 /** Retrouve un média par son nom, quelle que soit la casse d'écriture — les
