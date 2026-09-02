@@ -18,8 +18,10 @@
  * franchement — un scope manquant renvoie un 403 qui nomme le scope. L'endpoint
  * client reste en repli tant qu'aucune clé privée n'est configurée.
  *
- * Scopes requis sur la clé privée : `lists:write`, `profiles:write`,
- * `subscriptions:write` (plus la lecture, dont se sert le tableau de bord).
+ * Scopes requis sur la clé privée : accès complet sur Listes, Profils et
+ * Abonnements (`lists:write`, `profiles:write`, `subscriptions:write`) — la
+ * lecture, dont se sert le tableau de bord, y est comprise. Ces autorisations
+ * ne se modifient pas après coup dans Klaviyo : il faut cloner la clé.
  *
  * Variables d'environnement (voir .env.local.example) :
  *   KLAVIYO_COMPANY_ID           clé publique du compte (ex. `AbC123`)
@@ -88,7 +90,16 @@ export async function subscribeToKlaviyo(
   return subscribeClientSide(list, email, source, properties);
 }
 
-/** Voie serveur, authentifiée par la clé privée. C'est la voie normale. */
+/**
+ * Voie serveur, authentifiée par la clé privée. C'est la voie normale, et elle
+ * demande **deux** appels : l'abonnement en masse n'accepte que l'adresse et le
+ * consentement — il rejette `properties` avec un 400 explicite. Les réponses du
+ * diagnostic passent donc d'abord par `profile-import`, qui crée ou met à jour
+ * le profil par son email, avant l'abonnement à la liste.
+ *
+ * L'abonnement est tenté même si l'import échoue : une adresse sans ses
+ * réponses vaut toujours mieux qu'une adresse perdue.
+ */
 async function subscribeServerSide(
   key: string,
   list: string,
@@ -96,49 +107,65 @@ async function subscribeServerSide(
   source: string,
   properties: Record<string, string>,
 ): Promise<boolean> {
-  try {
-    const response = await fetch("https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/", {
-      method: "POST",
-      headers: {
-        Authorization: `Klaviyo-API-Key ${key}`,
-        "Content-Type": "application/json",
-        revision: API_REVISION,
-      },
-      body: JSON.stringify({
-        data: {
-          type: "profile-subscription-bulk-create-job",
-          attributes: {
-            // Trace l'origine de l'inscription dans le profil Klaviyo
-            // (popup −10 %, footer, quiz diagnostic…).
-            custom_source: source,
-            profiles: {
-              data: [
-                {
-                  type: "profile",
-                  attributes: {
-                    email,
-                    properties: { source, ...properties },
-                    subscriptions: { email: { marketing: { consent: "SUBSCRIBED" } } },
-                  },
-                },
-              ],
-            },
-          },
-          relationships: { list: { data: { type: "list", id: list } } },
-        },
-      }),
-    });
+  const headers = {
+    Authorization: `Klaviyo-API-Key ${key}`,
+    "Content-Type": "application/json",
+    revision: API_REVISION,
+  };
 
+  await klaviyoPost(
+    "https://a.klaviyo.com/api/profile-import/",
+    headers,
+    { data: { type: "profile", attributes: { email, properties: { source, ...properties } } } },
+    "import du profil",
+  );
+
+  return klaviyoPost(
+    "https://a.klaviyo.com/api/profile-subscription-bulk-create-jobs/",
+    headers,
+    {
+      data: {
+        type: "profile-subscription-bulk-create-job",
+        attributes: {
+          // Trace l'origine de l'inscription dans le profil Klaviyo
+          // (popup −10 %, footer, quiz diagnostic…).
+          custom_source: source,
+          profiles: {
+            data: [
+              {
+                type: "profile",
+                attributes: {
+                  email,
+                  subscriptions: { email: { marketing: { consent: "SUBSCRIBED" } } },
+                },
+              },
+            ],
+          },
+        },
+        relationships: { list: { data: { type: "list", id: list } } },
+      },
+    },
+    "abonnement à la liste",
+  );
+}
+
+/** POST authentifié qui ne lève pas et dit franchement ce que Klaviyo a répondu. */
+async function klaviyoPost(
+  url: string,
+  headers: Record<string, string>,
+  body: unknown,
+  what: string,
+): Promise<boolean> {
+  try {
+    const response = await fetch(url, { method: "POST", headers, body: JSON.stringify(body) });
     if (!response.ok) {
       const detail = await response.text().catch(() => "");
-      console.error(
-        `[klaviyo] voie serveur refusée (${response.status}) : ${detail.slice(0, 500)}`,
-      );
+      console.error(`[klaviyo] ${what} refusé (${response.status}) : ${detail.slice(0, 500)}`);
       return false;
     }
     return true;
   } catch (err) {
-    console.error("[klaviyo] voie serveur impossible :", err);
+    console.error(`[klaviyo] ${what} impossible :`, err);
     return false;
   }
 }
