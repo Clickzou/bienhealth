@@ -52,6 +52,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, error: "invalid_body" }, { status: 400 });
   }
 
+  // Horodatage du diagnostic, posé ici et non par le navigateur : c'est la
+  // seule date fiable, et surtout la seule qui dise QUAND le questionnaire a
+  // été rempli. Klaviyo ne donne sinon que la date d'entrée dans la liste, qui
+  // ne bouge plus pour quelqu'un déjà inscrit — un habitué qui refait le quiz
+  // restait alors invisible dans le tableau de bord.
+  if (source === "diagnostic" && Object.keys(properties).length > 0) {
+    properties.diagnostic_date = new Date().toISOString();
+  }
+
   const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   if (!valid) {
     return NextResponse.json({ ok: false, error: "invalid_email" }, { status: 400 });

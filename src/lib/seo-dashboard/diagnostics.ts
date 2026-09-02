@@ -115,7 +115,7 @@ function toDiagnostic(profile: KlaviyoProfile): Diagnostic | null {
   const properties = attributes.properties ?? {};
   const answers: { question: string; answer: string }[] = [];
   const keys = Object.keys(properties)
-    .filter((k) => k.startsWith("diagnostic_") && k !== "diagnostic_resultat")
+    .filter((k) => k.startsWith("diagnostic_") && k !== "diagnostic_resultat" && k !== "diagnostic_date")
     .sort((a, b) => {
       const ia = QUESTION_ORDER.indexOf(a);
       const ib = QUESTION_ORDER.indexOf(b);
@@ -129,7 +129,13 @@ function toDiagnostic(profile: KlaviyoProfile): Diagnostic | null {
   }
 
   const result = properties.diagnostic_resultat;
-  const joinedAt = attributes.joined_group_at || attributes.created || null;
+  // `diagnostic_date` est posé par la route au moment de l'envoi. On lui donne
+  // la priorité sur `joined_group_at`, qui date de l'entrée dans la liste et ne
+  // bouge plus : quelqu'un déjà inscrit — l'équipe, un client fidèle — voyait
+  // son diagnostic classé au jour de son inscription, souvent hors période,
+  // donc nulle part. Le repli sert aux diagnostics antérieurs à ce correctif.
+  const stamped = typeof properties.diagnostic_date === "string" ? properties.diagnostic_date : null;
+  const joinedAt = stamped || attributes.joined_group_at || attributes.created || null;
   return {
     email,
     joinedAt,
