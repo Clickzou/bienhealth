@@ -288,6 +288,31 @@ function recommend(answers: Record<string, string[]>, questions: Question[]): Pr
   return bestScore <= 0 ? "MUSHGLOW" : best;
 }
 
+/**
+ * Réponses du questionnaire, mises à plat pour le CRM : une clé par question,
+ * les libellés lisibles plutôt que les identifiants d'option — c'est ce que
+ * lira la personne qui ouvre le profil, pas le code.
+ */
+function diagnosticProperties(
+  questions: Question[],
+  answers: Record<string, string[]>,
+  product: Product | null,
+  lang: string,
+): Record<string, string> {
+  const out: Record<string, string> = { diagnostic_langue: lang === "en" ? "en" : "fr" };
+  for (const question of questions) {
+    if (question.kind === "email") continue;
+    const picked = answers[question.id] ?? [];
+    if (picked.length === 0) continue;
+    out[`diagnostic_${question.id}`] =
+      question.kind === "number"
+        ? picked[0]
+        : picked.map((id) => question.options.find((o) => o.id === id)?.label ?? id).join(", ");
+  }
+  if (product) out.diagnostic_resultat = product;
+  return out;
+}
+
 export default function DiagnosticQuiz({ lang }: { lang: string }) {
   const en = lang === "en";
   const s = SCREEN[en ? "en" : "fr"];
@@ -339,16 +364,25 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
     e.preventDefault();
     if (sending) return;
     setSending(true);
+    const product = recommend(answers, questions);
     try {
       await fetch("/api/newsletter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "diagnostic" }),
+        // Les réponses partent avec l'adresse : la route les pose en propriétés
+        // du profil Klaviyo et les recopie dans Supabase. Sans elles, on ne
+        // récoltait qu'un email — impossible de savoir ce que la personne
+        // avait répondu, ni ce qu'on lui avait recommandé.
+        body: JSON.stringify({
+          email,
+          source: "diagnostic",
+          properties: diagnosticProperties(questions, answers, product, lang),
+        }),
       });
     } catch {
       /* best-effort */
     }
-    setResult(recommend(answers, questions));
+    setResult(product);
     setSending(false);
   }
 

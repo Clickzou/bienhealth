@@ -18,18 +18,39 @@ const API_REVISION = "2024-10-15";
 const companyId = process.env.KLAVIYO_COMPANY_ID;
 const listId = process.env.KLAVIYO_LIST_ID;
 
-export const isKlaviyoConfigured = Boolean(companyId && listId);
+/**
+ * Liste « EMAIL - Contacts typeform "Ton diagnostic personnalisé <3" », qui
+ * reçoit historiquement les contacts du questionnaire (246 profils au
+ * 02/09/2026). Le quiz du site les envoyait dans la liste newsletter, à côté
+ * des inscriptions du popup et du footer : impossible d'écrire au seul public
+ * du diagnostic. Repli en dur sur le même principe que le pixel Meta, pour que
+ * la production marche sans attendre une variable Vercel ; `KLAVIYO_DIAGNOSTIC_LIST_ID`
+ * la remplace si un jour la liste change.
+ */
+const DIAGNOSTIC_LIST_FALLBACK = "Y9itLF";
+const diagnosticListId = process.env.KLAVIYO_DIAGNOSTIC_LIST_ID || DIAGNOSTIC_LIST_FALLBACK;
+
+/** Liste destinataire selon l'origine de l'inscription. */
+export function klaviyoListFor(source: string): string | undefined {
+  return source === "diagnostic" ? diagnosticListId : listId;
+}
+
+export const isKlaviyoConfigured = Boolean(companyId);
 
 /**
- * Abonne `email` à la liste configurée. Renvoie `true` si Klaviyo a accepté
- * (202), `false` sinon — l'appelant décide quoi en faire, aucune exception
- * n'est propagée.
+ * Abonne `email` à la liste correspondant à `source`. `properties` est posé sur
+ * le profil Klaviyo : c'est ainsi que les réponses du diagnostic voyagent avec
+ * l'adresse, et qu'on peut segmenter dessus. Renvoie `true` si Klaviyo a
+ * accepté (202), `false` sinon — l'appelant décide quoi en faire, aucune
+ * exception n'est propagée.
  */
 export async function subscribeToKlaviyo(
   email: string,
   source: string,
+  properties: Record<string, string> = {},
 ): Promise<boolean> {
-  if (!companyId || !listId) return false;
+  const list = klaviyoListFor(source);
+  if (!companyId || !list) return false;
 
   try {
     const response = await fetch(
@@ -52,13 +73,13 @@ export async function subscribeToKlaviyo(
                   type: "profile",
                   attributes: {
                     email,
-                    properties: { source },
+                    properties: { source, ...properties },
                   },
                 },
               },
             },
             relationships: {
-              list: { data: { type: "list", id: listId } },
+              list: { data: { type: "list", id: list } },
             },
           },
         }),

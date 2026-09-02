@@ -19,15 +19,35 @@ import { isRateLimited, tooManyRequests } from "@/lib/rate-limit";
  * On renvoie toujours 200 pour ne jamais bloquer la délivrance du code côté
  * client, mais le corps indique ce qui a réellement abouti (diagnostic).
  */
+/**
+ * Ne laisse passer que des paires clé/valeur textuelles et bornées : ces
+ * propriétés partent telles quelles chez Klaviyo, elles viennent du navigateur
+ * et ne doivent ni gonfler la requête ni y injecter des structures.
+ */
+function sanitizeProperties(input: unknown): Record<string, string> {
+  if (!input || typeof input !== "object" || Array.isArray(input)) return {};
+  const out: Record<string, string> = {};
+  for (const [key, value] of Object.entries(input as Record<string, unknown>)) {
+    if (Object.keys(out).length >= 30) break;
+    if (!/^[a-z0-9_]{1,60}$/i.test(key)) continue;
+    if (typeof value !== "string" && typeof value !== "number") continue;
+    const text = String(value).trim();
+    if (text) out[key] = text.slice(0, 500);
+  }
+  return out;
+}
+
 export async function POST(request: Request) {
   if (isRateLimited(request, "newsletter", 3)) return tooManyRequests();
 
   let email = "";
   let source = "newsletter_popup";
+  let properties: Record<string, string> = {};
   try {
     const body = await request.json();
     email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
     if (typeof body.source === "string" && body.source) source = body.source;
+    properties = sanitizeProperties(body.properties);
   } catch {
     return NextResponse.json({ ok: false, error: "invalid_body" }, { status: 400 });
   }
@@ -38,9 +58,10 @@ export async function POST(request: Request) {
   }
 
   // 1) Klaviyo — inscription à la liste (CRM + envoi du code de bienvenue).
+  // La liste dépend de `source` : le diagnostic a la sienne (cf. lib/klaviyo).
   let klaviyo = false;
   if (isKlaviyoConfigured) {
-    klaviyo = await subscribeToKlaviyo(email, source);
+    klaviyo = await subscribeToKlaviyo(email, source, properties);
   } else {
     console.error(
       "[newsletter] Klaviyo non configuré : définissez KLAVIYO_COMPANY_ID et KLAVIYO_LIST_ID.",
@@ -74,13 +95,24 @@ export async function POST(request: Request) {
     }
   }
 
-  // 3) Supabase — miroir CRM optionnel.
+  // 3) Supabase — miroir CRM optionnel, et pour l'instant théorique : les trois
+  // variables sont vides en local comme en production (cf. GO-LIVE § 23), donc
+  // ce bloc ne s'exécute pas. Il reste écrit et à jour — réponses du diagnostic
+  // comprises — pour que le jour où la base est provisionnée, la marque ait sa
+  // propre copie des leads sans repasser par ici.
   if (isSupabaseConfigured) {
     try {
       const supabase = getSupabaseAdmin();
-      await supabase
+      // `upsert` ne lève pas : une colonne manquante ou un refus RLS revient
+      // dans `error` et passait jusqu'ici inaperçu — d'où un miroir qu'on
+      // croyait actif alors qu'il n'écrivait rien.
+      const { error } = await supabase
         .from("leads")
-        .upsert({ email, source }, { onConflict: "email", ignoreDuplicates: true });
+        .upsert(
+          { email, source, ...(Object.keys(properties).length ? { properties } : {}) },
+          { onConflict: "email", ignoreDuplicates: false },
+        );
+      if (error) console.error("[newsletter] Supabase a refusé le lead:", error.message);
     } catch (err) {
       console.error("[newsletter] échec enregistrement lead Supabase:", err);
     }
