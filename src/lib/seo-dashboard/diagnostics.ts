@@ -18,22 +18,15 @@
  * par mot de passe.
  */
 import type { Period } from "./periods";
-import { klaviyoListFor } from "@/lib/klaviyo";
+import { klaviyoListFor, klaviyoPrivateKey } from "@/lib/klaviyo";
 
 const API_REVISION = "2024-10-15";
 /** 100 = maximum accepté par Klaviyo. Cinq pages suffisent largement au volume. */
 const PAGE_SIZE = 100;
 const MAX_PAGES = 5;
 
-/**
- * `KLAVIYO_PRIVATE_API_KEY` est le nom retenu ; `KLAVIYO_API_KEY` est accepté
- * parce que c'est celui sous lequel la clé a d'abord été posée, et qu'un
- * tableau de bord muet à cause d'un nom de variable est le genre de panne qui
- * coûte une heure pour rien.
- */
-function privateKey(): string {
-  return (process.env.KLAVIYO_PRIVATE_API_KEY || process.env.KLAVIYO_API_KEY || "").trim();
-}
+/** Même clé que celle qui sert à inscrire : voir `lib/klaviyo`. */
+const privateKey = klaviyoPrivateKey;
 
 export function isDiagnosticsConfigured(): boolean {
   return privateKey() !== "" && Boolean(klaviyoListFor("diagnostic"));
