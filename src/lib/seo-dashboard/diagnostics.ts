@@ -194,7 +194,14 @@ export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResul
   // de période sont des jours calendaires parisiens, comme partout ailleurs dans
   // ce tableau de bord. On ramène donc chaque date au jour parisien avant de
   // comparer, sinon une inscription de 00 h 30 tomberait la veille.
-  const items = all.filter((d) => d.day !== null && d.day >= period.current.start && d.day <= period.current.end);
+  //
+  // La borne haute est **aujourd'hui**, et non la fin de période. Celle-ci
+  // s'arrête à hier parce que GA4 et Search Console publient avec un jour ou
+  // deux de retard ; Klaviyo, lui, répond en temps réel. Sans cette exception,
+  // un diagnostic rempli le matin même n'apparaissait pas avant le lendemain —
+  // et la section semblait vide alors qu'elle venait d'en recevoir un.
+  const today = PARIS_DAY.format(new Date());
+  const items = all.filter((d) => d.day !== null && d.day >= period.current.start && d.day <= today);
 
   const tally = new Map<string, number>();
   for (const d of items) tally.set(d.result ?? "Sans résultat", (tally.get(d.result ?? "Sans résultat") ?? 0) + 1);

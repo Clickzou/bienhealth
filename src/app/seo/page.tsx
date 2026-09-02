@@ -303,7 +303,7 @@ export default async function SeoDashboard({
         {diagnostics.data ? (
           <>
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-              <Kpi label="Sur la période" value={num(diagnostics.data.count)} />
+              <Kpi label="Sur la période" value={num(diagnostics.data.count)} hint="Aujourd'hui compris — Klaviyo répond en temps réel" />
               <Kpi
                 label="Produit le plus recommandé"
                 value={diagnostics.data.byResult[0]?.label ?? "—"}
