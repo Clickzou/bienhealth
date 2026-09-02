@@ -10,7 +10,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "retours",
     title: lang === "en" ? "Returns & refunds | BIEN health" : "Retours & remboursements | BIEN health",
-    description: lang === "en" ? "14-day right of withdrawal, return procedure and refunds for BIEN health orders." : "Droit de rétractation de 14 jours, procédure de retour et remboursement des commandes BIEN health.",
+    description: lang === "en" ? "14-day right of withdrawal, step-by-step return procedure, refund times and conditions for unopened products: everything about BIEN health returns." : "Droit de rétractation de 14 jours, procédure de retour étape par étape, délais de remboursement et conditions : tout sur les retours BIEN health.",
   });
 }
 

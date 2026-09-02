@@ -13,7 +13,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
     lang,
     path: "plan-du-site",
     title: lang === "en" ? "Sitemap | BIEN health" : "Plan du site | BIEN health",
-    description: lang === "en" ? "All the pages of the BIEN health site: shop, collections, products, about, help and legal notices." : "Toutes les pages du site BIEN health : boutique, collections, produits, à propos, aide et mentions légales.",
+    description: lang === "en" ? "All the pages of the BIEN health site in one place: shop, collections, products, ingredients, the journal, brand pages, customer help and legal notices." : "Toutes les pages du site BIEN health réunies : boutique, collections, produits, ingrédients, journal, la marque, aide au client et mentions légales.",
   });
 }
 

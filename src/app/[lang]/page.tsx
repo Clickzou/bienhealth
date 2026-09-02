@@ -348,6 +348,13 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "BIEN health",
+          // Google choisit seul le nom affiche au-dessus du resultat : sans
+          // alternateName il piochait « Bien Health » puis « Bien.health »
+          // dans l'ancien site Shopify, d'ou deux graphies differentes dans la
+          // meme SERP. Les variantes declarees ici lui disent que c'est la
+          // meme entite et que la forme canonique est « BIEN health ».
+          alternateName: ["BIEN", "Bien Health", "bien.health"],
+          publisher: { "@type": "Organization", name: "BIEN health", url: SITE_URL },
           url: `${SITE_URL}/${lang}`,
           inLanguage: lang === "en" ? "en" : "fr",
           potentialAction: {
