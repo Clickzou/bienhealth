@@ -2062,3 +2062,80 @@ problème de site. Réflexe de diagnostic, dans l'ordre :
    `echo | openssl s_client -connect bien.health:443 -servername bien.health | openssl x509 -noout -subject -dates`
 
 Ne jamais modifier le DNS avant d'avoir fait ces trois tests.
+
+---
+
+## 28. Klaviyo répondait « OK » sans rien enregistrer — deuxième fois (02/09/2026)
+
+Le § 23 racontait des inscriptions qui n'arrivaient nulle part. Le correctif du
+01/09 branchait Klaviyo via `POST /client/subscriptions/`, seul endpoint
+accessible sans clé privée. **Il a recommencé à tout avaler.**
+
+Constat, le 02/09/2026 : trois inscriptions de test par trois chemins
+différents — diagnostic en production, newsletter en production, appel direct
+depuis un poste — ont toutes reçu `202 Accepted`, et **aucun profil n'a été
+créé** dans le compte. Deux inscriptions identiques quarante minutes plus tôt
+avaient pourtant abouti.
+
+**Ce n'était ni le domaine, ni l'opt-in.** Vérifié dans l'admin : la clé
+publique est autorisée sur *tous les domaines*, et le compte comme les deux
+listes sont en *opt-in unique*. Ajouter un en-tête `Origin` fait pire —
+Cloudflare répond 403.
+
+**La cause est l'endpoint lui-même.** `/client/subscriptions/` est prévu pour le
+**navigateur** : Klaviyo y contrôle le domaine appelant et répond toujours 202
+sans jamais dire ce qu'il fait de la demande. Appelé depuis un serveur, il
+échoue en silence. Un 202 n'y prouve rien, et c'est précisément ce qui rend la
+panne invisible : la route répondait `{ ok: true, klaviyo: true }`, le popup
+affichait « c'est tout bon », et rien n'était enregistré.
+
+### Correctif : passer par l'API serveur
+
+Une clé privée existe depuis le branchement du tableau de bord. L'inscription
+passe donc par l'API **serveur**, en deux appels :
+
+1. `POST /api/profile-import/` — crée ou met à jour le profil **avec ses
+   propriétés** (les réponses du diagnostic) ;
+2. `POST /api/profile-subscription-bulk-create-jobs/` — l'abonne à la liste.
+
+Deux appels et non un : l'endpoint d'abonnement rejette `properties` par un 400
+explicite (« `'properties' is not a valid field for the resource 'profile'` »).
+L'abonnement est tenté même si l'import échoue — une adresse sans ses réponses
+vaut mieux qu'une adresse perdue.
+
+Cette voie est authentifiée, indépendante du domaine appelant, et surtout elle
+**refuse franchement** : un scope manquant renvoie un 403 qui nomme le scope.
+La voie client reste en repli tant qu'aucune clé privée n'est configurée.
+
+### Variables et autorisations
+
+| Variable | Valeur | Où |
+| --- | --- | --- |
+| `KLAVIYO_PRIVATE_API_KEY` | clé `pk_…` | Vercel + `.env.local` |
+| `KLAVIYO_DIAGNOSTIC_LIST_ID` | `Y9itLF` (repli en dur dans le code) | optionnel |
+
+La clé privée doit porter **l'accès complet** sur *Listes*, *Profils* et
+*Abonnements*. Attention : **ces autorisations ne se modifient pas après
+création** — l'écran d'une clé existante n'offre que Désactiver / Cloner /
+Supprimer. Pour les changer, cloner la clé, ajuster les droits, puis remplacer
+la valeur dans Vercel et supprimer l'ancienne.
+
+### Ce qui a changé pour le diagnostic
+
+Le quiz n'envoyait que l'adresse, et dans la liste newsletter. Il inscrit
+désormais dans la liste **« EMAIL - Contacts typeform "Ton diagnostic
+personnalisé <3" »** (`Y9itLF`, 246 contacts importés de Typeform), avec les
+réponses posées en propriétés du profil (`diagnostic_age`, `diagnostic_genre`,
+… `diagnostic_resultat`). Le tableau de bord `/seo` les relit et les affiche.
+
+Sa fenêtre va jusqu'à **aujourd'hui** et non jusqu'à la veille : les périodes du
+tableau de bord s'arrêtent hier parce que GA4 et Search Console publient en
+retard, mais Klaviyo répond en temps réel — sans cette exception, un diagnostic
+rempli le matin même n'apparaissait pas avant le lendemain.
+
+### À retenir
+
+Un `202 Accepted` n'est pas une preuve d'enregistrement. Pour toute intégration
+qui collecte des adresses, **vérifier la donnée à destination**, pas le code de
+retour — et préférer systématiquement une API serveur authentifiée, qui a de
+vraies erreurs, à un endpoint navigateur qui acquiesce toujours.
