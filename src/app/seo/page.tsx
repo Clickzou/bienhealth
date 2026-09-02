@@ -326,7 +326,7 @@ export default async function SeoDashboard({
               <Table
                 head={["Date", "Email", "Recommandation", "Réponses"]}
                 rows={diagnostics.data.items.slice(0, 40).map((d) => [
-                  d.joinedAt ? longDate(d.joinedAt.slice(0, 10)) : "—",
+                  d.day ? longDate(d.day) : "—",
                   <span key="m" className="font-medium text-[#00112b]">{d.email}</span>,
                   d.result ?? "—",
                   <span key="a" className="block max-w-[560px] text-[#4a5566]">

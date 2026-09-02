@@ -25,8 +25,14 @@ const API_REVISION = "2024-10-15";
 const PAGE_SIZE = 100;
 const MAX_PAGES = 5;
 
+/**
+ * `KLAVIYO_PRIVATE_API_KEY` est le nom retenu ; `KLAVIYO_API_KEY` est accepté
+ * parce que c'est celui sous lequel la clé a d'abord été posée, et qu'un
+ * tableau de bord muet à cause d'un nom de variable est le genre de panne qui
+ * coûte une heure pour rien.
+ */
 function privateKey(): string {
-  return (process.env.KLAVIYO_PRIVATE_API_KEY || "").trim();
+  return (process.env.KLAVIYO_PRIVATE_API_KEY || process.env.KLAVIYO_API_KEY || "").trim();
 }
 
 export function isDiagnosticsConfigured(): boolean {
@@ -46,6 +52,8 @@ export type Diagnostic = {
   email: string;
   /** Date d'entrée dans la liste, ISO. `null` si Klaviyo ne la donne pas. */
   joinedAt: string | null;
+  /** Même date, ramenée au jour parisien (YYYY-MM-DD) — c'est elle qu'on affiche. */
+  day: string | null;
   /** Produit recommandé à l'issue du questionnaire (`diagnostic_resultat`). */
   result: string | null;
   /** Réponses, libellé de question déduit de la clé → réponse. */
@@ -99,6 +107,13 @@ const QUESTION_LABELS: Record<string, string> = {
 /** Ordre d'affichage des réponses : celui du questionnaire, pas celui de l'objet. */
 const QUESTION_ORDER = Object.keys(QUESTION_LABELS);
 
+/** Jour parisien d'un horodatage ISO. `sv-SE` donne directement YYYY-MM-DD. */
+const PARIS_DAY = new Intl.DateTimeFormat("sv-SE", { timeZone: "Europe/Paris" });
+function parisDay(iso: string): string | null {
+  const time = Date.parse(iso);
+  return Number.isNaN(time) ? null : PARIS_DAY.format(new Date(time));
+}
+
 function toDiagnostic(profile: KlaviyoProfile): Diagnostic | null {
   const attributes = profile.attributes ?? {};
   const email = typeof attributes.email === "string" ? attributes.email : "";
@@ -121,9 +136,11 @@ function toDiagnostic(profile: KlaviyoProfile): Diagnostic | null {
   }
 
   const result = properties.diagnostic_resultat;
+  const joinedAt = attributes.joined_group_at || attributes.created || null;
   return {
     email,
-    joinedAt: attributes.joined_group_at || attributes.created || null,
+    joinedAt,
+    day: joinedAt ? parisDay(joinedAt) : null,
     result: typeof result === "string" && result ? result : null,
     answers,
   };
@@ -180,10 +197,11 @@ export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResul
     .filter((d): d is Diagnostic => d !== null && d.answers.length > 0)
     .sort((a, b) => (b.joinedAt ?? "").localeCompare(a.joinedAt ?? ""));
 
-  // Klaviyo date en UTC ; les bornes de période sont des jours calendaires.
-  const from = `${period.current.start}T00:00:00Z`;
-  const to = `${period.current.end}T23:59:59Z`;
-  const items = all.filter((d) => d.joinedAt && d.joinedAt >= from && d.joinedAt <= to);
+  // Klaviyo horodate en UTC (« 2026-09-02T15:16:55+00:00 ») alors que les bornes
+  // de période sont des jours calendaires parisiens, comme partout ailleurs dans
+  // ce tableau de bord. On ramène donc chaque date au jour parisien avant de
+  // comparer, sinon une inscription de 00 h 30 tomberait la veille.
+  const items = all.filter((d) => d.day !== null && d.day >= period.current.start && d.day <= period.current.end);
 
   const tally = new Map<string, number>();
   for (const d of items) tally.set(d.result ?? "Sans résultat", (tally.get(d.result ?? "Sans résultat") ?? 0) + 1);
