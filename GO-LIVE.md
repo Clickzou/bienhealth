@@ -2014,3 +2014,51 @@ seules.
 - sans bénéfice déclaré, la carte produit retombe sur le premier tag Shopify :
   BOOST s'annonçait « badge_-20% ». Les quatre packs ont leur phrase dans
   `BENEFITS`.
+
+---
+
+## 27. Fausse alerte : « Votre connexion n'est pas privée » sur mobile (02/09/2026)
+
+Sur un mobile en 5G Orange, `bien.health` affichait un écran rouge Chrome
+**« Votre connexion n'est pas privée — NET::ERR_CERT_COMMON_NAME_INVALID »**.
+Le même site s'ouvrait normalement en Wi-Fi.
+
+**Le site n'était pas en cause.** Tout a été vérifié le 02/09/2026 :
+
+- DNS cohérent chez Google, Cloudflare et Quad9 : `bien.health → 216.150.1.1` ;
+- certificat Let's Encrypt `CN=bien.health` valide du 28/08 au 26/11/2026,
+  identique et correct sur les trois IP edge Vercel ;
+- ni enregistrement `AAAA` ni `HTTPS`/SVCB parasite, aucun statut DNS en erreur ;
+- domaine enregistré depuis le 14/12/2021 — pas un « domaine récent » suspect.
+
+**La cause : Orange Cyberfiltre**, le filtrage DNS des flottes mobiles Orange
+Business. En tapant `www.bien.health`, le blocage se montre à visage découvert
+(page orange « Alerte page malveillante… ou non conforme à la politique de
+votre manager »). Le site tombe vraisemblablement dans une catégorie
+« santé / parapharmacie » filtrée par la politique de la flotte.
+
+**Portée : la seule ligne concernée.** Testé le même jour depuis un iPhone sur
+Orange en 5G : le site s'ouvre normalement. Aucun impact client.
+
+### Pourquoi deux écrans différents
+
+Sur l'apex, le site envoie `Strict-Transport-Security: max-age=63072000`. Une
+fois ce HSTS mémorisé, Chrome refuse toute interception et affiche l'erreur de
+certificat au lieu de la page du filtre. Sur `www`, HSTS n'était pas encore en
+cache : le détournement a pu s'afficher. Même blocage, deux symptômes.
+
+**Conséquence pratique :** le bouton « Je continue malgré tout » de Cyberfiltre
+ne fonctionne pas sur l'apex, et l'erreur reste en cache après un déblocage.
+Pour retester une correction, vider les données de Chrome ou changer d'appareil.
+
+### À retenir pour les prochaines mises en ligne
+
+Une erreur de certificat vue sur **un seul** mobile n'est presque jamais un
+problème de site. Réflexe de diagnostic, dans l'ordre :
+
+1. tester le domaine **avec `www`** — un filtrage opérateur s'y montre en clair ;
+2. tester depuis **une autre ligne mobile** — isole la ligne du domaine ;
+3. vérifier le certificat réellement servi :
+   `echo | openssl s_client -connect bien.health:443 -servername bien.health | openssl x509 -noout -subject -dates`
+
+Ne jamais modifier le DNS avant d'avoir fait ces trois tests.
