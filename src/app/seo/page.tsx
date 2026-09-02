@@ -322,18 +322,38 @@ export default async function SeoDashboard({
               </Card>
             )}
 
+            {/* Pas un tableau : `Table` aligne à droite et interdit le retour à la
+                ligne, ce qui convient aux chiffres mais étirait la page sur une
+                seule ligne de réponses. Chaque diagnostic est donc une fiche —
+                l'adresse et la recommandation en tête, les réponses dessous. */}
             <Card title="Derniers diagnostics" className="mt-3">
-              <Table
-                head={["Date", "Email", "Recommandation", "Réponses"]}
-                rows={diagnostics.data.items.slice(0, 40).map((d) => [
-                  d.day ? longDate(d.day) : "—",
-                  <span key="m" className="font-medium text-[#00112b]">{d.email}</span>,
-                  d.result ?? "—",
-                  <span key="a" className="block max-w-[560px] text-[#4a5566]">
-                    {d.answers.map((a) => `${a.question} : ${a.answer}`).join(" · ")}
-                  </span>,
-                ])}
-              />
+              <ul className="divide-y divide-black/[0.06]">
+                {diagnostics.data.items.slice(0, 40).map((d) => (
+                  <li key={`${d.email}-${d.joinedAt ?? ""}`} className="py-3 first:pt-0 last:pb-0">
+                    <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                      <span className="text-[13px] font-medium text-[#00112b]">{d.email}</span>
+                      <span className="text-[11px] uppercase tracking-[0.1em] text-[#818a97]">
+                        {d.day ? longDate(d.day) : "—"}
+                      </span>
+                      {d.result && (
+                        <span className="ml-auto inline-flex items-center rounded-full bg-[#238f5e]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#1c7a4f]">
+                          {d.result}
+                        </span>
+                      )}
+                    </div>
+                    {d.answers.length > 0 && (
+                      <dl className="mt-1.5 grid sm:grid-cols-2 gap-x-8 gap-y-0.5 text-[12.5px] leading-snug">
+                        {d.answers.map((a) => (
+                          <div key={a.question} className="flex gap-1.5">
+                            <dt className="shrink-0 text-[#818a97]">{a.question} :</dt>
+                            <dd className="text-[#243348]">{a.answer}</dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
+                  </li>
+                ))}
+              </ul>
             </Card>
           </>
         ) : (
