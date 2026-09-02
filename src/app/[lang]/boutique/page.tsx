@@ -49,7 +49,7 @@ export default async function BoutiquePage({
   // seul endroit où le client veut les voir (ils sont exclus des collections
   // gummies et poudres). Ils passent en fin de grille pour que la boutique
   // s'ouvre sur les compléments.
-  const all = await getProducts(24);
+  const all = await getProducts(24, lang);
   const products = [...all.filter((p) => !isAccessory(p)), ...all.filter(isAccessory)];
 
   return (

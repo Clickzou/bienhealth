@@ -326,7 +326,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
   // Vrais produits Shopify (repli sur la démo tant que le token n'est pas configuré)
   // On exclut les accessoires (mousseur, tote bag) pour ne garder que les compléments.
   const EXCLUDE_HANDLES = new Set(["mousseur-a-lait", "bien-totebag"]);
-  const shopProducts = (await getProducts(12)).filter((p) => !EXCLUDE_HANDLES.has(p.handle));
+  const shopProducts = (await getProducts(12, lang)).filter((p) => !EXCLUDE_HANDLES.has(p.handle));
   const products = shopProducts.length
     ? shopProducts.map((p) => ({
         name: p.title,

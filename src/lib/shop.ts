@@ -314,12 +314,12 @@ export const COLLECTIONS: Record<string, Collection> = {
   "packs": {
     slug: "packs",
     eyebrow: "Par type de produit",
-    label: "Packs & duos",
+    label: "Packs",
     seoTitle: "Packs et duos de compléments adaptogènes",
     desc: "Nos formules réunies en rituels complets : deux ou trois produits qui travaillent en synergie, à prix doux.",
     en: {
       eyebrow: "By product type",
-      label: "Packs & duos",
+      label: "Packs",
       desc: "Our formulas brought together as complete rituals: two or three products working in synergy, at a better price.",
     },
     match: isPack,

@@ -22,6 +22,7 @@ import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import { productPageTitle, productMetaEn } from "@/lib/shop";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
+import { splitProductTitle } from "@/lib/product-title";
 import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
 import { SHOP_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
 import StarRating from "@/components/star-rating";
@@ -33,7 +34,7 @@ export async function generateMetadata({
   params: Promise<{ lang: string; handle: string }>;
 }): Promise<Metadata> {
   const { lang, handle } = await params;
-  const product = await getProduct(handle);
+  const product = await getProduct(handle, lang);
   if (!product) return { title: lang === "en" ? "Product not found | BIEN health" : "Produit introuvable | BIEN health" };
   const key = keyFor(product.title);
   const seo = key ? localizeProductSeo(PRODUCT_SEO[key], lang) : null;
@@ -41,11 +42,12 @@ export async function generateMetadata({
     lang,
     path: `products/${handle}`,
     title: productPageTitle(product.title, lang),
-    // Description propre au produit, coupée sur une frontière de mot.
-    // En anglais, une description dédiée passe avant la description Shopify, qui
-    // est en français : sans elle, /fr et /en servaient la même meta description.
+    // Description propre au produit, coupée sur une frontière de mot. Elle vient
+    // maintenant de Shopify, qui la sert dans la langue demandée : la boutique
+    // publie FR et EN et porte les traductions de l'admin. Les textes locaux ne
+    // servent plus que de filet si la fiche Shopify est vide.
     description: metaDescription(
-      (lang === "en" ? productMetaEn(handle) : null) || seo?.paragraphs[0] || product.description || seo?.heading || product.title,
+      product.description || seo?.paragraphs[0] || (lang === "en" ? productMetaEn(handle) : null) || seo?.heading || product.title,
     ),
     image: product.featuredImage?.url ?? product.images[0]?.url ?? null,
     imageAlt: product.title,
@@ -657,6 +659,8 @@ const UI = {
     routineTitle: "Complétez votre routine",
     add: (t: string) => `Ajouter ${t}`,
     aboutEyebrow: "À propos",
+    /** Titre de repli quand le produit n'a pas de titre SEO dédié (packs, accessoires). */
+    aboutHeading: "À propos de",
     backToShop: "Retour à la boutique",
     notFound: "Produit introuvable | BIEN health",
   },
@@ -679,6 +683,7 @@ const UI = {
     routineTitle: "Complete your routine",
     add: (t: string) => `Add ${t}`,
     aboutEyebrow: "About",
+    aboutHeading: "About",
     backToShop: "Back to the shop",
     notFound: "Product not found | BIEN health",
   },
@@ -703,7 +708,7 @@ export default async function ProductPage({
 }) {
   const { lang, handle } = await params;
   if (!hasLocale(lang)) notFound();
-  const product = await getProduct(handle);
+  const product = await getProduct(handle, lang);
   if (!product) notFound();
   const images = product.images.filter((i) => !isHidden(i.url));
 
@@ -793,7 +798,7 @@ export default async function ProductPage({
   };
 
   const EXCLUDE = new Set(["mousseur-a-lait", "bien-totebag"]);
-  const related = (await getProducts(12))
+  const related = (await getProducts(12, lang))
     .filter((p) => p.handle !== handle && !EXCLUDE.has(p.handle))
     .slice(0, 2);
 
@@ -1064,8 +1069,14 @@ export default async function ProductPage({
           </div>
         </div>
 
-        {/* Intro éditoriale SEO produit */}
-        {productSeo && (
+        {/* Description produit — la fiche Shopify fait foi (demande client du
+            02/09/2026) : le site servait ses propres paragraphes, si bien que
+            corriger un texte dans l'admin ne changeait rien en ligne, et que
+            les quatre packs n'avaient aucun descriptif faute d'entrée locale.
+            La boutique publie FR et EN, `getProduct` demande la bonne langue.
+            Les textes de `product-seo.ts` ne servent plus que de repli si la
+            fiche Shopify est vide, et pour le titre de section. */}
+        {(product.descriptionHtml || productSeo) && (
           <section className="mt-16 sm:mt-24 rounded-3xl lg:rounded-[2.5rem] bg-bien-cream/50 ring-1 ring-border p-7 sm:p-12 lg:p-16">
             <p className="text-xs uppercase tracking-[0.2em] text-bien-leaf font-semibold">{ui.aboutEyebrow}</p>
             {/* `tracking-tighter` (-0,05 em) resserre aussi l'espace : dans la
@@ -1073,12 +1084,21 @@ export default async function ProductPage({
                 poudre » (retour client du 01/09/2026). Ces titres commencent
                 tous par le nom du produit suivi d'une virgule — d'où
                 `tracking-tight`, qui garde le resserrement sans coller. */}
-            <h2 className="mt-3 font-display tracking-tight text-2xl sm:text-3xl text-black max-w-2xl">{productSeo.heading}</h2>
-            <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
-              {productSeo.paragraphs.map((para, i) => (
-                <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{para}</p>
-              ))}
-            </div>
+            <h2 className="mt-3 font-display tracking-tight text-2xl sm:text-3xl text-black max-w-2xl">
+              {productSeo?.heading ?? `${ui.aboutHeading} ${splitProductTitle(product.title).main}`}
+            </h2>
+            {product.descriptionHtml ? (
+              <div
+                className="bien-richtext mt-5 max-w-3xl text-[15px] sm:text-base text-black/75 leading-relaxed"
+                dangerouslySetInnerHTML={{ __html: product.descriptionHtml }}
+              />
+            ) : (
+              <div className="mt-5 grid md:grid-cols-2 gap-x-12 gap-y-4 max-w-5xl">
+                {productSeo!.paragraphs.map((para, i) => (
+                  <p key={i} className="text-[15px] sm:text-base text-black/75 leading-relaxed text-justify hyphens-auto">{para}</p>
+                ))}
+              </div>
+            )}
           </section>
         )}
 

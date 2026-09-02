@@ -86,8 +86,8 @@ function parseRating(metafields: ProductNode["metafields"]): { rating: number | 
 function normalizeNode(p: ProductNode): ShopifyProduct {
   const v = p.variants?.nodes?.[0];
   return {
-    id: p.id, handle: p.handle, title: p.title,
-    description: p.description, descriptionHtml: p.descriptionHtml,
+    id: p.id, handle: p.handle, title: repairEncoding(p.title),
+    description: repairEncoding(p.description), descriptionHtml: repairEncoding(p.descriptionHtml),
     tags: p.tags ?? [],
     featuredImage: p.featuredImage,
     images: p.images?.nodes ?? [],
@@ -110,6 +110,33 @@ type PublicProduct = {
   variants: PublicVariant[]; images: PublicImage[];
 };
 
+/**
+ * Répare l'encodage des fiches Shopify. Les dix descriptions françaises ont été
+ * importées en lisant de l'UTF-8 comme du Latin-1 : « à » y est stocké « Ã  »,
+ * « é » « Ã© », etc. Tant que le site servait ses propres textes, cela ne se
+ * voyait que dans l'admin ; il les affiche maintenant, il faut donc les rendre
+ * lisibles. La correction reste un pansement — le vrai remède est de recoller
+ * les textes proprement dans l'admin, après quoi cette fonction ne trouvera
+ * plus rien à faire.
+ *
+ * On ne touche qu'aux suites qui se relisent comme de l'UTF-8 valide : une
+ * lettre accentuée isolée, un emoji ou un ™ passent au travers sans dommage.
+ */
+const MOJIBAKE = /[\u00c2-\u00f4][\u0080-\u00bf]+/g;
+const utf8 = new TextDecoder("utf-8", { fatal: true });
+
+export function repairEncoding(text: string): string {
+  if (!text || !MOJIBAKE.test(text)) return text;
+  MOJIBAKE.lastIndex = 0;
+  return text.replace(MOJIBAKE, (run) => {
+    try {
+      return utf8.decode(Uint8Array.from(run, (c) => c.charCodeAt(0)));
+    } catch {
+      return run;
+    }
+  });
+}
+
 function stripHtml(html: string): string {
   return html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 }
@@ -117,9 +144,9 @@ function stripHtml(html: string): string {
 function normalizePublic(p: PublicProduct): ShopifyProduct {
   const v = p.variants?.[0];
   return {
-    id: String(p.id), handle: p.handle, title: p.title,
-    description: stripHtml(p.body_html || "").slice(0, 600),
-    descriptionHtml: p.body_html || "",
+    id: String(p.id), handle: p.handle, title: repairEncoding(p.title),
+    description: repairEncoding(stripHtml(p.body_html || "")).slice(0, 600),
+    descriptionHtml: repairEncoding(p.body_html || ""),
     tags: p.tags ?? [],
     featuredImage: p.images?.[0] ? { url: p.images[0].src, altText: p.images[0].alt } : null,
     images: (p.images ?? []).map((i) => ({ url: i.src, altText: i.alt })),
@@ -155,24 +182,36 @@ async function fetchPublicProducts(): Promise<ShopifyProduct[]> {
 
 /* -------------------------------- API publique ----------------------------- */
 
-export async function getProducts(count = 4): Promise<ShopifyProduct[]> {
+/**
+ * Directive de langue du Storefront API. La boutique publie deux langues
+ * (FR par défaut, EN) et porte les traductions saisies dans l'admin Shopify :
+ * sans `@inContext`, elle répond toujours en français, ce qui donnait des
+ * titres et des descriptions françaises sur /en.
+ */
+function inContext(lang?: string): string {
+  return lang === "en" ? " @inContext(language: EN)" : "";
+}
+
+export async function getProducts(count = 4, lang?: string): Promise<ShopifyProduct[]> {
   if (isShopifyConfigured) {
     try {
       const data = await shopifyFetch<{ products: { nodes: ProductNode[] } }>({
-        query: `query Products($n:Int!){ products(first:$n, sortKey: BEST_SELLING){ nodes { ${PRODUCT_FIELDS} } } }`,
+        query: `query Products($n:Int!)${inContext(lang)}{ products(first:$n, sortKey: BEST_SELLING){ nodes { ${PRODUCT_FIELDS} } } }`,
         variables: { n: count }, revalidate: 60,
       });
       return data.products.nodes.map(normalizeNode);
     } catch (e) { console.error("getProducts(storefront):", e); }
   }
+  // Repli public : `products.json` ne connaît pas les traductions, il renvoie
+  // toujours le français. C'est un filet de sécurité, pas la voie normale.
   return (await fetchPublicProducts()).slice(0, count);
 }
 
-export async function getProduct(handle: string): Promise<ShopifyProduct | null> {
+export async function getProduct(handle: string, lang?: string): Promise<ShopifyProduct | null> {
   if (isShopifyConfigured) {
     try {
       const data = await shopifyFetch<{ product: ProductNode | null }>({
-        query: `query Product($h:String!){ product(handle:$h){ ${PRODUCT_FIELDS} } }`,
+        query: `query Product($h:String!)${inContext(lang)}{ product(handle:$h){ ${PRODUCT_FIELDS} } }`,
         variables: { h: handle }, revalidate: 60,
       });
       if (data.product) return normalizeNode(data.product);

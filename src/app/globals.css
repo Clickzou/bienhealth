@@ -193,6 +193,29 @@
 .bien-marquee { overflow-x: auto; scrollbar-width: none; }
 .bien-marquee::-webkit-scrollbar { display: none; }
 
+/*
+  Texte riche venu de l'admin Shopify (description produit). Le projet n'a pas
+  le plugin typography de Tailwind : ces quelques règles suffisent à rendre
+  lisibles les paragraphes, listes et gras saisis dans la fiche, sans imposer
+  de mise en forme à celle ou celui qui l'écrit.
+*/
+.bien-richtext > :first-child { margin-top: 0; }
+.bien-richtext p { margin-top: 0.9rem; }
+.bien-richtext ul,
+.bien-richtext ol { margin-top: 0.9rem; padding-left: 1.15rem; }
+.bien-richtext ul { list-style: disc; }
+.bien-richtext ol { list-style: decimal; }
+.bien-richtext li { margin-top: 0.3rem; }
+.bien-richtext li::marker { color: var(--color-bien-leaf, currentColor); }
+.bien-richtext strong,
+.bien-richtext b { font-weight: 700; color: var(--foreground, currentColor); }
+.bien-richtext a { text-decoration: underline; text-underline-offset: 2px; }
+.bien-richtext h2,
+.bien-richtext h3,
+.bien-richtext h4 { margin-top: 1.5rem; font-weight: 700; color: var(--foreground, currentColor); }
+.bien-richtext img { border-radius: 1rem; margin-top: 1.2rem; }
+.bien-richtext br + br { display: none; }
+
 @media (prefers-reduced-motion: no-preference) {
   /* Entrée au chargement */
   .anim-down { animation: bien-fade-down 0.6s ease both; }

@@ -643,15 +643,20 @@ function Feature({ f, i, lang }: { f: Feature; i: number; lang: string }) {
             112 px et le scan de parution, en portrait, écrasé dans une bande
             de la même hauteur : les deux arrivaient mal cadrés (retour client
             du 02/09/2026). Ils gardent désormais partout le format 4/5 du
-            bureau — côte à côte à parts égales sur téléphone, empilés dès lg. */}
+            bureau — côte à côte à parts égales sur téléphone, empilés dès lg.
+            `max-w-[50%]` : les parutions sans scan n'ont qu'un visuel, qui
+            occupait alors toute la largeur du téléphone — au format 4/5 la
+            photo y était recadrée de si près qu'on ne voyait plus que deux
+            pots (retour client, parutions 09 et 21). Un visuel seul garde
+            donc la largeur qu'il aurait à deux. */}
         <div className="flex gap-4 px-6 pb-6 sm:px-9 sm:pb-9 lg:flex-col lg:p-11 lg:pl-0">
           {f.product && (
-            <div className="relative flex-1 min-w-0 aspect-[4/5] lg:w-full lg:flex-none rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
+            <div className="relative flex-1 min-w-0 max-w-[50%] lg:max-w-none aspect-[4/5] lg:w-full lg:flex-none rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
               <Image src={f.product.src} alt={f.product.alt} fill sizes="(max-width:1024px) 45vw, 272px" className="object-cover" />
             </div>
           )}
           {f.clipping && (
-            <a href={f.clipping.src} target="_blank" rel="noopener noreferrer" className="group/clip min-w-0 flex-1 lg:flex-none">
+            <a href={f.clipping.src} target="_blank" rel="noopener noreferrer" className="group/clip min-w-0 flex-1 max-w-[50%] lg:max-w-none lg:flex-none">
               <span className="relative block aspect-[4/5] rounded-2xl overflow-hidden ring-1 ring-border bg-bien-cream">
                 <Image src={f.clipping.src} alt={f.clipping.alt} fill sizes="(max-width:1024px) 45vw, 272px" className="object-cover transition-transform duration-500 group-hover/clip:scale-105" />
               </span>

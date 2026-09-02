@@ -55,7 +55,7 @@ export default async function CollectionPage({
   const t = T[lang === "en" ? "en" : "fr"];
   const c = localizeCollection(col, lang);
 
-  const all = await getProducts(24);
+  const all = await getProducts(24, lang);
   const products = sortForCollection(col, all.filter(col.match));
   // « Découvrez aussi » : les produits qui ne sont pas déjà affichés plus haut.
   // Les accessoires en sont exclus, sauf sur leur propre collection : le client

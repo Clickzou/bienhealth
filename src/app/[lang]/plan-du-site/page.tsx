@@ -43,7 +43,7 @@ export default async function PlanDuSitePage({
   if (!hasLocale(lang)) notFound();
   const t = T[lang === "en" ? "en" : "fr"];
 
-  const products = await getProducts(24).catch(() => []);
+  const products = await getProducts(24, lang).catch(() => []);
   const p = (path: string) => `/${lang}${path ? `/${path}` : ""}`;
 
   const groups: { title: string; links: { label: string; href: string }[] }[] = [

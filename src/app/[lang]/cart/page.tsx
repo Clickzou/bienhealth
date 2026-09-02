@@ -34,7 +34,7 @@ export default async function CartPage({
   if (!hasLocale(lang)) notFound();
 
   const EXCLUDE = new Set(["mousseur-a-lait", "bien-totebag"]);
-  const suggestions = (await getProducts(12)).filter((p) => !EXCLUDE.has(p.handle)).slice(0, 4);
+  const suggestions = (await getProducts(12, lang)).filter((p) => !EXCLUDE.has(p.handle)).slice(0, 4);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
