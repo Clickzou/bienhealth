@@ -287,22 +287,24 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
     >
       {/* `h-full` + colonne : les cartes d'une même rangée (ou d'une même vue
           de carrousel) finissent à la même hauteur, quel que soit le nombre de
-          lignes du titre. Le descriptif absorbe la différence en `flex-1`, si
-          bien que le « Découvrir » reste aligné d'une carte à l'autre. */}
+          lignes du titre. Le surplus de hauteur allait auparavant au descriptif
+          (`flex-1`), qui plaquait l'icône en haut et le « Découvrir » en bas
+          avec un trou au milieu (retour client) : `justify-center` le répartit
+          désormais de part et d'autre, le bloc reste centré dans la carte. */}
       {/* Ni ombre ni contour tant que la carte est dans la piste du carrousel :
           posée sur le fond crème, l'ombre y traînait un liseré gris sous la
           carte, et le `ring` gris qui restait était lu comme un reste d'ombre
           (retour client). La carte blanche se détache alors du crème par son
           seul fond. Les deux reviennent dès sm, où les cartes redeviennent une
           pile. */}
-      <a href={`/${lang}/boutique`} className="flex h-full flex-col bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-transparent sm:ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      <a href={`/${lang}/boutique`} className="flex h-full flex-col justify-center bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-transparent sm:ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
         <h3 className="mt-4 font-display text-xl text-black leading-tight">
           {item.title}
         </h3>
-        <p className="mt-2 flex-1 text-sm text-black/70 leading-relaxed">{item.desc}</p>
+        <p className="mt-2 text-sm text-black/70 leading-relaxed">{item.desc}</p>
         <span className="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
           {lang === "en" ? "Discover" : "Découvrir"} <ArrowRight className="h-4 w-4" />
         </span>

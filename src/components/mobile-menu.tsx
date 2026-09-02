@@ -25,8 +25,8 @@ export default function MobileMenu({ lang }: { lang: string }) {
 
   const BY_TYPE = [
     { label: t.gummies, href: l("/collections/gummies") },
-    { label: t.packs, href: l("/collections/packs") },
     { label: t.powders, href: l("/collections/nos-poudres") },
+    { label: t.packs, href: l("/collections/packs") },
     { label: t.accessories, href: l("/collections/nos-accessoires") },
     { label: t.allProducts, href: l("/boutique") },
   ];

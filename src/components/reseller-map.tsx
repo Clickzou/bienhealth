@@ -59,13 +59,21 @@ export default function ResellerMap({ resellers }: { resellers: Reseller[] }) {
     // en plein milieu de la carte des revendeurs. Le fond Esri « Light Gray »
     // rend la même chose et ne demande pas de clé. Les libellés de villes sont
     // sur une couche séparée, à poser par-dessus le fond.
+    // `detectRetina` : les tuiles Esri sont des images 256 px prévues pour un
+    // pixel physique par pixel CSS. Sur un écran HiDPI (ou avec le zoom du
+    // navigateur) elles étaient étirées et les noms de villes ressortaient
+    // flous (retour client). Leaflet demande alors les tuiles du niveau de
+    // zoom suivant et les affiche à demi-taille : deux fois plus de pixels
+    // pour la même surface, texte net.
     const esri = "https://services.arcgisonline.com/ArcGIS/rest/services/Canvas";
     L.tileLayer(`${esri}/World_Light_Gray_Base/MapServer/tile/{z}/{y}/{x}`, {
       attribution: "&copy; Esri &copy; OpenStreetMap",
-      maxZoom: 19,
+      maxZoom: 16,
+      detectRetina: true,
     }).addTo(map);
     L.tileLayer(`${esri}/World_Light_Gray_Reference/MapServer/tile/{z}/{y}/{x}`, {
-      maxZoom: 19,
+      maxZoom: 16,
+      detectRetina: true,
     }).addTo(map);
 
     resellers.forEach((r, i) => {

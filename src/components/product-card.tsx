@@ -26,6 +26,12 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
   // manquait sur la page où l'on voit tous les produits (demande client).
   const isBestSeller = p.available && BEST_SELLERS.some((k) => p.title.toUpperCase().includes(k));
   const { main: titleMain, sub: titleSub } = splitProductTitle(p.title);
+  // Prix barré : Shopify porte un « prix comparé » sur les packs, remisés par
+  // rapport à la somme des unités. Il n'apparaissait que sur la fiche produit,
+  // si bien que la grille des packs affichait la remise sans la montrer
+  // (demande client). Ignoré quand il n'est pas supérieur au prix de vente.
+  const compareAt =
+    p.compareAtPrice && Number(p.compareAtPrice.amount) > Number(p.price.amount) ? p.compareAtPrice : null;
   return (
     <article className="group bg-card rounded-2xl sm:rounded-3xl ring-1 ring-border hover:ring-bien-leaf/40 hover:-translate-y-1 transition-all bien-shadow-sm overflow-hidden flex flex-col">
       <Link href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
@@ -73,7 +79,12 @@ export default function ProductCard({ p, lang }: { p: ShopifyProduct; lang: stri
         </Link>
         <p className="mt-1 text-xs sm:text-sm text-black/65 leading-snug flex-1 line-clamp-3 sm:line-clamp-none">{benefitFor(p.title, p.tags[0] ?? t.fallbackTag, lang)}</p>
         <div className="mt-3 sm:mt-4 flex items-center justify-between gap-2 sm:gap-3">
-          <span className="font-display text-base sm:text-lg text-black">{formatPrice(p.price)}</span>
+          <span className="min-w-0 flex items-baseline gap-1.5 sm:gap-2">
+            <span className="font-display text-base sm:text-lg text-black">{formatPrice(p.price)}</span>
+            {compareAt && (
+              <span className="text-xs sm:text-sm text-black/45 line-through">{formatPrice(compareAt)}</span>
+            )}
+          </span>
           <Link href={href} className="shrink-0 inline-flex items-center gap-1 sm:gap-1.5 rounded-full bg-bien-forest text-bien-cream px-2.5 sm:px-3.5 py-1.5 sm:py-2 text-[11px] sm:text-xs font-semibold hover:bg-bien-leaf transition-colors">
             <ShoppingBag className="h-3 w-3 sm:h-3.5 sm:w-3.5" /> {p.available ? t.see : t.preorderCta}
           </Link>

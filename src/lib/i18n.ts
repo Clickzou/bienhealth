@@ -47,7 +47,7 @@ const DICT = {
       blog: "Blog",
       // Sous-menu « par type »
       gummies: "Gummies",
-      packs: "Packs & duos",
+      packs: "Packs",
       powders: "Poudres",
       accessories: "Accessoires",
       allProducts: "Tous les produits",
@@ -131,7 +131,7 @@ const DICT = {
       reviews: "Reviews",
       blog: "Blog",
       gummies: "Gummies",
-      packs: "Packs & duos",
+      packs: "Packs",
       powders: "Powders",
       accessories: "Accessories",
       allProducts: "All products",

@@ -31,7 +31,6 @@ function canHover(): boolean {
 
 export default function PressMarquee({ children }: { children: React.ReactNode }) {
   const scroller = useRef<HTMLDivElement>(null);
-  const hovered = useRef(false);
   const pausedUntil = useRef(0);
 
   useEffect(() => {
@@ -46,17 +45,39 @@ export default function PressMarquee({ children }: { children: React.ReactNode }
 
     let raf = 0;
     let last = performance.now();
+    // Position en flottant, tenue à part. `el.scrollLeft += 0.68` ne marchait
+    // pas : le navigateur aligne la valeur relue sur le pixel physique, si bien
+    // qu'à certains niveaux de zoom l'incrément d'une frame était systématique-
+    // ment ravalé et le bandeau restait figé — y compris après rechargement,
+    // puisque le zoom, lui, ne change pas (retour client). On accumule donc
+    // nous-mêmes et on écrit la valeur, sans jamais la relire.
+    let pos = el.scrollLeft;
+    const hoverCapable = canHover();
 
     const step = (now: number) => {
       const dt = now - last;
       last = now;
+      // Flèches, doigt ou molette déplacent `scrollLeft` sans passer par nous :
+      // on se recale avant d'ajouter le pas de la frame.
+      if (Math.abs(el.scrollLeft - pos) > 1) pos = el.scrollLeft;
+      // Le survol et le focus clavier sont relus à chaque frame plutôt que
+      // mémorisés dans un drapeau : un `mouseenter` sans `mouseleave` (fenêtre
+      // quittée d'un geste vif, logo ouvert dans un nouvel onglet, curseur déjà
+      // posé sur le bandeau au chargement) laissait le drapeau à `true` et
+      // arrêtait le défilement pour le reste de la visite.
+      const held =
+        (hoverCapable && el.matches(":hover")) || el.querySelector(":focus-visible") !== null;
       // `dt` borné : après un changement d'onglet, le premier delta vaut
       // plusieurs secondes et ferait sauter le bandeau.
-      if (!hovered.current && now >= pausedUntil.current) {
-        el.scrollLeft += (SPEED * Math.min(dt, 100)) / 1000;
+      if (!held && now >= pausedUntil.current) {
+        pos += (SPEED * Math.min(dt, 100)) / 1000;
+        el.scrollLeft = pos;
       }
       const half = el.scrollWidth / 2;
-      if (half > 0 && el.scrollLeft >= half) el.scrollLeft -= half;
+      if (half > 0 && pos >= half) {
+        pos -= half;
+        el.scrollLeft = pos;
+      }
       raf = requestAnimationFrame(step);
     };
 
@@ -78,19 +99,12 @@ export default function PressMarquee({ children }: { children: React.ReactNode }
     <div className="relative">
       <div
         ref={scroller}
-        /* La pause au survol est réservée aux appareils à vrai pointeur : sur
-           un écran tactile, un simple appui émule `mouseenter` sans jamais
-           émettre le `mouseleave` correspondant — le bandeau restait figé pour
-           le reste de la visite. Un doigt sur la piste met en pause le temps du
-           geste, puis le défilement repart tout seul. */
-        onMouseEnter={() => { if (canHover()) hovered.current = true; }}
-        onMouseLeave={() => (hovered.current = false)}
+        /* Le survol et le focus sont lus à la frame (voir l'effet ci-dessus).
+           Restent ici les gestes tactiles, qui n'ont pas d'état à relire : un
+           doigt sur la piste met en pause le temps du geste, puis le défilement
+           repart tout seul au bout de `TOUCH_PAUSE_MS`. */
         onPointerDown={(e) => { if (e.pointerType !== "mouse") pausedUntil.current = performance.now() + TOUCH_PAUSE_MS; }}
         onTouchMove={() => (pausedUntil.current = performance.now() + TOUCH_PAUSE_MS)}
-        /* Seul le focus clavier met en pause : après un appui sur un logo,
-           `:focus` reste posé sur le lien et gelait le bandeau. */
-        onFocusCapture={(e) => { if (e.target instanceof Element && e.target.matches(":focus-visible")) hovered.current = true; }}
-        onBlurCapture={() => (hovered.current = false)}
         className="bien-marquee [mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
       >
         {children}
