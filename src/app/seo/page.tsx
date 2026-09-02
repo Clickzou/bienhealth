@@ -5,6 +5,7 @@ import { DEFAULT_PERIOD, PERIODS, isPeriodKey, resolvePeriod, variation, type Pe
 import { fetchGa4, isGa4Configured, ga4PropertyId } from "@/lib/seo-dashboard/ga4";
 import { fetchGsc, isGscConfigured, gscSiteUrl } from "@/lib/seo-dashboard/gsc";
 import { fetchShopifySales } from "@/lib/seo-dashboard/shopify-sales";
+import { fetchDiagnostics } from "@/lib/seo-dashboard/diagnostics";
 import LoginForm from "./login-form";
 import KeywordTable from "./keyword-table";
 import RealtimePanel from "./realtime";
@@ -55,7 +56,12 @@ export default async function SeoDashboard({
   const key: PeriodKey = isPeriodKey(periodParam) ? periodParam : DEFAULT_PERIOD;
   const period = resolvePeriod(key);
 
-  const [ga4, gsc, shopify] = await Promise.all([fetchGa4(period), fetchGsc(period), fetchShopifySales(period)]);
+  const [ga4, gsc, shopify, diagnostics] = await Promise.all([
+    fetchGa4(period),
+    fetchGsc(period),
+    fetchShopifySales(period),
+    fetchDiagnostics(period),
+  ]);
 
   // Search Console publie avec deux à trois jours de retard, et la période
   // choisie déborde donc toujours sur des jours qu'elle n'a pas encore. On
@@ -281,6 +287,97 @@ export default async function SeoDashboard({
                         "Renseigner <code>SHOPIFY_APP_CLIENT_ID</code> et <code>SHOPIFY_APP_CLIENT_SECRET</code> dans Vercel et dans <code>.env.local</code>.",
                         "Installer l'application sur la boutique, puis recharger cette page.",
                       ]
+            }
+          />
+        )}
+
+        {/* --------------------------------------------------- diagnostics */}
+        {/* Ce que les gens répondent au quiz. Klaviyo fait office de base : le
+            site n'en a pas d'autre, et le quiz y inscrit déjà chaque personne
+            avec ses réponses en propriétés de profil. La liste contient aussi
+            les contacts importés de Typeform — sans réponses, donc écartés en
+            amont : on ne montre que les diagnostics remplis sur le site. */}
+        <SectionTitle hint='Source : liste Klaviyo « EMAIL - Contacts typeform "Ton diagnostic personnalisé <3" » — réponses au quiz /diagnostic'>
+          Diagnostics remplis
+        </SectionTitle>
+        {diagnostics.data ? (
+          <>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              <Kpi label="Sur la période" value={num(diagnostics.data.count)} />
+              <Kpi
+                label="Produit le plus recommandé"
+                value={diagnostics.data.byResult[0]?.label ?? "—"}
+                hint={diagnostics.data.byResult[0] ? `${diagnostics.data.byResult[0].value} fois` : undefined}
+              />
+              <Kpi
+                label="Profils lus dans la liste"
+                value={num(diagnostics.data.listTotal)}
+                hint={diagnostics.data.capped ? "Lecture bornée : total partiel" : "Contacts Typeform inclus"}
+              />
+            </div>
+
+            {diagnostics.data.byResult.length > 0 && (
+              <Card title="Répartition des recommandations" className="mt-3">
+                <BarList rows={diagnostics.data.byResult} />
+              </Card>
+            )}
+
+            <Card title="Derniers diagnostics" className="mt-3">
+              <Table
+                head={["Date", "Email", "Recommandation", "Réponses"]}
+                rows={diagnostics.data.items.slice(0, 40).map((d) => [
+                  d.joinedAt ? longDate(d.joinedAt.slice(0, 10)) : "—",
+                  <span key="m" className="font-medium text-[#00112b]">{d.email}</span>,
+                  d.result ?? "—",
+                  <span key="a" className="block max-w-[560px] text-[#4a5566]">
+                    {d.answers.map((a) => `${a.question} : ${a.answer}`).join(" · ")}
+                  </span>,
+                ])}
+              />
+            </Card>
+          </>
+        ) : (
+          <NotConnected
+            title={
+              diagnostics.status === "bad-credentials"
+                ? "Klaviyo refuse la clé privée"
+                : diagnostics.status === "forbidden"
+                  ? "La clé privée n'a pas le droit de lire les profils"
+                  : diagnostics.status === "list-not-found"
+                    ? "Klaviyo ne trouve pas la liste du diagnostic"
+                    : diagnostics.status === "not-configured"
+                      ? "La clé de lecture Klaviyo n'est pas renseignée"
+                      : "Klaviyo n'a pas répondu"
+            }
+            why={
+              diagnostics.status === "bad-credentials"
+                ? "La clé a peut-être été révoquée ou recopiée incomplètement. Une clé privée commence par <code>pk_</code>."
+                : diagnostics.status === "forbidden"
+                  ? "La clé existe mais ses autorisations ne couvrent pas la lecture des profils et des listes."
+                  : diagnostics.status === "list-not-found"
+                    ? "L'identifiant de liste ne correspond à rien dans ce compte Klaviyo. Il se lit dans l'URL de la liste, après <code>/list/</code>."
+                    : diagnostics.status === "not-configured"
+                      ? "Le site écrit déjà les diagnostics dans Klaviyo avec la clé publique du compte. Les relire demande une clé privée, qui reste côté serveur et ne part jamais au navigateur."
+                      : "L'appel à l'API Klaviyo a échoué. Si cela persiste, vérifier l'état du service."
+            }
+            steps={
+              diagnostics.status === "forbidden"
+                ? [
+                    "Dans Klaviyo : <em>Settings → API keys</em>, ouvrir la clé utilisée.",
+                    "Lui donner l'accès <strong>Read</strong> sur <code>Profiles</code> et sur <code>Lists</code>.",
+                    "Recharger cette page.",
+                  ]
+                : diagnostics.status === "list-not-found"
+                  ? [
+                      "Ouvrir la liste dans Klaviyo et relever l'identifiant dans l'URL (<code>klaviyo.com/list/<strong>XXXXXX</strong></code>).",
+                      "Le renseigner dans <code>KLAVIYO_DIAGNOSTIC_LIST_ID</code> sur Vercel, puis redéployer.",
+                    ]
+                  : [
+                      "Dans Klaviyo : <em>Settings → API keys → Create private key</em>.",
+                      "Autorisations : <strong>Read</strong> sur <code>Profiles</code> et sur <code>Lists</code> — rien de plus.",
+                      "Copier la clé (<code>pk_…</code>, affichée une seule fois) dans <code>KLAVIYO_PRIVATE_API_KEY</code>, sur Vercel et dans <code>.env.local</code>.",
+                      "Redéployer, puis recharger cette page.",
+                    ]
             }
           />
         )}
