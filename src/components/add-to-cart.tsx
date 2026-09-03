@@ -188,45 +188,50 @@ export default function AddToCart({
         </fieldset>
       )}
 
-      <div className={quantitySelector ? "flex items-center gap-3" : "contents"}>
+      <div className={quantitySelector ? "flex flex-wrap items-end gap-3" : "contents"}>
         {quantitySelector && (
           /* 1 à 5 puis « 6+ », qui déplie un menu jusqu'à 15 : le trio 1/2/3
              ne permettait pas de commander plus de trois mousseurs (demande
-             client du 19/08/2026). */
-          <div className="shrink-0 flex items-center gap-2">
-            <div className="inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>
-              {[1, 2, 3, 4, 5].map((n) => (
-                <button
-                  key={n}
-                  type="button"
-                  onClick={() => { setQty(n); setMoreQty(false); }}
-                  aria-pressed={qty === n && !moreQty}
-                  className={`h-9 w-9 rounded-full text-sm font-bold transition ${qty === n && !moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
-                >
-                  {n}
-                </button>
-              ))}
-              <button
-                type="button"
-                onClick={() => { setMoreQty(true); setQty(6); }}
-                aria-pressed={moreQty}
-                className={`h-9 px-3 rounded-full text-sm font-bold transition ${moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
-              >
-                6+
-              </button>
-            </div>
-            {moreQty && (
-              <select
-                value={qty}
-                onChange={(e) => setQty(Number(e.target.value))}
-                aria-label={t.pick}
-                className="h-9 rounded-full ring-1 ring-border bg-card px-3 text-sm font-semibold text-black"
-              >
-                {BULK_QUANTITIES.map((n) => (
-                  <option key={n} value={n}>{n}</option>
+             client du 19/08/2026). Le groupe porte maintenant son libellé en
+             clair : rien n'annonçait ces chiffres, qu'on pouvait prendre pour
+             un choix de format ou de parfum (retour client du 03/09/2026). */
+          <div className="shrink-0">
+            <p className="mb-1.5 text-xs font-bold uppercase tracking-[0.18em] text-black/50">{t.quantity}</p>
+            <div className="flex items-center gap-2">
+              <div className="inline-flex items-center rounded-full ring-1 ring-border bg-card p-1" role="group" aria-label={t.quantity}>
+                {[1, 2, 3, 4, 5].map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => { setQty(n); setMoreQty(false); }}
+                    aria-pressed={qty === n && !moreQty}
+                    className={`h-9 w-9 rounded-full text-sm font-bold transition ${qty === n && !moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
+                  >
+                    {n}
+                  </button>
                 ))}
-              </select>
-            )}
+                <button
+                  type="button"
+                  onClick={() => { setMoreQty(true); setQty(6); }}
+                  aria-pressed={moreQty}
+                  className={`h-9 px-3 rounded-full text-sm font-bold transition ${moreQty ? "bg-bien-forest text-bien-cream" : "text-black/70 hover:bg-bien-cream"}`}
+                >
+                  6+
+                </button>
+              </div>
+              {moreQty && (
+                <select
+                  value={qty}
+                  onChange={(e) => setQty(Number(e.target.value))}
+                  aria-label={t.pick}
+                  className="h-9 rounded-full ring-1 ring-border bg-card px-3 text-sm font-semibold text-black"
+                >
+                  {BULK_QUANTITIES.map((n) => (
+                    <option key={n} value={n}>{n}</option>
+                  ))}
+                </select>
+              )}
+            </div>
           </div>
         )}
         <button type="button" onClick={add} className={className}>

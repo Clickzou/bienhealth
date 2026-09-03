@@ -18,6 +18,10 @@ export default function ProductStickyBar({
   lang,
   ctaLabel = "Ajouter au panier",
   anchorId = "reviews-start",
+  /** Le produit se vend en cures (compléments) : la quantité s'y compte en
+   *  mois. Un pack ou un accessoire se compte en articles — la barre y
+   *  annonçait « 2 mois » pour deux packs. */
+  cure = true,
 }: {
   title: string;
   price: string;
@@ -26,6 +30,7 @@ export default function ProductStickyBar({
   lang: string;
   ctaLabel?: string;
   anchorId?: string;
+  cure?: boolean;
 }) {
   const [show, setShow] = useState(false);
   /**
@@ -84,7 +89,11 @@ export default function ProductStickyBar({
             {/* Le prix suit la cure : total remisé de la ligne, et rappel du
                 nombre de mois pour qu'on voie ce qu'on s'apprête à ajouter. */}
             <p className="text-sm text-bien-cream/70">
-              {qty > 1 && <span className="font-semibold text-bien-cream">{qty} {lang === "en" ? "months" : "mois"} · </span>}
+              {qty > 1 && (
+                <span className="font-semibold text-bien-cream">
+                  {cure ? `${qty} ${lang === "en" ? "months" : "mois"}` : `×${qty}`} ·{" "}
+                </span>
+              )}
               {qty > 1 ? money(lineTotal(item.price, qty)) : price}
             </p>
           </div>

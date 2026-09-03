@@ -20,12 +20,13 @@ import DeliveryEstimate from "@/components/delivery-estimate";
 import ReassuranceCarousel from "@/components/reassurance-carousel";
 import JsonLd from "@/components/json-ld";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
-import { productPageTitle, productMetaEn } from "@/lib/shop";
+import { productPageTitle, productMetaEn, PACKS } from "@/lib/shop";
 import { PRODUCT_SEO, localizeProductSeo } from "@/lib/product-seo";
 import { splitProductTitle } from "@/lib/product-title";
 import { freeShippingAmount, freeShippingSentence } from "@/lib/shipping";
 import { SHOP_RATING, ratingLabel, happyClientsLabel } from "@/lib/social-proof";
 import StarRating from "@/components/star-rating";
+import LinePrice from "@/components/line-price";
 import MetaViewContent from "@/components/meta-view-content";
 
 export async function generateMetadata({
@@ -63,6 +64,15 @@ const ACTIVES: Record<string, string[]> = {
   FOCUS: ["Lion's Mane", "Rhodiola", "L-Théanine"],
   POWER: ["Cordyceps", "Rhodiola", "Panax Ginseng"],
   MUSHGLOW: ["Lion's Mane", "Maca", "Chaga", "Cordyceps", "Collagène", "L-Théanine"],
+};
+
+/** Mêmes actifs, écrits comme les fiches anglaises les écrivent : « Saffron »
+ *  et « L-Theanine », pas « Safran » ni « L-Théanine ». */
+const ACTIVES_EN: Record<string, string[]> = {
+  CALM: ["Ashwagandha", "Reishi", "Saffron"],
+  FOCUS: ["Lion's Mane", "Rhodiola", "L-Theanine"],
+  POWER: ["Cordyceps", "Rhodiola", "Panax Ginseng"],
+  MUSHGLOW: ["Lion's Mane", "Maca", "Chaga", "Cordyceps", "Collagen", "L-Theanine"],
 };
 
 /** Infos clés produit (comme sur la fiche du vrai site) : catégorie + 4 lignes. */
@@ -603,12 +613,87 @@ RHODIOLA ROSEA
   { q: "Shipping", a: LIVRAISON_EN },
 ];
 
-function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolean, lang: string): Accordion[] {
+const TRACEABILITE: Accordion = {
+  q: "Traçabilité et Qualité",
+  a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM), avec un numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique.",
+};
+
+const TRACEABILITY_EN: Accordion = {
+  q: "Traceability and Quality",
+  a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform), with a publicly verifiable declaration number. Actives dosed according to scientific literature.",
+};
+
+/** « A, B et C » (« A, B and C » en anglais). */
+function enumerate(items: string[], en: boolean): string {
+  if (items.length < 2) return items[0] ?? "";
+  return `${items.slice(0, -1).join(", ")} ${en ? "and" : "et"} ${items[items.length - 1]}`;
+}
+
+/**
+ * Infos clés d'un pack, déduites des produits qu'il réunit.
+ *
+ * Les quatre packs (BOOST, FLOW, BALANCE, RESET) ne citent aucun produit de la
+ * gamme dans leur titre : `keyFor` ne leur trouvait donc pas de clé et ils
+ * héritaient du traitement des accessoires — ni encadré de bienfaits, ni détail
+ * des actifs, un seul volet « Livraison » (retour client du 03/09/2026). Rien
+ * n'est inventé ici : tout vient des fiches des produits qui composent le pack,
+ * via la table PACKS (lib/shop.ts).
+ */
+function packInfo(handle: string, lang: string): ProductInfo | null {
+  const parts = PACKS[handle];
+  if (!parts) return null;
+  const en = lang === "en";
+  const highlights = en ? HIGHLIGHTS_EN : HIGHLIGHTS;
+  const actives = [...new Set(parts.flatMap((k) => (en ? ACTIVES_EN : ACTIVES)[k] ?? []))];
+  return {
+    category: parts.map((k) => highlights[k].category).join(" + "),
+    reviews: parts.reduce((n, k) => n + highlights[k].reviews, 0),
+    rows: [
+      {
+        icon: HeartPulse,
+        text: en
+          ? `${enumerate(actives, true)} at clinically effective doses.`
+          : `${enumerate(actives, false)} aux doses cliniquement efficaces.`,
+      },
+      // Le bénéfice de chaque produit, préfixé de son nom : dans un duo, on doit
+      // voir d'un coup d'œil ce que fait chacune des deux formules.
+      ...parts.map((k) => ({ icon: Zap, text: `${k} — ${highlights[k].rows[1].text}` })),
+      {
+        icon: Leaf,
+        // Volontairement sans « vegan » : BALANCE contient MUSHGLOW, qui porte
+        // du collagène. On n'affirme que ce qui vaut pour les quatre packs.
+        text: en
+          ? "Natural, clean formulas: no added sugar or artificial additives, made in France."
+          : "Des formules naturelles et clean, sans sucre ajouté ni additif artificiel, fabriquées en France.",
+      },
+    ],
+  };
+}
+
+/** Volets d'un pack : le détail de chaque produit qu'il contient. */
+function packAccordions(handle: string, lang: string): Accordion[] | null {
+  const parts = PACKS[handle];
+  if (!parts) return null;
+  const en = lang === "en";
+  const highlights = en ? HIGHLIGHTS_EN : HIGHLIGHTS;
+  return [
+    ...parts.map((k) => ({
+      q: en ? `${k} — Ingredients, Benefits and Dosage` : `${k} — Ingrédients, Bienfaits et Posologie`,
+      a: highlights[k].rows.map((r) => "• " + r.text).join("\n\n"),
+    })),
+    en ? TRACEABILITY_EN : TRACEABILITE,
+    { q: en ? "Shipping" : "Livraison", a: en ? LIVRAISON_EN : LIVRAISON },
+  ];
+}
+
+function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolean, lang: string, handle: string): Accordion[] {
   const en = lang === "en";
   if (key === "MUSHGLOW") return en ? MUSHGLOW_ACCORDIONS_EN : MUSHGLOW_ACCORDIONS;
   if (key === "CALM") return en ? CALM_ACCORDIONS_EN : CALM_ACCORDIONS;
   if (key === "FOCUS") return en ? FOCUS_ACCORDIONS_EN : FOCUS_ACCORDIONS;
   if (key === "POWER") return en ? POWER_ACCORDIONS_EN : POWER_ACCORDIONS;
+  const pack = packAccordions(handle, lang);
+  if (pack) return pack;
   // Accessoires (mousseur, tote bag) : aucun `key`. Ils n'ont ni goût, ni
   // posologie, ni actifs — seule la livraison les concerne (correction client).
   if (!key) return [{ q: en ? "Shipping" : "Livraison", a: en ? LIVRAISON_EN : LIVRAISON }];
@@ -617,14 +702,14 @@ function buildAccordions(key: string | null, info: ProductInfo, isPowder: boolea
         { q: "Ingredients, Benefits and Dosage", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
         { q: "What does it taste like?", a: isPowder ? "Neutral taste, blends easily into any hot or cold drink." : "Fruity, delicious gummies, pleasant to chew, with no added sugar." },
         { q: isPowder ? "How do I take it?" : "Dosage", a: info.rows[info.rows.length - 1]?.text ?? "" },
-        { q: "Traceability and Quality", a: "Formulated and made in France, with quality controls at every step. Declared to the DGAL (COMPL'ALIM platform), with a publicly verifiable declaration number. Actives dosed according to scientific literature." },
+        TRACEABILITY_EN,
         { q: "Shipping", a: LIVRAISON_EN },
       ]
     : [
         { q: "Ingrédients, Bienfaits et Posologie", a: info.rows.map((r) => "• " + r.text).join("\n\n") },
         { q: "Quel goût a-t-il ?", a: isPowder ? "Goût neutre, se mélange facilement à toute boisson chaude ou froide." : "Des gummies au goût fruité et gourmand, agréables à mâcher, sans sucre ajouté." },
         { q: isPowder ? "Comment le préparer ?" : "Posologie", a: info.rows[info.rows.length - 1]?.text ?? "" },
-        { q: "Traçabilité et Qualité", a: "Formulé et fabriqué en France, avec des contrôles qualité à chaque étape. Déclaré auprès de la DGAL (plateforme COMPL'ALIM), avec un numéro de déclaration vérifiable publiquement. Actifs dosés selon la littérature scientifique." },
+        TRACEABILITE,
         { q: "Livraison", a: LIVRAISON },
       ];
 }
@@ -715,10 +800,15 @@ export default async function ProductPage({
   const en = lang === "en";
   const ui = en ? UI.en : UI.fr;
   const key = keyFor(product.title);
-  const info = key ? (en ? HIGHLIGHTS_EN : HIGHLIGHTS)[key] : (en ? DEFAULT_INFO_EN : DEFAULT_INFO);
+  // Un pack n'a pas de clé produit, mais ce n'est pas un accessoire pour
+  // autant : ses infos clés se composent à partir des produits qu'il réunit.
+  const pack = packInfo(handle, lang);
+  const info = key ? (en ? HIGHLIGHTS_EN : HIGHLIGHTS)[key] : pack ?? (en ? DEFAULT_INFO_EN : DEFAULT_INFO);
+  /** Complément alimentaire : un produit de la gamme, ou un pack de produits. */
+  const supplement = Boolean(key) || Boolean(pack);
   const isPowder = key === "MUSHGLOW";
   const videos = key ? VIDEOS[key] ?? [] : [];
-  const accordions = buildAccordions(key, info, isPowder, lang);
+  const accordions = buildAccordions(key, info, isPowder, lang, handle);
 
   // Article pour le panier local (client) — le checkout Shopify est déclenché
   // depuis la page panier via un permalink multi-articles.
@@ -905,7 +995,7 @@ export default async function ProductPage({
                 et le bouton. Masqué pour les accessoires (mousseur, tote bag) :
                 le texte générique leur prêtait des adaptogènes et des
                 champignons qu'ils ne contiennent pas. */}
-            {key && (
+            {supplement && (
               /* Déployé par défaut sur toutes les fiches (demande client du
                  24/08/2026, qui revient sur le repli demandé le 19/08) : ce
                  qu'apporte le produit doit se lire sans un clic de plus. Le
@@ -940,13 +1030,20 @@ export default async function ProductPage({
                     19/08/2026). Il reste affiché pour les accessoires, qui
                     n'ont pas ce tableau. */}
                 {!key && (
-                  <div className="flex items-baseline gap-3">
-                    <span className="text-base font-bold text-black">{formatPrice(product.price)}</span>
-                    {product.compareAtPrice &&
-                      Number(product.compareAtPrice.amount) > Number(product.price.amount) && (
-                        <span className="text-sm text-black/45 line-through">{formatPrice(product.compareAtPrice)}</span>
-                      )}
-                  </div>
+                  /* Total de la ligne, recalculé à chaque changement de
+                     quantité : le prix rendu ici était statique et restait au
+                     prix d'une unité (retour client du 03/09/2026). */
+                  <LinePrice
+                    handle={handle}
+                    price={Number(product.price.amount)}
+                    compareAtPrice={
+                      product.compareAtPrice && Number(product.compareAtPrice.amount) > Number(product.price.amount)
+                        ? Number(product.compareAtPrice.amount)
+                        : null
+                    }
+                    currency={product.price.currencyCode || "EUR"}
+                    lang={lang}
+                  />
                 )}
               </div>
 
@@ -993,7 +1090,7 @@ export default async function ProductPage({
             {/* La presse en parle — citation + logos magazines. Masqué sur les
                 accessoires : la citation parle des champignons adaptogènes,
                 hors sujet sur un mousseur ou un tote bag (demande client). */}
-            {key && (
+            {supplement && (
             <div className="mt-6 rounded-2xl bg-bien-cream/60 ring-1 ring-border px-5 py-5 text-center">
               <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-black/50">{ui.pressEyebrow}</p>
               <p className="mt-2.5 text-sm text-black/85 leading-snug">
@@ -1126,6 +1223,7 @@ export default async function ProductPage({
         item={cartItem}
         lang={lang}
         ctaLabel={ctaLabel}
+        cure={Boolean(key)}
       />
     </div>
   );
