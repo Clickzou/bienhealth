@@ -25,6 +25,9 @@ export default function ReviewsSwitch({
     const host = window.location.hostname;
     const forced = new URLSearchParams(window.location.search).get("loox") === "1";
     if (forced || host === "bien.health" || host.endsWith(".bien.health")) {
+      // Le domaine réellement servi et le paramètre d'URL ne sont lisibles que
+      // dans le navigateur ; le serveur rend donc toujours l'affichage maison.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setUseLoox(true);
     }
   }, []);

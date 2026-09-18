@@ -54,7 +54,7 @@ export default async function CgvPage({
         </p>
         <p>
           We make no representation as to the legal compliance of the products and/or services in other countries. It is
-          the user's responsibility to comply with the local laws and regulations applicable in their country.
+          the user&apos;s responsibility to comply with the local laws and regulations applicable in their country.
         </p>
 
         <h2>Scope</h2>

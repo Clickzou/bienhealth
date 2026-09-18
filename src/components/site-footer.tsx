@@ -86,8 +86,16 @@ export default function SiteFooter({ lang }: { lang: string }) {
           </div>
           <div>
             <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.languageTitle}</h3>
+            {/* Comme partout ailleurs sur le site, en-tête compris, la navigation
+                interne passe par des <a> : changer de langue recharge la page,
+                ce qui garantit que tout — l'attribut lang du document, les
+                données rendues côté serveur — suit la bascule. Ces deux liens
+                sont les seuls dont l'adresse soit écrite en clair, d'où le
+                signalement de la règle ici et nulle part ailleurs. */}
             <div className="mt-5 inline-flex rounded-full bg-bien-cream/10 p-1 text-sm">
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a href="/fr" className={`rounded-full px-3.5 py-1.5 ${lang === "fr" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>FR</a>
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
               <a href="/en" className={`rounded-full px-3.5 py-1.5 ${lang === "en" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>EN</a>
             </div>
 

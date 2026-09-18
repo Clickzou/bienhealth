@@ -26,6 +26,10 @@ export default function CookieBanner({ lang }: { lang: string }) {
 
   useEffect(() => {
     try {
+      // Afficher la bannière côté serveur la ferait clignoter chez les
+      // visiteurs qui ont déjà choisi : leur réponse n'existe que dans leur
+      // navigateur, on ne la connaît qu'une fois monté.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (!localStorage.getItem(CONSENT_KEY)) setShow(true);
     } catch {
       /* localStorage indisponible */

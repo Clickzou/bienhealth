@@ -34,7 +34,7 @@ export default async function RetoursPage({
         <h2>How to start a return?</h2>
         <p>
           Contact our customer service at <a href="mailto:info@bien.health">info@bien.health</a> with your{" "}
-          <strong>order number</strong>. We'll send you the steps to follow for your return.
+          <strong>order number</strong>. We&apos;ll send you the steps to follow for your return.
         </p>
 
         <h2>Refund</h2>
@@ -43,14 +43,14 @@ export default async function RetoursPage({
           to the payment method used for the order.
         </p>
         <p>
-          Return shipping costs are the customer's responsibility, except in the event of our error.
+          Return shipping costs are the customer&apos;s responsibility, except in the event of our error.
         </p>
 
         <h2>Damaged product or error</h2>
         <p>
           If you receive a damaged product or an error in your order, contact us{" "}
           <strong>within 3 days</strong> of receipt at <a href="mailto:info@bien.health">info@bien.health</a>, attaching
-          a photo if possible. We'll quickly find a solution.
+          a photo if possible. We&apos;ll quickly find a solution.
         </p>
 
         <h2>Mediation</h2>

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { X, Sparkles, Check, Copy } from "lucide-react";
 import { CONSENT_KEY, CONSENT_EVENT } from "@/lib/consent";
 
@@ -58,6 +58,25 @@ export default function NewsletterPopup() {
     };
   }, []);
 
+  function persist(value: "closed" | "subscribed") {
+    try {
+      localStorage.setItem(STORAGE_KEY, value);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  // `useCallback` et non une simple fonction : l'écouteur clavier ci-dessous
+  // capture `close`, et donc le `status` du rendu où il a été posé. Sans
+  // dépendance à `status`, une personne qui s'inscrivait puis fermait avec
+  // Échap voyait son « subscribed » écrasé par « closed » — exactement ce que
+  // la ligne suivante veut éviter.
+  const close = useCallback(() => {
+    setOpen(false);
+    // Ne pas écraser l'état « subscribed » par « closed ».
+    if (status !== "done") persist("closed");
+  }, [status]);
+
   // Fermeture au clavier (Échap) + focus initial.
   useEffect(() => {
     if (!open) return;
@@ -67,21 +86,7 @@ export default function NewsletterPopup() {
     document.addEventListener("keydown", onKey);
     dialogRef.current?.focus();
     return () => document.removeEventListener("keydown", onKey);
-  }, [open]);
-
-  function persist(value: "closed" | "subscribed") {
-    try {
-      localStorage.setItem(STORAGE_KEY, value);
-    } catch {
-      /* ignore */
-    }
-  }
-
-  function close() {
-    setOpen(false);
-    // Ne pas écraser l'état « subscribed » par « closed ».
-    if (status !== "done") persist("closed");
-  }
+  }, [open, close]);
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();

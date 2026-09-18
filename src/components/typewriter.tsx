@@ -26,6 +26,9 @@ export default function Typewriter({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
+      // « Réduire les animations » est une préférence système, inconnue du
+      // serveur : on affiche alors le texte entier, d'un coup.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShown(text.length);
       setStarted(true);
       return;

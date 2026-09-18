@@ -119,10 +119,10 @@ export default async function ConfidentialitePage({
           the privacy or security of those sites. Please review their own policies.
         </p>
 
-        <h2>Children's data</h2>
+        <h2>Children&apos;s data</h2>
         <p>
           The Services are not intended for children and we do not knowingly collect their information. A parent or
-          guardian may contact us to request the deletion of a child's information.
+          guardian may contact us to request the deletion of a child&apos;s information.
         </p>
 
         <h2>Security and retention of your information</h2>

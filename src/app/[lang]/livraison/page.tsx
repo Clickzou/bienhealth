@@ -52,7 +52,7 @@ export default async function LivraisonPage({
 
         <h2>Order tracking</h2>
         <p>
-          After placing your order, you'll receive real-time email updates at every stage of shipping. You can also
+          After placing your order, you&apos;ll receive real-time email updates at every stage of shipping. You can also
           track your orders from your <a href={`/${lang}/compte`}>account area</a>.
         </p>
 

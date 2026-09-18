@@ -2248,3 +2248,41 @@ rend la position tenable ; sans cette mention, elle ne l'était pas.
       (gratuit jusqu'à 200 commandes/mois), avec démarrage par codes promo
       dédiés le temps de valider le programme. Le paramètre attendu par l'app
       retenue est peut-être à ajouter dans `PARAMS` (`lib/affiliate.ts`).
+
+---
+
+## 30. Dette de lint soldée (18/09/2026)
+
+`npx eslint src` remontait 24 signalements, tous antérieurs aux chantiers du
+jour. Plus aucun. Quatre familles, traitées différemment selon qu'il s'agissait
+d'un défaut ou d'un choix assumé.
+
+**Un vrai correctif — `newsletter-popup.tsx`.** L'écouteur de la touche Échap
+capturait `close`, et avec lui le `status` du rendu où il avait été posé. Une
+personne qui s'inscrivait puis fermait au clavier voyait son `subscribed`
+écrasé par `closed` dans son navigateur — précisément ce que le commentaire
+« Ne pas écraser l'état subscribed » cherchait à éviter. `close` est désormais
+un `useCallback` dépendant de `status`, et l'effet en dépend à son tour. Sans
+conséquence visible aujourd'hui (les deux valeurs empêchent la réapparition du
+popup), mais l'information était perdue.
+
+**Huit apostrophes non échappées** dans les textes anglais des pages légales
+(CGV, confidentialité, cookies, livraison, retours) : `&apos;`, rendu identique.
+
+**Cinq `setState` dans un effet** — panier, bannière cookies, menu mobile,
+bascule des avis, machine à écrire. Tous lisent une donnée qui n'existe pas
+côté serveur : `localStorage`, le domaine servi, la préférence système
+« réduire les animations ». Les rendre au premier passage provoquerait un écart
+d'hydratation. Chacun porte maintenant sa justification et une désactivation
+ciblée, comme `delivery-estimate.tsx` le faisait déjà.
+
+**Dix signalements sur le sélecteur FR/EN du pied de page**, qui veulent un
+`<Link>` à la place d'un `<a>`. Non suivi : **tout le site navigue en `<a>`**,
+en-tête compris — changer de langue recharge la page, ce qui garantit que
+l'attribut `lang` du document et les données rendues côté serveur suivent la
+bascule. Ces deux liens sont seulement les seuls dont l'adresse est écrite en
+clair, d'où le signalement ici et nulle part ailleurs. La règle est désactivée
+sur ces deux lignes, avec l'explication.
+
+Si l'on voulait un jour passer le site à `<Link>`, ce serait un chantier en
+soi — cohérent, testé en navigateur — et non l'effet de bord d'un linter.

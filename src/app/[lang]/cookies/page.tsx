@@ -59,7 +59,7 @@ export default async function CookiesPage({
         <h2>Your consent</h2>
         <p>
           On your first visit, a banner lets you accept or decline non-essential cookies. Your choice is stored on your
-          device. Essential cookies remain active as they are indispensable to the site's operation.
+          device. Essential cookies remain active as they are indispensable to the site&apos;s operation.
         </p>
 
         <h2>Managing cookies</h2>

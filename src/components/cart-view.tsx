@@ -34,7 +34,11 @@ export default function CartView({ lang }: { lang: string }) {
 
   useEffect(() => {
     const sync = () => setItems(getCart());
+    // Le panier vit dans localStorage : le serveur ne peut pas le connaître, et
+    // le rendre au premier passage provoquerait un écart d'hydratation. D'où la
+    // première lecture ici, puis l'abonnement aux modifications.
     sync();
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setReady(true);
     window.addEventListener(CART_EVENT, sync);
     window.addEventListener("storage", sync);

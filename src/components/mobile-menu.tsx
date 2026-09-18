@@ -11,6 +11,9 @@ export default function MobileMenu({ lang }: { lang: string }) {
   const [open, setOpen] = useState(false);
   const [mounted, setMounted] = useState(false);
 
+  // Le menu s'affiche dans un portail, qui a besoin d'un `document` : ce
+  // drapeau marque le moment où il existe.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => setMounted(true), []);
 
   // Verrouille le scroll de la page quand le menu est ouvert.
