@@ -2147,6 +2147,11 @@ vraies erreurs, à un endpoint navigateur qui acquiesce toujours.
 Cinq questions posées par le client, dont trois appelaient du développement.
 Les deux autres (visibilité, facturation Shopify) ont été traitées par écrit.
 
+La réponse envoyée au client est conservée dans
+`docs/reponse-client-2026-09-18.md`, avec les deux points qui attendent une
+décision de sa part : la relecture des phrases ajoutées à la politique de
+cookies, et le choix de l'application d'affiliation.
+
 ### Dates libres sur le tableau de bord
 
 Le bandeau n'offrait que quatre raccourcis glissants (7 jours, 28 jours, 3 mois,
