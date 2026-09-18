@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { Star, Check, ArrowUpRight, Quote } from "lucide-react";
 import { hasLocale } from "../dictionaries";
@@ -261,12 +262,12 @@ export default async function AvisPage({
             </span>
           </div>
           <div className="mt-5">
-            <a
+            <Link
               href={`/${lang}/boutique`}
               className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-3 text-sm font-bold hover:bg-bien-leaf transition-colors"
             >
               {t.seeAll} <ArrowUpRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -307,12 +308,12 @@ export default async function AvisPage({
         {/* Le bouton renvoyait vers Trustpilot, où la boutique ne collectait
             aucun avis. Après le mur d'avis, la suite utile est la boutique. */}
         <div className="mt-10 flex justify-center">
-          <a
+          <Link
             href={`/${lang}/boutique`}
             className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-7 py-3.5 text-sm font-bold hover:bg-bien-leaf transition-colors"
           >
             {t.seeAll} <ArrowUpRight className="h-4 w-4" />
-          </a>
+          </Link>
         </div>
       </section>
     </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Check, Sparkles, Copy } from "lucide-react";
 
@@ -422,9 +423,9 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
 
             {/* Code de bienvenue */}
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <a href={`/${lang}/products/${p.handle}`} className="inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-7 py-4 text-base font-bold hover:brightness-105 transition bien-shadow-sm">
+              <Link href={`/${lang}/products/${p.handle}`} className="inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-7 py-4 text-base font-bold hover:brightness-105 transition bien-shadow-sm">
                 {s.discover(p.name)} <ArrowRight className="h-4 w-4" />
-              </a>
+              </Link>
               <button onClick={copyCode} className="group inline-flex items-center gap-2 rounded-full border-2 border-dashed border-bien-gold/70 px-4 py-3 hover:bg-bien-cream/5 transition">
                 <span className="font-display tracking-wider text-bien-cream">{PROMO_CODE}</span>
                 <span className="inline-flex items-center gap-1 text-xs font-semibold text-bien-gold">

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
@@ -27,7 +28,7 @@ export default async function CookiesPage({
       <LegalLayout lang={lang} title="Cookie policy">
         <p>
           This policy explains what cookies are, how bien.health uses them and how you can manage them. It complements our{" "}
-          <a href={`/${lang}/confidentialite`}>Privacy policy</a>.
+          <Link href={`/${lang}/confidentialite`}>Privacy policy</Link>.
         </p>
 
         <h2>What is a cookie?</h2>
@@ -80,7 +81,7 @@ export default async function CookiesPage({
     <LegalLayout lang={lang} title="Politique de cookies">
       <p>
         Cette politique explique ce que sont les cookies, comment le site bien.health les utilise et comment vous pouvez
-        les gérer. Elle complète notre <a href={`/${lang}/confidentialite`}>Politique de confidentialité</a>.
+        les gérer. Elle complète notre <Link href={`/${lang}/confidentialite`}>Politique de confidentialité</Link>.
       </p>
 
       <h2>Qu&apos;est-ce qu&apos;un cookie ?</h2>

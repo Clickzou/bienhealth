@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef, useState } from "react";
 import { ChevronDown, ArrowRight, Truck, ShieldCheck, Star, RefreshCw } from "lucide-react";
 import { ui } from "@/lib/i18n";
@@ -92,8 +93,17 @@ export default function HeaderNav({ lang }: { lang: string }) {
           <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "shop" ? "rotate-180" : ""}`} />
         </button>
 
+        {/* `onClick` ferme le panneau : il se refermait autrefois parce que le
+            clic rechargeait la page. Les liens naviguent désormais côté client,
+            qui ne démonte rien — sans cela le méga-menu resterait ouvert
+            par-dessus la page qui vient de s'afficher. */}
         {openMenu === "shop" && (
-          <div onMouseEnter={() => open("shop")} onMouseLeave={scheduleClose} className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
+          <div
+            onMouseEnter={() => open("shop")}
+            onMouseLeave={scheduleClose}
+            onClick={() => setOpenMenu(null)}
+            className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50"
+          >
             <div className="w-[min(1040px,calc(100vw-2rem))] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 animate-[bien-fade-up_0.25s_ease]">
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr_1.4fr] gap-7">
                 {/* Par type de produits */}
@@ -102,10 +112,10 @@ export default function HeaderNav({ lang }: { lang: string }) {
                   <ul className="mt-4 space-y-2.5">
                     {BY_TYPE.map((item) => (
                       <li key={item.label}>
-                        <a href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors">
+                        <Link href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors" prefetch={false}>
                           {item.label}
                           <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -117,10 +127,10 @@ export default function HeaderNav({ lang }: { lang: string }) {
                   <ul className="mt-4 space-y-2.5">
                     {BY_NEED.map((item) => (
                       <li key={item.label}>
-                        <a href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors">
+                        <Link href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors" prefetch={false}>
                           {item.label}
                           <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -129,14 +139,14 @@ export default function HeaderNav({ lang }: { lang: string }) {
                 {/* Cartes mises en avant */}
                 <div className="grid grid-cols-2 gap-3">
                   {SHOP_FEATURED.map((card) => (
-                    <a key={card.label} href={card.href} className="group relative overflow-hidden rounded-2xl ring-1 ring-border aspect-[3/4]">
+                    <Link key={card.label} href={card.href} className="group relative overflow-hidden rounded-2xl ring-1 ring-border aspect-[3/4]" prefetch={false}>
                       <Image src={card.img} alt={card.label} fill sizes="200px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       <span className="absolute inset-0 bg-gradient-to-t from-bien-forest/70 via-bien-forest/10 to-transparent" />
                       <span className="absolute bottom-3 left-3 right-3 text-bien-cream">
                         <span className="block font-display text-base leading-none">{card.label}</span>
                         <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-bien-cream/90">{card.cta} <ArrowRight className="h-3 w-3" /></span>
                       </span>
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -171,8 +181,17 @@ export default function HeaderNav({ lang }: { lang: string }) {
           <ChevronDown className={`h-4 w-4 transition-transform ${openMenu === "about" ? "rotate-180" : ""}`} />
         </button>
 
+        {/* `onClick` ferme le panneau : il se refermait autrefois parce que le
+            clic rechargeait la page. Les liens naviguent désormais côté client,
+            qui ne démonte rien — sans cela le méga-menu resterait ouvert
+            par-dessus la page qui vient de s'afficher. */}
         {openMenu === "about" && (
-          <div onMouseEnter={() => open("about")} onMouseLeave={scheduleClose} className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50">
+          <div
+            onMouseEnter={() => open("about")}
+            onMouseLeave={scheduleClose}
+            onClick={() => setOpenMenu(null)}
+            className="absolute top-full left-1/2 -translate-x-1/2 pt-4 z-50"
+          >
             <div className="w-[min(880px,calc(100vw-2rem))] max-h-[calc(100vh-8rem)] overflow-y-auto rounded-3xl bg-card ring-1 ring-border bien-shadow p-7 grid grid-cols-1 lg:grid-cols-[1fr_1.7fr] gap-7 animate-[bien-fade-up_0.25s_ease]">
               {/* Liens */}
               <div>
@@ -180,10 +199,10 @@ export default function HeaderNav({ lang }: { lang: string }) {
                 <ul className="mt-4 space-y-2.5">
                   {ABOUT_LINKS.map((item) => (
                     <li key={item.label}>
-                      <a href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors">
+                      <Link href={item.href} className="group inline-flex items-center gap-1.5 text-[15px] font-medium text-black hover:text-bien-leaf transition-colors" prefetch={false}>
                         {item.label}
                         <ArrowRight className="h-3.5 w-3.5 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -192,14 +211,14 @@ export default function HeaderNav({ lang }: { lang: string }) {
               {/* Cartes mises en avant */}
               <div className="grid grid-cols-2 gap-3">
                 {ABOUT_FEATURED.map((card) => (
-                  <a key={card.label} href={card.href} className="group relative overflow-hidden rounded-2xl ring-1 ring-border aspect-[4/3]">
+                  <Link key={card.label} href={card.href} className="group relative overflow-hidden rounded-2xl ring-1 ring-border aspect-[4/3]" prefetch={false}>
                     <Image src={card.img} alt={card.label} fill sizes="260px" className="object-cover group-hover:scale-105 transition-transform duration-500" />
                     <span className="absolute inset-0 bg-gradient-to-t from-bien-forest/70 via-bien-forest/10 to-transparent" />
                     <span className="absolute bottom-3 left-3 right-3 text-bien-cream">
                       <span className="block font-display text-sm leading-tight">{card.label}</span>
                       <span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-bien-cream/90">{card.cta} <ArrowRight className="h-3 w-3" /></span>
                     </span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -209,9 +228,9 @@ export default function HeaderNav({ lang }: { lang: string }) {
 
       {/* Liens simples */}
       {LINKS.map((n) => (
-        <a key={n.label} href={n.href} className="text-sm font-medium text-black/80 hover:text-black transition-colors">
+        <Link key={n.label} href={n.href} className="text-sm font-medium text-black/80 hover:text-black transition-colors" prefetch={false}>
           {n.label}
-        </a>
+        </Link>
       ))}
     </nav>
   );

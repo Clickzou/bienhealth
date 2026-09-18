@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ShoppingBag } from "lucide-react";
 import StarRating from "./star-rating";
@@ -103,14 +104,14 @@ export default function ProductsCarousel({
               key={p.name}
               className="snap-start shrink-0 w-[72%] sm:w-[45%] lg:w-[calc((100%-4.5rem)/4)] group bg-card rounded-3xl ring-1 ring-border hover:ring-bien-leaf/40 hover:-translate-y-1 transition-all bien-shadow-sm overflow-hidden flex flex-col"
             >
-              <a href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
+              <Link href={href} className="relative aspect-square bg-bien-cream overflow-hidden block">
                 {showBadge && (
                   <span className="absolute top-3 left-3 z-10 inline-flex items-center rounded-full bg-bien-gold text-black px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider">
                     {p.available ? t.bestSeller : t.backSoon}
                   </span>
                 )}
                 <Image src={p.img} alt={t.alt(p.name)} fill loading="lazy" sizes="(max-width:1024px) 72vw, 22vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
-              </a>
+              </Link>
               <div className="p-4 sm:p-5 flex flex-col flex-1">
                 {/* Note boutique (la même que le header) plutôt que cinq
                     étoiles pleines en dur, qui contredisaient le 4,4/5. */}
@@ -120,18 +121,18 @@ export default function ProductsCarousel({
                     moitié de son corps (demande client) : au même corps, il
                     faisait passer le titre sur deux lignes et la carte
                     dépassait ses voisines. */}
-                <a href={href}>
+                <Link href={href}>
                   <h3 className="mt-2 font-display text-xl text-black hover:text-bien-leaf transition-colors">
                     {title.main}
                     {title.sub && <span className="ml-1.5 text-[0.5em] leading-tight font-normal text-black/60">{title.sub}</span>}
                   </h3>
-                </a>
+                </Link>
                 <p className="mt-1 text-sm text-black/65 leading-snug">{p.tagline}</p>
                 <div className="mt-4 flex items-center justify-between gap-3">
                   <span className="font-display text-lg text-black">{p.price}</span>
-                  <a href={href} className="inline-flex items-center gap-1.5 rounded-full bg-bien-forest text-bien-cream px-3.5 py-2 text-xs font-semibold hover:bg-bien-leaf transition-colors">
+                  <Link href={href} className="inline-flex items-center gap-1.5 rounded-full bg-bien-forest text-bien-cream px-3.5 py-2 text-xs font-semibold hover:bg-bien-leaf transition-colors">
                     <ShoppingBag className="h-3.5 w-3.5" /> {p.available ? t.see : t.preorder}
-                  </a>
+                  </Link>
                 </div>
               </div>
             </article>

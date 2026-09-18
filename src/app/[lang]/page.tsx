@@ -297,7 +297,7 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
           (retour client). La carte blanche se détache alors du crème par son
           seul fond. Les deux reviennent dès sm, où les cartes redeviennent une
           pile. */}
-      <a href={`/${lang}/boutique`} className="flex h-full flex-col justify-center bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-transparent sm:ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
+      <Link href={`/${lang}/boutique`} className="flex h-full flex-col justify-center bg-card rounded-[1.75rem] p-7 text-center ring-1 ring-transparent sm:ring-border sm:bien-shadow hover:-translate-y-1.5 hover:ring-bien-gold/60 transition-all">
         <span className="mx-auto grid place-items-center h-16 w-16 rounded-full bg-bien-navy text-bien-cream group-hover:bg-bien-sky group-hover:text-bien-navy group-hover:scale-110 group-hover:rotate-6 transition-all">
           <Icon className="h-8 w-8" />
         </span>
@@ -308,7 +308,7 @@ function Bubble({ item, side, anim, delay = 0, lang, className = "" }: {
         <span className="mt-5 inline-flex items-center justify-center gap-1.5 text-sm font-semibold text-bien-leaf group-hover:text-bien-navy group-hover:gap-2.5 transition-all">
           {lang === "en" ? "Discover" : "Découvrir"} <ArrowRight className="h-4 w-4" />
         </span>
-      </a>
+      </Link>
     </div>
   );
 }
@@ -401,9 +401,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
               {/* `flex-wrap` : les garanties passent à la ligne au lieu d'être
                   rognées par le bord du bloc (« Marque française » était coupé). */}
               <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
-                <a href={`/${lang}/boutique`} className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-3 text-[15px] font-semibold hover:brightness-95 transition bien-shadow-sm">
+                <Link href={`/${lang}/boutique`} className="shrink-0 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-3 text-[15px] font-semibold hover:brightness-95 transition bien-shadow-sm">
                   {c.hero.cta} <ArrowRight className="h-4 w-4" />
-                </a>
+                </Link>
                 <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 shrink-0 text-bien-gold" /> {c.hero.g1}</span>
                 <span className="inline-flex items-center gap-2 text-sm text-bien-cream/85"><Check className="h-4 w-4 shrink-0 text-bien-gold" /> {c.hero.g2}</span>
               </div>
@@ -475,7 +475,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
         </div>
 
         <div className="flex justify-center">
-          <a
+          <Link
             href={`/${lang}/avis`}
             title={c.press.seeAllTitle}
             className="group inline-flex items-center gap-3 sm:gap-4 rounded-full bg-card ring-1 ring-border bien-shadow px-5 sm:px-7 py-3 hover:ring-bien-gold/60 hover:-translate-y-0.5 transition-all"
@@ -485,7 +485,7 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             <span className="h-5 w-px bg-border" />
             <span className="text-sm sm:text-base text-black/65"><span className="font-semibold text-black">{reviewCount}</span> {c.press.reviews}</span>
             <ArrowUpRight className="h-4 w-4 text-bien-leaf opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all" />
-          </a>
+          </Link>
         </div>
         <p className="mt-8 mb-2 text-center text-xs uppercase tracking-[0.2em] text-bien-sage font-semibold underline decoration-bien-sky decoration-2 underline-offset-4">
           <Typewriter text={c.press.featured} />
@@ -623,14 +623,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             « Soutenez votre bien-être » (demande client) — la preuve de
             conformité suit ainsi les bénéfices annoncés. */}
         <div className="order-4 mt-14 flex justify-center">
-          <a
+          <Link
             href={`/${lang}/certifications`}
             className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-bien-leaf text-white bien-shadow-sm px-7 py-3.5 text-[15px] font-bold hover:brightness-110 hover:-translate-y-0.5 transition-all"
           >
             <span className="grid place-items-center h-6 w-6 rounded-full bg-white/15 text-white"><ShieldCheck className="h-3.5 w-3.5" /></span>
             {c.press.compliance}
             <ArrowRight className="h-4 w-4 -translate-x-0.5 group-hover:translate-x-0 transition-transform" />
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -644,14 +644,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
                 <StarRating value={SHOP_RATING} className="h-5 w-5" />
               </div>
               <p className="mt-3 text-sm text-black/70">{c.reviews.basedOnPre}<span className="font-semibold">{c.reviews.basedOnStrong(reviewCount)}</span></p>
-              <a
+              <Link
                 href={`/${lang}/avis`}
                 title={c.reviews.seeAll}
                 className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-bien-leaf hover:opacity-80 transition-opacity"
               >
                 {c.reviews.seeAll}
                 <ArrowUpRight className="h-4 w-4" />
-              </a>
+              </Link>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               {c.reviews.items.map((r) => (
@@ -668,14 +668,14 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </div>
 
           <div className="mt-8 flex justify-center">
-            <a
+            <Link
               href={`/${lang}/avis`}
               className="group inline-flex items-center gap-2.5 rounded-full bg-bien-forest text-bien-cream px-6 py-3 text-sm font-bold hover:bg-bien-leaf transition-colors"
             >
               <StarRating value={SHOP_RATING} className="h-4 w-4" />
               {c.reviews.seeAll}
               <ArrowUpRight className="h-4 w-4 -translate-x-0.5 group-hover:translate-x-0 transition-transform" />
-            </a>
+            </Link>
           </div>
         </div>
       </section>
@@ -703,10 +703,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
           </div>
           <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {rituals.map(({ title, icon: Icon }) => (
-              <a key={title} href={`/${lang}/diagnostic`} className="group bg-bien-forest text-bien-cream rounded-2xl px-5 py-5 text-left hover:bg-bien-leaf transition-colors flex items-center gap-3">
+              <Link key={title} href={`/${lang}/diagnostic`} className="group bg-bien-forest text-bien-cream rounded-2xl px-5 py-5 text-left hover:bg-bien-leaf transition-colors flex items-center gap-3">
                 <span className="grid place-items-center h-10 w-10 rounded-xl bg-bien-cream/10 shrink-0"><Icon className="h-5 w-5" /></span>
                 <span className="font-display text-base leading-tight">{title}</span>
-              </a>
+              </Link>
             ))}
           </div>
           <p className="mt-7 text-sm font-semibold inline-flex items-center gap-2 bg-bien-forest text-bien-cream rounded-full px-4 py-2">
@@ -808,10 +808,10 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
             </details>
           )}
           <div className="mt-8 text-center">
-            <a href={`/${lang}/certifications`} className="inline-flex items-center gap-2 rounded-full bg-bien-leaf text-white px-6 py-3 text-sm font-bold hover:brightness-110 transition">
+            <Link href={`/${lang}/certifications`} className="inline-flex items-center gap-2 rounded-full bg-bien-leaf text-white px-6 py-3 text-sm font-bold hover:brightness-110 transition">
               <ShieldCheck className="h-4 w-4" /> {c.faq.cta}
               <ArrowRight className="h-4 w-4" />
-            </a>
+            </Link>
           </div>
           <script
             type="application/ld+json"
@@ -834,9 +834,9 @@ export default async function Home({ params }: { params: Promise<{ lang: string 
 
       {/* 13. Mobile sticky CTA — la marge basse suit la zone sûre du téléphone,
              sinon la barre d'adresse d'iOS recouvre le bouton. */}
-      <a href={`/${lang}/boutique`} className="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
+      <Link href={`/${lang}/boutique`} className="sm:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] inset-x-4 z-50 inline-flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-6 py-4 text-base font-bold bien-shadow">
         <ShoppingBag className="h-4 w-4" /> {c.mobileCta}
-      </a>
+      </Link>
     </div>
   );
 }

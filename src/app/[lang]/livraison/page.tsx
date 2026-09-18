@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
@@ -53,13 +54,13 @@ export default async function LivraisonPage({
         <h2>Order tracking</h2>
         <p>
           After placing your order, you&apos;ll receive real-time email updates at every stage of shipping. You can also
-          track your orders from your <a href={`/${lang}/compte`}>account area</a>.
+          track your orders from your <Link href={`/${lang}/compte`}>account area</Link>.
         </p>
 
         <h2>A question?</h2>
         <p>
           Email us at <a href="mailto:info@bien.health">info@bien.health</a> or check our{" "}
-          <a href={`/${lang}/faq`}>FAQ</a>.
+          <Link href={`/${lang}/faq`}>FAQ</Link>.
         </p>
       </LegalLayout>
     );
@@ -92,13 +93,13 @@ export default async function LivraisonPage({
       <p>
         Après avoir passé commande, vous recevez des mises à jour par e-mail en temps réel à chaque étape de
         l&apos;expédition. Vous pouvez également suivre vos commandes depuis votre{" "}
-        <a href={`/${lang}/compte`}>espace compte</a>.
+        <Link href={`/${lang}/compte`}>espace compte</Link>.
       </p>
 
       <h2>Une question ?</h2>
       <p>
         Écrivez-nous à <a href="mailto:info@bien.health">info@bien.health</a> ou consultez notre{" "}
-        <a href={`/${lang}/faq`}>FAQ</a>.
+        <Link href={`/${lang}/faq`}>FAQ</Link>.
       </p>
     </LegalLayout>
   );

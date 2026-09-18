@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
@@ -58,8 +59,8 @@ export default async function MentionsLegalesPage({
 
         <h2>Personal data</h2>
         <p>
-          The processing of your personal data is detailed in our <a href={`/${lang}/confidentialite`}>Privacy policy</a>.
-          Cookie management is described in our <a href={`/${lang}/cookies`}>Cookie policy</a>.
+          The processing of your personal data is detailed in our <Link href={`/${lang}/confidentialite`}>Privacy policy</Link>.
+          Cookie management is described in our <Link href={`/${lang}/cookies`}>Cookie policy</Link>.
         </p>
 
         <h2>Food supplements</h2>
@@ -115,8 +116,8 @@ export default async function MentionsLegalesPage({
       <h2>Données personnelles</h2>
       <p>
         Le traitement de vos données personnelles est détaillé dans notre{" "}
-        <a href={`/${lang}/confidentialite`}>Politique de confidentialité</a>. La gestion des cookies est décrite dans
-        notre <a href={`/${lang}/cookies`}>Politique de cookies</a>.
+        <Link href={`/${lang}/confidentialite`}>Politique de confidentialité</Link>. La gestion des cookies est décrite dans
+        notre <Link href={`/${lang}/cookies`}>Politique de cookies</Link>.
       </p>
 
       <h2>Compléments alimentaires</h2>

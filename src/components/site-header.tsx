@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { Star, Search, User, ShoppingBag } from "lucide-react";
 import HeaderNav from "./header-nav";
 import LanguageToggle from "./language-toggle";
@@ -45,11 +46,11 @@ export default async function SiteHeader({ lang }: { lang: string }) {
               </a>
             ))}
           </div>
-          <a
+          <Link
             href={`/${lang}/avis`}
             className="shrink-0 flex items-center gap-1.5 hover:opacity-80 transition-opacity"
             title={t.reviewsTitle}
-          >
+           prefetch={false}>
             <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 fill-bien-star text-bien-star" />
             <span className="font-semibold">{ratingLabel(lang)}/5</span>
             {/* Le volume d'avis était réservé au desktop : sur téléphone, la
@@ -57,7 +58,7 @@ export default async function SiteHeader({ lang }: { lang: string }) {
                 (demande client). La barre garde de la place, les réseaux et
                 les langues étant compacts. */}
             <span className="opacity-70 font-normal whitespace-nowrap">{reviews} {t.reviewsBadge}</span>
-          </a>
+          </Link>
           <div className="flex-1 flex justify-end">
             <LanguageToggle current={lang} />
           </div>
@@ -84,10 +85,10 @@ export default async function SiteHeader({ lang }: { lang: string }) {
             autre. `relative` sert d'ancre aux méga-menus : eux restent centrés
             sur ce conteneur, donc cadrés à l'écran sous 1600px. */}
         <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
-          <a href={`/${lang}`} className="flex items-center">
+          <Link href={`/${lang}`} className="flex items-center" prefetch={false}>
             <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
             <span className="sr-only">{t.home}</span>
-          </a>
+          </Link>
           <div className="flex items-center justify-center">
             <HeaderNav lang={lang} />
           </div>
@@ -95,20 +96,20 @@ export default async function SiteHeader({ lang }: { lang: string }) {
             {/* La note boutique vit maintenant dans la barre d'offre : ici elle
                 ne s'affichait qu'au-delà de 1536 px et, en dessous, ses ~155 px
                 poussaient la nav hors de l'axe central. */}
-            <a href={`/${lang}/boutique`} className="hidden lg:inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-4 lg:px-5 py-2.5 text-sm font-semibold hover:brightness-95 transition bien-shadow-sm">{t.shop}</a>
+            <Link href={`/${lang}/boutique`} className="hidden lg:inline-flex items-center gap-2 rounded-full bg-bien-gold text-black px-4 lg:px-5 py-2.5 text-sm font-semibold hover:brightness-95 transition bien-shadow-sm" prefetch={false}>{t.shop}</Link>
             {/* Les liens en icône seule portent un libellé `sr-only` : sans texte
                 d'ancrage, lecteurs d'écran et crawlers affichent l'URL brute
                 (« /fr/compte ») à la place du libellé. */}
             <button aria-label={t.search} className="hidden lg:inline-flex p-2 rounded-full hover:bg-bien-cream transition-colors"><Search className="h-5 w-5 text-black" /></button>
-            <a href={`/${lang}/compte`} className="p-2 rounded-full hover:bg-bien-cream transition-colors">
+            <Link href={`/${lang}/compte`} className="p-2 rounded-full hover:bg-bien-cream transition-colors" prefetch={false}>
               <User className="h-5 w-5 text-black" />
               <span className="sr-only">{t.account}</span>
-            </a>
-            <a href={`/${lang}/cart`} className="relative p-2 rounded-full hover:bg-bien-cream transition-colors">
+            </Link>
+            <Link href={`/${lang}/cart`} className="relative p-2 rounded-full hover:bg-bien-cream transition-colors" prefetch={false}>
               <ShoppingBag className="h-5 w-5 text-black" />
               <span className="sr-only">{t.cart}</span>
               <CartBadge />
-            </a>
+            </Link>
             {/* Burger à droite (convention mobile) : dans la colonne centrale,
                 il se retrouvait seul au milieu de l'écran sous le breakpoint lg. */}
             <MobileMenu lang={lang} />

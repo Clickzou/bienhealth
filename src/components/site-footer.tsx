@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import FooterCredit from "./footer-credit";
 import NewsletterForm from "./newsletter-form";
@@ -67,36 +68,31 @@ export default function SiteFooter({ lang }: { lang: string }) {
           <div>
             <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.helpTitle}</h3>
             <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
-              <li><a href={`/${lang}/contact`} className="hover:text-bien-gold">{t.contact}</a></li>
-              <li><a href={`/${lang}/livraison`} className="hover:text-bien-gold">{t.shipping}</a></li>
-              <li><a href={`/${lang}/retours`} className="hover:text-bien-gold">{t.returns}</a></li>
-              <li><a href={`/${lang}/faq`} className="hover:text-bien-gold">{t.faq}</a></li>
+              <li><Link href={`/${lang}/contact`} className="hover:text-bien-gold" prefetch={false}>{t.contact}</Link></li>
+              <li><Link href={`/${lang}/livraison`} className="hover:text-bien-gold" prefetch={false}>{t.shipping}</Link></li>
+              <li><Link href={`/${lang}/retours`} className="hover:text-bien-gold" prefetch={false}>{t.returns}</Link></li>
+              <li><Link href={`/${lang}/faq`} className="hover:text-bien-gold" prefetch={false}>{t.faq}</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.legalTitle}</h3>
             <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
-              <li><a href={`/${lang}/certifications`} className="hover:text-bien-gold">{t.compliance}</a></li>
-              <li><a href={`/${lang}/mentions-legales`} className="hover:text-bien-gold">{t.legalNotice}</a></li>
-              <li><a href={`/${lang}/cgv`} className="hover:text-bien-gold">{t.cgv}</a></li>
-              <li><a href={`/${lang}/confidentialite`} className="hover:text-bien-gold">{t.privacy}</a></li>
-              <li><a href={`/${lang}/cookies`} className="hover:text-bien-gold">{t.cookies}</a></li>
-              <li><a href={`/${lang}/plan-du-site`} className="hover:text-bien-gold">{t.sitemap}</a></li>
+              <li><Link href={`/${lang}/certifications`} className="hover:text-bien-gold" prefetch={false}>{t.compliance}</Link></li>
+              <li><Link href={`/${lang}/mentions-legales`} className="hover:text-bien-gold" prefetch={false}>{t.legalNotice}</Link></li>
+              <li><Link href={`/${lang}/cgv`} className="hover:text-bien-gold" prefetch={false}>{t.cgv}</Link></li>
+              <li><Link href={`/${lang}/confidentialite`} className="hover:text-bien-gold" prefetch={false}>{t.privacy}</Link></li>
+              <li><Link href={`/${lang}/cookies`} className="hover:text-bien-gold" prefetch={false}>{t.cookies}</Link></li>
+              <li><Link href={`/${lang}/plan-du-site`} className="hover:text-bien-gold" prefetch={false}>{t.sitemap}</Link></li>
             </ul>
           </div>
           <div>
             <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.languageTitle}</h3>
-            {/* Comme partout ailleurs sur le site, en-tête compris, la navigation
-                interne passe par des <a> : changer de langue recharge la page,
-                ce qui garantit que tout — l'attribut lang du document, les
-                données rendues côté serveur — suit la bascule. Ces deux liens
-                sont les seuls dont l'adresse soit écrite en clair, d'où le
-                signalement de la règle ici et nulle part ailleurs. */}
+            {/* Bascule de langue : elle renvoie à l'accueil de l'autre langue,
+                et non à la page équivalente — un composant serveur ne connaît
+                pas le chemin courant. `language-toggle` fait mieux côté client. */}
             <div className="mt-5 inline-flex rounded-full bg-bien-cream/10 p-1 text-sm">
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/fr" className={`rounded-full px-3.5 py-1.5 ${lang === "fr" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>FR</a>
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/en" className={`rounded-full px-3.5 py-1.5 ${lang === "en" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`}>EN</a>
+              <Link href="/fr" className={`rounded-full px-3.5 py-1.5 ${lang === "fr" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`} prefetch={false}>FR</Link>
+              <Link href="/en" className={`rounded-full px-3.5 py-1.5 ${lang === "en" ? "bg-bien-gold text-black font-semibold" : "text-bien-cream/80 hover:text-bien-cream"}`} prefetch={false}>EN</Link>
             </div>
 
             <h3 className="mt-8 font-display text-sm uppercase tracking-wider text-bien-gold">{t.socialTitle}</h3>

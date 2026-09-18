@@ -2286,3 +2286,58 @@ sur ces deux lignes, avec l'explication.
 
 Si l'on voulait un jour passer le site à `<Link>`, ce serait un chantier en
 soi — cohérent, testé en navigateur — et non l'effet de bord d'un linter.
+
+---
+
+## 31. Navigation : le site passe entièrement à `<Link>` (18/09/2026)
+
+Suite de la section 30, où le pied de page gardait ses `<a>` « parce que tout le
+site navigue ainsi ». **C'était faux, et c'est ce qui a décidé du chantier** :
+`<Link>` était déjà employé dans 24 fichiers — fiches produit, boutique,
+collections, blog, panier, cartes produit. Les `<a>` du chrome n'étaient pas une
+convention, mais une incohérence : deux régimes de navigation cohabitaient, et
+la moitié du site rechargeait entièrement la page à chaque clic.
+
+**55 liens convertis** dans 12 fichiers. Ce qui reste en `<a>`, et pourquoi :
+
+- tout ce qui porte `target="_blank"` — presse, certificats, réseaux sociaux,
+  associations, suivi de commande Shopify, itinéraires Google Maps ;
+- `mailto:` et `tel:` ;
+- le checkout (`cart-view.tsx`), qui part sur `shop.bien.health` ;
+- l'export du tableau de bord (`/api/seo/diagnostics`), une route d'API avec un
+  attribut `download`.
+
+### Préchargement : désactivé sur le chrome, laissé ailleurs
+
+`<Link>` précharge par défaut les routes visibles. En-tête, pied de page,
+méga-menus et menu mobile sont présents sur **chaque** page et portent une
+quarantaine de liens, dont des fiches produit — rendues à la demande, avec un
+appel Shopify à la clé. Les précharger à chaque page vue coûterait cher sans
+que personne ne les clique : ces quatre fichiers passent donc en
+`prefetch={false}`. Ailleurs (carrousel, pages de contenu), on garde le
+comportement par défaut, celui des `<Link>` déjà en place.
+
+### Le piège du chantier : ce qui ne se ferme plus tout seul
+
+Un menu se refermait jusqu'ici parce que le clic rechargeait la page. La
+navigation client ne démonte plus rien :
+
+- **méga-menus** (`header-nav.tsx`) : `onClick` de fermeture ajouté sur les deux
+  panneaux, sans quoi le menu restait ouvert par-dessus la page appelée ;
+- **menu mobile** : rien à faire, il fermait déjà au clic (`closest("a")`, qui
+  marche toujours puisque `<Link>` rend un `<a>`). Heureusement — ce menu
+  verrouille `document.body.style.overflow`, et un tiroir resté ouvert aurait
+  bloqué le défilement de la page suivante.
+
+### Recette
+
+- **HTML inchangé, prouvé** : les 98 pages statiques rendent exactement les
+  mêmes **4 776 liens** qu'avant la bascule, aux mêmes endroits. Rien ne change
+  pour un visiteur sans JavaScript, ni pour un robot d'indexation.
+- **Comportement client, vérifié au navigateur** (Playwright, bureau 1440 et
+  mobile 390) — 10 vérifications, toutes passées : navigation sans rechargement
+  du document depuis le pied de page, le méga-menu et le menu mobile ; méga-menu
+  ouvert au survol puis refermé après le clic ; tiroir mobile disparu et
+  défilement rendu à la page ; panier conservé d'une page à l'autre ; **aucun
+  préchargement de fiche produit** au chargement de l'accueil ; aucune erreur
+  JavaScript.

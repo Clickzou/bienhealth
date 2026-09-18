@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { createPortal } from "react-dom";
 import { Menu, X, ChevronDown, ShoppingBag, User, ArrowRight } from "lucide-react";
 import { ui } from "@/lib/i18n";
@@ -75,9 +76,9 @@ export default function MobileMenu({ lang }: { lang: string }) {
             </div>
 
             <nav className="flex-1 overflow-y-auto px-5 py-4" onClick={(e) => { if ((e.target as HTMLElement).closest("a")) setOpen(false); }}>
-              <a href={l("/boutique")} className="flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-5 py-3 font-bold">
+              <Link href={l("/boutique")} className="flex items-center justify-center gap-2 rounded-full bg-bien-gold text-black px-5 py-3 font-bold" prefetch={false}>
                 <ShoppingBag className="h-4 w-4" /> {t.shop}
-              </a>
+              </Link>
 
               <MobileGroup title={t.products}>
                 <p className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-bien-sage">{t.byType}</p>
@@ -96,17 +97,17 @@ export default function MobileMenu({ lang }: { lang: string }) {
                   simples n'étaient séparés par rien. */}
               <div>
                 {SIMPLE.map((i) => (
-                  <a key={i.href} href={i.href} className="block py-3.5 font-display text-black border-b border-border">{i.label}</a>
+                  <Link key={i.href} href={i.href} className="block py-3.5 font-display text-black border-b border-border" prefetch={false}>{i.label}</Link>
                 ))}
               </div>
 
               <div className="mt-5 flex items-center gap-3">
-                <a href={l("/compte")} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-semibold text-black">
+                <Link href={l("/compte")} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-semibold text-black" prefetch={false}>
                   <User className="h-4 w-4" /> {t.account}
-                </a>
-                <a href={l("/cart")} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-semibold text-black">
+                </Link>
+                <Link href={l("/cart")} className="flex-1 inline-flex items-center justify-center gap-2 rounded-full ring-1 ring-border px-4 py-2.5 text-sm font-semibold text-black" prefetch={false}>
                   <ShoppingBag className="h-4 w-4" /> {t.cart}
-                </a>
+                </Link>
               </div>
             </nav>
           </div>
@@ -131,9 +132,9 @@ function MobileGroup({ title, children }: { title: string; children: React.React
 
 function MobileLink({ label, href }: { label: string; href: string }) {
   return (
-    <a href={href} className="flex items-center justify-between gap-2 py-2 text-[15px] text-black/80">
+    <Link href={href} className="flex items-center justify-between gap-2 py-2 text-[15px] text-black/80" prefetch={false}>
       {label}
       <ArrowRight className="h-4 w-4 text-black/30" />
-    </a>
+    </Link>
   );
 }

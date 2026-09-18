@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import type { Metadata } from "next";
 import { hasLocale } from "../dictionaries";
 import LegalLayout from "@/components/legal-layout";
@@ -56,7 +57,7 @@ export default async function RetoursPage({
         <h2>Mediation</h2>
         <p>
           In accordance with French consumer law, you can also use a free consumer mediation service. See also our{" "}
-          <a href={`/${lang}/cgv`}>terms and conditions of sale</a>.
+          <Link href={`/${lang}/cgv`}>terms and conditions of sale</Link>.
         </p>
       </LegalLayout>
     );
@@ -95,7 +96,7 @@ export default async function RetoursPage({
       <h2>Médiation</h2>
       <p>
         Conformément au droit de la consommation français, vous pouvez également recourir gratuitement à un service de
-        médiation de la consommation. Voir aussi nos <a href={`/${lang}/cgv`}>conditions générales de vente</a>.
+        médiation de la consommation. Voir aussi nos <Link href={`/${lang}/cgv`}>conditions générales de vente</Link>.
       </p>
     </LegalLayout>
   );
