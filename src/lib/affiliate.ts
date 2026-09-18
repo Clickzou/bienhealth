@@ -20,17 +20,20 @@
  *
  * ## Cookies et consentement
  *
- * Le code n'est mémorisé d'une visite à l'autre **que si la mesure d'audience a
- * été acceptée** : conserver trente jours un identifiant de traçage relève du
- * consentement, au même titre qu'Analytics. Sans acceptation, le code vit le
- * temps de la visite (`sessionStorage`) — un achat dans la foulée reste donc
- * attribué, une visite de retour ne l'est plus. C'est le compromis honnête ;
- * l'élargir est une décision juridique, pas technique.
+ * Le code est conservé trente jours **quel que soit le choix fait dans la
+ * bannière** : décision du client du 18/09/2026, qui veut que l'affilié soit
+ * rémunéré dans tous les cas. Le cookie est donc traité comme fonctionnel — il
+ * n'identifie pas la personne, il n'existe que pour attribuer une commande à
+ * celui qui l'a amenée, et il ne sert à aucun profilage ni à aucune publicité.
+ *
+ * Ce classement se défend, mais il n'est pas neutre : la CNIL range en général
+ * l'affiliation parmi les traceurs soumis au consentement. La contrepartie
+ * minimale, et elle est en place, est qu'il figure nommément dans la politique
+ * de cookies du site, parmi les cookies essentiels.
  *
  * Le cookie est posé sur le domaine parent (`.bien.health`) pour que la caisse,
  * hébergée sur `shop.bien.health`, puisse le lire elle aussi.
  */
-import { getConsent } from "./consent";
 
 /** Paramètres d'URL reconnus, par ordre de priorité. */
 const PARAMS = ["sca_ref", "ref", "aff", "affiliate"] as const;
@@ -77,13 +80,13 @@ function readCookie(): string {
 
 function remember(code: string) {
   const payload = JSON.stringify({ code, at: Date.now() } satisfies Stored);
+  // Trois supports : la visite en cours, la mémoire longue, et le cookie — seul
+  // des trois à être lisible depuis la caisse, sur l'autre domaine.
   try {
-    // La visite en cours d'abord : elle vaut quel que soit le consentement.
     sessionStorage.setItem(AFFILIATE_KEY, payload);
   } catch {
     /* navigation privée, stockage saturé : le code vivra dans l'URL seulement */
   }
-  if (getConsent() !== "all") return;
   try {
     localStorage.setItem(AFFILIATE_KEY, payload);
   } catch {
@@ -130,17 +133,6 @@ export function captureAffiliate(): string {
 export function getAffiliateCode(): string {
   if (typeof window === "undefined") return "";
   return readStore(sessionStorage) || readStore(localStorage) || readCookie();
-}
-
-/**
- * Le consentement peut arriver après le clic sur le lien d'affiliation — la
- * bannière s'affiche au premier chargement, le code est déjà capté. On repose
- * alors la mémoire longue, sans quoi l'acceptation ne servirait qu'aux visites
- * suivantes.
- */
-export function persistAffiliateAfterConsent() {
-  const code = getAffiliateCode();
-  if (code) remember(code);
 }
 
 /**

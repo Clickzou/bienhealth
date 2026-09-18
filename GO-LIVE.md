@@ -2231,12 +2231,18 @@ porte le nom de l'affilié.
 chaque changement de page (un lien d'affilié peut viser un article ou une fiche
 produit, pas seulement l'accueil).
 
-**Consentement** : le code n'est mémorisé d'une visite à l'autre que si la
-mesure d'audience a été acceptée — conserver trente jours un identifiant de
-traçage relève du consentement, au même titre qu'Analytics. Sans acceptation, le
-code vit le temps de la visite : un achat dans la foulée reste attribué, une
-visite de retour ne l'est plus. Élargir ce compromis est une décision juridique,
-à prendre avec le client.
+**Consentement — arbitré par le client le 18/09/2026** : l'attribution vaut
+dans tous les cas. Le code est donc conservé trente jours quel que soit le choix
+fait dans la bannière, et le cookie `bien_aff` est traité comme fonctionnel : il
+n'identifie personne, il ne sert qu'à rémunérer celui qui a amené la commande,
+et il ne part chez aucun tiers.
+
+Ce classement se défend — mais la CNIL range en général l'affiliation parmi les
+traceurs soumis au consentement, et la première version du module respectait
+donc la bannière. La contrepartie, mise en place avec le changement : le cookie
+figure **nommément dans la politique de cookies**, en français et en anglais,
+avec sa durée et sa finalité (`src/app/[lang]/cookies/page.tsx`). C'est ce qui
+rend la position tenable ; sans cette mention, elle ne l'était pas.
 
 - [~] **Choisir l'application d'affiliation** — recommandation faite : UpPromote
       (gratuit jusqu'à 200 commandes/mois), avec démarrage par codes promo

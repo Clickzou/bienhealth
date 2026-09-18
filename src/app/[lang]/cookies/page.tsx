@@ -39,6 +39,11 @@ export default async function CookiesPage({
         <h2>The cookies we use</h2>
         <ul>
           <li><strong>Essential cookies</strong>: necessary for the site to work (cart, security, language preferences). They cannot be disabled.</li>
+          <li>
+            <strong>Referral cookie</strong> (<code>bien_aff</code>, 30 days): when you reach our site through a partner
+            or ambassador link, it records that partner&apos;s code so their commission can be credited on your order.
+            It does not identify you, is never used for advertising or profiling, and is shared with no one.
+          </li>
           <li><strong>Analytics cookies</strong>: help us understand how the site is used so we can improve it (Google Analytics 4).</li>
           <li><strong>Marketing cookies</strong>: let us show you relevant content and ads, on our site and on others (Meta pixel, for Facebook and Instagram).</li>
         </ul>
@@ -89,6 +94,12 @@ export default async function CookiesPage({
         <li>
           <strong>Cookies essentiels</strong> : nécessaires au fonctionnement du site (panier, sécurité, préférences de
           langue). Ils ne peuvent pas être désactivés.
+        </li>
+        <li>
+          <strong>Cookie de parrainage</strong> (<code>bien_aff</code>, 30 jours) : lorsque vous arrivez sur le site par
+          le lien d&apos;un partenaire ou d&apos;un ambassadeur, il retient le code de ce partenaire afin que sa
+          commission lui soit versée si vous passez commande. Il ne vous identifie pas, ne sert ni à la publicité ni au
+          profilage, et n&apos;est transmis à personne.
         </li>
         <li>
           <strong>Cookies de mesure d&apos;audience</strong> : nous aident à comprendre comment le site est utilisé afin
