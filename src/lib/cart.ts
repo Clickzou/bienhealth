@@ -18,6 +18,7 @@ export type CartItem = {
 };
 
 import { lineSubtotal, lineTotal, lineSavings } from "./discounts";
+import { affiliateCheckoutParams } from "./affiliate";
 
 const KEY = "bien-cart";
 export const CART_EVENT = "bien-cart-change";
@@ -99,8 +100,13 @@ function numericVariantId(variantId: string): string {
   return variantId.split("/").pop() ?? variantId;
 }
 
-/** Permalink de checkout Shopify pour tous les articles du panier. */
+/** Permalink de checkout Shopify pour tous les articles du panier.
+ *
+ *  Le code de l'affilié, s'il y en a un, voyage avec : la caisse est sur un
+ *  autre domaine que le site, et c'est le seul moyen de le lui transmettre
+ *  (voir `lib/affiliate`). */
 export function checkoutUrl(items = getCart()): string {
   const line = items.map((i) => `${numericVariantId(i.variantId)}:${i.qty}`).join(",");
-  return `${SHOPIFY_STORE}/cart/${line}`;
+  const affiliate = affiliateCheckoutParams();
+  return `${SHOPIFY_STORE}/cart/${line}${affiliate ? `?${affiliate}` : ""}`;
 }

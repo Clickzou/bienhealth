@@ -17,13 +17,16 @@
  * navigateur : ce module ne s'exécute que côté serveur, dans une page protégée
  * par mot de passe.
  */
-import type { Period } from "./periods";
+import { parisYesterday, type Period } from "./periods";
 import { klaviyoListFor, klaviyoPrivateKey } from "@/lib/klaviyo";
 
 const API_REVISION = "2024-10-15";
 /** 100 = maximum accepté par Klaviyo. Cinq pages suffisent largement au volume. */
 const PAGE_SIZE = 100;
 const MAX_PAGES = 5;
+/** Borne de l'export : 5 000 profils, très au-delà du volume attendu, mais une
+ *  boucle sur une API tierce ne doit jamais être sans fin. */
+const EXPORT_MAX_PAGES = 50;
 
 /** Même clé que celle qui sert à inscrire : voir `lib/klaviyo`. */
 const privateKey = klaviyoPrivateKey;
@@ -84,7 +87,7 @@ type KlaviyoProfile = {
  * quelle, plutôt que masquée — mieux vaut une étiquette brute qu'une réponse
  * perdue.
  */
-const QUESTION_LABELS: Record<string, string> = {
+export const QUESTION_LABELS: Record<string, string> = {
   diagnostic_age: "Âge",
   diagnostic_genre: "Genre",
   diagnostic_concentration: "Concentration",
@@ -146,14 +149,16 @@ function toDiagnostic(profile: KlaviyoProfile): Diagnostic | null {
 }
 
 /**
- * Lit la liste du diagnostic et ne garde que les profils portant au moins une
- * réponse : la liste contient aussi les 246 contacts importés de Typeform, qui
- * n'ont pas d'historique de réponses côté site.
+ * Parcourt la liste du diagnostic et renvoie les profils bruts, du plus récent
+ * au plus ancien. `maxPages` borne la pagination : l'affichage se contente des
+ * dernières centaines, l'export les veut toutes.
  */
-export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResult> {
+async function loadProfiles(
+  maxPages: number,
+): Promise<{ status: DiagnosticsStatus; profiles: KlaviyoProfile[]; capped: boolean }> {
   const key = privateKey();
   const listId = klaviyoListFor("diagnostic");
-  if (!key || !listId) return { status: "not-configured", data: null };
+  if (!key || !listId) return { status: "not-configured", profiles: [], capped: false };
 
   const profiles: KlaviyoProfile[] = [];
   let url:
@@ -162,7 +167,7 @@ export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResul
   let capped = false;
 
   try {
-    for (let page = 0; page < MAX_PAGES && url; page++) {
+    for (let page = 0; page < maxPages && url; page++) {
       const res: Response = await fetch(url, {
         headers: {
           Authorization: `Klaviyo-API-Key ${key}`,
@@ -173,41 +178,75 @@ export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResul
       });
 
       if (!res.ok) {
-        if (res.status === 401) return { status: "bad-credentials", data: null };
-        if (res.status === 403) return { status: "forbidden", data: null };
-        if (res.status === 404) return { status: "list-not-found", data: null };
+        if (res.status === 401) return { status: "bad-credentials", profiles: [], capped: false };
+        if (res.status === 403) return { status: "forbidden", profiles: [], capped: false };
+        if (res.status === 404) return { status: "list-not-found", profiles: [], capped: false };
         const detail = await res.text().catch(() => "");
         console.error(`[diagnostics] Klaviyo HTTP ${res.status} : ${detail.slice(0, 400)}`);
-        return { status: "error", data: null };
+        return { status: "error", profiles: [], capped: false };
       }
 
       const json = (await res.json()) as { data?: KlaviyoProfile[]; links?: { next?: string | null } };
       profiles.push(...(json.data ?? []));
       url = json.links?.next ?? null;
-      if (url && page === MAX_PAGES - 1) capped = true;
+      if (url && page === maxPages - 1) capped = true;
     }
   } catch (err) {
     console.error("[diagnostics] appel Klaviyo impossible :", err);
-    return { status: "error", data: null };
+    return { status: "error", profiles: [], capped: false };
   }
 
-  const all = profiles
+  return { status: "ok", profiles, capped };
+}
+
+/**
+ * Diagnostics d'une liste de profils : on ne garde que ceux qui portent au
+ * moins une réponse, la liste contenant aussi les 246 contacts importés de
+ * Typeform, qui n'ont pas d'historique de réponses côté site.
+ */
+function toDiagnostics(profiles: KlaviyoProfile[]): Diagnostic[] {
+  return profiles
     .map(toDiagnostic)
     .filter((d): d is Diagnostic => d !== null && d.answers.length > 0)
     .sort((a, b) => (b.joinedAt ?? "").localeCompare(a.joinedAt ?? ""));
+}
+
+/**
+ * Tous les diagnostics reçus depuis la mise en ligne du questionnaire, sans
+ * filtre de date — c'est la source de l'export du tableau de bord.
+ */
+export async function fetchAllDiagnostics(): Promise<{
+  status: DiagnosticsStatus;
+  items: Diagnostic[];
+  capped: boolean;
+}> {
+  const { status, profiles, capped } = await loadProfiles(EXPORT_MAX_PAGES);
+  if (status !== "ok") return { status, items: [], capped: false };
+  return { status, items: toDiagnostics(profiles), capped };
+}
+
+/** Diagnostics de la période affichée, avec les totaux qui vont avec. */
+export async function fetchDiagnostics(period: Period): Promise<DiagnosticsResult> {
+  const { status, profiles, capped } = await loadProfiles(MAX_PAGES);
+  if (status !== "ok") return { status, data: null };
+
+  const all = toDiagnostics(profiles);
 
   // Klaviyo horodate en UTC (« 2026-09-02T15:16:55+00:00 ») alors que les bornes
   // de période sont des jours calendaires parisiens, comme partout ailleurs dans
   // ce tableau de bord. On ramène donc chaque date au jour parisien avant de
   // comparer, sinon une inscription de 00 h 30 tomberait la veille.
   //
-  // La borne haute est **aujourd'hui**, et non la fin de période. Celle-ci
-  // s'arrête à hier parce que GA4 et Search Console publient avec un jour ou
-  // deux de retard ; Klaviyo, lui, répond en temps réel. Sans cette exception,
-  // un diagnostic rempli le matin même n'apparaissait pas avant le lendemain —
-  // et la section semblait vide alors qu'elle venait d'en recevoir un.
+  // La borne haute d'une période à jour est **aujourd'hui**, et non sa fin.
+  // Celle-ci s'arrête à hier parce que GA4 et Search Console publient avec un
+  // jour ou deux de retard ; Klaviyo, lui, répond en temps réel. Sans cette
+  // exception, un diagnostic rempli le matin même n'apparaissait pas avant le
+  // lendemain — et la section semblait vide alors qu'elle venait d'en recevoir
+  // un. Une période choisie à la main qui se termine dans le passé garde en
+  // revanche sa propre fin : on ne va pas lui ajouter les diagnostics du jour.
   const today = PARIS_DAY.format(new Date());
-  const items = all.filter((d) => d.day !== null && d.day >= period.current.start && d.day <= today);
+  const upper = period.current.end >= parisYesterday() ? today : period.current.end;
+  const items = all.filter((d) => d.day !== null && d.day >= period.current.start && d.day <= upper);
 
   const tally = new Map<string, number>();
   for (const d of items) tally.set(d.result ?? "Sans résultat", (tally.get(d.result ?? "Sans résultat") ?? 0) + 1);

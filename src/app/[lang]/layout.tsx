@@ -10,6 +10,7 @@ import CookieBanner from "@/components/cookie-banner";
 import JsonLd from "@/components/json-ld";
 import GoogleAnalytics from "@/components/google-analytics";
 import MetaPixel from "@/components/meta-pixel";
+import AffiliateTracker from "@/components/affiliate-tracker";
 
 // Fontes de la charte « Brand Refresh V2 » — auto-hébergées via next/font/local.
 // Licences dans src/app/fonts/LICENSES/.
@@ -116,6 +117,7 @@ export default async function RootLayout({
         <CookieBanner lang={lang} />
         <GoogleAnalytics />
         <MetaPixel />
+        <AffiliateTracker />
       </body>
     </html>
   );

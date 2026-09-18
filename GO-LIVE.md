@@ -2139,3 +2139,106 @@ Un `202 Accepted` n'est pas une preuve d'enregistrement. Pour toute intégration
 qui collecte des adresses, **vérifier la donnée à destination**, pas le code de
 retour — et préférer systématiquement une API serveur authentifiée, qui a de
 vraies erreurs, à un endpoint navigateur qui acquiesce toujours.
+
+---
+
+## 29. Questions du client du 18/09/2026 — dates libres, export des diagnostics, affiliation
+
+Cinq questions posées par le client, dont trois appelaient du développement.
+Les deux autres (visibilité, facturation Shopify) ont été traitées par écrit.
+
+### Dates libres sur le tableau de bord
+
+Le bandeau n'offrait que quatre raccourcis glissants (7 jours, 28 jours, 3 mois,
+12 mois), tous arrêtés à hier : impossible d'isoler une journée, une opération
+commerciale ou un mois clos, ni de revenir en arrière.
+
+- `src/lib/seo-dashboard/periods.ts` accepte désormais `?start=…&end=…` en plus
+  de `?period=…`. `resolvePeriodFromParams()` est le point d'entrée unique ; les
+  dates l'emportent sur le raccourci. `resolveCustomPeriod()` rattrape ce qui
+  peut l'être — dates inversées remises dans l'ordre, fin postérieure à hier
+  ramenée à hier — et renvoie `null` sur une saisie inexploitable, auquel cas la
+  page retombe sur le raccourci par défaut : une URL bricolée à la main ne doit
+  pas casser le tableau de bord.
+- `src/app/seo/date-range.tsx` : panneau de saisie (« du… au… »), plus les
+  raccourcis calendaires que les périodes glissantes ne savent pas produire —
+  Hier, Ce mois-ci, Mois dernier. La navigation passe par l'URL, donc une
+  période reste partageable et rechargeable.
+- La période de comparaison suit : même durée, juste avant. Vérifié en local —
+  1<sup>er</sup>–15 août se compare à 17–31 juillet, une journée à la veille.
+
+Deux conséquences ailleurs, l'une et l'autre invisibles jusqu'ici parce que les
+périodes se terminaient toujours à hier :
+
+- `diagnostics.ts` bornait à **aujourd'hui** (Klaviyo répond en temps réel,
+  contrairement à GA4). Une période qui s'arrête dans le passé garde maintenant
+  sa propre fin, sinon on lui ajoutait les diagnostics du jour.
+- `shopify-sales.ts` : une période entièrement antérieure à la fenêtre de
+  commandes autorisée renvoyait un zéro parfaitement valide, que le tableau de
+  bord affichait comme une absence de ventes. `outOfHistory` distingue ce cas et
+  n'interroge plus Shopify pour rien.
+
+### Constaté au passage : `read_all_orders` est bien accordé
+
+La section 13 le listait comme restant à faire. Il ne l'est plus : sur la
+période « 12 mois », aucun bandeau de troncature n'apparaît et les ventes de mai
+2026 s'affichent — ce qui n'est possible que si `hasFullOrderHistory()` répond
+vrai. L'historique des ventes est donc complet, la limite de soixante jours
+décrite dans l'en-tête de `shopify-sales.ts` ne s'applique plus.
+
+### Export de tous les diagnostics — demande explicite du client
+
+Le tableau de bord ne montrait que la période affichée, et ses quarante derniers
+diagnostics seulement. Le client voulait « un fichier type Excel » avec tous les
+résultats depuis la sortie du questionnaire.
+
+- `src/lib/seo-dashboard/diagnostics.ts` : la lecture Klaviyo est factorisée
+  (`loadProfiles(maxPages)`), l'affichage se contentant de cinq pages là où
+  l'export en parcourt cinquante (5 000 profils).
+- `src/lib/seo-dashboard/diagnostics-csv.ts` : mise en tableau, fonction pure —
+  une ligne par personne, une colonne par question, plus email, date, heure et
+  produit recommandé. Calibré pour Excel en français : BOM UTF-8, point-virgule
+  en séparateur, dates en `JJ/MM/AAAA`. Les cellules commençant par `=`, `+`,
+  `-` ou `@` sont neutralisées : un tableur exécute une formule, et l'adresse
+  email est une saisie libre.
+- `src/app/api/seo/diagnostics/route.ts` : protégée par le cookie de session du
+  tableau de bord — le fichier contient des réponses personnelles.
+- Vérifié en local : 8 diagnostics, 14 colonnes sur toutes les lignes, fuseau de
+  Paris respecté, réponses multiples contenant un point-virgule correctement
+  échappées.
+
+⚠️ Les 246 contacts importés de Typeform n'ont pas de réponses dans Klaviyo :
+ils ne peuvent pas figurer dans l'export. Retrouver ces réponses-là suppose
+d'exporter depuis Typeform.
+
+### Suivi d'affiliation jusqu'à la caisse
+
+Le client veut lancer un programme d'affiliation (UpPromote, GoAffPro ou
+Refersion). Le site étant headless, une application installée sur Shopify ne
+voit que la caisse : le script qu'elle pose d'ordinaire sur les pages boutique
+n'existe nulle part ici, et le code de l'affilié — présent dans l'URL d'arrivée
+sur `bien.health` — se perdait avant `shop.bien.health`.
+
+`src/lib/affiliate.ts` comble ce trou sans dépendre d'une application précise :
+il reconnaît `?sca_ref=`, `?ref=`, `?aff=` et `?affiliate=`, conserve le code
+trente jours et le réinjecte dans le permalink de caisse sous trois formes — les
+paramètres `ref` et `sca_ref`, que les applications relisent, et un **attribut
+de commande** `attributes[affiliate]`, que Shopify affiche sur la commande dans
+l'admin. Ce dernier ne dépend d'aucune application : même sans app, la commande
+porte le nom de l'affilié.
+
+`src/components/affiliate-tracker.tsx`, monté dans le layout, relit l'URL à
+chaque changement de page (un lien d'affilié peut viser un article ou une fiche
+produit, pas seulement l'accueil).
+
+**Consentement** : le code n'est mémorisé d'une visite à l'autre que si la
+mesure d'audience a été acceptée — conserver trente jours un identifiant de
+traçage relève du consentement, au même titre qu'Analytics. Sans acceptation, le
+code vit le temps de la visite : un achat dans la foulée reste attribué, une
+visite de retour ne l'est plus. Élargir ce compromis est une décision juridique,
+à prendre avec le client.
+
+- [~] **Choisir l'application d'affiliation** — recommandation faite : UpPromote
+      (gratuit jusqu'à 200 commandes/mois), avec démarrage par codes promo
+      dédiés le temps de valider le programme. Le paramètre attendu par l'app
+      retenue est peut-être à ajouter dans `PARAMS` (`lib/affiliate.ts`).

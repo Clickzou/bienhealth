@@ -1,12 +1,13 @@
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { isValidSession, SEO_COOKIE } from "@/lib/seo-dashboard/auth";
-import { DEFAULT_PERIOD, PERIODS, isPeriodKey, resolvePeriod, variation, type PeriodKey } from "@/lib/seo-dashboard/periods";
+import { MIN_DAY, PERIODS, parisYesterday, resolvePeriodFromParams, variation, type PeriodKey } from "@/lib/seo-dashboard/periods";
 import { fetchGa4, isGa4Configured, ga4PropertyId } from "@/lib/seo-dashboard/ga4";
 import { fetchGsc, isGscConfigured, gscSiteUrl } from "@/lib/seo-dashboard/gsc";
 import { fetchShopifySales } from "@/lib/seo-dashboard/shopify-sales";
 import { fetchDiagnostics } from "@/lib/seo-dashboard/diagnostics";
 import LoginForm from "./login-form";
+import DateRange from "./date-range";
 import KeywordTable from "./keyword-table";
 import RealtimePanel from "./realtime";
 import {
@@ -47,14 +48,13 @@ const CHART_AMBER = "#c2760b";
 export default async function SeoDashboard({
   searchParams,
 }: {
-  searchParams: Promise<{ period?: string }>;
+  searchParams: Promise<{ period?: string; start?: string; end?: string }>;
 }) {
   const session = (await cookies()).get(SEO_COOKIE)?.value;
   if (!isValidSession(session)) return <LoginForm />;
 
-  const { period: periodParam } = await searchParams;
-  const key: PeriodKey = isPeriodKey(periodParam) ? periodParam : DEFAULT_PERIOD;
-  const period = resolvePeriod(key);
+  const period = resolvePeriodFromParams(await searchParams);
+  const key = period.key;
 
   const [ga4, gsc, shopify, diagnostics] = await Promise.all([
     fetchGa4(period),
@@ -114,6 +114,13 @@ export default async function SeoDashboard({
                   {PERIODS[k].label}
                 </Link>
               ))}
+              <DateRange
+                start={period.current.start}
+                end={period.current.end}
+                min={MIN_DAY}
+                max={parisYesterday()}
+                active={key === "custom"}
+              />
             </nav>
 
             <form action="/api/seo/logout" method="post">
@@ -213,7 +220,16 @@ export default async function SeoDashboard({
               </p>
             )}
 
-            {sales.truncated && sales.coveredFrom && (
+            {sales.outOfHistory && sales.coveredFrom && (
+              <p className="mt-3 text-[12px] text-[#8a5a2b] bg-[#fdf4e7] ring-1 ring-amber-500/30 rounded-lg px-3 py-2 max-w-4xl">
+                Cette période est entièrement antérieure aux soixante derniers jours, seule fenêtre de commandes à
+                laquelle Shopify donne accès aujourd&apos;hui : les ventes ne peuvent pas être affichées avant le{" "}
+                {longDate(sales.coveredFrom)}. Le trafic, lui, couvre bien la période. Lever cette limite demande
+                l&apos;autorisation <code>read_all_orders</code> dans la configuration de l&apos;application.
+              </p>
+            )}
+
+            {sales.truncated && !sales.outOfHistory && sales.coveredFrom && (
               <p className="mt-3 text-[12px] text-[#8a5a2b] bg-[#fdf4e7] ring-1 ring-amber-500/30 rounded-lg px-3 py-2 max-w-4xl">
                 Shopify ne donne accès qu&apos;aux soixante derniers jours de commandes : les ventes affichées démarrent
                 au {longDate(sales.coveredFrom)}, alors que le trafic couvre toute la période. Lever cette limite demande
@@ -314,6 +330,22 @@ export default async function SeoDashboard({
                 value={num(diagnostics.data.listTotal)}
                 hint={diagnostics.data.capped ? "Lecture bornée : total partiel" : "Contacts Typeform inclus"}
               />
+            </div>
+
+            {/* L'export ignore la période : la demande était de pouvoir relire
+                « tous les résultats depuis la sortie du diagnostic ». */}
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <a
+                href="/api/seo/diagnostics"
+                download
+                className="rounded-full bg-bien-navy px-3.5 py-1.5 text-[12px] font-semibold text-white hover:opacity-90 transition"
+              >
+                Exporter tous les diagnostics
+              </a>
+              <span className="text-[11px] text-[#8c94a1]">
+                Depuis le premier questionnaire, hors période affichée — fichier CSV qui s&apos;ouvre dans Excel, une
+                ligne par personne et une colonne par question.
+              </span>
             </div>
 
             {diagnostics.data.byResult.length > 0 && (

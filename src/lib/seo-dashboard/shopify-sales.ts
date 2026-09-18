@@ -32,7 +32,9 @@
  * l'installation et adapte la fenêtre en conséquence. Tant que `read_all_orders`
  * n'est pas accordé, les périodes « 3 mois » et « 12 mois » sont tronquées à
  * soixante jours et `truncated` le signale, plutôt que de laisser croire à un
- * effondrement des ventes.
+ * effondrement des ventes. Une période choisie à la main peut, elle, tomber
+ * entièrement avant cette fenêtre : `outOfHistory` distingue ce cas, où il n'y
+ * a rien à demander du tout.
  */
 import type { Period } from "./periods";
 
@@ -90,6 +92,8 @@ export type ShopifySales = {
   capped: boolean;
   /** Premier jour réellement couvert quand `truncated` est vrai. */
   coveredFrom: string | null;
+  /** Vrai quand la période demandée est entièrement antérieure à l'historique. */
+  outOfHistory: boolean;
 };
 
 export type ShopifySalesResult = { status: ShopifyStatus; data: ShopifySales | null };
@@ -350,6 +354,27 @@ export async function fetchShopifySales(period: Period): Promise<ShopifySalesRes
   const truncated = !full && period.current.start < floor;
   const currentStart = truncated ? floor : period.current.start;
 
+  // Période entièrement hors historique — le cas arrive dès qu'on choisit des
+  // dates passées. Interroger Shopify renverrait un zéro parfaitement valide,
+  // que le tableau de bord afficherait comme une absence de ventes ; on préfère
+  // ne rien demander et le dire.
+  if (!full && period.current.end < floor) {
+    const zero = totalsOf([]);
+    return {
+      status: "ok",
+      data: {
+        totals: zero,
+        previousTotals: zero,
+        daily: [],
+        topProducts: [],
+        truncated: true,
+        capped: false,
+        coveredFrom: floor,
+        outOfHistory: true,
+      },
+    };
+  }
+
   const [current, previous] = await Promise.all([
     fetchOrders(currentStart, period.current.end),
     // Inutile d'interroger une période de comparaison entièrement hors historique.
@@ -395,6 +420,7 @@ export async function fetchShopifySales(period: Period): Promise<ShopifySalesRes
       truncated,
       capped: current.capped,
       coveredFrom: truncated ? currentStart : null,
+      outOfHistory: false,
     },
   };
 }
