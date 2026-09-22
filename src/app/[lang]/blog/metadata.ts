@@ -25,5 +25,13 @@ export function blogMetadata(lang: string, page: number): Metadata {
     ? "Insights, tips and science on adaptogens and functional mushrooms by BIEN health: stress, sleep, focus, energy and natural beauty."
     : "Décryptages, conseils et science des adaptogènes et champignons fonctionnels par BIEN health : stress, sommeil, concentration, énergie et beauté au naturel.";
 
-  return pageMetadata({ lang, path, title, description });
+  // Page 2 et suivantes : même description, préfixée, pour ne pas la dupliquer.
+  const paged =
+    page > 1
+      ? en
+        ? `The BIEN health Journal, page ${page}: adaptogens and functional mushrooms explained — stress, sleep, focus, energy, beauty.`
+        : `Le Journal BIEN health, page ${page} : adaptogènes et champignons fonctionnels décryptés — stress, sommeil, concentration, énergie, beauté.`
+      : description;
+
+  return pageMetadata({ lang, path, title, description: paged });
 }

@@ -57,9 +57,17 @@ const BENEFITS: Record<string, { fr: string; en: string }> = {
  */
 const SEO_SUFFIX: Record<string, { fr: string; en: string }> = {
   CALM: { fr: "Gummies sérénité & sommeil", en: "Calm & sleep gummies" },
-  FOCUS: { fr: "Gummies concentration & mémoire", en: "Focus & memory gummies" },
+  // « mémoire » retiré le 22/09/2026 : allégation absente du registre européen
+  // (règlement 1924/2006), celle-là même qui a fait rejeter FOCUS du catalogue Meta.
+  FOCUS: { fr: "Gummies concentration & clarté mentale", en: "Focus & mental clarity gummies" },
   POWER: { fr: "Gummies énergie & performance", en: "Energy & performance gummies" },
   MUSHGLOW: { fr: "Supermix beauté & collagène", en: "Beauty & collagen supermix" },
+  // Packs : sans suffixe, leur titre se réduisait à « BOOST | BIEN health »
+  // (19 caractères), sans un mot de ce qu'ils contiennent (audit du 22/09/2026).
+  BOOST: { fr: "Duo énergie & concentration", en: "Energy & focus duo" },
+  FLOW: { fr: "Duo concentration & sérénité", en: "Focus & calm duo" },
+  BALANCE: { fr: "Duo sérénité & éclat", en: "Calm & glow duo" },
+  RESET: { fr: "Trio adaptogène complet", en: "Complete adaptogen trio" },
   MOUSSEUR: { fr: "Mousseur à lait rechargeable", en: "Rechargeable milk frother" },
   TOTEBAG: { fr: "Tote bag coton bio", en: "Organic cotton tote bag" },
 };
@@ -207,7 +215,10 @@ export type Collection = {
   eyebrow: string;
   label: string;
   desc: string;
-  en: { eyebrow: string; label: string; desc: string };
+  en: { eyebrow: string; label: string; desc: string; metaDescription?: string };
+  /** Méta-description, quand l'accroche du bandeau est trop courte pour les
+   *  résultats de recherche (« Poudres » : 60 caractères, audit du 22/09/2026). */
+  metaDescription?: string;
   /** Titre de page, quand le libellé seul est trop court pour le référencement
    *  (« Gummies | BIEN health » ne cible aucune requête). */
   seoTitle?: string;
@@ -302,12 +313,18 @@ export const COLLECTIONS: Record<string, Collection> = {
     slug: "gummies",
     eyebrow: "Par type de produit",
     label: "Gummies",
-    seoTitle: "Gummies adaptogènes sans sucre",
+    // « naturels » : la requête « gummies adaptogènes naturels » est la seule
+    // requête générique déjà proche de la première page (11e, 22/09/2026).
+    seoTitle: "Gummies adaptogènes naturels, sans sucre",
     desc: "Nos compléments naturels à mâcher : actifs dosés selon la science, sans sucre ajouté ni additifs artificiels et vegan.",
+    metaDescription:
+      "Gummies adaptogènes naturels CALM, FOCUS et POWER : champignons et plantes dosés, sans sucre ajouté, vegan, fabriqués en France. 2 par jour, 39 € le mois.",
     en: {
       eyebrow: "By product type",
       label: "Gummies",
       desc: "Our natural chewable supplements: science-based dosages, no added sugar, no artificial additives and vegan.",
+      metaDescription:
+        "CALM, FOCUS and POWER natural adaptogenic gummies: dosed mushrooms and plants, no added sugar, vegan, made in France. 2 a day, €39 a month.",
     },
     match: hasGummies,
   },
@@ -331,10 +348,14 @@ export const COLLECTIONS: Record<string, Collection> = {
     label: "Poudres",
     seoTitle: "Poudres de champignons adaptogènes",
     desc: "Notre poudre 6-en-1, à intégrer à vos préparations du matin.",
+    metaDescription:
+      "MUSHGLOW, poudre 6-en-1 : lion's mane, cordyceps, chaga, maca, L-théanine et collagène. Sans sucre ni caféine, fabriquée en France. Une cuillère par jour.",
     en: {
       eyebrow: "By product type",
       label: "Powders",
       desc: "Our 6-in-1 powder, to add to your morning preparations.",
+      metaDescription:
+        "MUSHGLOW 6-in-1 powder: lion's mane, cordyceps, chaga, maca, L-theanine and collagen. No sugar, no caffeine, made in France. One spoonful a day.",
     },
     match: hasPowder,
   },

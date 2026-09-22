@@ -22,6 +22,10 @@ export type ArticleL10n = {
 export type Article = ArticleL10n & {
   slug: string;
   date: string; // ISO
+  /** Dernière révision de fond (ISO). Les 18 articles ont été réécrits le
+   *  30/08/2026 : sans ce champ, `dateModified` restait à leur date de
+   *  publication de juin, et Google lisait des contenus jamais mis à jour. */
+  updated?: string;
   readingMinutes: number;
   cover: string;
   en?: ArticleL10n; // version anglaise (repli FR si absente)
@@ -46,6 +50,7 @@ export const ARTICLES: Article[] = [
       "Lion's mane, reishi, cordyceps, chaga : bienfaits, différences, dosages et précautions. Le guide complet pour choisir le bon champignon adaptogène.",
     category: "Ingrédients & science",
     date: "2026-07-28",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-adaptogenes.jpg",
     intro:
@@ -183,6 +188,7 @@ export const ARTICLES: Article[] = [
       "Respiration, activité physique, sommeil, adaptogènes… 7 solutions naturelles et concrètes pour réduire le stress et retrouver votre sérénité au quotidien.",
     category: "Sommeil & stress",
     date: "2026-07-05",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-stress.jpg",
     intro:
@@ -352,6 +358,7 @@ export const ARTICLES: Article[] = [
       "Distractions, fatigue mentale, brouillard : méthodes concrètes et compléments naturels pour améliorer votre concentration et votre clarté d'esprit.",
     category: "Concentration",
     date: "2026-06-18",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-concentration.jpg",
     intro:
@@ -493,6 +500,7 @@ export const ARTICLES: Article[] = [
       "Le coup de barre de 15 h, la fatigue persistante : comment retrouver de l'énergie naturellement, du sommeil à l'alimentation en passant par les adaptogènes.",
     category: "Énergie & performance",
     date: "2026-06-02",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-energie.jpg",
     intro:
@@ -636,6 +644,7 @@ export const ARTICLES: Article[] = [
       "Définition, critères, plantes concernées : tout comprendre aux adaptogènes, ces végétaux qui aident l'organisme à faire face aux contraintes.",
     category: "Ingrédients & science",
     date: "2026-05-20",
+    updated: "2026-08-30",
     readingMinutes: 8,
     cover: "/brand/blog/cover-adaptogene-def.jpg",
     intro:
@@ -767,6 +776,7 @@ export const ARTICLES: Article[] = [
       "Hydratation, élasticité, éclat : ce que le collagène apporte à la peau, ce que valent les compléments et comment en tirer parti au quotidien.",
     category: "Beauté & bien-être",
     date: "2026-05-06",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-collagene.jpg",
     intro:
@@ -900,6 +910,7 @@ export const ARTICLES: Article[] = [
       "Mémoire, concentration, clarté mentale : ce que les études disent réellement du Lion's Mane, à quelle dose, pendant combien de temps, et comment reconnaître un extrait qui vaut son prix.",
     category: "Ingrédients & science",
     date: "2026-06-30",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-lions-mane.jpg",
     intro:
@@ -1034,6 +1045,7 @@ export const ARTICLES: Article[] = [
       "Stress, cortisol, sommeil : ce que la recherche montre vraiment sur l'ashwagandha, à quelle dose, sous quelle forme — et les précautions que peu de pages mentionnent.",
     category: "Ingrédients & science",
     date: "2026-06-29",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-ashwagandha.jpg",
     intro:
@@ -1200,6 +1212,7 @@ export const ARTICLES: Article[] = [
       "Trois champignons, trois usages différents : détente, endurance, antioxydants. Ce que chacun fait réellement, à quelle dose, et comment ne pas se tromper de produit.",
     category: "Ingrédients & science",
     date: "2026-06-28",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-trio-champignons.jpg",
     intro:
@@ -1362,6 +1375,7 @@ export const ARTICLES: Article[] = [
       "Endormissement difficile, réveils à 3 h : les leviers qui fonctionnent, classés par ordre d'efficacité réelle — et ceux qui ne servent à rien malgré leur popularité.",
     category: "Sommeil & stress",
     date: "2026-06-27",
+    updated: "2026-08-30",
     readingMinutes: 11,
     cover: "/brand/blog/cover-sommeil.jpg",
     intro:
@@ -1512,6 +1526,7 @@ export const ARTICLES: Article[] = [
       "Ni bon ni mauvais : le cortisol est une hormone de rythme. Comment il fonctionne, ce qui le dérègle vraiment, ce qui le fait baisser — et les mythes qui circulent.",
     category: "Sommeil & stress",
     date: "2026-06-26",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-cortisol.jpg",
     intro:
@@ -1666,6 +1681,7 @@ export const ARTICLES: Article[] = [
       "Pensée ralentie, mots qui échappent, concentration impossible : les causes du brouillard mental par ordre de fréquence, le bilan sanguin utile et ce qui fonctionne.",
     category: "Concentration",
     date: "2026-06-25",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-brouillard-mental.jpg",
     intro:
@@ -1834,6 +1850,7 @@ export const ARTICLES: Article[] = [
       "Trop de café, trop de nervosité ? Ce que valent réellement le matcha, le guarana, la L-théanine ou la chicorée — et comment réduire sans passer trois jours à côté de ses pompes.",
     category: "Concentration",
     date: "2026-06-24",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-alternative-cafe.jpg",
     intro:
@@ -1994,6 +2011,7 @@ export const ARTICLES: Article[] = [
       "Une fatigue qui ne cède pas au repos n'est pas un manque de volonté : c'est un signal. Les causes à explorer, le bilan à demander, et ce qui aide vraiment.",
     category: "Énergie & performance",
     date: "2026-06-23",
+    updated: "2026-08-30",
     readingMinutes: 11,
     cover: "/brand/blog/cover-fatigue.jpg",
     intro:
@@ -2164,6 +2182,7 @@ export const ARTICLES: Article[] = [
       "Courbatures, fatigue, progression en panne : les leviers de récupération classés par impact réel, les doses utiles et ce que les compléments peuvent — ou non — apporter.",
     category: "Énergie & performance",
     date: "2026-06-22",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-recuperation-sport.jpg",
     intro:
@@ -2316,6 +2335,7 @@ export const ARTICLES: Article[] = [
       "Collagène, zinc, vitamine C, oméga-3 : ce que chaque actif apporte vraiment à la peau, ce que la réglementation autorise à en dire, et les doses qui comptent.",
     category: "Beauté & bien-être",
     date: "2026-06-21",
+    updated: "2026-08-30",
     readingMinutes: 10,
     cover: "/brand/blog/cover-peau-guide.jpg",
     intro:
@@ -2475,11 +2495,12 @@ export const ARTICLES: Article[] = [
     title: "Gummies ou gélules : ce qui change vraiment, et comment choisir",
     metaTitle: "Gummies ou gélules : le comparatif honnête",
     metaDescription:
-      "Dosage, sucre, stabilité, observance : ce qui sépare réellement une gummy d'une gélule, les cas où chaque format s'impose, et les pièges d'étiquette à repérer.",
+      "Dosage, sucre, stabilité, observance : ce qui sépare vraiment une gummy d'une gélule, quand choisir l'une ou l'autre, et les pièges d'étiquette.",
     excerpt:
       "Le meilleur complément est celui que vous prenez vraiment — mais tous les actifs ne passent pas en gummy. Ce qui sépare les deux formats, avec leurs limites respectives.",
     category: "Ingrédients & science",
     date: "2026-06-20",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-gummies-gelules.jpg",
     intro:
@@ -2644,6 +2665,7 @@ export const ARTICLES: Article[] = [
       "Moins de nervosité, des champignons fonctionnels dans la tasse : ce que le café aux champignons contient réellement, ce qu'on peut en attendre, et comment repérer un bon produit.",
     category: "Ingrédients & science",
     date: "2026-06-19",
+    updated: "2026-08-30",
     readingMinutes: 9,
     cover: "/brand/blog/cover-mushroom-coffee.jpg",
     intro:

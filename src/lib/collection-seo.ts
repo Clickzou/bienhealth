@@ -4,66 +4,141 @@
  * Bilingue FR / EN. Server-only (importé par la page collection).
  */
 export type SeoBlock = { h: string; p: string[] };
-export type SeoBody = { intro: string[]; blocks: SeoBlock[] };
-export type CollectionSeo = SeoBody & { en: SeoBody };
+/** Tableau comparatif : les faits d'une gamme en lignes, la forme que les
+ *  moteurs génératifs extraient et citent le plus volontiers. */
+export type SeoTable = { caption: string; head: string[]; rows: string[][]; note?: string };
+export type SeoBody = {
+  intro: string[];
+  blocks: SeoBlock[];
+  table?: SeoTable;
+  /** Questions fréquentes, affichées et balisées en FAQPage. */
+  faq?: { q: string; a: string }[];
+};
+export type CollectionSeo = SeoBody & {
+  en: SeoBody;
+  /** Slugs d'articles du blog à proposer en lecture (maillage). */
+  related?: string[];
+};
 
-/** Renvoie le corps SEO localisé (intro + blocks) d'une collection. */
+/** Renvoie le corps SEO localisé d'une collection. */
 export function localizeCollectionSeo(seo: CollectionSeo, lang: string): SeoBody {
-  return lang === "en" ? seo.en : { intro: seo.intro, blocks: seo.blocks };
+  return lang === "en" ? seo.en : { intro: seo.intro, blocks: seo.blocks, table: seo.table, faq: seo.faq };
 }
 
 export const COLLECTION_SEO: Record<string, CollectionSeo> = {
+  // Réécrit le 22/09/2026 (audit SEO) : 535 mots → environ 1 000, tableau
+  // comparatif et FAQ balisée. Deux affirmations sans source ont été retirées
+  // (« absorbés dès la mastication, ils agissent plus vite », « la majorité
+  // termine sa cure ») : ni défendables, ni citables par un moteur génératif.
+  // Doses, goûts et précautions reprennent mot pour mot les fiches produit.
   gummies: {
     intro: [
-      "Les gummies BIEN health réinventent le complément alimentaire du quotidien. Formulées avec des champignons fonctionnels et des plantes adaptogènes, ces gommes à mâcher offrent une alternative gourmande, efficace et facile à adopter aux traditionnelles gélules. Fabriqués en France, sans sucre, sans additifs artificiels, sans gluten et 100 % vegan, nos gummies adaptogènes accompagnent votre concentration, votre énergie et votre sérénité, jour après jour.",
+      "Les gummies BIEN health sont des compléments alimentaires à mâcher, formulés à partir de champignons fonctionnels et de plantes adaptogènes. Trois formules composent la gamme : CALM pour la sérénité et le sommeil, FOCUS pour la concentration, POWER pour l'énergie. Chacune associe trois actifs extraits et dosés, se prend à raison de deux gummies par jour, et un pot de 60 couvre une cure d'un mois. Les trois sont fabriqués en France, sans sucre ajouté, vegan et sans gluten.",
     ],
     blocks: [
       {
-        h: "Pourquoi choisir des gummies adaptogènes ?",
+        h: "Qu'est-ce qu'un gummy adaptogène ?",
         p: [
-          "La forme gummy n'est pas qu'une question de plaisir : elle est aussi plus efficace. En partie absorbés dès la mastication, les actifs agissent plus rapidement qu'une pilule classique. Surtout, l'observance est bien meilleure : la majorité des personnes terminent leur cure sous forme de gummies, contre à peine la moitié pour les comprimés.",
-          "Nos gummies concentrent des adaptogènes reconnus (ashwagandha, rhodiola, safran) et des champignons fonctionnels (lion's mane, reishi, cordyceps), dosés selon la littérature scientifique. Une manière simple et naturelle de soutenir votre organisme face au stress, à la fatigue mentale et aux baisses d'énergie.",
+          "Un adaptogène est une plante ou un champignon traditionnellement utilisé pour aider l'organisme à faire face aux sollicitations du quotidien : stress, fatigue, rythme irrégulier. L'ashwagandha, la rhodiola, le reishi ou le cordyceps en sont les plus étudiés. Le gummy n'est qu'un format : une gomme à mâcher qui remplace la gélule.",
+          "Ce format a un intérêt très concret : on oublie moins une prise qui ressemble à une friandise qu'une gélule de plus. Il impose aussi une limite, que nous préférons dire : une gomme ne contient que quelques centaines de milligrammes d'actifs. C'est pourquoi nous utilisons des extraits concentrés et standardisés plutôt que de la poudre brute.",
         ],
       },
       {
-        h: "CALM, FOCUS, POWER : à chaque besoin son gummy",
+        h: "CALM, FOCUS, POWER : trois formules, trois moments",
         p: [
-          "Trois formules complémentaires composent notre gamme de gummies. CALM associe Reishi, Ashwagandha et Safran pour apaiser le stress et favoriser un sommeil réparateur. FOCUS réunit Lion's Mane, Rhodiola Rosea et L-Théanine pour améliorer la concentration et la clarté mentale, sans nervosité. POWER, enrichi en Cordyceps, Rhodiola Rosea et Panax Ginseng, soutient les performances physiques, l'énergie et l'endurance.",
-          "Vous hésitez ? Notre diagnostic personnalisé vous oriente en moins d'une minute vers la formule la plus adaptée à votre rythme et à vos objectifs.",
+          "CALM réunit reishi, ashwagandha et safran. Il se prend dans la journée pour accompagner les moments de tension, ou le soir pour préparer le coucher, et a un goût de mûre.",
+          "FOCUS associe lion's mane, L-théanine issue du thé vert et rhodiola rosea. Il se prend le matin ou en début d'après-midi, quand l'attention décroche, et a un goût d'ananas.",
+          "POWER combine cordyceps, panax ginseng et rhodiola rosea. Il se prend le matin ou avant une activité physique, au goût de fruit de la passion.",
+          "Le tableau ci-dessous détaille la dose de chaque actif par prise journalière. Vous hésitez entre deux formules ? Le diagnostic en ligne vous oriente en une minute.",
         ],
       },
       {
-        h: "Comment intégrer les gummies à votre routine ?",
+        h: "Des extraits dosés et contrôlés",
         p: [
-          "Deux gummies par jour suffisent. À mâcher le matin pour un coup de focus ou d'énergie, ou le soir pour préparer un sommeil apaisé. Les adaptogènes révélant tout leur potentiel avec la régularité, une cure de 30 jours minimum est recommandée pour constater des effets durables. Naturels, vegan et sans sucre ajouté, nos gummies se glissent facilement dans le quotidien des athlètes de la vie.",
+          "Chaque actif est un extrait dont la concentration est indiquée : 120 mg de lion's mane concentré entre 8:1 et 12:1 dans FOCUS, l'équivalent d'environ 1 200 mg de champignon sec ; 80 mg d'ashwagandha standardisée à au moins 5 % de withanolides dans CALM ; 200 mg de cordyceps concentré 4:1 dans POWER. Les extraits sont contrôlés pour les métaux lourds, la microbiologie et, selon les actifs, les pesticides et les résidus de solvants.",
+          "Les trois formules sont déclarées auprès de la DGAL et enregistrées sur Compl'Alim, la base officielle des compléments alimentaires en France. Les numéros de déclaration sont publics sur notre page Certifications.",
+        ],
+      },
+      {
+        h: "Comment prendre vos gummies",
+        p: [
+          "Deux gummies par jour, à mâcher, sans dépasser cette dose. Comme pour tous les adaptogènes, c'est la régularité qui compte : nous recommandons une cure d'au moins 30 jours, soit un pot. Les packs FLOW, BOOST et RESET associent plusieurs formules pour couvrir deux ou trois besoins à la fois, à un prix plus doux.",
+          "Les gummies sont déconseillés aux femmes enceintes ou allaitantes, et aux personnes sous traitement médical sans avis de leur médecin. Un complément alimentaire ne remplace ni une alimentation variée et équilibrée, ni un mode de vie sain.",
         ],
       },
     ],
+    table: {
+      caption: "Les gummies BIEN health en un coup d'œil (dose par prise journalière de 2 gummies)",
+      head: ["Formule", "Actifs et doses", "Goût", "Quand la prendre"],
+      rows: [
+        ["CALM", "Reishi 80 mg (extrait 10:1) · Ashwagandha 80 mg (≥ 5 % withanolides) · Safran 16 mg (≥ 2 % safranal)", "Mûre", "Dans la journée ou le soir"],
+        ["FOCUS", "Lion's mane 120 mg (extrait 8:1 à 12:1) · Extrait de thé vert 80 mg (40 % L-théanine) · Rhodiola rosea 30 mg (3 % rosavines)", "Ananas", "Le matin ou l'après-midi"],
+        ["POWER", "Cordyceps 200 mg (extrait 4:1) · Panax ginseng 100 mg (4 % ginsénosides) · Rhodiola rosea 30 mg (3 % rosavines)", "Fruit de la passion", "Le matin ou avant l'effort"],
+      ],
+      note: "Pot de 60 gummies = 30 jours · 39 € · sans sucre ajouté, vegan, sans gluten · fabriqué en France.",
+    },
+    faq: [
+      { q: "Quelle différence entre les gummies CALM, FOCUS et POWER ?", a: "Ils répondent à trois besoins. CALM (reishi, ashwagandha, safran) accompagne la détente et le sommeil. FOCUS (lion's mane, L-théanine, rhodiola) accompagne la concentration. POWER (cordyceps, panax ginseng, rhodiola) accompagne l'énergie et l'effort physique. Tous se prennent à raison de deux gummies par jour." },
+      { q: "Les gummies BIEN contiennent-ils du sucre ?", a: "Non : les trois formules sont sans sucre ajouté. Elles sont aussi vegan et sans gluten." },
+      { q: "Peut-on prendre deux formules en même temps ?", a: "Oui, c'est le principe de nos packs : FLOW associe FOCUS et CALM, BOOST associe FOCUS et POWER, RESET réunit les trois. Respectez deux gummies par jour et par formule. En cas de traitement médical, demandez l'avis de votre médecin." },
+      { q: "Au bout de combien de temps ressent-on les effets ?", a: "Certaines personnes perçoivent une différence dès les premiers jours, mais les adaptogènes s'apprécient sur la durée : nous recommandons une cure d'au moins 30 jours, soit un pot de 60 gummies." },
+      { q: "Qui ne doit pas prendre de gummies adaptogènes ?", a: "Ils sont déconseillés aux femmes enceintes ou allaitantes, aux enfants, et aux personnes sous traitement médical sans avis de leur médecin, en particulier avec des sédatifs ou des anxiolytiques pour CALM." },
+      { q: "Où sont fabriqués les gummies BIEN ?", a: "En France. Les formules sont déclarées auprès de la DGAL et enregistrées sur Compl'Alim ; les attestations sont consultables sur la page Certifications du site." },
+    ],
+    related: ["gummies-vs-gelules", "quest-ce-quun-adaptogene", "ashwagandha", "lions-mane", "reishi-cordyceps-chaga", "gerer-le-stress-naturellement"],
     en: {
       intro: [
-        "BIEN health gummies reinvent the everyday food supplement. Formulated with functional mushrooms and adaptogenic plants, these chewable gummies offer a tasty, effective and easy-to-adopt alternative to traditional capsules. Made in France, sugar-free, gluten-free and 100% vegan, our adaptogenic gummies support your focus, energy and calm, day after day.",
+        "BIEN health gummies are chewable food supplements made from functional mushrooms and adaptogenic plants. The range has three formulas: CALM for calm and sleep, FOCUS for concentration, POWER for energy. Each combines three dosed extracts, is taken as two gummies a day, and one jar of 60 covers a one-month course. All three are made in France, with no added sugar, vegan and gluten-free.",
       ],
       blocks: [
         {
-          h: "Why choose adaptogenic gummies?",
+          h: "What is an adaptogenic gummy?",
           p: [
-            "The gummy format isn't just about pleasure. It's also more effective. Partly absorbed in the mouth, the actives work faster than a classic pill. Above all, adherence is much better: most people finish their course in gummy form, versus barely half for tablets.",
-            "Our gummies concentrate well-known adaptogens (ashwagandha, rhodiola, saffron) and functional mushrooms (lion's mane, reishi, cordyceps), dosed according to scientific literature. A simple, natural way to support your body against stress, mental fatigue and energy dips.",
+            "An adaptogen is a plant or mushroom traditionally used to help the body cope with everyday demands: stress, fatigue, irregular routines. Ashwagandha, rhodiola, reishi and cordyceps are the most studied. A gummy is simply a format: a chewable that replaces the capsule.",
+            "The format has a very practical benefit: a dose that feels like a treat is harder to forget than one more capsule. It also has a limit we would rather state plainly: a gummy holds only a few hundred milligrams of actives. That is why we use concentrated, standardised extracts rather than raw powder.",
           ],
         },
         {
-          h: "CALM, FOCUS, POWER: a gummy for every need",
+          h: "CALM, FOCUS, POWER: three formulas, three moments",
           p: [
-            "Three complementary formulas make up our gummy range. CALM combines Reishi, Ashwagandha and Saffron to soothe stress and promote restorative sleep. FOCUS brings together Lion's Mane, Rhodiola Rosea and L-Theanine to improve focus and mental clarity, without jitters. POWER, enriched with Cordyceps, Rhodiola Rosea and Panax Ginseng, supports physical performance, energy and stamina.",
-            "Not sure? Our personalised quiz points you in under a minute to the formula best suited to your lifestyle and goals.",
+            "CALM combines reishi, ashwagandha and saffron. Take it during the day to accompany tense moments, or in the evening before bed. It tastes of blackberry.",
+            "FOCUS pairs lion's mane, L-theanine from green tea and rhodiola rosea. Take it in the morning or early afternoon, when attention drops. It tastes of pineapple.",
+            "POWER blends cordyceps, panax ginseng and rhodiola rosea. Take it in the morning or before physical activity. It tastes of passion fruit.",
+            "The table below gives the dose of each active per daily serving. Torn between two formulas? Our online quiz points you in the right direction in a minute.",
           ],
         },
         {
-          h: "How to add gummies to your routine?",
+          h: "Dosed, tested extracts",
           p: [
-            "Two gummies a day are enough. Chew them in the morning for a focus or energy boost, or in the evening to prepare for restful sleep. As adaptogens reveal their full potential with regularity, a course of at least 30 days is recommended for lasting effects. Natural, vegan and with no added sugar, our gummies slip easily into the daily life of life's athletes.",
+            "Every active is an extract with a stated concentration: 120 mg of lion's mane concentrated 8:1 to 12:1 in FOCUS, the equivalent of about 1,200 mg of dried mushroom; 80 mg of ashwagandha standardised to at least 5% withanolides in CALM; 200 mg of cordyceps concentrated 4:1 in POWER. Extracts are tested for heavy metals, microbiology and, depending on the active, pesticides and solvent residues.",
+            "All three formulas are declared to the French DGAL and registered on Compl'Alim, France's official food supplement database. Declaration numbers are public on our Certifications page.",
           ],
         },
+        {
+          h: "How to take your gummies",
+          p: [
+            "Two gummies a day, chewed, without exceeding this dose. As with all adaptogens, consistency is what matters: we recommend a course of at least 30 days, which is one jar. The FLOW, BOOST and RESET packs combine several formulas to cover two or three needs at once, at a better price.",
+            "The gummies are not recommended for pregnant or breastfeeding women, or for people under medical treatment without their doctor's advice. A food supplement does not replace a varied, balanced diet or a healthy lifestyle.",
+          ],
+        },
+      ],
+      table: {
+        caption: "BIEN health gummies at a glance (dose per daily serving of 2 gummies)",
+        head: ["Formula", "Actives and doses", "Flavour", "When to take it"],
+        rows: [
+          ["CALM", "Reishi 80 mg (10:1 extract) · Ashwagandha 80 mg (≥ 5% withanolides) · Saffron 16 mg (≥ 2% safranal)", "Blackberry", "During the day or in the evening"],
+          ["FOCUS", "Lion's mane 120 mg (8:1 to 12:1 extract) · Green tea extract 80 mg (40% L-theanine) · Rhodiola rosea 30 mg (3% rosavins)", "Pineapple", "Morning or afternoon"],
+          ["POWER", "Cordyceps 200 mg (4:1 extract) · Panax ginseng 100 mg (4% ginsenosides) · Rhodiola rosea 30 mg (3% rosavins)", "Passion fruit", "Morning or before exercise"],
+        ],
+        note: "Jar of 60 gummies = 30 days · €39 · no added sugar, vegan, gluten-free · made in France.",
+      },
+      faq: [
+        { q: "What is the difference between CALM, FOCUS and POWER gummies?", a: "They address three needs. CALM (reishi, ashwagandha, saffron) supports relaxation and sleep. FOCUS (lion's mane, L-theanine, rhodiola) supports concentration. POWER (cordyceps, panax ginseng, rhodiola) supports energy and physical effort. All are taken as two gummies a day." },
+        { q: "Do BIEN gummies contain sugar?", a: "No: all three formulas have no added sugar. They are also vegan and gluten-free." },
+        { q: "Can I take two formulas at the same time?", a: "Yes, that is the idea behind our packs: FLOW pairs FOCUS and CALM, BOOST pairs FOCUS and POWER, RESET brings all three together. Stick to two gummies a day per formula. If you are under medical treatment, ask your doctor." },
+        { q: "How long before I feel the effects?", a: "Some people notice a difference within the first days, but adaptogens are best judged over time: we recommend a course of at least 30 days, which is one jar of 60 gummies." },
+        { q: "Who should not take adaptogenic gummies?", a: "They are not recommended for pregnant or breastfeeding women, children, or people under medical treatment without their doctor's advice, particularly with sedatives or anxiolytics for CALM." },
+        { q: "Where are BIEN gummies made?", a: "In France. The formulas are declared to the DGAL and registered on Compl'Alim; the certificates are available on the site's Certifications page." },
       ],
     },
   },

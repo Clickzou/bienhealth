@@ -19,20 +19,30 @@ const T = {
   },
 } as const;
 
-/** Bannière de consentement aux cookies (RGPD) — s'affiche jusqu'au premier choix. */
+/**
+ * Bannière de consentement aux cookies (RGPD) — s'affiche jusqu'au premier choix.
+ *
+ * Rendue dès le serveur (22/09/2026). Montée seulement après l'hydratation,
+ * elle apparaissait vers 3,5 s sur mobile — et, plus grand bloc de texte de
+ * l'écran, c'est elle que Google retenait comme LCP de l'accueil. Le choix du
+ * visiteur n'existant que dans son navigateur, c'est `CONSENT_BOOT` (script en
+ * tête de <body>) qui pose `has-consent` sur <html> avant le premier rendu, et
+ * la CSS qui masque alors la bannière : pas de clignotement chez ceux qui ont
+ * déjà répondu.
+ */
+/** Pose `has-consent` sur <html> avant le premier rendu si le visiteur a déjà choisi. */
+export const CONSENT_BOOT = `try{if(localStorage.getItem(${JSON.stringify(CONSENT_KEY)}))document.documentElement.classList.add("has-consent")}catch(e){}`;
+
 export default function CookieBanner({ lang }: { lang: string }) {
   const t = T[lang === "en" ? "en" : "fr"];
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     try {
-      // Afficher la bannière côté serveur la ferait clignoter chez les
-      // visiteurs qui ont déjà choisi : leur réponse n'existe que dans leur
-      // navigateur, on ne la connaît qu'une fois monté.
       // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (!localStorage.getItem(CONSENT_KEY)) setShow(true);
+      if (localStorage.getItem(CONSENT_KEY)) setShow(false);
     } catch {
-      /* localStorage indisponible */
+      /* localStorage indisponible : la bannière reste, comme avant */
     }
   }, []);
 
@@ -50,7 +60,7 @@ export default function CookieBanner({ lang }: { lang: string }) {
   if (!show) return null;
 
   return (
-    <div className="fixed bottom-0 inset-x-0 z-[120] p-3 sm:p-4">
+    <div className="cookie-banner fixed bottom-0 inset-x-0 z-[120] p-3 sm:p-4">
       {/* Fond rose de la charte (demande client), celui du bandeau d'annonce.
           Il ne se confond avec aucune page — l'off-white précédent se fondait
           dans les fonds clairs, et le bleu nuit d'avant se superposait au hero.

@@ -1,6 +1,7 @@
 import { SITE_URL, IS_INDEXABLE } from "@/lib/seo";
 import { ARTICLES } from "@/lib/blog";
 import { COLLECTIONS } from "@/lib/shop";
+import { PRODUCT_FACTS, PACK_FACTS, productFactLine } from "@/lib/brand-facts";
 
 /**
  * `/llms.txt` — sommaire du site destiné aux moteurs génératifs.
@@ -43,15 +44,17 @@ export async function GET() {
 > sucre ajouté, vegan et sans gluten.
 
 Éditeur : BIEN Health France SAS — 100 rue du Verbial, 81000 Albi, France.
+Fondatrice : Carla Debard.
 Site : ${SITE_URL} (français : ${SITE_URL}/fr · anglais : ${SITE_URL}/en)
 Contact : info@bien.health
 
-## Gamme
+## Gamme (faits vérifiables)
 
-- **CALM** — sérénité et sommeil (reishi, ashwagandha, safran)
-- **FOCUS** — concentration et mémoire (lion's mane, rhodiola rosea, L-théanine)
-- **POWER** — énergie et performance physique (cordyceps, rhodiola rosea, panax ginseng)
-- **MUSHGLOW** — beauté et vitalité, supermix 6-en-1 avec collagène
+${PRODUCT_FACTS.map((p) => productFactLine(p, SITE_URL)).join("\n")}
+
+Packs : ${PACK_FACTS.map((p) => `${p.name} (${p.content})`).join(", ")}.
+Tous les gummies sont sans sucre ajouté, vegan et sans gluten ; toute la gamme est
+fabriquée en France.
 
 Tous les produits sont déclarés auprès de la DGAL (Ministère de l'Agriculture) et
 enregistrés sur COMPL'ALIM ; les numéros de déclaration et les attestations sont
@@ -64,6 +67,11 @@ ${collections}
 ## Guides et articles
 
 ${articles}
+
+## Version intégrale
+
+- [llms-full.txt](${SITE_URL}/llms-full.txt) : le texte complet des guides et des
+  questions fréquentes, en un seul fichier.
 
 ## Pages de référence
 

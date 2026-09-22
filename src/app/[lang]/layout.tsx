@@ -6,7 +6,7 @@ import { getDictionary, hasLocale, locales } from "./dictionaries";
 import { SITE_URL, pageMetadata } from "@/lib/seo";
 import NewsletterPopup from "@/components/newsletter-popup";
 import SiteFooter from "@/components/site-footer";
-import CookieBanner from "@/components/cookie-banner";
+import CookieBanner, { CONSENT_BOOT } from "@/components/cookie-banner";
 import JsonLd from "@/components/json-ld";
 import GoogleAnalytics from "@/components/google-analytics";
 import MetaPixel from "@/components/meta-pixel";
@@ -81,14 +81,21 @@ export default async function RootLayout({
   if (!hasLocale(lang)) notFound();
 
   return (
-    <html lang={lang} className={`${title.variable} ${body.variable} h-full`}>
+    // suppressHydrationWarning : CONSENT_BOOT ajoute `has-consent` à <html>
+    // avant l'hydratation, ce qui est voulu.
+    <html lang={lang} className={`${title.variable} ${body.variable} h-full`} suppressHydrationWarning>
       <body className="min-h-full flex flex-col bg-background text-foreground">
+        <script dangerouslySetInnerHTML={{ __html: CONSENT_BOOT }} />
         <JsonLd
           data={{
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "BIEN health",
             legalName: "BIEN Health France SAS",
+            // La fondatrice nommée relie la marque à une personne réelle, déjà
+            // citée par la presse (Psychologies) : un signal d'entité pour les
+            // moteurs génératifs comme pour Google.
+            founder: { "@type": "Person", name: "Carla Debard" },
             url: SITE_URL,
             logo: `${SITE_URL}/brand/logo-bien.png`,
             email: "info@bien.health",

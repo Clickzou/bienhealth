@@ -86,7 +86,7 @@ export default async function SiteHeader({ lang }: { lang: string }) {
             sur ce conteneur, donc cadrés à l'écran sous 1600px. */}
         <div className="relative mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 h-16 sm:h-20 grid grid-cols-[auto_1fr_auto] items-center gap-4">
           <Link href={`/${lang}`} className="flex items-center" prefetch={false}>
-            <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} priority className="h-6 sm:h-7 w-auto" />
+            <Image src="/brand/logo-bien.png" alt="BIEN" width={118} height={37} loading="eager" className="h-6 sm:h-7 w-auto" />
             <span className="sr-only">{t.home}</span>
           </Link>
           <div className="flex items-center justify-center">

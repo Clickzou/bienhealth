@@ -115,7 +115,12 @@ export default function ProductGallery({
             src={img.url}
             alt={img.altText ?? title}
             fill
-            priority={i === 0}
+            /* `priority` est déprécié et sans effet depuis Next 16 : la photo
+               principale, élément LCP de la fiche, partait sans indice de
+               priorité (Lighthouse, 22/09/2026). La doc recommande
+               `fetchPriority` + `loading="eager"` plutôt que `preload`. */
+            fetchPriority={i === 0 ? "high" : "auto"}
+            loading={i === 0 ? "eager" : "lazy"}
             sizes="(max-width:1024px) 100vw, 45vw"
             className={`object-cover transition-opacity duration-500 ${i === active ? "opacity-100" : "opacity-0"}`}
           />

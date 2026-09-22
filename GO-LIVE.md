@@ -2374,3 +2374,19 @@ mesure, pas par défaut d'activité.
 Les vraies conclusions restent : ~1 commande par semaine sur le site, même
 rythme qu'en juillet-août ; 119 des 205 clics Google sur la requête de marque.
 Relances presse envoyées au client le 22/09 (6 articles sans lien).
+
+## 33. Audit SEO du 22/09 — corrections rapides, collection gummies, citations IA
+
+Audit complet dans `docs/seo/audit-seo-2026-09-22.md` (section « Suivi » pour
+le détail). À retenir pour la maintenance :
+
+- **La bannière cookies est rendue côté serveur.** `CONSENT_BOOT`
+  (`cookie-banner.tsx`), script en tête de `<body>`, pose `has-consent` sur
+  `<html>` ; la CSS masque alors la bannière. Ne pas remettre un `useState(false)`
+  initial : la bannière redeviendrait le LCP de l'accueil à 3,5 s.
+- **`priority` ne fait plus rien depuis Next 16** : utiliser `fetchPriority="high"`
+  et `loading="eager"` sur l'image principale d'une page.
+- **Faits produit pour les IA** : `src/lib/brand-facts.ts` alimente `llms.txt` et
+  `llms-full.txt`. À tenir à jour si une composition, une dose ou un prix change.
+- **Articles** : champ `updated` (ISO) à bouger à chaque révision de fond ; il
+  alimente `dateModified` et la mention visible.

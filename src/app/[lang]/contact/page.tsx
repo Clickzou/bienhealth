@@ -11,7 +11,7 @@ export async function generateMetadata({ params }: { params: Promise<{ lang: str
   return pageMetadata({
     lang,
     path: "contact",
-    title: "Contact | BIEN health",
+    title: lang === "en" ? "Contact us: orders, advice, partnerships | BIEN health" : "Contact : commande, conseil et partenariat | BIEN health",
     description: lang === "en" ? "Contact the BIEN health team: email, phone, address and pro enquiries. A question about a formula, an order or a delivery? We reply within 48 business hours." : "Une question sur une formule, une commande ou une livraison ? Contactez l'équipe BIEN health par email ou téléphone : réponse sous 48 h ouvrées.",
   });
 }

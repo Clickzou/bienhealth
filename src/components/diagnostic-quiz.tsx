@@ -437,7 +437,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
           </div>
 
           <div className="order-1 lg:order-2 relative aspect-square w-full max-w-sm mx-auto rounded-[2rem] overflow-hidden ring-4 ring-bien-cream/20 bien-shadow">
-            <Image src={p.img} alt={p.name} fill sizes="(max-width:1024px) 80vw, 400px" className="object-cover" priority />
+            <Image src={p.img} alt={p.name} fill sizes="(max-width:1024px) 80vw, 400px" className="object-cover" loading="eager" />
           </div>
         </div>
       </section>

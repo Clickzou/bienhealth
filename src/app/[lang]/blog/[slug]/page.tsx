@@ -2,9 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Clock, ChevronDown, ArrowLeft } from "lucide-react";
+import { Clock, ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { ARTICLES, getArticle, localizeArticle } from "@/lib/blog";
+import { articleLinks } from "@/lib/blog-links";
+import { COLLECTIONS, localizeCollection } from "@/lib/shop";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
 import DiagnosticCTA from "@/components/diagnostic-cta";
@@ -34,7 +36,7 @@ export async function generateMetadata({
   });
   return {
     ...meta,
-    openGraph: { ...meta.openGraph, type: "article", publishedTime: a.date },
+    openGraph: { ...meta.openGraph, type: "article", publishedTime: a.date, modifiedTime: a.updated ?? a.date },
   };
 }
 
@@ -57,8 +59,11 @@ export default async function ArticlePage({
   if (!base) notFound();
   const a = localizeArticle(base, lang);
   const ui = lang === "en"
-    ? { home: "Home", journal: "The Journal", readTime: "min read", faqTitle: "Frequently asked questions", back: "Back to the Journal" }
-    : { home: "Accueil", journal: "Le Journal", readTime: "min de lecture", faqTitle: "Questions fréquentes", back: "Retour au Journal" };
+    ? { home: "Home", journal: "The Journal", readTime: "min read", updated: "Updated", further: "Going further", seeCollection: "See the collection", faqTitle: "Frequently asked questions", back: "Back to the Journal" }
+    : { home: "Accueil", journal: "Le Journal", readTime: "min de lecture", updated: "Mis à jour le", further: "Pour aller plus loin", seeCollection: "Voir la collection", faqTitle: "Questions fréquentes", back: "Retour au Journal" };
+
+  const links = articleLinks(slug, base.category);
+  const linkedCollection = links && COLLECTIONS[links.collection] ? localizeCollection(COLLECTIONS[links.collection], lang) : null;
 
   const url = `${SITE_URL}/${lang}/blog/${slug}`;
 
@@ -74,7 +79,7 @@ export default async function ArticlePage({
           description: a.metaDescription,
           image: `${SITE_URL}${a.cover}`,
           datePublished: a.date,
-          dateModified: a.date,
+          dateModified: a.updated ?? a.date,
           author: { "@type": "Organization", name: "BIEN" },
           publisher: {
             "@type": "Organization",
@@ -121,13 +126,22 @@ export default async function ArticlePage({
           <h1 className="mt-4 font-hero text-[clamp(1.76rem,4.4vw,3.08rem)] leading-[1.02] text-black">{a.title}</h1>
           <div className="mt-4 flex items-center gap-3 text-sm text-black/55">
             <span>{fmtDate(a.date, lang)}</span>
+            {/* Date de révision visible : elle doit concorder avec `dateModified`,
+                et c'est elle que lisent les moteurs génératifs pour juger de la
+                fraîcheur d'une source. */}
+            {a.updated && a.updated > a.date && (
+              <>
+                <span>·</span>
+                <span>{ui.updated} {fmtDate(a.updated, lang)}</span>
+              </>
+            )}
             <span>·</span>
             <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" /> {a.readingMinutes} {ui.readTime}</span>
           </div>
 
           {/* Couverture */}
           <div className="mt-7 relative aspect-[16/9] rounded-3xl overflow-hidden ring-1 ring-border bg-bien-cream">
-            <Image src={a.cover} alt={a.title} fill priority sizes="(max-width:768px) 100vw, 768px" className="object-cover" />
+            <Image src={a.cover} alt={a.title} fill fetchPriority="high" loading="eager" sizes="(max-width:768px) 100vw, 768px" className="object-cover" />
           </div>
 
           {/* Corps */}
@@ -160,6 +174,32 @@ export default async function ArticlePage({
                     </summary>
                     <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed">{f.a}</p>
                   </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Pour aller plus loin : la collection et les produits liés au sujet
+              (maillage, audit du 22/09/2026). */}
+          {links && linkedCollection && (
+            <section className="mt-12 rounded-3xl bg-bien-cream/60 ring-1 ring-border p-6 sm:p-8">
+              <h2 className="font-display tracking-tight text-xl sm:text-2xl text-black">{ui.further}</h2>
+              <p className="mt-2 text-[15px] text-black/70 leading-relaxed">{linkedCollection.desc}</p>
+              <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <Link
+                  href={`/${lang}/collections/${links.collection}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-5 py-2.5 text-sm font-semibold hover:bg-bien-leaf transition-colors"
+                >
+                  {ui.seeCollection} {linkedCollection.label} <ArrowRight className="h-4 w-4" />
+                </Link>
+                {links.products.map((p) => (
+                  <Link
+                    key={p.handle}
+                    href={`/${lang}/products/${p.handle}`}
+                    className="rounded-full ring-1 ring-black/15 bg-white px-4 py-2.5 text-sm font-semibold text-black hover:ring-bien-leaf transition"
+                  >
+                    {p.name}
+                  </Link>
                 ))}
               </div>
             </section>

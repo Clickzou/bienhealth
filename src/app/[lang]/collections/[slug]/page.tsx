@@ -1,12 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { Sparkles, ArrowRight } from "lucide-react";
+import { Sparkles, ArrowRight, ChevronDown } from "lucide-react";
 import { hasLocale, locales } from "../../dictionaries";
 import { getProducts } from "@/lib/shopify-products";
 import { COLLECTIONS, localizeCollection, sortForCollection, isAccessory } from "@/lib/shop";
 import JsonLd from "@/components/json-ld";
 import { COLLECTION_SEO, localizeCollectionSeo } from "@/lib/collection-seo";
+import { getArticle, localizeArticle } from "@/lib/blog";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
 import ProductCard from "@/components/product-card";
@@ -32,13 +33,13 @@ export async function generateMetadata({
     lang,
     path: `collections/${slug}`,
     title: `${col.seoTitle ?? c.label} | BIEN health`,
-    description: metaDescription(c.desc),
+    description: metaDescription((lang === "en" ? col.en.metaDescription : col.metaDescription) ?? c.desc),
   });
 }
 
 const T = {
-  fr: { product: "produit", products: "produits", seeAll: "Tout voir", findFormula: "Trouver ma formule", alsoDiscover: "Découvrez aussi", fullRange: "Toute la gamme", learnMore: "En savoir plus" },
-  en: { product: "product", products: "products", seeAll: "See all", findFormula: "Find my formula", alsoDiscover: "You may also like", fullRange: "The full range", learnMore: "Learn more" },
+  fr: { product: "produit", products: "produits", seeAll: "Tout voir", findFormula: "Trouver ma formule", alsoDiscover: "Découvrez aussi", fullRange: "Toute la gamme", learnMore: "En savoir plus", faq: "Questions fréquentes", read: "À lire sur le Journal" },
+  en: { product: "product", products: "products", seeAll: "See all", findFormula: "Find my formula", alsoDiscover: "You may also like", fullRange: "The full range", learnMore: "Learn more", faq: "Frequently asked questions", read: "Read on the Journal" },
 } as const;
 
 export default async function CollectionPage({
@@ -54,6 +55,10 @@ export default async function CollectionPage({
   const seo = seoRaw ? localizeCollectionSeo(seoRaw, lang) : undefined;
   const t = T[lang === "en" ? "en" : "fr"];
   const c = localizeCollection(col, lang);
+  const related = (seoRaw?.related ?? [])
+    .map((s) => getArticle(s))
+    .filter((a) => a !== undefined)
+    .map((a) => localizeArticle(a, lang));
 
   const all = await getProducts(24, lang);
   const products = sortForCollection(col, all.filter(col.match));
@@ -85,6 +90,19 @@ export default async function CollectionPage({
           })),
         }}
       />
+      {seo?.faq && seo.faq.length > 0 && (
+        <JsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: seo.faq.map((f) => ({
+              "@type": "Question",
+              name: f.q,
+              acceptedAnswer: { "@type": "Answer", text: f.a },
+            })),
+          }}
+        />
+      )}
       <SiteHeader lang={lang} />
 
       {/* Hero collection */}
@@ -160,6 +178,70 @@ export default async function CollectionPage({
                 </article>
               ))}
             </div>
+
+            {/* Tableau comparatif : les doses et les usages en clair, lisibles
+                d'un coup d'œil par un visiteur comme par un moteur génératif. */}
+            {seo.table && (
+              <div className="mt-12 overflow-x-auto">
+                <table className="w-full min-w-[640px] text-left text-sm border-separate border-spacing-0 rounded-2xl ring-1 ring-border bg-white overflow-hidden">
+                  <caption className="caption-top text-left pb-3 font-display text-lg text-black">{seo.table.caption}</caption>
+                  <thead>
+                    <tr>
+                      {seo.table.head.map((h) => (
+                        <th key={h} scope="col" className="px-4 py-3 bg-bien-forest text-bien-cream font-semibold">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {seo.table.rows.map((row) => (
+                      <tr key={row[0]}>
+                        {row.map((cell, i) =>
+                          i === 0 ? (
+                            <th key={i} scope="row" className="px-4 py-3 border-t border-border font-display text-black align-top">{cell}</th>
+                          ) : (
+                            <td key={i} className="px-4 py-3 border-t border-border text-black/75 align-top leading-relaxed">{cell}</td>
+                          ),
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                {seo.table.note && <p className="mt-3 text-sm text-black/60">{seo.table.note}</p>}
+              </div>
+            )}
+
+            {seo.faq && seo.faq.length > 0 && (
+              <div className="mt-12">
+                <h2 className="font-display tracking-tight text-xl sm:text-2xl text-black">{t.faq}</h2>
+                <div className="mt-4 space-y-3 max-w-3xl">
+                  {seo.faq.map((f) => (
+                    <details key={f.q} className="group bg-white rounded-2xl ring-1 ring-border px-5">
+                      <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
+                        <h3 className="font-display text-black">{f.q}</h3>
+                        <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform group-open:rotate-180" />
+                      </summary>
+                      <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed">{f.a}</p>
+                    </details>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {related.length > 0 && (
+              <div className="mt-12">
+                <h2 className="font-display tracking-tight text-xl sm:text-2xl text-black">{t.read}</h2>
+                <ul className="mt-4 grid sm:grid-cols-2 gap-x-8 gap-y-2.5">
+                  {related.map((a) => (
+                    <li key={a.slug}>
+                      <Link href={`/${lang}/blog/${a.slug}`} className="inline-flex items-start gap-2 text-[15px] text-black/80 hover:text-bien-leaf">
+                        <ArrowRight className="h-4 w-4 mt-1 shrink-0 text-bien-leaf" />
+                        {a.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </section>
       )}
