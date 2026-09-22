@@ -2,11 +2,13 @@
 
 import { useEffect } from "react";
 import { trackMeta } from "@/lib/meta-pixel";
+import { trackGa } from "@/lib/ga";
 
 /**
- * Envoie l'évènement Meta `ViewContent` à l'affichage d'une fiche produit
- * (audience de reciblage « a vu ce produit »). Ne rend rien ; sans pixel
- * chargé (pas d'ID ou pas de consentement), l'appel est ignoré.
+ * Envoie l'évènement Meta `ViewContent` et son équivalent GA4 `view_item` à
+ * l'affichage d'une fiche produit (audience de reciblage « a vu ce produit »,
+ * premier palier de l'entonnoir d'achat). Ne rend rien ; sans consentement,
+ * les appels sont ignorés.
  */
 export default function MetaViewContent({
   handle,
@@ -26,6 +28,11 @@ export default function MetaViewContent({
       content_type: "product",
       value: price,
       currency,
+    });
+    trackGa("view_item", {
+      currency,
+      value: price,
+      items: [{ item_id: handle, item_name: title, price, quantity: 1 }],
     });
   }, [handle, title, price, currency]);
 

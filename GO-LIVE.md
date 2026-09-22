@@ -2346,3 +2346,31 @@ navigation client ne démonte plus rien :
   défilement rendu à la page ; panier conservé d'une page à l'autre ; **aucun
   préchargement de fiche produit** au chargement de l'accueil ; aucune erreur
   JavaScript.
+
+## 32. Tableau de bord : des chiffres qui mesurent ce qu'ils disent (22/09/2026)
+
+Le client trouvait les stats mauvaises. Une partie l'était, mais par défaut de
+mesure, pas par défaut d'activité.
+
+- **Ajouts au panier** : le site n'envoyait aucun évènement e-commerce à GA4.
+  Les 10 ajouts comptés venaient des pages Shopify, et le « −77 % » comparait
+  le nouveau site à l'ancienne boutique. Le site envoie désormais `view_item`,
+  `add_to_cart` et `begin_checkout` (`src/lib/ga.ts`), toujours après
+  consentement seulement — vérifié dans Chromium, hits interceptés : les trois
+  partent avec « Accepter », aucun avec « Refuser ». La carte ne compare plus
+  une période antérieure au 22/09/2026 et le dit.
+- **Ventes** : une commande Ankorstore de 250 € (grossiste) était comptée comme
+  une vente du site. Seules les commandes de source `web` alimentent désormais
+  les cartes, le panier moyen et la conversion ; les autres canaux sont listés à
+  part (« Hors site »). Veepee s'y rangera de lui-même.
+- **Visiteurs** : GA4 ne se charge qu'après consentement et ne voit qu'environ
+  un visiteur sur trois (205 clics Google pour 75 visiteurs venus de Google sur
+  28 jours). Les deux cartes le précisent. Le Consent Mode v2 corrigerait
+  l'estimation ; c'est un changement de bannière, laissé à la décision du client.
+- **Presse** : L'Officiel pointe vers `/products/focus-1`, en 404 depuis la
+  bascule. Redirection 301 des handles suffixés (`calm|focus|power|mushglow-N`)
+  vers la fiche.
+
+Les vraies conclusions restent : ~1 commande par semaine sur le site, même
+rythme qu'en juillet-août ; 119 des 205 clics Google sur la requête de marque.
+Relances presse envoyées au client le 22/09 (6 articles sans lien).

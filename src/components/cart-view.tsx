@@ -9,6 +9,7 @@ import {
 } from "@/lib/cart";
 import { discountPercent, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { trackMeta } from "@/lib/meta-pixel";
+import { trackGa } from "@/lib/ga";
 
 const T = {
   fr: {
@@ -142,7 +143,7 @@ export default function CartView({ lang }: { lang: string }) {
           </div>
           <a
             href={checkoutUrl(items)}
-            onClick={() =>
+            onClick={() => {
               // Départ vers le checkout Shopify : dernière conversion mesurable
               // côté site (le tunnel Shopify a son propre pixel).
               trackMeta("InitiateCheckout", {
@@ -151,8 +152,13 @@ export default function CartView({ lang }: { lang: string }) {
                 num_items: items.reduce((n, i) => n + i.qty, 0),
                 value: total,
                 currency: currency || "EUR",
-              })
-            }
+              });
+              trackGa("begin_checkout", {
+                currency: currency || "EUR",
+                value: total,
+                items: items.map((i) => ({ item_id: i.handle, item_name: i.title, price: i.price, quantity: i.qty })),
+              });
+            }}
             className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full bg-bien-forest text-bien-cream px-6 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm"
           >
             {t.checkout} <ArrowRight className="h-4 w-4" />

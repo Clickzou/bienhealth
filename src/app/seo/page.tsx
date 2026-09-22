@@ -45,6 +45,9 @@ const CHART_GREEN = "#238f5e";
 const CHART_PINK = "#d4568e";
 const CHART_AMBER = "#c2760b";
 
+/** Premier jour où le site envoie ses propres évènements e-commerce à GA4. */
+const CART_TRACKING_SINCE = "2026-09-22";
+
 export default async function SeoDashboard({
   searchParams,
 }: {
@@ -89,6 +92,20 @@ export default async function SeoDashboard({
   const t = ga4?.totals;
   const p = ga4?.previousTotals;
   const commerce = ga4?.commerce;
+
+  // Le site n'envoie `add_to_cart` à Analytics que depuis le 22/09/2026. Avant,
+  // seules les pages Shopify le faisaient : comparer une période à cheval sur
+  // cette date à la précédente opposait le nouveau site à l'ancienne boutique,
+  // et affichait un −77 % qui ne mesurait que le changement d'outil.
+  const cartComparable = period.previous.start >= CART_TRACKING_SINCE;
+  const cartDelta =
+    commerce && ga4?.previousCommerce && cartComparable
+      ? variation(commerce.addToCarts, ga4.previousCommerce.addToCarts)
+      : undefined;
+  const cartNote =
+    period.current.start < CART_TRACKING_SINCE
+      ? `Mesuré sur le site depuis le ${longDate(CART_TRACKING_SINCE)} : avant, seules les pages Shopify étaient comptées`
+      : undefined;
 
   return (
     <div className="min-h-screen">
@@ -157,12 +174,18 @@ export default async function SeoDashboard({
             value={t ? num(t.users) : "—"}
             delta={t && p ? variation(t.users, p.users) : undefined}
             hint={t ? undefined : "Analytics non connecté"}
+            note={t ? "Seulement ceux qui acceptent les cookies" : undefined}
           />
+          {/* Les deux premières cartes ne comptent pas la même population :
+              Analytics ne se charge qu'après « Accepter », Search Console voit
+              tous les clics. Sur août-septembre 2026, 205 clics Google pour 75
+              visiteurs venus de Google selon Analytics. */}
           <Kpi
             label="Clics depuis Google"
             value={gsc ? num(gsc.totals.clicks) : "—"}
             delta={gsc ? variation(gsc.totals.clicks, gsc.previousTotals.clicks) : undefined}
             hint={gsc ? undefined : "Search Console non connectée"}
+            note={gsc ? "Tous les visiteurs, cookies acceptés ou non" : undefined}
           />
           <Kpi
             label="Position moyenne"
@@ -176,13 +199,14 @@ export default async function SeoDashboard({
           <Kpi
             label="Ajouts au panier"
             value={commerce ? num(commerce.addToCarts) : "—"}
-            delta={commerce && ga4?.previousCommerce ? variation(commerce.addToCarts, ga4.previousCommerce.addToCarts) : undefined}
-            hint={commerce ? undefined : "Analytics non connecté"}
+            delta={cartDelta}
+            hint={commerce ? (cartComparable ? undefined : "Pas de comparaison possible") : "Analytics non connecté"}
+            note={commerce ? cartNote : undefined}
           />
         </div>
 
         {/* -------------------------------------------------------- ventes */}
-        <SectionTitle hint="Source : administration Shopify — commandes réelles, hors commandes annulées et commandes de test">
+        <SectionTitle hint="Source : administration Shopify — commandes passées sur le site, hors commandes annulées et commandes de test. Les autres canaux sont détaillés à part.">
           Ventes
         </SectionTitle>
         {sales ? (
@@ -209,9 +233,22 @@ export default async function SeoDashboard({
               <Kpi
                 label="Taux de conversion"
                 value={t && t.sessions ? pct((sales.totals.orders / t.sessions) * 100) : "—"}
-                hint="Commandes rapportées aux visites du site"
+                hint="Commandes du site rapportées à ses visites"
               />
             </div>
+
+            {/* Grossistes et marketplaces : de vraies ventes, mais que le site
+                n'a pas générées. Mêlées aux siennes, elles faussaient panier
+                moyen et conversion. */}
+            {sales.otherChannels.length > 0 && (
+              <p className="mt-3 text-[12px] text-[#465269] bg-white ring-1 ring-black/[0.08] rounded-lg px-3 py-2 max-w-4xl">
+                <strong className="font-medium">Hors site, sur la même période :</strong>{" "}
+                {sales.otherChannels
+                  .map((c) => `${c.name}, ${num(c.orders)} commande${c.orders > 1 ? "s" : ""} pour ${money(c.revenue, sales.totals.currency)}`)
+                  .join(" · ")}
+                . Non compté dans les chiffres ci-dessus.
+              </p>
+            )}
 
             {sales.capped && (
               <p className="mt-3 text-[12px] text-[#8a5a2b] bg-[#fdf4e7] ring-1 ring-amber-500/30 rounded-lg px-3 py-2 max-w-4xl">
@@ -239,7 +276,7 @@ export default async function SeoDashboard({
 
             {sales.topProducts.length > 0 && (
               <div className="mt-3">
-                <Card title="Produits vendus" subtitle="Sur la période, par chiffre d'affaires">
+                <Card title="Produits vendus" subtitle="Sur le site, sur la période, par chiffre d'affaires">
                   <Table
                     head={["Produit", "Quantité", "Chiffre d'affaires"]}
                     rows={sales.topProducts.map((row) => [
@@ -449,7 +486,9 @@ export default async function SeoDashboard({
               <Kpi
                 label="Ajouts au panier"
                 value={commerce ? num(commerce.addToCarts) : "—"}
-                delta={commerce && ga4.previousCommerce ? variation(commerce.addToCarts, ga4.previousCommerce.addToCarts) : undefined}
+                delta={cartDelta}
+                hint={cartComparable ? undefined : "Pas de comparaison possible"}
+                note={cartNote}
               />
             </div>
 

@@ -90,18 +90,22 @@ export function Kpi({
   delta,
   invert,
   hint,
+  note,
 }: {
   label: string;
   value: string;
   delta?: number | null;
   invert?: boolean;
   hint?: string;
+  /** Précision toujours affichée, sous l'évolution : ce que le chiffre compte vraiment. */
+  note?: string;
 }) {
   return (
     <div className="rounded-xl bg-[#eaf5fc] ring-1 ring-bien-sky/45 px-4 py-3.5">
       <p className="text-[11px] uppercase tracking-[0.12em] text-[#3f6c88]">{label}</p>
       <p className="mt-1.5 text-2xl font-semibold text-[#00112b] tabular-nums tracking-tight">{value}</p>
       <div className="mt-1">{delta !== undefined ? <Delta value={delta} invert={invert} /> : hint ? <span className="text-[11px] text-[#6d8ba1]">{hint}</span> : null}</div>
+      {note && <p className="mt-1 text-[11px] leading-snug text-[#6d8ba1]">{note}</p>}
     </div>
   );
 }

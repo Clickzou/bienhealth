@@ -8,6 +8,7 @@ import { addToCart, type CartItem } from "@/lib/cart";
 import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, MAX_QUANTITY, discountPercent, emitCureChange, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 import { trackMeta } from "@/lib/meta-pixel";
+import { trackGa } from "@/lib/ga";
 
 /** Quantités du menu « autre quantité » (compléments) et du menu « 6+ » (accessoires). */
 const FREE_QUANTITIES = Array.from({ length: MAX_QUANTITY }, (_, i) => i + 1);
@@ -110,6 +111,11 @@ export default function AddToCart({
       content_type: "product",
       value: lineTotal(item.price, qty),
       currency,
+    });
+    trackGa("add_to_cart", {
+      currency,
+      value: lineTotal(item.price, qty),
+      items: [{ item_id: item.handle, item_name: item.title, price: item.price, quantity: qty }],
     });
     setOpen(true);
   }

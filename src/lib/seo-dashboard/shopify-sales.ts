@@ -80,9 +80,16 @@ export type ShopifySalesTotals = {
   currency: string;
 };
 
+/** Ventes passées ailleurs que sur le site : grossistes, marketplaces, saisies manuelles. */
+export type OtherChannel = { name: string; orders: number; revenue: number };
+
 export type ShopifySales = {
+  /** Ventes du site seul (boutique en ligne). Les autres canaux sont à part :
+   *  une commande Ankorstore de 250 € gonflait le panier moyen et le taux de
+   *  conversion d'un site qui n'y était pour rien (constaté le 22/09/2026). */
   totals: ShopifySalesTotals;
   previousTotals: ShopifySalesTotals;
+  otherChannels: OtherChannel[];
   /** Une entrée par jour de la période courante, en heure de Paris. */
   daily: { date: string; orders: number; revenue: number }[];
   topProducts: { title: string; quantity: number; revenue: number }[];
@@ -242,6 +249,8 @@ type OrderNode = {
   createdAt: string;
   test: boolean;
   cancelledAt: string | null;
+  sourceName: string | null;
+  app: { name: string } | null;
   currentTotalPriceSet: { shopMoney: { amount: string; currencyCode: string } } | null;
   lineItems: { nodes: { title: string; currentQuantity: number; discountedTotalSet: { shopMoney: { amount: string } } | null }[] };
 };
@@ -254,6 +263,8 @@ const ORDERS_QUERY = `
         createdAt
         test
         cancelledAt
+        sourceName
+        app { name }
         currentTotalPriceSet { shopMoney { amount currencyCode } }
         lineItems(first: 20) {
           nodes {
@@ -271,6 +282,21 @@ const ORDERS_QUERY = `
 function counts(order: OrderNode): boolean {
   return !order.test && !order.cancelledAt;
 }
+
+/**
+ * Canal d'une commande, ou `null` pour le site. Le panier du site bascule vers
+ * la caisse Shopify par un permalink : ces commandes portent la source « web »,
+ * comme celles de l'ancienne boutique. Tout le reste vient d'ailleurs.
+ */
+function channelOf(order: OrderNode): string | null {
+  if (!order.sourceName || order.sourceName === "web") return null;
+  if (order.app?.name) return order.app.name.replace(/:.*$/, "").trim();
+  if (order.sourceName === "shopify_draft_order") return "Commande manuelle";
+  if (order.sourceName === "pos") return "Point de vente";
+  return order.sourceName;
+}
+
+const fromSite = (order: OrderNode) => channelOf(order) === null;
 
 type OrdersPage = {
   orders: { pageInfo: { hasNextPage: boolean; endCursor: string | null }; nodes: OrderNode[] };
@@ -365,6 +391,7 @@ export async function fetchShopifySales(period: Period): Promise<ShopifySalesRes
       data: {
         totals: zero,
         previousTotals: zero,
+        otherChannels: [],
         daily: [],
         topProducts: [],
         truncated: true,
@@ -385,7 +412,18 @@ export async function fetchShopifySales(period: Period): Promise<ShopifySalesRes
 
   if (!current) return { status: lastTokenError, data: null };
 
-  const kept = current.orders.filter(counts);
+  const valid = current.orders.filter(counts);
+  const kept = valid.filter(fromSite);
+
+  const channels = new Map<string, OtherChannel>();
+  for (const order of valid) {
+    const name = channelOf(order);
+    if (name === null) continue;
+    const entry = channels.get(name) ?? { name, orders: 0, revenue: 0 };
+    entry.orders += 1;
+    entry.revenue += Number(order.currentTotalPriceSet?.shopMoney.amount ?? 0);
+    channels.set(name, entry);
+  }
   const byDay = new Map<string, { orders: number; revenue: number }>();
   const byProduct = new Map<string, { quantity: number; revenue: number }>();
 
@@ -409,7 +447,8 @@ export async function fetchShopifySales(period: Period): Promise<ShopifySalesRes
     status: "ok",
     data: {
       totals: totalsOf(kept),
-      previousTotals: totalsOf((previous?.orders ?? []).filter(counts)),
+      previousTotals: totalsOf((previous?.orders ?? []).filter(counts).filter(fromSite)),
+      otherChannels: [...channels.values()].sort((a, b) => b.revenue - a.revenue),
       daily: [...byDay.entries()]
         .map(([date, v]) => ({ date, ...v }))
         .sort((a, b) => a.date.localeCompare(b.date)),

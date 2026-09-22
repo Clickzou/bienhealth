@@ -159,6 +159,13 @@ const nextConfig: NextConfig = {
       // est l'équivalent le plus proche, pas la boutique entière.
       ...collection("frontpage", "products/mushglow"),
 
+      // --- Fiches produit en double ------------------------------------------
+      // Shopify suffixe le handle quand un produit est dupliqué (« focus-1 »).
+      // L'Officiel pointe vers /products/focus-1, qui tombait en 404 depuis la
+      // bascule (relevé le 22/09/2026 en vérifiant les liens presse).
+      { source: "/products/:handle(calm|focus|power|mushglow)-:n(\\d+)", destination: "/fr/products/:handle", permanent: true },
+      { source: "/:lang(fr|en)/products/:handle(calm|focus|power|mushglow)-:n(\\d+)", destination: "/:lang/products/:handle", permanent: true },
+
       // --- Blogs Shopify ----------------------------------------------------
       // Sept blogs existaient (news, learn, lions-mane, microdosing…), tous vides
       // côté API : impossible de faire correspondre les articles un à un. L'index
