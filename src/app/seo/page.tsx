@@ -10,6 +10,7 @@ import LoginForm from "./login-form";
 import DateRange from "./date-range";
 import KeywordTable from "./keyword-table";
 import RealtimePanel from "./realtime";
+import SiteTabs from "./site-tabs";
 import {
   BarList,
   Card,
@@ -117,6 +118,8 @@ export default async function SeoDashboard({
               <p className="text-[10px] uppercase tracking-[0.22em] text-[#1379b0]">Clickzou</p>
               <h1 className="text-xl font-semibold tracking-tight leading-tight">SEO by Clickzou</h1>
             </div>
+
+            <SiteTabs active="bien" />
 
             <nav className="flex gap-1" aria-label="Période">
               {(Object.keys(PERIODS) as PeriodKey[]).map((k) => (

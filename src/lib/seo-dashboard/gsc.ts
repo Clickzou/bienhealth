@@ -83,9 +83,9 @@ function totalsFrom(res: GscResponse | null): GscTotals {
   };
 }
 
-export async function fetchGsc(period: Period): Promise<GscData | null> {
-  if (!isGscConfigured()) return null;
-  const site = gscSiteUrl();
+/** `site` : bien.health par défaut ; l'onglet Microdose passe la sienne. */
+export async function fetchGsc(period: Period, site: string = gscSiteUrl()): Promise<GscData | null> {
+  if (!isGoogleConfigured() || !site) return null;
 
   const [totals, previousTotals, byDate, byQuery, byQueryPrev, byPage, byCountry, byDevice] = await Promise.all([
     query(site, { ...range(period.current), dimensions: [] }),

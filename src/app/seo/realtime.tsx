@@ -33,7 +33,7 @@ type Realtime = {
   countries?: { label: string; users: number }[];
 };
 
-export default function RealtimePanel({ enabled }: { enabled: boolean }) {
+export default function RealtimePanel({ enabled, site }: { enabled: boolean; site?: "microdose" }) {
   const router = useRouter();
   const [data, setData] = useState<Realtime | null>(null);
   const [updatedAt, setUpdatedAt] = useState<Date | null>(null);
@@ -45,7 +45,7 @@ export default function RealtimePanel({ enabled }: { enabled: boolean }) {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch("/api/seo/realtime", { cache: "no-store" });
+      const res = await fetch(site ? `/api/seo/realtime?site=${site}` : "/api/seo/realtime", { cache: "no-store" });
       if (res.status === 401) {
         router.refresh(); // session expirée : on retombe sur l'écran de connexion
         return;
@@ -56,7 +56,7 @@ export default function RealtimePanel({ enabled }: { enabled: boolean }) {
     } catch {
       /* réseau instable : on retentera au tick suivant */
     }
-  }, [router]);
+  }, [router, site]);
 
   useEffect(() => {
     if (!enabled || !live) return;

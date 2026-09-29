@@ -47,6 +47,7 @@ export default function DateRange({
   min,
   max,
   active,
+  basePath = "/seo",
 }: {
   /** Dates de la période affichée, qui pré-remplissent les champs. */
   start: string;
@@ -56,6 +57,8 @@ export default function DateRange({
   max: string;
   /** Vrai quand la période courante vient déjà de ce panneau. */
   active: boolean;
+  /** Onglet courant : `/seo` (BIEN Health) ou `/seo/microdose`. */
+  basePath?: string;
 }) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
@@ -92,7 +95,7 @@ export default function DateRange({
 
   function go(nextFrom: string, nextTo: string) {
     setOpen(false);
-    router.push(`/seo?start=${nextFrom}&end=${nextTo}`);
+    router.push(`${basePath}?start=${nextFrom}&end=${nextTo}`);
   }
 
   function apply(e: React.FormEvent) {

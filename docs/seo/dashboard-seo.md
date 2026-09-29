@@ -129,3 +129,19 @@ src/app/api/seo/       login · logout · realtime
   et importer `ui.tsx` (qui lit le catalogue du blog pour nommer les articles)
   embarquerait tous les articles dans le bundle du navigateur. Ne pas replier ces
   fonctions dans `ui.tsx`.
+
+## Onglet « Microdose » (depuis le 30/09/2026)
+
+`/seo/microdose` affiche les mêmes blocs pour bien-microdose.com, avec la même
+connexion. Sources et variables (projet Vercel bien.health) :
+
+| Source | Variable | État au 30/09/2026 |
+|---|---|---|
+| Analytics | `MICRODOSE_GA4_PROPERTY_ID` (identifiant numérique de la propriété GA4 de bien-microdose.com) | à créer après la mise en ligne |
+| Search Console | `MICRODOSE_GSC_SITE_URL` (défaut `sc-domain:bien-microdose.com`) | ajouter le compte de service en autorisation Complète |
+| Ventes | `MICRODOSE_DASHBOARD_TOKEN` (= `SEO_DASHBOARD_API_TOKEN` du projet Microdose) ; `MICRODOSE_SITE_URL` facultatif (défaut `https://microdose-lyart.vercel.app`) | en place |
+
+Les ventes Microdose ne viennent pas de Shopify : le paiement passe par le site
+(CardGate), les commandes sont dans sa base Supabase. Le tableau de bord les lit par
+`GET /api/seo/sales` du site Microdose, protégé par le jeton partagé — la clé de
+service de la base Microdose ne quitte pas son projet.

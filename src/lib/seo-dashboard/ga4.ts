@@ -129,10 +129,11 @@ function named(report: Report | undefined, metrics: number, extraDimension = fal
   }));
 }
 
-export async function fetchGa4(period: Period): Promise<Ga4Data | null> {
-  if (!isGa4Configured()) return null;
+/** `propertyId` : bien.health par défaut ; l'onglet Microdose passe la sienne. */
+export async function fetchGa4(period: Period, propertyId: string = ga4PropertyId()): Promise<Ga4Data | null> {
+  if (!isGoogleConfigured() || !propertyId) return null;
 
-  const url = `${API}/properties/${ga4PropertyId()}:batchRunReports`;
+  const url = `${API}/properties/${propertyId}:batchRunReports`;
   const cur = [{ startDate: period.current.start, endDate: period.current.end }];
   const prev = [{ startDate: period.previous.start, endDate: period.previous.end }];
   const m = (names: string[]) => names.map((name) => ({ name }));
@@ -267,9 +268,9 @@ export type Ga4Realtime = {
  * `minutesAgo` vaut « 00 » pour la minute en cours et « 29 » pour la plus
  * ancienne ; on inverse donc l'ordre pour tracer le temps de gauche à droite.
  */
-export async function fetchGa4Realtime(): Promise<Ga4Realtime | null> {
-  if (!isGa4Configured()) return null;
-  const url = `${API}/properties/${ga4PropertyId()}:runRealtimeReport`;
+export async function fetchGa4Realtime(propertyId: string = ga4PropertyId()): Promise<Ga4Realtime | null> {
+  if (!isGoogleConfigured() || !propertyId) return null;
+  const url = `${API}/properties/${propertyId}:runRealtimeReport`;
   const m = [{ name: "activeUsers" }];
 
   const [total, minutes, pages, devices, countries] = await Promise.all([
