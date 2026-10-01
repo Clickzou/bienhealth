@@ -73,7 +73,14 @@ alors qu'ils sont réglés dans Klaviyo.
   des identifiants numériques : sans effet sur des campagnes de conversion,
   gênant pour des pubs catalogue.
 
-**Promis au client, reste à faire** :
+**Preuve de bout en bout (01/10/2026, 13 h 06)** : après mise en ligne (commit
+`4f452ae`), test réel avec `jc@clickzou.fr` — inscription par le pied de page,
+fiche produit, ajout au panier. Le profil Klaviyo affiche « Activité sur le
+site » (13 h 05), « Viewed Product » et « Added to Cart » (13 h 06). Le
+rebranchement fonctionne. Non observé : la réception de l'e-mail de navigation
+abandonnée (le testeur ayant ajouté au panier, un filtre du flux peut l'écarter).
+
+**Promis au client, reste à faire** (le point 1 est fait, voir ci-dessus) :
 
 1. rebrancher « Viewed Product » et « Added to Cart » du site vers Klaviyo,
    derrière la bannière cookies (comme GA et le pixel Meta). Limite à rappeler :
