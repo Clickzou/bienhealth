@@ -49,6 +49,11 @@ const CHART_AMBER = "#c2760b";
 /** Premier jour où le site envoie ses propres évènements e-commerce à GA4. */
 const CART_TRACKING_SINCE = "2026-09-22";
 
+/** Part de l'étape précédente qui passe à la suivante ; rien si personne n'y était. */
+function funnelShare(value: number, previous: number): string | undefined {
+  return previous > 0 ? `${pct((value / previous) * 100)} de l'étape précédente` : undefined;
+}
+
 export default async function SeoDashboard({
   searchParams,
 }: {
@@ -207,6 +212,45 @@ export default async function SeoDashboard({
             note={commerce ? cartNote : undefined}
           />
         </div>
+
+        {/* ----------------------------------------------- parcours d'achat */}
+        {/* Où les visiteurs s'arrêtent. Les quatre étapes viennent d'Analytics
+            et portent sur la même population — ceux qui acceptent les cookies —,
+            ce qui rend les pourcentages comparables entre eux. Les commandes
+            Shopify, elles, comptent tout le monde : sur la semaine du 24/09/2026,
+            1 visiteur mesuré au paiement pour 2 commandes réelles. Elles sont
+            donc rappelées à part, sans pourcentage qui dépasserait 100 %. */}
+        {ga4?.funnel && t && (
+          <>
+            <SectionTitle hint="Source : Analytics — visiteurs qui acceptent les cookies. Chaque pourcentage se lit par rapport à l'étape juste au-dessus.">
+              Parcours d&apos;achat
+            </SectionTitle>
+            <Card>
+              <BarList
+                rows={[
+                  { label: "Sont venus sur le site", value: t.users },
+                  { label: "Ont vu une fiche produit", value: ga4.funnel.viewItem, extra: funnelShare(ga4.funnel.viewItem, t.users) },
+                  { label: "Ont ajouté au panier", value: ga4.funnel.addToCart, extra: funnelShare(ga4.funnel.addToCart, ga4.funnel.viewItem) },
+                  { label: "Ont commencé à payer", value: ga4.funnel.beginCheckout, extra: funnelShare(ga4.funnel.beginCheckout, ga4.funnel.addToCart) },
+                ]}
+              />
+              <p className="mt-4 text-[12px] text-[#465269]">
+                {sales ? (
+                  <>
+                    <strong className="font-medium">
+                      {num(sales.totals.orders)} commande{sales.totals.orders > 1 ? "s" : ""} sur le site
+                    </strong>{" "}
+                    sur la même période, d&apos;après Shopify. Ce chiffre compte tous les acheteurs, cookies acceptés ou
+                    non : il ne se compare pas aux étapes ci-dessus.
+                  </>
+                ) : (
+                  "La dernière étape, la commande, se lit dans Shopify, qui n'est pas connecté."
+                )}
+              </p>
+              {cartNote && <p className="mt-2 text-[12px] text-[#8a5a2b]">{cartNote}.</p>}
+            </Card>
+          </>
+        )}
 
         {/* -------------------------------------------------------- ventes */}
         <SectionTitle hint="Source : administration Shopify — commandes passées sur le site, hors commandes annulées et commandes de test. Les autres canaux sont détaillés à part.">

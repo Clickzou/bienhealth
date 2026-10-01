@@ -62,6 +62,16 @@ export type Ga4Commerce = {
   keyEvents: number;
 };
 
+/**
+ * Parcours d'achat sur le site, en **visiteurs** et non en évènements : une
+ * personne qui ouvre dix fiches ne compte qu'une fois. Les trois étapes sont
+ * mesurées par le site lui-même (voir lib/ga.ts) ; la commande, conclue sur
+ * Shopify, n'en fait pas partie — elle se lit dans les ventes Shopify.
+ */
+export type Ga4Funnel = { viewItem: number; addToCart: number; beginCheckout: number };
+
+const FUNNEL_EVENTS = ["view_item", "add_to_cart", "begin_checkout"];
+
 export type NamedRow = { label: string; extra?: string; values: number[] };
 
 export type Ga4Data = {
@@ -82,6 +92,8 @@ export type Ga4Data = {
   organicLandings: NamedRow[];
   commerce: Ga4Commerce | null;
   previousCommerce: Ga4Commerce | null;
+  /** `null` si le rapport n'a pas pu être lu. */
+  funnel: Ga4Funnel | null;
 };
 
 const CORE_METRICS = [
@@ -215,10 +227,26 @@ export async function fetchGa4(period: Period, propertyId: string = ga4PropertyI
         orderBys: [{ dimension: { dimensionName: "date" } }],
         limit: 400,
       },
+      {
+        dateRanges: cur,
+        dimensions: [{ name: "eventName" }],
+        metrics: m(["totalUsers"]),
+        dimensionFilter: { filter: { fieldName: "eventName", inListFilter: { values: FUNNEL_EVENTS } } },
+      },
     ],
   });
 
+  const funnelReport = daily?.reports?.[1];
+  const funnelUsers = new Map((funnelReport?.rows ?? []).map((row) => [dimension(row, 0), metric(row, 0)]));
+
   return {
+    funnel: funnelReport
+      ? {
+          viewItem: funnelUsers.get("view_item") ?? 0,
+          addToCart: funnelUsers.get("add_to_cart") ?? 0,
+          beginCheckout: funnelUsers.get("begin_checkout") ?? 0,
+        }
+      : null,
     totals: totalsFrom(core.reports[0]),
     previousTotals: totalsFrom(core.reports[1]),
     timeseries: (core.reports[2]?.rows ?? []).map((row) => ({
