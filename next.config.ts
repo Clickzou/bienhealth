@@ -53,7 +53,8 @@ const nextConfig: NextConfig = {
       "default-src 'self'",
       // googletagmanager sert gtag.js, connect.facebook.net sert fbevents.js.
       // vercel.live n'apparaît que sur les déploiements de prévisualisation.
-      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://vercel.live",
+      // static.klaviyo.com sert klaviyo.js et ses modules (ajout du 01/10/2026).
+      "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://static.klaviyo.com https://static-tracking.klaviyo.com https://vercel.live",
       "style-src 'self' 'unsafe-inline'",
       // Polices auto-hébergées : aucun domaine tiers.
       "font-src 'self'",
@@ -65,7 +66,7 @@ const nextConfig: NextConfig = {
       // autorisés pour ne rien casser de l existant ; les désactiver dans GA4
       // (Admin > Paramètres des données > Google signals) rendrait ces entrées
       // inutiles et allégerait le volet publicitaire côté RGPD.
-      "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://stats.g.doubleclick.net https://vercel.live",
+      "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com https://stats.g.doubleclick.net https://*.klaviyo.com https://vercel.live",
       // Le site n'a aucune iframe ; le pixel Meta peut en insérer une.
       "frame-src https://www.facebook.com https://vercel.live",
       "media-src 'self'",

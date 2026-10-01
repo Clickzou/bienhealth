@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRight, ArrowLeft, Check, Sparkles, Copy } from "lucide-react";
+import { identifyKlaviyo } from "@/lib/klaviyo-onsite";
 
 /**
  * Diagnostic BIEN — quiz natif (porté du Typeform bien.health/pages/diagnostic).
@@ -383,6 +384,7 @@ export default function DiagnosticQuiz({ lang }: { lang: string }) {
     } catch {
       /* best-effort */
     }
+    identifyKlaviyo(email);
     setResult(product);
     setSending(false);
   }

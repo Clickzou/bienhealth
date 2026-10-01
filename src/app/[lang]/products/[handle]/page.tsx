@@ -913,7 +913,7 @@ export default async function ProductPage({
       <SiteHeader lang={lang} />
       <JsonLd data={productLd} />
       <JsonLd data={breadcrumbLd} />
-      <MetaViewContent handle={handle} title={product.title} price={Number(product.price.amount)} currency={product.price.currencyCode || "EUR"} />
+      <MetaViewContent handle={handle} title={product.title} price={Number(product.price.amount)} currency={product.price.currencyCode || "EUR"} productId={product.id.split("/").pop()} image={cartItem.image} />
 
       {/* Gouttière haute resserrée : sur un 13", la marge blanche au-dessus de
           la photo repoussait le bloc « Équilibre global » hors de l'écran. */}

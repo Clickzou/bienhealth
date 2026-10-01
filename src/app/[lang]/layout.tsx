@@ -10,6 +10,7 @@ import CookieBanner, { CONSENT_BOOT } from "@/components/cookie-banner";
 import JsonLd from "@/components/json-ld";
 import GoogleAnalytics from "@/components/google-analytics";
 import MetaPixel from "@/components/meta-pixel";
+import KlaviyoOnsite from "@/components/klaviyo-onsite";
 import AffiliateTracker from "@/components/affiliate-tracker";
 
 // Fontes de la charte « Brand Refresh V2 » — auto-hébergées via next/font/local.
@@ -124,6 +125,7 @@ export default async function RootLayout({
         <CookieBanner lang={lang} />
         <GoogleAnalytics />
         <MetaPixel />
+        <KlaviyoOnsite />
         <AffiliateTracker />
       </body>
     </html>

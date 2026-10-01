@@ -4,7 +4,7 @@ import Script from "next/script";
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import { CONSENT_EVENT, getConsent } from "@/lib/consent";
-import { META_PIXEL_ID, trackMeta } from "@/lib/meta-pixel";
+import { META_PIXEL_ID, captureFbclid, restoreFbc, trackMeta } from "@/lib/meta-pixel";
 
 /**
  * Pixel Meta (Facebook / Instagram) — conforme RGPD, même logique que
@@ -24,7 +24,14 @@ export default function MetaPixel() {
   const firstView = useRef(true);
 
   useEffect(() => {
-    const check = () => setGranted(getConsent() === "all");
+    // Le clic publicitaire est retenu dès l'arrivée, et rendu au pixel au
+    // moment où le visiteur accepte — même s'il a changé de page entre-temps.
+    captureFbclid();
+    const check = () => {
+      const all = getConsent() === "all";
+      if (all) restoreFbc();
+      setGranted(all);
+    };
     check();
     window.addEventListener(CONSENT_EVENT, check);
     return () => window.removeEventListener(CONSENT_EVENT, check);

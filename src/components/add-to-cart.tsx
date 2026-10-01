@@ -4,11 +4,12 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Check, X, ShoppingBag, ArrowRight } from "lucide-react";
-import { addToCart, type CartItem } from "@/lib/cart";
+import { addToCart, getCart, cartTotal, checkoutUrl, type CartItem } from "@/lib/cart";
 import { CURE_QUANTITIES, BEST_VALUE_QUANTITY, MAX_QUANTITY, discountPercent, emitCureChange, lineSubtotal, lineTotal } from "@/lib/discounts";
 import { FREE_SHIPPING_THRESHOLD } from "@/lib/shipping";
 import { trackMeta } from "@/lib/meta-pixel";
 import { trackGa } from "@/lib/ga";
+import { trackKlaviyo } from "@/lib/klaviyo-onsite";
 
 /** Quantités du menu « autre quantité » (compléments) et du menu « 6+ » (accessoires). */
 const FREE_QUANTITIES = Array.from({ length: MAX_QUANTITY }, (_, i) => i + 1);
@@ -116,6 +117,33 @@ export default function AddToCart({
       currency,
       value: lineTotal(item.price, qty),
       items: [{ item_id: item.handle, item_name: item.title, price: item.price, quantity: qty }],
+    });
+    // Klaviyo : même évènement que celui qu'émettait le thème Shopify. Le lien
+    // de paiement reprend tout le panier, pour qu'un e-mail de relance puisse
+    // y ramener en un clic.
+    const cart = getCart();
+    const productUrl = `${window.location.origin}/${lang}/products/${item.handle}`;
+    trackKlaviyo("Added to Cart", {
+      $value: cartTotal(cart),
+      AddedItemProductName: item.title,
+      AddedItemProductID: item.handle,
+      AddedItemSKU: item.handle,
+      AddedItemImageURL: item.image ?? undefined,
+      AddedItemURL: productUrl,
+      AddedItemPrice: item.price,
+      AddedItemQuantity: qty,
+      ItemNames: cart.map((i) => i.title),
+      CheckoutURL: checkoutUrl(cart),
+      Items: cart.map((i) => ({
+        ProductID: i.handle,
+        SKU: i.handle,
+        ProductName: i.title,
+        Quantity: i.qty,
+        ItemPrice: i.price,
+        RowTotal: lineTotal(i.price, i.qty),
+        ProductURL: `${window.location.origin}/${lang}/products/${i.handle}`,
+        ImageURL: i.image ?? undefined,
+      })),
     });
     setOpen(true);
   }

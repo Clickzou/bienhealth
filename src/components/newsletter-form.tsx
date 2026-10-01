@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Check } from "lucide-react";
 import { ui } from "@/lib/i18n";
+import { identifyKlaviyo } from "@/lib/klaviyo-onsite";
 
 /**
  * Formulaire d'inscription newsletter pour le footer.
@@ -27,6 +28,7 @@ export default function NewsletterForm({ lang }: { lang: string }) {
     } catch {
       /* best-effort */
     }
+    identifyKlaviyo(email);
     setStatus("done");
   }
 

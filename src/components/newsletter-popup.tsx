@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { X, Sparkles, Check, Copy } from "lucide-react";
 import { CONSENT_KEY, CONSENT_EVENT } from "@/lib/consent";
+import { identifyKlaviyo } from "@/lib/klaviyo-onsite";
 
 /**
  * Popup newsletter « −10 % première commande ».
@@ -101,6 +102,7 @@ export default function NewsletterPopup() {
     } catch {
       /* best-effort : on révèle le code même si l'enregistrement échoue */
     }
+    identifyKlaviyo(email);
     setStatus("done");
     persist("subscribed");
   }
