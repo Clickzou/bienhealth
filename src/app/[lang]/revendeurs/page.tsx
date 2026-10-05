@@ -99,9 +99,10 @@ export default async function RevendeursPage({
             <Link href={`/${lang}/devenir-revendeur`} className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-8 py-4 font-bold hover:bg-bien-leaf transition-colors bien-shadow-sm">
               <Handshake className="h-4 w-4" /> {t.become}
             </Link>
-            <Link href={`/${lang}/boutique`} className="inline-flex items-center gap-2 rounded-full ring-1 ring-bien-forest/25 text-black px-8 py-4 font-bold hover:bg-bien-forest hover:text-bien-cream transition-colors">
+            {/* Commande professionnelle : la marque vend en gros via Ankorstore (lien de parrainage fourni par la cliente). */}
+            <a href="https://fr.ankorstore.com/r/bien-health-2N1x" target="_blank" rel="noopener" className="inline-flex items-center gap-2 rounded-full ring-1 ring-bien-forest/25 text-black px-8 py-4 font-bold hover:bg-bien-forest hover:text-bien-cream transition-colors">
               {t.order} <ArrowRight className="h-4 w-4" />
-            </Link>
+            </a>
           </div>
         </div>
       </section>
