@@ -90,8 +90,8 @@ faussée. Demande un accès à l'admin Shopify.
 - [ ] **Compte client** : l'espace compte dépend de l'auth Shopify Customer
       (`isCustomerAuthConfigured`). Vérifier connexion, inscription, commandes.
 - [~] **Formulaire revendeur** : n'a rien transmis du 29/08 au 05/10/2026
-      (Supabase jamais configuré). Envoi par e-mail via Resend, voir § 34 ;
-      attend la clé Resend et la vérification DNS. La newsletter passe par
+      (Supabase jamais configuré). Envoi par e-mail via Resend, en place
+      le 05/10, voir § 34 ; réception dans la boîte à confirmer. La newsletter passe par
       Klaviyo depuis le 01/09 (§ 23).
 - [x] **Redirections des anciennes URLs Shopify** — table complète livrée le
       31/08/2026, vérifiée en production (voir section 21).
@@ -2415,7 +2415,19 @@ Correctif :
   affiche une erreur avec l'adresse à laquelle écrire. Vérifié en local : sans
   clé, 502 et rien de prétendu.
 
-Reste à faire : compte Resend, domaine `bien.health` vérifié (enregistrements
-DNS dans le cPanel, cf. § « Le DNS de bien.health n'est pas géré dans l'onglet
-Advanced DNS »), `RESEND_API_KEY` dans Vercel, puis un envoi réel jusqu'à la
-boîte `administration@bien.health`.
+### Configuration Resend (05/10/2026)
+
+- **Compte utilisé : `info@bien.health`** (identifiants dans 1Password, « Resend
+  Bien Health »). Le domaine `bien.health` y est vérifié depuis le 29/09/2026 :
+  c'est lui qui a posé `resend._domainkey` dans la zone DNS.
+- Clé `Site bien.health - formulaire revendeur` (Sending access, domaine
+  bien.health) dans Vercel, `RESEND_API_KEY`, production. Expéditeur par
+  défaut : `formulaire@bien.health`.
+- Ne pas toucher à la clé « Onboarding » de ce compte : elle a servi le
+  29/09/2026, un autre outil s'en sert.
+- Un second compte Resend a été créé par erreur le 05/10 avec
+  `administration@bien.health`. Il n'est plus utilisé : à supprimer. **Ne pas y
+  vérifier bien.health** : Resend transférerait le domaine et couperait le
+  compte `info@`.
+- Envois réels acceptés par Resend le 05/10 (local et production, réponse
+  200). Reste à constater l'arrivée dans la boîte `administration@bien.health`.
