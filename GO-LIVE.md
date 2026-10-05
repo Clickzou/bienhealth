@@ -89,8 +89,10 @@ faussée. Demande un accès à l'admin Shopify.
       l'affichage maison qui s'affiche.
 - [ ] **Compte client** : l'espace compte dépend de l'auth Shopify Customer
       (`isCustomerAuthConfigured`). Vérifier connexion, inscription, commandes.
-- [ ] **Newsletter + formulaire revendeur** : dépendent de Supabase. Tester un
-      envoi réel et vérifier la réception côté base.
+- [~] **Formulaire revendeur** : n'a rien transmis du 29/08 au 05/10/2026
+      (Supabase jamais configuré). Envoi par e-mail via Resend, voir § 34 ;
+      attend la clé Resend et la vérification DNS. La newsletter passe par
+      Klaviyo depuis le 01/09 (§ 23).
 - [x] **Redirections des anciennes URLs Shopify** — table complète livrée le
       31/08/2026, vérifiée en production (voir section 21).
 - [ ] **Search Console** : soumettre le sitemap après bascule, vérifier la
@@ -2390,3 +2392,30 @@ le détail). À retenir pour la maintenance :
   `llms-full.txt`. À tenir à jour si une composition, une dose ou un prix change.
 - **Articles** : champ `updated` (ISO) à bouger à chaque révision de fond ; il
   alimente `dateModified` et la mention visible.
+
+## 34. Formulaire revendeur : aucune demande reçue depuis la bascule (05/10/2026)
+
+Signalé par Carla le 05/10 : elle remplit le formulaire « Devenir revendeur »
+et ne reçoit rien. Cause : la route `/api/revendeur` n'envoyait aucun e-mail et
+n'écrivait que dans Supabase, dont aucune clé n'existe dans Vercel (vérifié par
+`vercel env ls production`). Elle répondait « OK » quand même, et le formulaire
+remerciait le visiteur. **Toutes les demandes du 29/08 au 05/10 sont perdues**,
+sans moyen de les retrouver : le journal n'en garde volontairement pas le contenu.
+
+Le même jour, à sa demande, le bouton « Commander en ligne » de `/revendeurs`
+mène au lien de parrainage Ankorstore (commit `3642132`).
+
+Correctif :
+
+- la demande part par e-mail à `administration@bien.health` (adresse donnée
+  par la marque le 05/10), via Resend (`src/lib/resend.ts`), avec l'adresse du
+  demandeur en « Répondre à » ;
+- Supabase reste une voie secondaire, si un jour il est configuré ;
+- la route ne répond OK que si une voie a abouti ; sinon 502, et le formulaire
+  affiche une erreur avec l'adresse à laquelle écrire. Vérifié en local : sans
+  clé, 502 et rien de prétendu.
+
+Reste à faire : compte Resend, domaine `bien.health` vérifié (enregistrements
+DNS dans le cPanel, cf. § « Le DNS de bien.health n'est pas géré dans l'onglet
+Advanced DNS »), `RESEND_API_KEY` dans Vercel, puis un envoi réel jusqu'à la
+boîte `administration@bien.health`.

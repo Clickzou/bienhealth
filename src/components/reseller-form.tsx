@@ -3,6 +3,9 @@
 import { useState } from "react";
 import { Check, Handshake } from "lucide-react";
 
+/** Adresse de repli affichée si l'envoi échoue : celle qui reçoit les demandes. */
+const CONTACT_EMAIL = "administration@bien.health";
+
 const COPY = {
   fr: {
     types: ["Café / Restaurant", "Studio / Salle de sport", "Pharmacie / Parapharmacie", "Concept-store / Boutique", "Spa / Institut", "Autre"],
@@ -14,6 +17,7 @@ const COPY = {
     message: "Votre message", messagePh: "Parlez-nous de votre établissement et de votre projet…",
     sending: "Envoi…", send: "Envoyer ma demande",
     note: "Ce formulaire est réservé aux demandes professionnelles pour devenir revendeur BIEN.",
+    error: "Votre demande n'a pas pu être envoyée. Réessayez dans un instant, ou écrivez-nous directement à",
   },
   en: {
     types: ["Café / Restaurant", "Studio / Gym", "Pharmacy / Parapharmacy", "Concept store / Shop", "Spa / Salon", "Other"],
@@ -25,12 +29,13 @@ const COPY = {
     message: "Your message", messagePh: "Tell us about your business and your project…",
     sending: "Sending…", send: "Send my enquiry",
     note: "This form is for trade enquiries to become a BIEN reseller only.",
+    error: "Your enquiry could not be sent. Please try again shortly, or email us directly at",
   },
 } as const;
 
 export default function ResellerForm({ lang }: { lang: string }) {
   const c = COPY[lang === "en" ? "en" : "fr"];
-  const [status, setStatus] = useState<"idle" | "sending" | "done">("idle");
+  const [status, setStatus] = useState<"idle" | "sending" | "done" | "error">("idle");
   const [form, setForm] = useState({
     type: "",
     company: "",
@@ -51,16 +56,18 @@ export default function ResellerForm({ lang }: { lang: string }) {
     e.preventDefault();
     if (!valid || status === "sending") return;
     setStatus("sending");
+    // On ne confirme que si la route l'a confirmé : jusqu'au 05/10/2026, le
+    // formulaire remerciait le visiteur alors que sa demande n'arrivait nulle part.
     try {
-      await fetch(`/${lang}/api/revendeur`, {
+      const res = await fetch(`/${lang}/api/revendeur`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
+      setStatus(res.ok ? "done" : "error");
     } catch {
-      /* best-effort : on confirme quand même côté UX */
+      setStatus("error");
     }
-    setStatus("done");
   }
 
   if (status === "done") {
@@ -125,6 +132,12 @@ export default function ResellerForm({ lang }: { lang: string }) {
       >
         <Handshake className="h-4 w-4" /> {status === "sending" ? c.sending : c.send}
       </button>
+      {status === "error" && (
+        <p role="alert" className="mt-4 text-sm text-red-600">
+          {c.error}{" "}
+          <a href={`mailto:${CONTACT_EMAIL}`} className="underline font-semibold">{CONTACT_EMAIL}</a>.
+        </p>
+      )}
       <p className="mt-3 text-xs text-black/50">
         {c.note}
       </p>
