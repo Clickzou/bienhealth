@@ -59,7 +59,7 @@ const ARTICLES_REDIGES: Article[] = [
     excerpt:
       "Une cuillère rase, une boisson chaude ou froide, un mousseur contre les grumeaux : le mode d'emploi d'une poudre de champignons, du café du matin à la pâtisserie.",
     category: "Ingrédients & science",
-    date: "2026-11-24",
+    date: "2026-12-01",
     readingMinutes: 8,
     cover: "/brand/lions-mane.png",
     intro:
@@ -254,7 +254,7 @@ const ARTICLES_REDIGES: Article[] = [
     excerpt:
       "Ophiocordyceps ou militaris, ginsénosides, dose par portion journalière, norme NF V94-001 : ce qu'il faut savoir avant d'ajouter du cordyceps et du ginseng à sa routine sportive.",
     category: "Énergie & performance",
-    date: "2026-11-10",
+    date: "2026-11-17",
     readingMinutes: 8,
     cover: "/brand/ing-cordyceps.jpg",
     intro:
@@ -423,7 +423,7 @@ const ARTICLES_REDIGES: Article[] = [
     excerpt:
       "Withanolides, safranal, ratio d'extraction, gélifiant, précautions : la méthode pour comparer deux pots de gummies à l'ashwagandha et au safran sur des faits.",
     category: "Ingrédients & science",
-    date: "2026-10-27",
+    date: "2026-11-03",
     readingMinutes: 8,
     cover: "/brand/ing-ashwagandha.jpg",
     intro:
@@ -592,7 +592,7 @@ const ARTICLES_REDIGES: Article[] = [
     excerpt:
       "Numéro de déclaration DGAL, mentions obligatoires de l'étiquette, sens exact de « fabriqué en France » : la méthode pour vérifier une marque de compléments aux champignons.",
     category: "Ingrédients & science",
-    date: "2026-10-13",
+    date: "2026-10-20",
     readingMinutes: 8,
     cover: "/brand/ing-lionsmane.jpg",
     intro:
