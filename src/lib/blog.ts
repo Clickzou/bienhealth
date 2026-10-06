@@ -594,7 +594,7 @@ const ARTICLES_REDIGES: Article[] = [
     category: "Ingrédients & science",
     date: "2026-10-13",
     readingMinutes: 8,
-    cover: "/brand/products-row.jpg",
+    cover: "/brand/ing-lionsmane.jpg",
     intro:
       `Un complément aux <strong>champignons adaptogènes</strong> vendu comme <strong>français</strong> se vérifie en trois points : son numéro de déclaration auprès de la DGAL, enregistré sur la plateforme Compl'Alim ; les mentions obligatoires de son étiquette ; et ce que recouvre exactement la mention « fabriqué en France ». Aucune de ces vérifications ne dit ce qu'un produit « fait » : elles disent s'il a été déclaré, ce qu'il contient et où il a été fabriqué. C'est précisément ce qui permet de comparer deux marques sur des faits, et non sur des promesses.`,
     blocks: [
