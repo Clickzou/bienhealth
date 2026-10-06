@@ -49,6 +49,175 @@ export function localizeArticle(a: Article, lang: string): Article {
 
 const ARTICLES_REDIGES: Article[] = [
   {
+    slug: "gummies-ashwagandha-safran-lire-etiquette",
+    motCle: "gummies ashwagandha safran",
+    motsClesSecondaires: ["ashwagandha safran", "gummies calm"],
+    title: "Gummies à l'ashwagandha et au safran : ce qu'il faut lire sur l'étiquette avant d'acheter",
+    metaTitle: "Gummies ashwagandha et safran : lire l'étiquette",
+    metaDescription:
+      "Dose d'extrait, standardisation, autres ingrédients, précautions : comment comparer des gummies à l'ashwagandha et au safran sur leur étiquette.",
+    excerpt:
+      "Withanolides, safranal, ratio d'extraction, gélifiant, précautions : la méthode pour comparer deux pots de gummies à l'ashwagandha et au safran sur des faits.",
+    category: "Ingrédients & science",
+    date: "2026-10-27",
+    readingMinutes: 8,
+    cover: "/brand/ing-ashwagandha.jpg",
+    intro:
+      `Des <strong>gummies à l'ashwagandha et au safran</strong> se comparent sur cinq points de l'étiquette : la dose d'extrait par portion journalière, sa standardisation (withanolides pour l'ashwagandha, safranal et crocine pour le safran), la liste complète des autres ingrédients, les précautions d'emploi et la déclaration du produit auprès de la DGAL. Le goût et le format viennent ensuite. Ce guide ne dit pas ce que ces plantes « font » : aucune allégation de santé n'est autorisée pour elles à ce jour en Europe. Il explique comment lire ce que contient réellement un pot.`,
+    blocks: [
+      { h2: "Deux plantes, deux parties différentes" },
+      { p: `L'<strong>ashwagandha</strong> (<em>Withania somnifera</em>) est une plante de la tradition ayurvédique, en Inde, dont on utilise la <strong>racine</strong>. Le <strong>safran</strong> (<em>Crocus sativus</em>) est l'épice obtenue à partir des <strong>stigmates</strong> d'une fleur, récoltés à la main, ce qui en fait l'épice la plus chère au monde au poids. Notre article sur l'<a href="${l("/blog/ashwagandha")}">ashwagandha</a> présente la plante plus en détail.` },
+      { p: `Dans un gummy, ni l'une ni l'autre n'est présente telle quelle : on y trouve des <strong>extraits</strong>, c'est-à-dire des concentrés obtenus en faisant passer la plante dans un solvant alimentaire (eau, éthanol), puis en séchant le résultat. C'est pourquoi les doses se comptent en dizaines de milligrammes, et pourquoi la manière de les exprimer compte autant que le chiffre lui-même.` },
+
+      { h2: "La dose : toujours « par portion journalière »" },
+      { p: `La réglementation française impose d'indiquer la quantité de chaque substance <strong>pour la portion journalière recommandée</strong>, et non par gomme. Lisez donc d'abord combien de gummies forment cette portion. Pour un pot de 60 gummies à 2 par jour, cela fait 30 jours.` },
+      { p: `Exemple concret : les gummies <a href="${l("/products/calm")}">CALM</a> déclarent, pour 2 gummies, <strong>80 mg d'extrait d'ashwagandha</strong>, <strong>16 mg d'extrait de safran</strong> et 80 mg d'extrait de reishi (<em>Ganoderma lucidum</em>), un champignon fonctionnel. Ce sont les doses enregistrées dans la déclaration n° 353706, consultable sur notre page <a href="${l("/certifications")}">Certifications</a>.` },
+      { h3: "Extrait, ratio et « équivalent plante sèche »" },
+      { p: `Certaines marques mettent en avant un « équivalent plante sèche », plus impressionnant que le poids d'extrait. Les deux chiffres sont liés par le <strong>ratio d'extraction</strong> : un extrait 18:1 a été obtenu à partir d'environ dix-huit fois son poids de racine sèche. L'extrait d'ashwagandha de CALM est concentré à 18:1, soit l'équivalent de 1 440 mg de racine sèche ; l'extrait de reishi, à 10:1, soit 800 mg de champignon sec.` },
+      { p: `Pour comparer deux produits, comparez <strong>extrait avec extrait</strong>, au même ratio si possible, ou équivalent avec équivalent. Mettre en regard l'extrait de l'un et l'équivalent plante sèche de l'autre fausse toute la comparaison.` },
+
+      { h2: "La standardisation : withanolides, safranal et crocine" },
+      { p: `La standardisation garantit qu'un extrait contient un pourcentage minimum d'une famille de composés caractéristiques de la plante. Elle assure la <strong>constance d'un lot à l'autre</strong> ; ce n'est pas une promesse d'effet.` },
+      {
+        ul: [
+          "<strong>Ashwagandha</strong> : la standardisation porte sur les <strong>withanolides</strong>, des composés propres à la plante. L'extrait de CALM est standardisé à au moins 5 % de withanolides.",
+          "<strong>Safran</strong> : elle porte sur le <strong>safranal</strong>, qui donne son arôme à l'épice, et la <strong>crocine</strong>, qui lui donne sa couleur. L'extrait de CALM est standardisé à au moins 2 % de safranal et 2 % de crocine.",
+        ],
+      },
+      { p: `Si une étiquette ou une fiche produit ne mentionne aucune standardisation, la question mérite d'être posée à la marque : sans elle, deux lots du même produit peuvent différer sensiblement.` },
+
+      { h2: "Les autres ingrédients d'un gummy" },
+      { p: `Un gummy n'est pas qu'un support neutre. La liste complète des ingrédients, que tout site marchand doit afficher avant l'achat, indique de quoi il est fait. Pour CALM, la déclaration mentionne :` },
+      {
+        ul: [
+          "un <strong>gélifiant</strong> : la pectine (E440), d'origine végétale, là où d'autres gommes utilisent de la gélatine animale ;",
+          "un <strong>agent d'enrobage</strong> : la cire de carnauba (E903), qui empêche les gommes de coller entre elles ;",
+          "de l'huile de tournesol et du monostéarate de glycérol ;",
+          "des <strong>jus de carotte et de myrtille</strong>, et un arôme mûre, pour la couleur et le goût ;",
+          "deux <strong>correcteurs d'acidité</strong> : l'acide citrique (E330) et les citrates de sodium (E331) ;",
+          "du bambou (<em>Bambusa vulgaris</em>) et 3 630 mg de <strong>fructo-oligosaccharides</strong> (FOS), des fibres, par portion journalière.",
+        ],
+      },
+      { p: `Deux points de lecture utiles. D'abord, la mention « sans sucres » a une définition précise (au plus 0,5 g de sucres pour 100 g), de même que « sans sucres ajoutés » : en cas de doute, c'est le tableau nutritionnel qui fait foi, pas le slogan. Ensuite, un gummy contient toujours des additifs de texture ou de conservation : l'important est qu'ils soient listés.` },
+
+      { h2: "Les précautions qui doivent figurer sur le pot" },
+      { p: `Les précautions d'emploi font partie de l'étiquette au même titre que la composition. Pour CALM, elles sont les suivantes : <strong>déconseillé aux femmes enceintes ou allaitantes</strong> et aux <strong>personnes sous traitement médical</strong>, notamment sédatifs ou anxiolytiques, sans avis médical. Ne pas dépasser la dose journalière recommandée. Tenir hors de portée des enfants. Un complément alimentaire ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain.` },
+      { p: `Si un produit concurrent ne mentionne aucune précaution pour l'ashwagandha, c'est un signal à prendre au sérieux : la plante n'est pas anodine, et les précautions détaillées figurent dans notre <a href="${l("/blog/ashwagandha")}">article dédié</a>.` },
+
+      { h2: "Ce que la réglementation permet d'écrire sur ces plantes" },
+      { p: `Le règlement (CE) n° 1924/2006 n'autorise que les allégations de santé inscrites au <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">registre européen des allégations</a>. Les allégations qui portent sur des plantes, dont l'ashwagandha et le safran, sont <strong>en attente d'évaluation</strong> depuis 2010 : une marque ne peut pas les reformuler à sa guise, et cet article n'en reprend aucune. Aucun complément ne peut par ailleurs prétendre prévenir, traiter ou guérir une maladie, ni se présenter comme une alternative à un médicament.` },
+      { p: `En pratique, méfiez-vous des promesses de résultat ou de délai, des comparaisons avec un médicament et des avis clients qui parlent d'une maladie : repris par une marque, ils engagent la marque. Une étiquette sérieuse décrit ; elle ne promet pas.` },
+
+      { h2: "Moment de prise et régularité" },
+      { p: `La portion journalière se prend en une fois ou en deux, selon ce qu'indique l'étiquette. Pour CALM : <strong>2 gummies par jour, à mâcher</strong>, en journée ou le soir. Un pot correspond à une cure de 30 jours. Le plus simple est d'associer la prise à un moment fixe de votre journée, une pause ou le rituel du soir, pour ne pas l'oublier ni la doubler.` },
+      { p: `Si vous prenez plusieurs compléments, lisez leurs étiquettes côte à côte : deux produits peuvent contenir le même ingrédient, et c'est la somme des deux qui compte au regard des doses indiquées.` },
+
+      { h2: "Quand demander l'avis d'un professionnel de santé" },
+      { p: `Parlez-en à votre médecin ou à votre pharmacien avant de commencer si vous suivez un traitement, en particulier un traitement sédatif ou anxiolytique, si vous êtes enceinte ou allaitez, ou si vous avez une maladie chronique. Si une difficulté dure plusieurs semaines ou pèse sur vos journées, c'est un médecin qu'il faut voir : un complément alimentaire n'est pas une réponse à un problème de santé. Tout effet indésirable après la prise d'un complément peut être signalé à la <a href="https://www.anses.fr/fr/content/nutrivigilance" target="_blank" rel="noopener noreferrer">nutrivigilance de l'ANSES</a>.` },
+
+      { h2: "La grille en un coup d'œil" },
+      {
+        ul: [
+          "<strong>Dose</strong> : en mg d'extrait, par portion journalière, pour chaque plante.",
+          "<strong>Ratio</strong> : extrait comparé à extrait, ou équivalent comparé à équivalent.",
+          "<strong>Standardisation</strong> : withanolides pour l'ashwagandha, safranal et crocine pour le safran.",
+          "<strong>Liste complète</strong> : gélifiant, enrobage, arômes, fibres, allergènes.",
+          "<strong>Précautions</strong> : grossesse, allaitement, traitements, dose maximale, enfants.",
+          "<strong>Déclaration</strong> : numéro DGAL et attestation consultable.",
+        ],
+      },
+      { p: `Toutes ces informations figurent sur la fiche <a href="${l("/products/calm")}">CALM</a> et sur la page <a href="${l("/ingredients")}">Ingrédients</a>. Les autres formules en gummies sont réunies dans la <a href="${l("/collections/gummies")}">collection Gummies</a>.` },
+    ],
+    faq: [
+      { q: "Quelle dose d'ashwagandha contient un gummy CALM ?", a: "La portion journalière de 2 gummies contient 80 mg d'extrait d'ashwagandha, standardisé à au moins 5 % de withanolides et concentré à 18:1, soit l'équivalent de 1 440 mg de racine sèche." },
+      { q: "Et de safran ?", a: "16 mg d'extrait de safran pour 2 gummies, standardisé à au moins 2 % de safranal et 2 % de crocine." },
+      { q: "Que veut dire « extrait 18:1 » ?", a: "Que l'extrait a été obtenu à partir d'environ dix-huit fois son poids de plante sèche. Pour comparer deux produits, il faut comparer extrait avec extrait, ou équivalent plante sèche avec équivalent plante sèche." },
+      { q: "Les gummies à l'ashwagandha conviennent-ils à tout le monde ?", a: "Non. CALM est déconseillé aux femmes enceintes ou allaitantes et aux personnes sous traitement médical, notamment sédatifs ou anxiolytiques, sans avis médical. Tenir hors de portée des enfants." },
+      { q: "Quand prendre des gummies CALM ?", a: "2 gummies par jour, à mâcher, en journée ou le soir. Un pot de 60 gummies correspond à 30 jours. Ne pas dépasser cette dose." },
+      { q: "Quels ingrédients contient un gummy en plus des actifs ?", a: "Pour CALM : pectine (E440), cire de carnauba (E903), huile de tournesol, monostéarate de glycérol, jus de carotte et de myrtille, arôme mûre, E330, E331, bambou et fructo-oligosaccharides." },
+    ],
+    en: {
+      title: "Ashwagandha and saffron gummies: what to read on the label before you buy",
+      metaTitle: "Ashwagandha and saffron gummies: reading the label",
+      metaDescription: "Extract dose, standardisation, other ingredients, precautions: how to compare ashwagandha and saffron gummies on their label.",
+      excerpt: "Withanolides, safranal, extraction ratio, gelling agent, precautions: how to compare two jars of ashwagandha and saffron gummies on facts.",
+      category: "Ingredients & science",
+      intro: `<strong>Ashwagandha and saffron gummies</strong> can be compared on five points of the label: the extract dose per daily serving, its standardisation (withanolides for ashwagandha, safranal and crocin for saffron), the complete list of other ingredients, the precautions for use and the product's declaration to the DGAL. Taste and format come next. This guide does not say what these plants « do »: no health claim is authorised for them in Europe to date. It explains how to read what a jar actually contains.`,
+      blocks: [
+        { h2: "Two plants, two different parts" },
+        { p: `<strong>Ashwagandha</strong> (<em>Withania somnifera</em>) is a plant from the Ayurvedic tradition in India, whose <strong>root</strong> is used. <strong>Saffron</strong> (<em>Crocus sativus</em>) is the spice obtained from a flower's <strong>stigmas</strong>, picked by hand, which makes it the most expensive spice in the world by weight. Our article on <a href="${le("/blog/ashwagandha")}">ashwagandha</a> presents the plant in more detail.` },
+        { p: `In a gummy, neither is present as such: what you find are <strong>extracts</strong>, that is, concentrates obtained by passing the plant through a food-grade solvent (water, ethanol) and then drying the result. That is why doses are counted in tens of milligrams, and why the way they are expressed matters as much as the figure itself.` },
+
+        { h2: "The dose: always « per daily serving »" },
+        { p: `French regulations require the amount of each substance to be given <strong>for the recommended daily serving</strong>, not per gummy. So first read how many gummies make up that serving. For a jar of 60 gummies at 2 a day, that makes 30 days.` },
+        { p: `A concrete example: <a href="${le("/products/calm")}">CALM</a> gummies declare, for 2 gummies, <strong>80 mg of ashwagandha extract</strong>, <strong>16 mg of saffron extract</strong> and 80 mg of extract of reishi (<em>Ganoderma lucidum</em>), a functional mushroom. These are the doses recorded in declaration no. 353706, available on our <a href="${le("/certifications")}">Certifications</a> page.` },
+        { h3: "Extract, ratio and « dried plant equivalent »" },
+        { p: `Some brands highlight a « dried plant equivalent », which looks more impressive than the extract weight. The two figures are linked by the <strong>extraction ratio</strong>: an 18:1 extract was obtained from roughly eighteen times its weight in dried root. CALM's ashwagandha extract is concentrated 18:1, the equivalent of 1,440 mg of dried root; its reishi extract, 10:1, the equivalent of 800 mg of dried mushroom.` },
+        { p: `To compare two products, compare <strong>extract with extract</strong>, at the same ratio if possible, or equivalent with equivalent. Setting one product's extract against another's dried plant equivalent skews the whole comparison.` },
+
+        { h2: "Standardisation: withanolides, safranal and crocin" },
+        { p: `Standardisation guarantees that an extract contains a minimum percentage of a family of compounds characteristic of the plant. It ensures <strong>consistency from one batch to the next</strong>; it is not a promise of effect.` },
+        {
+          ul: [
+            "<strong>Ashwagandha</strong>: standardisation is based on <strong>withanolides</strong>, compounds specific to the plant. CALM's extract is standardised to at least 5% withanolides.",
+            "<strong>Saffron</strong>: it is based on <strong>safranal</strong>, which gives the spice its aroma, and <strong>crocin</strong>, which gives it its colour. CALM's extract is standardised to at least 2% safranal and 2% crocin.",
+          ],
+        },
+        { p: `If a label or product page mentions no standardisation at all, it is worth asking the brand: without it, two batches of the same product can differ noticeably.` },
+
+        { h2: "The other ingredients in a gummy" },
+        { p: `A gummy is not just a neutral carrier. The complete ingredient list, which every online shop must display before purchase, tells you what it is made of. For CALM, the declaration lists:` },
+        {
+          ul: [
+            "a <strong>gelling agent</strong>: pectin (E440), of plant origin, where other gummies use animal gelatine;",
+            "a <strong>glazing agent</strong>: carnauba wax (E903), which stops the gummies sticking together;",
+            "sunflower oil and glycerol monostearate;",
+            "<strong>carrot and blueberry juices</strong>, and a blackberry flavouring, for colour and taste;",
+            "two <strong>acidity regulators</strong>: citric acid (E330) and sodium citrates (E331);",
+            "bamboo (<em>Bambusa vulgaris</em>) and 3,630 mg of <strong>fructo-oligosaccharides</strong> (FOS), a fibre, per daily serving.",
+          ],
+        },
+        { p: `Two useful reading points. First, « sugar-free » has a precise definition (no more than 0.5 g of sugars per 100 g), as does « no added sugars »: when in doubt, the nutrition table is what counts, not the slogan. Second, a gummy always contains texture or preservation additives: what matters is that they are listed.` },
+
+        { h2: "The precautions that must appear on the jar" },
+        { p: `Precautions for use are part of the label just as much as the composition. For CALM, they are: <strong>not recommended for pregnant or breastfeeding women</strong> or for <strong>people on medical treatment</strong>, notably sedatives or anxiolytics, without medical advice. Do not exceed the recommended daily dose. Keep out of reach of children. A food supplement is not a substitute for a varied, balanced diet or a healthy lifestyle.` },
+        { p: `If a competing product mentions no precautions for ashwagandha, take it as a serious signal: the plant is not trivial, and the detailed precautions are in our <a href="${le("/blog/ashwagandha")}">dedicated article</a>.` },
+
+        { h2: "What the regulations allow brands to write about these plants" },
+        { p: `Regulation (EC) No 1924/2006 only allows the health claims listed in the <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">EU register of claims</a>. Claims relating to plants, including ashwagandha and saffron, have been <strong>awaiting evaluation</strong> since 2010: a brand cannot reword them as it pleases, and this article uses none of them. Nor may any supplement claim to prevent, treat or cure a disease, or present itself as an alternative to a medicine.` },
+        { p: `In practice, be wary of promises of results or timing, of comparisons with a medicine, and of customer reviews that mention a disease: once a brand reproduces them, they commit the brand. A serious label describes; it does not promise.` },
+
+        { h2: "When to take them, and regularity" },
+        { p: `The daily serving is taken in one go or in two, as the label says. For CALM: <strong>2 gummies a day, to chew</strong>, during the day or in the evening. One jar is a 30-day course. The simplest approach is to link taking them to a fixed moment of your day, a break or your evening ritual, so you neither forget nor double the dose.` },
+        { p: `If you take several supplements, read their labels side by side: two products may contain the same ingredient, and it is the total that counts against the stated doses.` },
+
+        { h2: "When to ask a healthcare professional" },
+        { p: `Talk to your doctor or pharmacist before starting if you are on treatment, particularly sedative or anxiolytic treatment, if you are pregnant or breastfeeding, or if you have a chronic condition. If a difficulty lasts several weeks or weighs on your days, it is a doctor you need to see: a food supplement is not an answer to a health problem. Any adverse effect after taking a supplement can be reported to <a href="https://www.anses.fr/en/content/nutrivigilance" target="_blank" rel="noopener noreferrer">ANSES nutrivigilance</a>.` },
+
+        { h2: "The checklist at a glance" },
+        {
+          ul: [
+            "<strong>Dose</strong>: in mg of extract, per daily serving, for each plant.",
+            "<strong>Ratio</strong>: extract compared with extract, or equivalent with equivalent.",
+            "<strong>Standardisation</strong>: withanolides for ashwagandha, safranal and crocin for saffron.",
+            "<strong>Full list</strong>: gelling agent, coating, flavourings, fibre, allergens.",
+            "<strong>Precautions</strong>: pregnancy, breastfeeding, treatments, maximum dose, children.",
+            "<strong>Declaration</strong>: DGAL number and certificate available.",
+          ],
+        },
+        { p: `All this information is on the <a href="${le("/products/calm")}">CALM</a> product page and the <a href="${le("/ingredients")}">Ingredients</a> page. Our other gummy formulas are in the <a href="${le("/collections/gummies")}">Gummies collection</a>.` },
+      ],
+      faq: [
+        { q: "How much ashwagandha does a CALM serving contain?", a: "The daily serving of 2 gummies contains 80 mg of ashwagandha extract, standardised to at least 5% withanolides and concentrated 18:1, the equivalent of 1,440 mg of dried root." },
+        { q: "And how much saffron?", a: "16 mg of saffron extract per 2 gummies, standardised to at least 2% safranal and 2% crocin." },
+        { q: "What does « 18:1 extract » mean?", a: "That the extract was obtained from roughly eighteen times its weight in dried plant. To compare two products, compare extract with extract, or dried plant equivalent with dried plant equivalent." },
+        { q: "Are ashwagandha gummies suitable for everyone?", a: "No. CALM is not recommended for pregnant or breastfeeding women, or for people on medical treatment, notably sedatives or anxiolytics, without medical advice. Keep out of reach of children." },
+        { q: "When should I take CALM gummies?", a: "2 gummies a day, to chew, during the day or in the evening. A jar of 60 gummies lasts 30 days. Do not exceed this dose." },
+        { q: "What does a gummy contain besides the actives?", a: "For CALM: pectin (E440), carnauba wax (E903), sunflower oil, glycerol monostearate, carrot and blueberry juices, blackberry flavouring, E330, E331, bamboo and fructo-oligosaccharides." },
+      ],
+    },
+  },
+  {
     slug: "champignons-adaptogenes-francais-verifier",
     motCle: "champignons adaptogènes français",
     motsClesSecondaires: ["compl'alim", "complément alimentaire fabriqué en France", "déclaration DGAL complément alimentaire"],
