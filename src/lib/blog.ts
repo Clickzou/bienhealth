@@ -49,6 +49,201 @@ export function localizeArticle(a: Article, lang: string): Article {
 
 const ARTICLES_REDIGES: Article[] = [
   {
+    slug: "utiliser-poudre-champignons-cafe-smoothie",
+    motCle: "comment utiliser une poudre de champignons",
+    motsClesSecondaires: ["poudre de champignons dans le café", "poudre de champignons smoothie", "mousseur"],
+    title: "Poudre de champignons : comment l'utiliser dans un café, un matcha ou un smoothie",
+    metaTitle: "Poudre de champignons : l'utiliser au café ou en smoothie",
+    metaDescription:
+      "Dose, température, mousseur, idées de recettes et précautions : le mode d'emploi d'une poudre de champignons au quotidien.",
+    excerpt:
+      "Une cuillère rase, une boisson chaude ou froide, un mousseur contre les grumeaux : le mode d'emploi d'une poudre de champignons, du café du matin à la pâtisserie.",
+    category: "Ingrédients & science",
+    date: "2026-11-24",
+    readingMinutes: 8,
+    cover: "/brand/lions-mane.png",
+    intro:
+      `Une <strong>poudre de champignons</strong> s'utilise à la dose indiquée sur le sachet, une fois par jour, dans une boisson ou une préparation chaude ou froide : café, matcha, lait végétal, smoothie, yaourt, soupe. Le geste qui fait la différence est le mélange : un <strong>mousseur</strong>, un shaker ou un blender évitent les grumeaux. Ce guide détaille la dose, la température, les associations qui fonctionnent en cuisine et les précautions à connaître. Il ne promet aucun effet : aucune allégation de santé n'est autorisée à ce jour pour ces champignons en Europe.`,
+    blocks: [
+      { h2: "Ce que contient une poudre de champignons" },
+      { p: `Le terme recouvre deux types de produits. Certaines poudres sont du <strong>champignon séché et broyé</strong> ; d'autres contiennent des <strong>extraits</strong>, plus concentrés ; beaucoup mélangent les deux, avec d'autres ingrédients. L'étiquette doit préciser, pour chaque ingrédient, la quantité par portion journalière : c'est la seule base de comparaison fiable entre deux sachets.` },
+      { p: `Exemple concret : la poudre <a href="${l("/products/mushglow")}">MUSHGLOW</a> réunit six ingrédients principaux. Pour une cuillère à soupe rase, soit environ 4 g, sa déclaration (n° 353738) indique :` },
+      {
+        ul: [
+          "lion's mane (<em>Hericium erinaceus</em>) : 750 mg ;",
+          "maca (<em>Lepidium meyenii</em>), une racine des hauts plateaux andins : 750 mg ;",
+          "extrait de cordyceps (<em>Ophiocordyceps sinensis</em>) : 500 mg ;",
+          "chaga (<em>Inonotus obliquus</em>), un champignon qui pousse sur les bouleaux : 500 mg ;",
+          "L-théanine, un acide aminé présent naturellement dans le thé : 500 mg ;",
+          "collagène issu de la membrane de coquille d'œuf : 300 mg.",
+        ],
+      },
+      { p: `La déclaration mentionne aussi de la lucuma (<em>Pouteria lucuma</em>), de la gomme d'acacia et de la chicorée. Le collagène venant de l'œuf, MUSHGLOW <strong>contient de l'œuf</strong>. Un sachet contient 30 doses.` },
+
+      { h2: "La dose : une cuillère rase, une fois par jour" },
+      { p: `La dose d'une poudre se mesure à la cuillère, et c'est là que les écarts se créent. Pour MUSHGLOW, la portion journalière est d'<strong>une cuillère à soupe rase</strong> (environ 4 g) ; une cuillère est fournie dans le sachet. Une cuillère bombée dépasse la dose déclarée : arasez-la avec le dos d'un couteau.` },
+      { p: `Ne dépassez pas cette portion, même si vous utilisez la poudre dans plusieurs préparations au cours de la journée : répartissez plutôt la cuillère entre elles. Si vous cuisinez pour plusieurs personnes, adaptez la quantité au nombre de portions, à raison d'une cuillère rase par personne au plus.` },
+
+      { h2: "Chaud ou froid : la question de la température" },
+      { p: `Une poudre de champignons se mélange aussi bien à une boisson chaude qu'à une boisson froide. MUSHGLOW s'utilise dans des préparations froides ou chaudes, et supporte la cuisson au four jusqu'à 200 °C. Pour une boisson, inutile de faire bouillir : un liquide chaud, comme pour un café ou un thé, suffit.` },
+      { p: `La bonne méthode, quelle que soit la température : <strong>délayer d'abord la poudre dans un fond de liquide</strong> (deux ou trois cuillères à soupe), jusqu'à obtenir une pâte lisse, puis compléter. C'est la même technique que pour un cacao en poudre ou un matcha.` },
+
+      { h2: "Éviter les grumeaux : mousseur, shaker ou blender" },
+      { p: `Une poudre de champignons séchés se disperse moins facilement qu'un cacao instantané ; de légers grumeaux sont normaux et ne changent rien à la composition. Trois outils les font disparaître :` },
+      {
+        ul: [
+          "<strong>Le mousseur à lait</strong> : quelques secondes dans la tasse suffisent, et il donne une texture de latte. BIEN propose un mousseur à lait rechargeable, pensé pour ses poudres.",
+          "<strong>Le shaker</strong> : pratique pour une boisson froide, avec un lait végétal ou un jus.",
+          "<strong>Le blender</strong> : la solution naturelle pour un smoothie, la poudre étant ajoutée avec les autres ingrédients.",
+        ],
+      },
+      { p: `À défaut d'outil, un petit fouet ou une fourchette et la technique de la pâte préalable donnent un résultat correct.` },
+
+      { h2: "Idées d'utilisation, du matin au soir" },
+      { p: `Le goût de MUSHGLOW est neutre, légèrement terreux : il se fond dans les boissons aromatisées et les préparations au goût marqué. La marque ne le conseille pas dans de l'eau seule. Il se prend de préférence le matin. Quelques usages courants :` },
+      {
+        ul: [
+          "<strong>Latte</strong> : lait de vache ou végétal chauffé, poudre délayée, un passage de mousseur, éventuellement une pincée de cannelle.",
+          "<strong>Café</strong> : dans un café filtre ou un expresso allongé, de préférence avec un peu de lait, qui adoucit les notes terreuses.",
+          "<strong>Matcha</strong> : fouettez d'abord le matcha, puis ajoutez la poudre délayée et le lait.",
+          "<strong>Smoothie</strong> : banane, fruits rouges ou cacao, avec un lait végétal ; le blender fait tout le travail.",
+          "<strong>Yaourt, fromage blanc, porridge</strong> : mélangez la poudre directement, avec un peu de miel ou de fruits si vous le souhaitez.",
+          "<strong>Soupes et jus de légumes</strong> : ajoutez la poudre hors du feu et mélangez.",
+          "<strong>Pâtisserie et cuisine</strong> : gâteaux, pancakes, omelettes, en respectant une cuillère rase par portion.",
+        ],
+      },
+      { p: `Notre article sur le <a href="${l("/blog/cafe-champignons-mushroom-coffee")}">café aux champignons</a> présente le produit voisin, un café déjà mélangé à des champignons, et ce qui le distingue d'une poudre à ajouter soi-même.` },
+      { h3: "Café et caféine" },
+      { p: `Ajoutée à un café, une poudre de champignons ne change pas la quantité de caféine de la tasse : celle-ci dépend du café lui-même. Pour un adulte en bonne santé, l'<a href="https://www.efsa.europa.eu/fr/topics/topic/caffeine" target="_blank" rel="noopener noreferrer">EFSA</a> considère qu'un apport allant jusqu'à 400 mg de caféine par jour ne pose pas de problème de sécurité, et 200 mg pendant la grossesse.` },
+
+      { h2: "Conservation" },
+      { p: `Comme toute poudre, une poudre de champignons craint l'humidité. Refermez bien le sachet après chaque usage, conservez-le à l'abri de la chaleur et de la lumière, et utilisez une cuillère sèche : une goutte d'eau suffit à faire prendre la poudre en blocs. Respectez la date indiquée sur l'emballage.` },
+
+      { h2: "Précautions" },
+      { p: `MUSHGLOW <strong>contient de l'œuf</strong> : il ne convient pas aux personnes allergiques. Comme toute la gamme BIEN health, il est déconseillé aux femmes enceintes ou allaitantes et aux personnes sous traitement médical sans avis médical. Ne pas dépasser la dose journalière recommandée. Tenir hors de portée des enfants. Un complément alimentaire ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain.` },
+      { p: `Si vous prenez d'autres compléments, vérifiez les ingrédients en commun : le cordyceps entre aussi dans les gummies POWER, le lion's mane dans les gummies FOCUS. Respectez la dose journalière de chaque produit et, en cas de doute, demandez conseil à votre pharmacien.` },
+
+      { h2: "Quand demander l'avis d'un professionnel de santé" },
+      { p: `Parlez-en à votre médecin ou à votre pharmacien avant de commencer si vous suivez un traitement, si vous avez une allergie alimentaire, une maladie chronique, ou si vous êtes enceinte ou allaitez. Si un inconfort apparaît après l'introduction de la poudre, digestif ou autre, arrêtez-la et demandez conseil. Les effets indésirables liés à un complément alimentaire peuvent être signalés à la <a href="https://www.anses.fr/fr/content/nutrivigilance" target="_blank" rel="noopener noreferrer">nutrivigilance de l'ANSES</a>.` },
+
+      { h2: "Ce que la réglementation permet d'en dire" },
+      { p: `Le règlement (CE) n° 1924/2006 n'autorise que les allégations de santé inscrites au <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">registre européen des allégations</a>. Aucune n'y figure pour le lion's mane, le cordyceps ou le chaga ; celles qui avaient été demandées pour la L-théanine ont été rejetées après un avis de l'EFSA en 2011 ; aucune n'est autorisée pour le collagène. C'est pourquoi ce mode d'emploi décrit une poudre, sa dose et sa préparation, et rien de plus.` },
+
+      { h2: "En résumé" },
+      {
+        ul: [
+          "<strong>Une cuillère rase par jour</strong>, jamais bombée, répartie si besoin entre plusieurs préparations.",
+          "<strong>Chaud ou froid</strong>, avec une pâte préalable dans un fond de liquide.",
+          "<strong>Un mousseur, un shaker ou un blender</strong> pour une texture lisse.",
+          "<strong>Pas dans de l'eau seule</strong> : lait, café, matcha, smoothie, yaourt ou soupe.",
+          "<strong>Précautions</strong> : contient de l'œuf, grossesse, allaitement, traitements, cumul avec d'autres produits.",
+        ],
+      },
+      { p: `Notre poudre est présentée dans la collection <a href="${l("/collections/nos-poudres")}">Poudres</a>, et le détail de chaque ingrédient figure sur la page <a href="${l("/ingredients")}">Ingrédients</a>.` },
+    ],
+    faq: [
+      { q: "Quelle quantité de poudre de champignons mettre par jour ?", a: "La dose indiquée sur l'étiquette, et pas plus. Pour MUSHGLOW, une cuillère à soupe rase par jour, soit environ 4 g ; la cuillère est fournie dans le sachet." },
+      { q: "Peut-on mettre une poudre de champignons dans un café chaud ?", a: "Oui. MUSHGLOW s'utilise dans des préparations chaudes ou froides. Délayez-la d'abord dans un fond de liquide, puis complétez et mélangez, idéalement avec un mousseur." },
+      { q: "Comment éviter les grumeaux ?", a: "En faisant d'abord une pâte avec deux ou trois cuillères de liquide, puis en utilisant un mousseur, un shaker ou un blender. De légers grumeaux restent normaux et ne changent rien à la composition." },
+      { q: "Peut-on cuisiner avec une poudre de champignons ?", a: "Oui : MUSHGLOW supporte la cuisson au four jusqu'à 200 °C (gâteaux, pancakes, omelettes). Adaptez la quantité au nombre de portions, une cuillère rase par personne au plus." },
+      { q: "Quel goût a MUSHGLOW ?", a: "Un goût neutre, légèrement terreux, qui se fond dans les boissons aromatisées, les smoothies ou les yaourts. La marque ne le conseille pas dans de l'eau seule." },
+      { q: "Qui ne doit pas en prendre ?", a: "Les personnes allergiques à l'œuf, puisque MUSHGLOW contient du collagène de membrane de coquille d'œuf. Il est aussi déconseillé aux femmes enceintes ou allaitantes et aux personnes sous traitement médical sans avis médical." },
+    ],
+    en: {
+      title: "Mushroom powder: how to use it in coffee, matcha or a smoothie",
+      metaTitle: "Mushroom powder: using it in coffee or smoothies",
+      metaDescription: "Dose, temperature, frother, recipe ideas and precautions: how to use a mushroom powder day to day.",
+      excerpt: "One level spoonful, a hot or cold drink, a frother against lumps: how to use a mushroom powder, from your morning coffee to baking.",
+      category: "Ingredients & science",
+      intro: `A <strong>mushroom powder</strong> is used at the dose stated on the pouch, once a day, in a hot or cold drink or dish: coffee, matcha, plant milk, smoothie, yoghurt, soup. The step that makes the difference is mixing: a <strong>frother</strong>, a shaker or a blender prevents lumps. This guide covers the dose, the temperature, combinations that work in the kitchen and the precautions to know. It promises no effect: no health claim is authorised for these mushrooms in Europe to date.`,
+      blocks: [
+        { h2: "What a mushroom powder contains" },
+        { p: `The term covers two types of product. Some powders are <strong>dried, ground mushroom</strong>; others contain <strong>extracts</strong>, which are more concentrated; many mix the two with other ingredients. The label must state, for each ingredient, the amount per daily serving: it is the only reliable basis for comparing two pouches.` },
+        { p: `A concrete example: the <a href="${le("/products/mushglow")}">MUSHGLOW</a> powder brings together six main ingredients. For one level tablespoon, about 4 g, its declaration (no. 353738) states:` },
+        {
+          ul: [
+            "lion's mane (<em>Hericium erinaceus</em>): 750 mg;",
+            "maca (<em>Lepidium meyenii</em>), a root from the Andean highlands: 750 mg;",
+            "cordyceps extract (<em>Ophiocordyceps sinensis</em>): 500 mg;",
+            "chaga (<em>Inonotus obliquus</em>), a mushroom that grows on birch trees: 500 mg;",
+            "L-theanine, an amino acid naturally found in tea: 500 mg;",
+            "collagen from eggshell membrane: 300 mg.",
+          ],
+        },
+        { p: `The declaration also lists lucuma (<em>Pouteria lucuma</em>), acacia gum and chicory. As the collagen comes from egg, MUSHGLOW <strong>contains egg</strong>. A pouch holds 30 servings.` },
+
+        { h2: "The dose: one level spoonful, once a day" },
+        { p: `A powder's dose is measured with a spoon, and that is where discrepancies creep in. For MUSHGLOW, the daily serving is <strong>one level tablespoon</strong> (about 4 g); a spoon is included in the pouch. A heaped spoonful exceeds the declared dose: level it off with the back of a knife.` },
+        { p: `Do not exceed this serving, even if you use the powder in several preparations over the day: split the spoonful between them instead. If you cook for several people, adjust the amount to the number of servings, at no more than one level spoonful per person.` },
+
+        { h2: "Hot or cold: the temperature question" },
+        { p: `A mushroom powder mixes into a hot drink as well as a cold one. MUSHGLOW can be used in cold or hot preparations, and withstands oven baking up to 200 °C. For a drink, there is no need to boil: a hot liquid, as for coffee or tea, is enough.` },
+        { p: `The right method, whatever the temperature: <strong>first mix the powder into a splash of liquid</strong> (two or three tablespoons) until you have a smooth paste, then top up. It is the same technique as for cocoa powder or matcha.` },
+
+        { h2: "Avoiding lumps: frother, shaker or blender" },
+        { p: `A dried mushroom powder disperses less easily than instant cocoa; slight lumps are normal and change nothing about the composition. Three tools get rid of them:` },
+        {
+          ul: [
+            "<strong>The milk frother</strong>: a few seconds in the cup is enough, and it gives a latte texture. BIEN offers a rechargeable milk frother designed for its powders.",
+            "<strong>The shaker</strong>: handy for a cold drink, with a plant milk or a juice.",
+            "<strong>The blender</strong>: the natural choice for a smoothie, with the powder added alongside the other ingredients.",
+          ],
+        },
+        { p: `Without any tool, a small whisk or a fork and the paste-first technique give a decent result.` },
+
+        { h2: "Ideas for use, from morning to evening" },
+        { p: `MUSHGLOW tastes neutral and slightly earthy: it blends into flavoured drinks and dishes with a distinct taste. The brand does not recommend it in plain water. It is best taken in the morning. A few common uses:` },
+        {
+          ul: [
+            "<strong>Latte</strong>: heated dairy or plant milk, powder mixed to a paste, a pass of the frother, perhaps a pinch of cinnamon.",
+            "<strong>Coffee</strong>: in a filter coffee or a long espresso, ideally with a little milk, which softens the earthy notes.",
+            "<strong>Matcha</strong>: whisk the matcha first, then add the pre-mixed powder and the milk.",
+            "<strong>Smoothie</strong>: banana, red berries or cocoa, with a plant milk; the blender does all the work.",
+            "<strong>Yoghurt, fromage blanc, porridge</strong>: stir the powder straight in, with a little honey or fruit if you like.",
+            "<strong>Soups and vegetable juices</strong>: add the powder off the heat and stir.",
+            "<strong>Baking and cooking</strong>: cakes, pancakes, omelettes, keeping to one level spoonful per serving.",
+          ],
+        },
+        { p: `Our article on <a href="${le("/blog/cafe-champignons-mushroom-coffee")}">mushroom coffee</a> presents the neighbouring product, a coffee already blended with mushrooms, and what sets it apart from a powder you add yourself.` },
+        { h3: "Coffee and caffeine" },
+        { p: `Added to a coffee, a mushroom powder does not change the amount of caffeine in the cup: that depends on the coffee itself. For a healthy adult, <a href="https://www.efsa.europa.eu/en/topics/topic/caffeine" target="_blank" rel="noopener noreferrer">EFSA</a> considers an intake of up to 400 mg of caffeine a day to raise no safety concerns, and 200 mg during pregnancy.` },
+
+        { h2: "Storage" },
+        { p: `Like any powder, a mushroom powder dislikes moisture. Close the pouch properly after each use, keep it away from heat and light, and use a dry spoon: a single drop of water is enough to make the powder clump. Respect the date shown on the packaging.` },
+
+        { h2: "Precautions" },
+        { p: `MUSHGLOW <strong>contains egg</strong>: it is not suitable for people with an egg allergy. Like the whole BIEN health range, it is not recommended for pregnant or breastfeeding women or for people on medical treatment without medical advice. Do not exceed the recommended daily dose. Keep out of reach of children. A food supplement is not a substitute for a varied, balanced diet or a healthy lifestyle.` },
+        { p: `If you take other supplements, check for shared ingredients: cordyceps is also in the POWER gummies, lion's mane in the FOCUS gummies. Respect each product's daily dose and, if in doubt, ask your pharmacist.` },
+
+        { h2: "When to ask a healthcare professional" },
+        { p: `Talk to your doctor or pharmacist before starting if you are on treatment, have a food allergy or a chronic condition, or are pregnant or breastfeeding. If any discomfort appears after introducing the powder, digestive or otherwise, stop it and seek advice. Adverse effects linked to a food supplement can be reported to <a href="https://www.anses.fr/en/content/nutrivigilance" target="_blank" rel="noopener noreferrer">ANSES nutrivigilance</a>.` },
+
+        { h2: "What the regulations allow us to say" },
+        { p: `Regulation (EC) No 1924/2006 only allows the health claims listed in the <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">EU register of claims</a>. None is listed for lion's mane, cordyceps or chaga; those requested for L-theanine were rejected following an EFSA opinion in 2011; none is authorised for collagen. That is why this guide describes a powder, its dose and how to prepare it, and nothing more.` },
+
+        { h2: "In short" },
+        {
+          ul: [
+            "<strong>One level spoonful a day</strong>, never heaped, split between several preparations if needed.",
+            "<strong>Hot or cold</strong>, with a paste made first in a splash of liquid.",
+            "<strong>A frother, shaker or blender</strong> for a smooth texture.",
+            "<strong>Not in plain water</strong>: milk, coffee, matcha, smoothie, yoghurt or soup.",
+            "<strong>Precautions</strong>: contains egg, pregnancy, breastfeeding, treatments, combining with other products.",
+          ],
+        },
+        { p: `Our powder is presented in the <a href="${le("/collections/nos-poudres")}">Powders</a> collection, and details of each ingredient are on the <a href="${le("/ingredients")}">Ingredients</a> page.` },
+      ],
+      faq: [
+        { q: "How much mushroom powder should I use a day?", a: "The dose stated on the label, and no more. For MUSHGLOW, one level tablespoon a day, about 4 g; the spoon is included in the pouch." },
+        { q: "Can I put mushroom powder in hot coffee?", a: "Yes. MUSHGLOW can be used in hot or cold preparations. Mix it first into a splash of liquid, then top up and stir, ideally with a frother." },
+        { q: "How do I avoid lumps?", a: "Make a paste first with two or three spoonfuls of liquid, then use a frother, a shaker or a blender. Slight lumps remain normal and change nothing about the composition." },
+        { q: "Can I cook with mushroom powder?", a: "Yes: MUSHGLOW withstands oven baking up to 200 °C (cakes, pancakes, omelettes). Adjust the amount to the number of servings, at no more than one level spoonful per person." },
+        { q: "What does MUSHGLOW taste like?", a: "A neutral, slightly earthy taste that blends into flavoured drinks, smoothies or yoghurts. The brand does not recommend it in plain water." },
+        { q: "Who should not take it?", a: "People allergic to egg, since MUSHGLOW contains eggshell-membrane collagen. It is also not recommended for pregnant or breastfeeding women or for people on medical treatment without medical advice." },
+      ],
+    },
+  },
+  {
     slug: "cordyceps-ginseng-avant-le-sport",
     motCle: "cordyceps ginseng",
     motsClesSecondaires: ["complément avant le sport", "gummies cordyceps"],

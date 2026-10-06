@@ -32,6 +32,7 @@ const BY_SLUG: Record<string, ArticleLinks> = {
   "lions-mane": { collection: "concentration", products: [P.focus, P.mushglow] },
   ashwagandha: { collection: "serenite", products: [P.calm] },
   "reishi-cordyceps-chaga": { collection: "gummies", products: [P.calm, P.power, P.mushglow] },
+  "utiliser-poudre-champignons-cafe-smoothie": { collection: "nos-poudres", products: [P.mushglow] },
 };
 
 /** Catégorie en français : les versions anglaises partagent le slug, pas la catégorie. */
