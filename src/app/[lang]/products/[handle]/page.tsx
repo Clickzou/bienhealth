@@ -676,10 +676,17 @@ function packAccordions(handle: string, lang: string): Accordion[] | null {
   if (!parts) return null;
   const en = lang === "en";
   const highlights = en ? HIGHLIGHTS_EN : HIGHLIGHTS;
+  // Un pack qui contient MUSHGLOW (collagène issu de l'œuf, cf. attestation
+  // DGAL n° 353738) ne doit afficher « vegan » nulle part, même dans le volet
+  // d'une formule qui l'est seule (CALM dans BALANCE) : le lecteur l'attribue
+  // au pack entier.
+  const withEgg = parts.includes("MUSHGLOW");
+  const noVegan = (t: string) =>
+    withEgg ? t.replace("vegan et sans gluten", "sans gluten").replace("vegan and gluten-free", "gluten-free") : t;
   return [
     ...parts.map((k) => ({
       q: en ? `${k} — Ingredients, Benefits and Dosage` : `${k} — Ingrédients, Bienfaits et Posologie`,
-      a: highlights[k].rows.map((r) => "• " + r.text).join("\n\n"),
+      a: highlights[k].rows.map((r) => "• " + noVegan(r.text)).join("\n\n"),
     })),
     en ? TRACEABILITY_EN : TRACEABILITE,
     { q: en ? "Shipping" : "Livraison", a: en ? LIVRAISON_EN : LIVRAISON },

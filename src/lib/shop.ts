@@ -98,7 +98,7 @@ const EN_META: Record<string, string> = {
   flow:
     "FLOW: calm concentration for busy minds that need to move forward without being overwhelmed. Adaptogenic supplements, sugar-free and made in France.",
   balance:
-    "BALANCE pairs CALM and MUSHGLOW: an evening ritual to slow down, breathe and glow. Adaptogenic supplements, sugar-free, vegan and made in France.",
+    "BALANCE pairs CALM and MUSHGLOW: an evening ritual to slow down, breathe and glow. Adaptogenic supplements, sugar-free and made in France.",
   reset:
     "RESET: the complete adaptogenic routine to restore your mental, physical and emotional balance. Sugar-free, vegan supplements made in France.",
   "mousseur-a-lait":

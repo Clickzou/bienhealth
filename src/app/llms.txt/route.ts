@@ -41,7 +41,8 @@ export async function GET() {
 > Marque française de compléments alimentaires à base de champignons fonctionnels
 > (lion's mane, reishi, cordyceps, chaga) et de plantes adaptogènes (ashwagandha,
 > rhodiola, panax ginseng, safran). Gummies et poudres fabriqués en France, sans
-> sucre ajouté, vegan et sans gluten.
+> sucre ajouté et sans gluten (gummies vegan ; poudre MUSHGLOW végétarienne,
+> contient de l'œuf).
 
 Éditeur : BIEN Health France SAS — 100 rue du Verbial, 81000 Albi, France.
 Fondatrice : Carla Debard.
