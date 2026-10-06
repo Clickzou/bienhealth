@@ -100,7 +100,7 @@ const DICT = {
       commitmentChildren: "Soutien à l'association Hôpital Sourire",
       disclaimer:
         "Compléments alimentaires. Ne se substituent pas à une alimentation variée et équilibrée. Ne pas dépasser la dose journalière recommandée. Allégations conformes au règlement EFSA.",
-      rights: "© 2026 BIEN Health France. Tous droits réservés.",
+      rights: "© 2026 BIEN HEALTH FRANCE SAS. Tous droits réservés.",
     },
   },
   en: {
@@ -177,7 +177,7 @@ const DICT = {
       commitmentChildren: "Supporter of the Hôpital Sourire charity",
       disclaimer:
         "Food supplements. Do not replace a varied and balanced diet. Do not exceed the recommended daily dose. Claims comply with EFSA regulation.",
-      rights: "© 2026 BIEN Health France. All rights reserved.",
+      rights: "© 2026 BIEN HEALTH FRANCE SAS. All rights reserved.",
     },
   },
 } as const;

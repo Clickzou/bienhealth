@@ -92,7 +92,7 @@ export default async function RootLayout({
             "@context": "https://schema.org",
             "@type": "Organization",
             name: "BIEN health",
-            legalName: "BIEN Health France SAS",
+            legalName: "BIEN HEALTH FRANCE SAS",
             // La fondatrice nommée relie la marque à une personne réelle, déjà
             // citée par la presse (Psychologies) : un signal d'entité pour les
             // moteurs génératifs comme pour Google.

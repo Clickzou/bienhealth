@@ -57,7 +57,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
             <Image src="/brand/logo-bien.png" alt="BIEN" width={130} height={41} className="h-9 w-auto invert brightness-0" />
             <p className="mt-4 text-sm text-bien-cream/70 leading-relaxed max-w-xs">{t.tagline}</p>
             <div className="mt-6 text-sm text-bien-cream/70 space-y-1.5">
-              <p className="font-semibold text-bien-cream">SAS BIEN HEALTH FRANCE</p>
+              <p className="font-semibold text-bien-cream">BIEN HEALTH FRANCE SAS</p>
               <p>100 Rue du Verbial, 81000 Albi</p>
               {/* inline-block + padding vertical : en ligne nue, ces deux liens
                   offraient une cible tactile sous les 24 px recommandés. */}
