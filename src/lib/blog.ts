@@ -49,6 +49,175 @@ export function localizeArticle(a: Article, lang: string): Article {
 
 const ARTICLES_REDIGES: Article[] = [
   {
+    slug: "cordyceps-ginseng-avant-le-sport",
+    motCle: "cordyceps ginseng",
+    motsClesSecondaires: ["complément avant le sport", "gummies cordyceps"],
+    title: "Cordyceps et ginseng avant le sport : composition, moment de prise et précautions",
+    metaTitle: "Cordyceps et ginseng avant le sport : mode d'emploi",
+    metaDescription:
+      "Espèces, doses d'extrait, moment de prise, contrôle antidopage, précautions : l'essentiel sur un complément au cordyceps et au ginseng.",
+    excerpt:
+      "Ophiocordyceps ou militaris, ginsénosides, dose par portion journalière, norme NF V94-001 : ce qu'il faut savoir avant d'ajouter du cordyceps et du ginseng à sa routine sportive.",
+    category: "Énergie & performance",
+    date: "2026-11-10",
+    readingMinutes: 8,
+    cover: "/brand/ing-cordyceps.jpg",
+    intro:
+      `Un complément au <strong>cordyceps et au ginseng</strong> se choisit sur trois informations de l'étiquette : l'espèce exacte de chaque ingrédient, la dose d'extrait par portion journalière et la standardisation. Il se prend à heure régulière, par exemple le matin ou avant une séance, sans jamais dépasser la dose indiquée. Aucune allégation de santé n'est autorisée en Europe pour ces ingrédients : un fabricant ne peut pas vous promettre un effet sur vos performances, et cet article ne le fait pas. Il explique ce que contient un tel produit, comment l'intégrer à une routine sportive et quelles précautions respecter.`,
+    blocks: [
+      { h2: "Le cordyceps : un nom commercial, deux espèces" },
+      { p: `Sous le nom de « cordyceps » circulent deux champignons différents. <em>Ophiocordyceps sinensis</em>, anciennement <em>Cordyceps sinensis</em>, est l'espèce de la tradition tibétaine et chinoise, traditionnellement récoltée en altitude. <em>Cordyceps militaris</em> est une espèce voisine, plus facile à cultiver. Les deux n'ont pas la même composition, et un produit honnête indique laquelle il contient.` },
+      { p: `C'est le premier point à vérifier sur l'étiquette ou sur la déclaration du produit. Pour BIEN health, les déclarations de <a href="${l("/products/power")}">POWER</a> (n° 353739) et de MUSHGLOW (n° 353738) mentionnent <em>Ophiocordyceps sinensis</em> ; elles sont consultables sur la page <a href="${l("/certifications")}">Certifications</a>. Notre <a href="${l("/blog/reishi-cordyceps-chaga")}">comparatif reishi, cordyceps, chaga</a> présente le champignon dans son ensemble.` },
+
+      { h2: "Le panax ginseng : racine, feuilles et ginsénosides" },
+      { p: `Le <strong>panax ginseng</strong> (<em>Panax ginseng</em>), ou ginseng asiatique, ne doit pas être confondu avec le « ginseng de Sibérie » (<em>Eleutherococcus senticosus</em>), une autre plante qui emprunte son nom. Là encore, le nom latin tranche.` },
+      { p: `Ses composés caractéristiques sont les <strong>ginsénosides</strong>, sur lesquels porte la standardisation des extraits. La partie utilisée compte aussi : la racine est la partie traditionnelle, mais des extraits sont tirés des parties aériennes (tiges et feuilles). L'extrait de POWER est standardisé à 4 % de ginsénosides, concentré à 3:1 (soit l'équivalent de 300 mg de ginseng sec) et issu des parties aériennes de la plante.` },
+
+      { h2: "La rhodiola, troisième ingrédient fréquent" },
+      { p: `Beaucoup de formules associent au cordyceps et au ginseng la <strong>rhodiola</strong> (<em>Rhodiola rosea</em>, nommée <em>Sedum roseum</em> dans les déclarations françaises), une plante des régions froides dont on utilise la racine. Sa standardisation porte sur deux familles de composés : les rosavines et le salidroside. Celle de POWER est standardisée à 3 % de rosavines et 1 % de salidroside, à raison de 30 mg d'extrait par portion journalière.` },
+
+      { h2: "Lire les doses d'un complément pris avant l'effort" },
+      { p: `Comme pour tout complément, les doses s'entendent <strong>par portion journalière</strong>. Pour POWER, la portion est de 2 gummies au goût fruit de la passion, et elle contient :` },
+      {
+        ul: [
+          "<strong>200 mg d'extrait de cordyceps</strong>, concentré à 4:1, soit l'équivalent de 800 mg de champignon sec ;",
+          "<strong>100 mg d'extrait de panax ginseng</strong>, standardisé à 4 % de ginsénosides ;",
+          "<strong>30 mg d'extrait de rhodiola</strong>, standardisé à 3 % de rosavines et 1 % de salidroside ;",
+          "du bambou (<em>Bambusa vulgaris</em>) et 3 330 mg de fructo-oligosaccharides (FOS), des fibres.",
+        ],
+      },
+      { p: `Le reste de la liste est celui d'une gomme : pectine (E440), cire de carnauba (E903), huile de tournesol, monostéarate de glycérol, concentré de carotte et de cassis, arôme fruit de la passion, acide citrique (E330) et citrates de sodium (E331). Un pot de 60 gummies couvre 30 jours.` },
+      { h3: "Attention aux cumuls" },
+      { p: `Le cordyceps se retrouve dans plusieurs produits. La poudre <a href="${l("/products/mushglow")}">MUSHGLOW</a> en contient 500 mg par cuillère, et la rhodiola entre aussi dans les gummies FOCUS. Si vous combinez plusieurs compléments, lisez leurs étiquettes côte à côte et respectez la dose journalière de chacun : c'est le total de la journée qui compte, pas chaque produit pris isolément.` },
+
+      { h2: "Quand le prendre : l'intégrer à une routine sportive" },
+      { p: `L'usage indiqué pour POWER est de <strong>2 gummies par jour, à mâcher, le matin ou avant une activité physique</strong>. Quelques repères pratiques pour l'installer dans votre semaine :` },
+      {
+        ul: [
+          "<strong>Choisissez un moment fixe</strong> : au petit-déjeuner, ou dans votre sac de sport avec votre gourde. La régularité de la prise compte davantage que son heure exacte.",
+          "<strong>Les jours sans séance</strong>, gardez le même moment, le matin : vous évitez ainsi d'oublier une prise ou d'en prendre deux.",
+          "<strong>Ne doublez jamais la dose</strong> un jour de compétition ou de séance difficile : la portion journalière reste la même.",
+          "<strong>Un pot correspond à 30 jours</strong> : notez la date d'ouverture pour suivre votre cure, puis faites une pause avant d'en recommencer une autre.",
+        ],
+      },
+      { p: `Un complément ne remplace pas les bases de la préparation sportive : un repas adapté avant l'effort, une hydratation suffisante et des nuits complètes. Un complément alimentaire ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain.` },
+
+      { h2: "Sportifs contrôlés : la question de l'antidopage" },
+      { p: `Si vous pratiquez en compétition et pouvez être soumis à un contrôle, la composition déclarée ne suffit pas : un complément peut être contaminé, au cours de sa fabrication, par une substance interdite. L'<a href="https://www.afld.fr/" target="_blank" rel="noopener noreferrer">Agence française de lutte contre le dopage</a> invite les sportifs à la plus grande prudence avec les compléments alimentaires.` },
+      { p: `En France, la norme <strong>AFNOR NF V94-001</strong> encadre les produits destinés aux sportifs et la recherche de substances dopantes. Avant de prendre un complément, quel qu'il soit, demandez au fabricant s'il est conforme à cette norme, et parlez-en à votre médecin ou au médecin de votre fédération.` },
+
+      { h2: "Ce que la réglementation interdit de promettre" },
+      { p: `Le règlement (CE) n° 1924/2006 n'autorise que les allégations de santé inscrites au <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">registre européen des allégations</a>. Aucune n'y figure pour le cordyceps ; les allégations portant sur des plantes comme le ginseng et la rhodiola sont en attente d'évaluation depuis 2010, et une marque ne peut pas les reformuler librement. Les études menées sur un ingrédient isolé, à d'autres doses et sous d'autres formes, ne valent pas preuve pour un produit fini.` },
+      { p: `Méfiez-vous donc d'un produit qui vous promet un chiffre, un délai, un gain mesurable ou une comparaison avec un produit dopant. Une étiquette sérieuse donne les espèces, les doses, les standardisations et les précautions, et vous laisse juger.` },
+
+      { h2: "Précautions" },
+      { p: `POWER est <strong>déconseillé aux femmes enceintes ou allaitantes</strong> et aux <strong>personnes sous traitement médical sans avis médical</strong> ; c'est particulièrement vrai pour le ginseng et la rhodiola. Ne pas dépasser la dose journalière recommandée. Tenir hors de portée des enfants. Un complément alimentaire ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain.` },
+
+      { h2: "Quand consulter un professionnel de santé" },
+      { p: `Demandez l'avis de votre médecin ou de votre pharmacien avant de commencer si vous suivez un traitement, si vous avez une maladie chronique ou si vous reprenez le sport après une longue interruption. Un essoufflement inhabituel, une douleur dans la poitrine, des palpitations ou un malaise pendant l'effort imposent d'arrêter la séance et de consulter, sans attendre. Tout effet indésirable après la prise d'un complément peut être signalé à la <a href="https://www.anses.fr/fr/content/nutrivigilance" target="_blank" rel="noopener noreferrer">nutrivigilance de l'ANSES</a>.` },
+
+      { h2: "En résumé" },
+      {
+        ul: [
+          "Vérifiez l'<strong>espèce</strong> : <em>Ophiocordyceps sinensis</em> ou <em>Cordyceps militaris</em>, <em>Panax ginseng</em> ou ginseng de Sibérie.",
+          "Lisez la <strong>dose d'extrait par portion journalière</strong>, avec son ratio et sa standardisation.",
+          "Prenez-le à un <strong>moment fixe</strong>, le matin ou avant la séance, sans doubler la dose.",
+          "Additionnez les doses si vous <strong>cumulez</strong> plusieurs produits.",
+          "Sportif contrôlé : demandez la conformité à la <strong>norme NF V94-001</strong>.",
+        ],
+      },
+      { p: `Les formules pensées pour les matinées actives et les jours d'entraînement sont réunies dans la collection <a href="${l("/collections/performance-et-vitalite")}">Performance & Vitalité</a>. Pour l'après-séance, notre article sur la <a href="${l("/blog/complement-recuperation-sport")}">récupération sportive</a> rappelle les fondamentaux.` },
+    ],
+    faq: [
+      { q: "Quelle est la différence entre Ophiocordyceps sinensis et Cordyceps militaris ?", a: "Ce sont deux espèces distinctes vendues sous le même nom de « cordyceps ». Ophiocordyceps sinensis est l'espèce de la tradition, récoltée en altitude ; Cordyceps militaris est une espèce voisine, plus facile à cultiver. Le nom latin sur l'étiquette permet de savoir laquelle un produit contient." },
+      { q: "Que contient une portion de POWER ?", a: "Pour 2 gummies : 200 mg d'extrait de cordyceps, 100 mg d'extrait de panax ginseng et 30 mg d'extrait de rhodiola, avec du bambou et des fructo-oligosaccharides." },
+      { q: "À quel moment prendre un complément au cordyceps et au ginseng ?", a: "Selon l'étiquette ; pour POWER, 2 gummies par jour, le matin ou avant une activité physique. Le plus important est de garder un moment fixe et de ne jamais doubler la dose." },
+      { q: "Peut-on le prendre avec MUSHGLOW ?", a: "MUSHGLOW contient lui aussi du cordyceps (500 mg par cuillère). Si vous combinez les deux, respectez la dose journalière de chacun et, en cas de doute, demandez conseil à votre pharmacien." },
+      { q: "Un sportif contrôlé peut-il prendre ce type de complément ?", a: "Seulement avec prudence : un complément peut être contaminé par une substance interdite. Demandez au fabricant si le produit est conforme à la norme NF V94-001 et parlez-en à votre médecin ou au médecin de votre fédération." },
+      { q: "Qui ne doit pas en prendre ?", a: "POWER est déconseillé aux femmes enceintes ou allaitantes et aux personnes sous traitement médical sans avis médical. Tenir hors de portée des enfants." },
+    ],
+    en: {
+      title: "Cordyceps and ginseng before exercise: composition, timing and precautions",
+      metaTitle: "Cordyceps and ginseng before exercise: how to use them",
+      metaDescription: "Species, extract doses, timing, anti-doping checks, precautions: the essentials on a cordyceps and ginseng supplement.",
+      excerpt: "Ophiocordyceps or militaris, ginsenosides, dose per daily serving, the NF V94-001 standard: what to know before adding cordyceps and ginseng to your training routine.",
+      category: "Energy & performance",
+      intro: `A <strong>cordyceps and ginseng</strong> supplement is chosen on three pieces of label information: the exact species of each ingredient, the extract dose per daily serving and the standardisation. It is taken at a regular time, for example in the morning or before a session, never exceeding the stated dose. No health claim is authorised in Europe for these ingredients: a manufacturer cannot promise you any effect on your performance, and this article does not either. It explains what such a product contains, how to fit it into a training routine and which precautions to follow.`,
+      blocks: [
+        { h2: "Cordyceps: one trade name, two species" },
+        { p: `Two different mushrooms circulate under the name « cordyceps ». <em>Ophiocordyceps sinensis</em>, formerly <em>Cordyceps sinensis</em>, is the species of the Tibetan and Chinese tradition, traditionally harvested at altitude. <em>Cordyceps militaris</em> is a related species that is easier to cultivate. The two do not have the same composition, and an honest product states which one it contains.` },
+        { p: `That is the first thing to check on the label or in the product's declaration. For BIEN health, the declarations for <a href="${le("/products/power")}">POWER</a> (no. 353739) and MUSHGLOW (no. 353738) name <em>Ophiocordyceps sinensis</em>; they are available on the <a href="${le("/certifications")}">Certifications</a> page. Our <a href="${le("/blog/reishi-cordyceps-chaga")}">reishi, cordyceps, chaga comparison</a> presents the mushroom as a whole.` },
+
+        { h2: "Panax ginseng: root, leaves and ginsenosides" },
+        { p: `<strong>Panax ginseng</strong> (<em>Panax ginseng</em>), or Asian ginseng, should not be confused with « Siberian ginseng » (<em>Eleutherococcus senticosus</em>), another plant that borrows the name. Here again, the Latin name settles it.` },
+        { p: `Its characteristic compounds are <strong>ginsenosides</strong>, on which extract standardisation is based. The part used also matters: the root is the traditional part, but some extracts come from the aerial parts (stems and leaves). POWER's extract is standardised to 4% ginsenosides, concentrated 3:1 (the equivalent of 300 mg of dried ginseng) and made from the plant's aerial parts.` },
+
+        { h2: "Rhodiola, a frequent third ingredient" },
+        { p: `Many formulas combine cordyceps and ginseng with <strong>rhodiola</strong> (<em>Rhodiola rosea</em>, named <em>Sedum roseum</em> in French declarations), a plant from cold regions whose root is used. Its standardisation is based on two families of compounds: rosavins and salidroside. POWER's is standardised to 3% rosavins and 1% salidroside, at 30 mg of extract per daily serving.` },
+
+        { h2: "Reading the doses of a supplement taken before exercise" },
+        { p: `As with any supplement, doses are given <strong>per daily serving</strong>. For POWER, the serving is 2 passion-fruit gummies, and it contains:` },
+        {
+          ul: [
+            "<strong>200 mg of cordyceps extract</strong>, concentrated 4:1, the equivalent of 800 mg of dried mushroom;",
+            "<strong>100 mg of panax ginseng extract</strong>, standardised to 4% ginsenosides;",
+            "<strong>30 mg of rhodiola extract</strong>, standardised to 3% rosavins and 1% salidroside;",
+            "bamboo (<em>Bambusa vulgaris</em>) and 3,330 mg of fructo-oligosaccharides (FOS), a fibre.",
+          ],
+        },
+        { p: `The rest of the list is that of a gummy: pectin (E440), carnauba wax (E903), sunflower oil, glycerol monostearate, carrot and blackcurrant concentrate, passion fruit flavouring, citric acid (E330) and sodium citrates (E331). A jar of 60 gummies lasts 30 days.` },
+        { h3: "Watch out for doubling up" },
+        { p: `Cordyceps appears in several products. The <a href="${le("/products/mushglow")}">MUSHGLOW</a> powder contains 500 mg per spoonful, and rhodiola is also in the FOCUS gummies. If you combine several supplements, read their labels side by side and respect each one's daily dose: what counts is the day's total, not each product taken on its own.` },
+
+        { h2: "When to take it: fitting it into a training routine" },
+        { p: `The stated use for POWER is <strong>2 gummies a day, to chew, in the morning or before physical activity</strong>. A few practical pointers to build it into your week:` },
+        {
+          ul: [
+            "<strong>Pick a fixed moment</strong>: at breakfast, or in your gym bag next to your water bottle. Taking it regularly matters more than the exact time.",
+            "<strong>On rest days</strong>, keep the same moment, in the morning: that way you neither miss a serving nor take two.",
+            "<strong>Never double the dose</strong> on a competition day or a hard session: the daily serving stays the same.",
+            "<strong>One jar lasts 30 days</strong>: note the opening date to keep track of your course, then take a break before starting another.",
+          ],
+        },
+        { p: `A supplement does not replace the basics of preparing for exercise: a suitable meal beforehand, enough fluids and full nights. A food supplement is not a substitute for a varied, balanced diet or a healthy lifestyle.` },
+
+        { h2: "Tested athletes: the anti-doping question" },
+        { p: `If you compete and may be tested, the declared composition is not enough: a supplement can be contaminated with a prohibited substance during manufacture. The <a href="https://www.afld.fr/" target="_blank" rel="noopener noreferrer">French Anti-Doping Agency (AFLD)</a> urges athletes to be extremely careful with food supplements.` },
+        { p: `In France, the <strong>AFNOR NF V94-001</strong> standard covers products intended for athletes and the testing for doping substances. Before taking any supplement, ask the manufacturer whether it complies with this standard, and talk to your doctor or your federation's doctor.` },
+
+        { h2: "What the regulations forbid brands to promise" },
+        { p: `Regulation (EC) No 1924/2006 only allows the health claims listed in the <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">EU register of claims</a>. None is listed for cordyceps; claims relating to plants such as ginseng and rhodiola have been awaiting evaluation since 2010, and a brand cannot freely reword them. Studies on an isolated ingredient, at other doses and in other forms, are no proof for a finished product.` },
+        { p: `So be wary of a product that promises you a figure, a timeframe, a measurable gain or a comparison with a doping product. A serious label gives the species, doses, standardisations and precautions, and lets you judge.` },
+
+        { h2: "Precautions" },
+        { p: `POWER is <strong>not recommended for pregnant or breastfeeding women</strong> or for <strong>people on medical treatment without medical advice</strong>; this applies particularly to ginseng and rhodiola. Do not exceed the recommended daily dose. Keep out of reach of children. A food supplement is not a substitute for a varied, balanced diet or a healthy lifestyle.` },
+
+        { h2: "When to see a healthcare professional" },
+        { p: `Ask your doctor or pharmacist before starting if you are on treatment, have a chronic condition or are returning to sport after a long break. Unusual breathlessness, chest pain, palpitations or feeling faint during exercise mean you should stop the session and seek medical advice straight away. Any adverse effect after taking a supplement can be reported to <a href="https://www.anses.fr/en/content/nutrivigilance" target="_blank" rel="noopener noreferrer">ANSES nutrivigilance</a>.` },
+
+        { h2: "In short" },
+        {
+          ul: [
+            "Check the <strong>species</strong>: <em>Ophiocordyceps sinensis</em> or <em>Cordyceps militaris</em>, <em>Panax ginseng</em> or Siberian ginseng.",
+            "Read the <strong>extract dose per daily serving</strong>, with its ratio and standardisation.",
+            "Take it at a <strong>fixed moment</strong>, in the morning or before the session, without doubling the dose.",
+            "Add up the doses if you <strong>combine</strong> several products.",
+            "Tested athlete: ask for compliance with the <strong>NF V94-001 standard</strong>.",
+          ],
+        },
+        { p: `The formulas designed for active mornings and training days are gathered in the <a href="${le("/collections/performance-et-vitalite")}">Performance & Vitality</a> collection. For after the session, our article on <a href="${le("/blog/complement-recuperation-sport")}">sports recovery</a> covers the fundamentals.` },
+      ],
+      faq: [
+        { q: "What is the difference between Ophiocordyceps sinensis and Cordyceps militaris?", a: "They are two distinct species sold under the same name, « cordyceps ». Ophiocordyceps sinensis is the traditional species, harvested at altitude; Cordyceps militaris is a related species that is easier to cultivate. The Latin name on the label tells you which one a product contains." },
+        { q: "What does a serving of POWER contain?", a: "For 2 gummies: 200 mg of cordyceps extract, 100 mg of panax ginseng extract and 30 mg of rhodiola extract, with bamboo and fructo-oligosaccharides." },
+        { q: "When should I take a cordyceps and ginseng supplement?", a: "As the label says; for POWER, 2 gummies a day, in the morning or before physical activity. The most important thing is to keep a fixed moment and never double the dose." },
+        { q: "Can I take it with MUSHGLOW?", a: "MUSHGLOW also contains cordyceps (500 mg per spoonful). If you combine the two, respect each one's daily dose and, if in doubt, ask your pharmacist." },
+        { q: "Can a tested athlete take this kind of supplement?", a: "Only with caution: a supplement can be contaminated with a prohibited substance. Ask the manufacturer whether the product complies with the NF V94-001 standard and talk to your doctor or your federation's doctor." },
+        { q: "Who should not take it?", a: "POWER is not recommended for pregnant or breastfeeding women or for people on medical treatment without medical advice. Keep out of reach of children." },
+      ],
+    },
+  },
+  {
     slug: "gummies-ashwagandha-safran-lire-etiquette",
     motCle: "gummies ashwagandha safran",
     motsClesSecondaires: ["ashwagandha safran", "gummies calm"],
