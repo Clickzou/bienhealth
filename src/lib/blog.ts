@@ -49,6 +49,233 @@ export function localizeArticle(a: Article, lang: string): Article {
 
 const ARTICLES_REDIGES: Article[] = [
   {
+    slug: "champignons-adaptogenes-francais-verifier",
+    motCle: "champignons adaptogènes français",
+    motsClesSecondaires: ["compl'alim", "complément alimentaire fabriqué en France", "déclaration DGAL complément alimentaire"],
+    title: "Champignons adaptogènes français : comment vérifier qu'un complément est déclaré et fabriqué en France",
+    metaTitle: "Champignons adaptogènes français : comment vérifier",
+    metaDescription:
+      "Compl'Alim, déclaration DGAL, étiquette : trois vérifications pour savoir si un complément aux champignons est déclaré et fabriqué en France.",
+    excerpt:
+      "Numéro de déclaration DGAL, mentions obligatoires de l'étiquette, sens exact de « fabriqué en France » : la méthode pour vérifier une marque de compléments aux champignons.",
+    category: "Ingrédients & science",
+    date: "2026-10-13",
+    readingMinutes: 8,
+    cover: "/brand/products-row.jpg",
+    intro:
+      `Un complément aux <strong>champignons adaptogènes</strong> vendu comme <strong>français</strong> se vérifie en trois points : son numéro de déclaration auprès de la DGAL, enregistré sur la plateforme Compl'Alim ; les mentions obligatoires de son étiquette ; et ce que recouvre exactement la mention « fabriqué en France ». Aucune de ces vérifications ne dit ce qu'un produit « fait » : elles disent s'il a été déclaré, ce qu'il contient et où il a été fabriqué. C'est précisément ce qui permet de comparer deux marques sur des faits, et non sur des promesses.`,
+    blocks: [
+      { h2: "Ce que recouvre l'expression « champignons adaptogènes français »" },
+      { p: `L'expression mélange trois réalités qui ne vont pas toujours ensemble : une <strong>marque</strong> française, un <strong>produit fabriqué</strong> en France, et des <strong>matières premières</strong> cultivées ou récoltées en France. Une marque peut être domiciliée à Paris et faire fabriquer ailleurs ; un produit fini en France peut contenir des extraits importés. Chacune de ces trois affirmations se vérifie séparément.` },
+      { p: `Le mot « adaptogène » demande aussi une précision. Il vient de la littérature scientifique et du marketing, mais ce n'est <strong>pas une catégorie réglementaire</strong> : le droit européen parle de « compléments alimentaires », de « plantes » et de « champignons », et le mot « adaptogène » n'ouvre droit à aucune allégation. Dans la suite de cet article, nous parlons donc de <strong>champignons fonctionnels</strong> : lion's mane (<em>Hericium erinaceus</em>), reishi (<em>Ganoderma lucidum</em>), cordyceps et chaga (<em>Inonotus obliquus</em>), présentés dans notre <a href="${l("/blog/champignons-adaptogenes-guide-complet")}">guide des champignons</a>.` },
+
+      { h2: "Première vérification : la déclaration auprès de la DGAL" },
+      { p: `En France, un complément alimentaire qui contient des plantes ou des champignons doit être <strong>déclaré à la DGAL</strong> (Direction générale de l'alimentation, ministère de l'Agriculture) avant sa première mise sur le marché. Cette obligation découle du décret n° 2006-352, qui transpose la <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32002L0046" target="_blank" rel="noopener noreferrer">directive européenne 2002/46/CE</a> sur les compléments alimentaires. La déclaration se dépose sur la téléprocédure <a href="https://compl-alim.beta.gouv.fr/" target="_blank" rel="noopener noreferrer">Compl'Alim</a>, et chaque déclaration reçoit un numéro.` },
+      { p: `Ce numéro est la première chose à demander à une marque. Une marque qui le publie, avec l'attestation correspondante, vous permet de rapprocher le produit que vous achetez de ce qui a été déclaré à l'administration.` },
+      { h3: "Ce que prouve l'attestation, et ce qu'elle ne prouve pas" },
+      { p: `L'attestation de déclaration prouve que la déclaration a été effectuée et enregistrée. Selon sa propre mention officielle, elle ne constitue <strong>ni une garantie de conformité</strong> à la réglementation, <strong>ni une autorisation de mise sur le marché</strong>. Un complément alimentaire n'est pas « autorisé » ni « approuvé » par un ministère : il est déclaré, puis il relève des contrôles de l'administration, notamment de la DGCCRF. Une formule du type « approuvé par le ministère » est donc un signal d'alerte.` },
+      { h3: "Comment lire une attestation" },
+      {
+        ul: [
+          "<strong>Le numéro de déclaration</strong>, à rapprocher de celui qu'affiche la marque.",
+          "<strong>Le nom du produit et sa forme</strong> : gomme, poudre, gélule.",
+          "<strong>Les ingrédients déclarés</strong>, avec leur quantité par dose journalière recommandée.",
+          "<strong>La date de déclaration</strong>, qui situe la formule dans le temps : une formule modifiée fait l'objet d'une nouvelle déclaration.",
+        ],
+      },
+      { p: `À titre d'exemple, les quatre produits BIEN health ont chacun leur numéro : CALM (353706), FOCUS (353734), POWER (353739) et MUSHGLOW (353738). Les trois gummies ont été déclarés en janvier 2026 et la poudre MUSHGLOW en mai 2026. Les attestations sont téléchargeables sur notre page <a href="${l("/certifications")}">Certifications</a>.` },
+
+      { h2: "Deuxième vérification : les mentions obligatoires de l'étiquette" },
+      { p: `Le décret n° 2006-352 fixe les mentions qui doivent figurer sur l'étiquette de tout complément alimentaire vendu en France :` },
+      {
+        ul: [
+          "le nom des catégories de nutriments ou de substances qui caractérisent le produit ;",
+          "la portion journalière recommandée, et la quantité de chaque substance pour cette portion ;",
+          "un avertissement indiquant qu'il est déconseillé de dépasser la dose journalière indiquée ;",
+          "une déclaration indiquant que le produit ne doit pas se substituer à une alimentation variée ;",
+          "un avertissement indiquant que le produit doit être tenu hors de portée des jeunes enfants.",
+        ],
+      },
+      { p: `S'y ajoutent les règles générales du <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32011R1169" target="_blank" rel="noopener noreferrer">règlement (UE) n° 1169/2011</a> : liste complète des ingrédients, allergènes mis en évidence et, pour la vente en ligne, ces informations disponibles <strong>avant l'achat</strong>. Sur un site marchand, cherchez donc la liste complète des ingrédients, pas seulement les quelques « actifs » mis en avant.` },
+      { h3: "Actifs et autres ingrédients" },
+      { p: `Une étiquette distingue les ingrédients dosés en milligrammes et ceux qui donnent sa forme au produit : gélifiant, enrobage, arômes, correcteurs d'acidité. La déclaration de CALM, par exemple, mentionne de la pectine (E440), de la cire de carnauba (E903), de l'huile de tournesol, du monostéarate de glycérol, des jus de carotte et de myrtille, un arôme mûre, de l'acide citrique (E330), des citrates de sodium (E331) et des fructo-oligosaccharides (FOS). Ce sont des ingrédients courants d'une gomme ; ils rappellent aussi qu'un gummy n'est jamais « sans additif ».` },
+      { p: `Les <strong>allergènes</strong> doivent ressortir dans la liste. La poudre MUSHGLOW contient du collagène issu de la membrane de coquille d'œuf : elle <strong>contient de l'œuf</strong>, ce que toute personne allergique doit savoir avant de l'acheter.` },
+
+      { h2: "Troisième vérification : ce que veut dire « fabriqué en France »" },
+      { p: `« Fabriqué en France » désigne le pays où le produit a reçu sa <strong>dernière transformation substantielle</strong>, selon les règles d'origine douanières : pour un complément, c'est en général le pays où les ingrédients sont mélangés et mis en forme. La mention ne dit rien de l'origine des matières premières. Beaucoup de plantes et de champignons utilisés en compléments sont cultivés hors d'Europe, et un produit fabriqué en France peut parfaitement en contenir.` },
+      { p: `Trois questions distinctes méritent donc d'être posées à une marque :` },
+      {
+        ul: [
+          "<strong>Où le produit fini est-il fabriqué ?</strong> C'est ce que dit la mention « fabriqué en France ».",
+          "<strong>D'où viennent les extraits ?</strong> Une marque peut l'indiquer ingrédient par ingrédient, ou non.",
+          "<strong>Quels contrôles sont faits sur les lots ?</strong> Métaux lourds, contaminants microbiologiques, pesticides : les champignons concentrent ce que contient leur substrat.",
+        ],
+      },
+      { p: `Toute la gamme BIEN health est fabriquée en France. Le détail des extraits, produit par produit, figure sur chaque fiche et sur la page <a href="${l("/ingredients")}">Ingrédients</a>.` },
+
+      { h2: "Lire la composition d'un extrait de champignon" },
+      { p: `Sur une étiquette, « lion's mane 120 mg » ne dit pas tout. Trois informations permettent de comparer deux produits :` },
+      {
+        ul: [
+          "<strong>La forme</strong> : extrait concentré ou champignon séché en poudre. Un même poids ne correspond pas à la même quantité de matière première.",
+          "<strong>Le ratio de concentration</strong> : un extrait 10:1 a été obtenu à partir d'environ dix fois son poids de champignon sec.",
+          "<strong>La standardisation</strong> : le pourcentage garanti d'une famille de composés (polysaccharides, par exemple), qui assure la constance d'un lot à l'autre.",
+        ],
+      },
+      { p: `Exemple concret : FOCUS déclare 120 mg d'<strong>extrait</strong> de lion's mane par dose journalière, concentré entre 8:1 et 12:1 ; MUSHGLOW déclare 750 mg de lion's mane par cuillère. Les deux chiffres ne se comparent pas directement, puisqu'ils ne portent pas sur la même forme.` },
+      { p: `Vérifiez aussi le <strong>nom latin</strong>. Pour le cordyceps, deux espèces circulent sous le même nom commercial : <em>Ophiocordyceps sinensis</em> et <em>Cordyceps militaris</em>. Les déclarations de POWER et de MUSHGLOW mentionnent <em>Ophiocordyceps sinensis</em>. Comparer deux produits n'a de sens qu'à espèce égale.` },
+
+      { h2: "Ce qu'une marque a le droit d'écrire, et ce qui doit vous alerter" },
+      { p: `Le <a href="https://eur-lex.europa.eu/legal-content/FR/TXT/?uri=CELEX:32006R1924" target="_blank" rel="noopener noreferrer">règlement (CE) n° 1924/2006</a> interdit toute allégation de santé qui ne figure pas au <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">registre européen des allégations</a>. À ce jour, aucune allégation n'y est autorisée pour le lion's mane, le reishi, le cordyceps ou le chaga ; les allégations qui portent sur des plantes sont en attente d'évaluation depuis 2010 et ne peuvent pas être reformulées librement. Et aucun complément alimentaire ne peut revendiquer de prévenir, traiter ou guérir une maladie.` },
+      { p: `Quelques signaux doivent donc vous faire douter d'une marque :` },
+      {
+        ul: [
+          "un vocabulaire de soin : « soigne », « guérit », « champignons médicinaux » ;",
+          "« cliniquement prouvé » ou « dosé selon la science », sans étude menée sur le produit lui-même ;",
+          "une promesse de résultat ou de délai (« dès 7 jours ») ;",
+          "« approuvé » ou « autorisé par le ministère » ;",
+          "une liste d'ingrédients introuvable avant l'achat.",
+        ],
+      },
+      { p: `À l'inverse, une marque sérieuse affiche ses doses, son numéro de déclaration, sa liste complète d'ingrédients et ses précautions d'emploi.` },
+
+      { h2: "Les précautions à retrouver sur tout complément" },
+      { p: `Les produits BIEN health sont déconseillés aux femmes enceintes ou allaitantes et aux personnes qui suivent un traitement médical sans avis médical. Il ne faut pas dépasser la dose journalière indiquée, et les produits doivent être tenus hors de portée des enfants. Un complément alimentaire ne se substitue pas à une alimentation variée et équilibrée ni à un mode de vie sain.` },
+
+      { h2: "Quand demander l'avis d'un professionnel de santé" },
+      { p: `Avant de commencer un complément, parlez-en à votre médecin ou à votre pharmacien si vous suivez un traitement, si vous êtes enceinte ou allaitez, ou si vous avez une maladie chronique. Un pharmacien peut lire l'étiquette avec vous et repérer une interaction possible. Si vous constatez un effet indésirable après la prise d'un complément, arrêtez-le, consultez, et signalez-le au dispositif de <a href="https://www.anses.fr/fr/content/nutrivigilance" target="_blank" rel="noopener noreferrer">nutrivigilance de l'ANSES</a>.` },
+
+      { h2: "En pratique : la grille en cinq questions" },
+      {
+        ul: [
+          "Le produit a-t-il un numéro de déclaration DGAL, et l'attestation est-elle consultable ?",
+          "La liste complète des ingrédients, allergènes compris, est-elle visible avant l'achat ?",
+          "Les doses sont-elles données par portion journalière, ingrédient par ingrédient, avec la forme (extrait ou poudre) ?",
+          "La marque distingue-t-elle le lieu de fabrication et l'origine des matières premières ?",
+          "Les précautions d'emploi figurent-elles en clair, sans promesse d'effet ?",
+        ],
+      },
+      { p: `Pour BIEN health, les réponses sont réunies sur la page <a href="${l("/certifications")}">Certifications</a>, la page <a href="${l("/ingredients")}">Ingrédients</a> et les fiches de la <a href="${l("/collections/gummies")}">collection Gummies</a>. Si vous hésitez entre nos formules, le <a href="${l("/diagnostic")}">questionnaire en ligne</a> vous oriente en une minute.` },
+    ],
+    faq: [
+      { q: "Qu'est-ce que Compl'Alim ?", a: "C'est la téléprocédure de la DGAL (ministère de l'Agriculture) sur laquelle les entreprises déclarent leurs compléments alimentaires avant leur mise sur le marché en France. Chaque déclaration reçoit un numéro." },
+      { q: "Une déclaration DGAL vaut-elle autorisation ?", a: "Non. L'attestation prouve que la déclaration a été faite et enregistrée ; selon sa mention officielle, elle n'est ni une garantie de conformité ni une autorisation de mise sur le marché." },
+      { q: "« Fabriqué en France » veut-il dire que les champignons sont français ?", a: "Non. La mention désigne le pays de la dernière transformation substantielle du produit. Elle ne dit rien de l'origine des matières premières, qui peuvent être importées." },
+      { q: "Comment savoir si un complément contient un allergène ?", a: "Les allergènes doivent être mis en évidence dans la liste des ingrédients, consultable avant l'achat en ligne. Par exemple, la poudre MUSHGLOW contient de l'œuf (collagène de membrane de coquille d'œuf)." },
+      { q: "Les champignons adaptogènes ont-ils des allégations de santé autorisées ?", a: "Non, aucune à ce jour pour le lion's mane, le reishi, le cordyceps ou le chaga. Le mot « adaptogène » n'est pas une catégorie réglementaire et n'autorise aucune allégation." },
+      { q: "Où trouver les numéros de déclaration de BIEN health ?", a: "Sur la page Certifications du site : CALM 353706, FOCUS 353734, POWER 353739 et MUSHGLOW 353738, avec les attestations téléchargeables." },
+    ],
+    en: {
+      title: "French adaptogenic mushrooms: how to check that a supplement is declared and made in France",
+      metaTitle: "French adaptogenic mushrooms: how to check",
+      metaDescription: "Compl'Alim, DGAL declaration, label: three checks to tell whether a mushroom supplement is declared and made in France.",
+      excerpt: "DGAL declaration number, mandatory label information, the exact meaning of « made in France »: how to check a mushroom supplement brand.",
+      category: "Ingredients & science",
+      intro: `A supplement made with <strong>adaptogenic mushrooms</strong> and sold as <strong>French</strong> can be checked on three points: its declaration number with the DGAL, registered on the Compl'Alim platform; the mandatory information on its label; and what the words « made in France » actually cover. None of these checks tells you what a product « does »: they tell you whether it was declared, what it contains and where it was made. That is exactly what lets you compare two brands on facts rather than promises.`,
+      blocks: [
+        { h2: "What « French adaptogenic mushrooms » covers" },
+        { p: `The phrase mixes three things that do not always go together: a French <strong>brand</strong>, a <strong>product made</strong> in France, and <strong>raw materials</strong> grown or harvested in France. A brand can be based in Paris and have its products made elsewhere; a product finished in France can contain imported extracts. Each of these three statements has to be checked separately.` },
+        { p: `The word « adaptogen » also needs a word of caution. It comes from scientific literature and from marketing, but it is <strong>not a regulatory category</strong>: European law speaks of « food supplements », « plants » and « mushrooms », and the word « adaptogen » gives no right to any claim. In the rest of this article we therefore speak of <strong>functional mushrooms</strong>: lion's mane (<em>Hericium erinaceus</em>), reishi (<em>Ganoderma lucidum</em>), cordyceps and chaga (<em>Inonotus obliquus</em>), presented in our <a href="${le("/blog/champignons-adaptogenes-guide-complet")}">mushroom guide</a>.` },
+
+        { h2: "First check: the declaration to the DGAL" },
+        { p: `In France, a food supplement containing plants or mushrooms must be <strong>declared to the DGAL</strong> (Directorate General for Food, Ministry of Agriculture) before it is first placed on the market. This obligation stems from decree no. 2006-352, which transposes <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32002L0046" target="_blank" rel="noopener noreferrer">European Directive 2002/46/EC</a> on food supplements. The declaration is filed on the <a href="https://compl-alim.beta.gouv.fr/" target="_blank" rel="noopener noreferrer">Compl'Alim</a> online procedure, and each declaration receives a number.` },
+        { p: `That number is the first thing to ask a brand for. A brand that publishes it, together with the matching certificate, lets you match the product you buy with what was declared to the authorities.` },
+        { h3: "What the certificate proves, and what it does not" },
+        { p: `The declaration certificate proves that the declaration was made and registered. According to its own official wording, it is <strong>neither a guarantee of compliance</strong> with the regulations <strong>nor a marketing authorisation</strong>. A food supplement is not « authorised » or « approved » by a ministry: it is declared, and then falls under the authorities' controls, notably those of the DGCCRF. A phrase such as « approved by the ministry » is therefore a warning sign.` },
+        { h3: "How to read a certificate" },
+        {
+          ul: [
+            "<strong>The declaration number</strong>, to compare with the one the brand displays.",
+            "<strong>The product name and its form</strong>: gummy, powder, capsule.",
+            "<strong>The declared ingredients</strong>, with their amount per recommended daily serving.",
+            "<strong>The declaration date</strong>, which places the formula in time: a modified formula requires a new declaration.",
+          ],
+        },
+        { p: `For example, the four BIEN health products each have their own number: CALM (353706), FOCUS (353734), POWER (353739) and MUSHGLOW (353738). The three gummies were declared in January 2026 and the MUSHGLOW powder in May 2026. The certificates can be downloaded from our <a href="${le("/certifications")}">Certifications</a> page.` },
+
+        { h2: "Second check: the mandatory label information" },
+        { p: `Decree no. 2006-352 sets the information that must appear on the label of any food supplement sold in France:` },
+        {
+          ul: [
+            "the names of the categories of nutrients or substances that characterise the product;",
+            "the recommended daily serving, and the amount of each substance in that serving;",
+            "a warning not to exceed the stated daily dose;",
+            "a statement that the product should not be used as a substitute for a varied diet;",
+            "a warning that the product must be kept out of reach of young children.",
+          ],
+        },
+        { p: `On top of this come the general rules of <a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32011R1169" target="_blank" rel="noopener noreferrer">Regulation (EU) No 1169/2011</a>: a complete ingredient list, allergens emphasised and, for online sales, this information available <strong>before purchase</strong>. On an online shop, look for the complete ingredient list, not just the few « actives » put forward.` },
+        { h3: "Actives and other ingredients" },
+        { p: `A label distinguishes the ingredients dosed in milligrams from those that give the product its form: gelling agent, coating, flavourings, acidity regulators. CALM's declaration, for example, lists pectin (E440), carnauba wax (E903), sunflower oil, glycerol monostearate, carrot and blueberry juices, a blackberry flavouring, citric acid (E330), sodium citrates (E331) and fructo-oligosaccharides (FOS). These are common gummy ingredients; they are also a reminder that a gummy is never « additive-free ».` },
+        { p: `<strong>Allergens</strong> must stand out in the list. The MUSHGLOW powder contains collagen from eggshell membrane: it <strong>contains egg</strong>, which anyone with an allergy needs to know before buying it.` },
+
+        { h2: "Third check: what « made in France » means" },
+        { p: `« Made in France » refers to the country where the product underwent its <strong>last substantial transformation</strong>, under customs rules of origin: for a supplement, this is usually the country where the ingredients are blended and shaped. The words say nothing about where the raw materials come from. Many plants and mushrooms used in supplements are grown outside Europe, and a product made in France may well contain them.` },
+        { p: `Three separate questions are therefore worth asking a brand:` },
+        {
+          ul: [
+            "<strong>Where is the finished product made?</strong> That is what « made in France » tells you.",
+            "<strong>Where do the extracts come from?</strong> A brand may state this ingredient by ingredient, or not.",
+            "<strong>What checks are run on each batch?</strong> Heavy metals, microbiological contaminants, pesticides: mushrooms concentrate whatever their substrate contains.",
+          ],
+        },
+        { p: `The whole BIEN health range is made in France. Details of each extract, product by product, are on every product page and on the <a href="${le("/ingredients")}">Ingredients</a> page.` },
+
+        { h2: "Reading the composition of a mushroom extract" },
+        { p: `On a label, « lion's mane 120 mg » does not tell the whole story. Three pieces of information let you compare two products:` },
+        {
+          ul: [
+            "<strong>The form</strong>: concentrated extract or dried mushroom powder. The same weight does not correspond to the same amount of raw material.",
+            "<strong>The concentration ratio</strong>: a 10:1 extract was obtained from roughly ten times its weight in dried mushroom.",
+            "<strong>Standardisation</strong>: the guaranteed percentage of a family of compounds (polysaccharides, for instance), which keeps batches consistent.",
+          ],
+        },
+        { p: `A concrete example: FOCUS declares 120 mg of lion's mane <strong>extract</strong> per daily serving, concentrated between 8:1 and 12:1; MUSHGLOW declares 750 mg of lion's mane per spoonful. The two figures cannot be compared directly, since they do not refer to the same form.` },
+        { p: `Also check the <strong>Latin name</strong>. For cordyceps, two species circulate under the same trade name: <em>Ophiocordyceps sinensis</em> and <em>Cordyceps militaris</em>. The POWER and MUSHGLOW declarations name <em>Ophiocordyceps sinensis</em>. Comparing two products only makes sense for the same species.` },
+
+        { h2: "What a brand may write, and what should alert you" },
+        { p: `<a href="https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32006R1924" target="_blank" rel="noopener noreferrer">Regulation (EC) No 1924/2006</a> prohibits any health claim not listed in the <a href="https://ec.europa.eu/food/safety/labelling-nutrition/claims/register/public/" target="_blank" rel="noopener noreferrer">EU register of claims</a>. To date, no claim is authorised there for lion's mane, reishi, cordyceps or chaga; claims relating to plants have been awaiting evaluation since 2010 and cannot be freely reworded. And no food supplement may claim to prevent, treat or cure a disease.` },
+        { p: `A few signs should therefore make you doubt a brand:` },
+        {
+          ul: [
+            "the vocabulary of medicine: « heals », « cures », « medicinal mushrooms »;",
+            "« clinically proven » or « dosed according to science », without a study on the product itself;",
+            "a promise of results or of timing (« within 7 days »);",
+            "« approved » or « authorised by the ministry »;",
+            "an ingredient list you cannot find before buying.",
+          ],
+        },
+        { p: `Conversely, a serious brand displays its doses, its declaration number, its full ingredient list and its precautions for use.` },
+
+        { h2: "The precautions every supplement should carry" },
+        { p: `BIEN health products are not recommended for pregnant or breastfeeding women, or for people on medical treatment without medical advice. Do not exceed the stated daily dose, and keep the products out of reach of children. A food supplement is not a substitute for a varied, balanced diet or a healthy lifestyle.` },
+
+        { h2: "When to ask a healthcare professional" },
+        { p: `Before starting a supplement, talk to your doctor or pharmacist if you are on treatment, pregnant or breastfeeding, or living with a chronic condition. A pharmacist can read the label with you and spot a possible interaction. If you notice an adverse effect after taking a supplement, stop it, see a professional, and report it to <a href="https://www.anses.fr/en/content/nutrivigilance" target="_blank" rel="noopener noreferrer">ANSES nutrivigilance</a>.` },
+
+        { h2: "In practice: the five-question checklist" },
+        {
+          ul: [
+            "Does the product have a DGAL declaration number, and can the certificate be viewed?",
+            "Is the complete ingredient list, allergens included, visible before purchase?",
+            "Are doses given per daily serving, ingredient by ingredient, with the form (extract or powder)?",
+            "Does the brand distinguish the place of manufacture from the origin of the raw materials?",
+            "Are the precautions for use stated clearly, without any promise of effect?",
+          ],
+        },
+        { p: `For BIEN health, the answers are gathered on the <a href="${le("/certifications")}">Certifications</a> page, the <a href="${le("/ingredients")}">Ingredients</a> page and the product pages of the <a href="${le("/collections/gummies")}">Gummies collection</a>. If you are unsure which of our formulas to choose, the <a href="${le("/diagnostic")}">online questionnaire</a> points you in the right direction in one minute.` },
+      ],
+      faq: [
+        { q: "What is Compl'Alim?", a: "It is the DGAL (Ministry of Agriculture) online procedure on which companies declare their food supplements before placing them on the French market. Each declaration receives a number." },
+        { q: "Is a DGAL declaration an authorisation?", a: "No. The certificate proves that the declaration was made and registered; according to its official wording, it is neither a guarantee of compliance nor a marketing authorisation." },
+        { q: "Does « made in France » mean the mushrooms are French?", a: "No. The words refer to the country of the product's last substantial transformation. They say nothing about the origin of the raw materials, which may be imported." },
+        { q: "How can I tell whether a supplement contains an allergen?", a: "Allergens must be emphasised in the ingredient list, which must be available before an online purchase. For example, the MUSHGLOW powder contains egg (eggshell-membrane collagen)." },
+        { q: "Do adaptogenic mushrooms have authorised health claims?", a: "No, none to date for lion's mane, reishi, cordyceps or chaga. The word « adaptogen » is not a regulatory category and does not allow any claim." },
+        { q: "Where can I find BIEN health's declaration numbers?", a: "On the site's Certifications page: CALM 353706, FOCUS 353734, POWER 353739 and MUSHGLOW 353738, with downloadable certificates." },
+      ],
+    },
+  },
+  {
     slug: "champignons-adaptogenes-guide-complet",
     motCle: "champignons adaptogènes",
     motsClesSecondaires: ["champignon adaptogène"],
