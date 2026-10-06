@@ -161,9 +161,9 @@ async function adminToken(): Promise<string | null> {
 
 /* -------------------------------------------------------------- requêtes */
 
-type GraphQlResponse<T> = { data?: T; errors?: { message: string; extensions?: { code?: string } }[] };
+export type GraphQlResponse<T> = { data?: T; errors?: { message: string; extensions?: { code?: string } }[] };
 
-async function adminGraphQl<T>(query: string, variables: Record<string, unknown>): Promise<GraphQlResponse<T> | null> {
+export async function adminGraphQl<T>(query: string, variables: Record<string, unknown>): Promise<GraphQlResponse<T> | null> {
   const token = await adminToken();
   if (!token) return null;
 
