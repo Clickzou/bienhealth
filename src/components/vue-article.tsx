@@ -1,0 +1,200 @@
+import Image from "next/image";
+import Link from "next/link";
+import { Clock, ChevronDown, ArrowLeft, ArrowRight } from "lucide-react";
+import { localizeArticle, type Article } from "@/lib/blog";
+import { articleLinks } from "@/lib/blog-links";
+import { COLLECTIONS, localizeCollection } from "@/lib/shop";
+import { SITE_URL } from "@/lib/seo";
+import SiteHeader from "@/components/site-header";
+import DiagnosticCTA from "@/components/diagnostic-cta";
+import JsonLd from "@/components/json-ld";
+
+/**
+ * Rendu d'un article du blog, partagé par la page publique
+ * (`/[lang]/blog/[slug]`) et par l'aperçu signé des articles programmés
+ * (`/[lang]/blog/apercu/[slug]`). En aperçu : bandeau « parution prévue », et
+ * aucune donnée structurée (la page n'est pas indexable).
+ */
+
+function fmtDate(iso: string, lang: string) {
+  try {
+    return new Intl.DateTimeFormat(lang === "en" ? "en-GB" : "fr-FR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(iso));
+  } catch {
+    return iso;
+  }
+}
+
+export default function VueArticle({ base, lang, apercu = false }: { base: Article; lang: string; apercu?: boolean }) {
+  const slug = base.slug;
+  const a = localizeArticle(base, lang);
+  const ui = lang === "en"
+    ? { home: "Home", journal: "The Journal", readTime: "min read", updated: "Updated", further: "Going further", seeCollection: "See the collection", faqTitle: "Frequently asked questions", back: "Back to the Journal" }
+    : { home: "Accueil", journal: "Le Journal", readTime: "min de lecture", updated: "Mis à jour le", further: "Pour aller plus loin", seeCollection: "Voir la collection", faqTitle: "Questions fréquentes", back: "Retour au Journal" };
+
+  const links = articleLinks(slug, base.category);
+  const linkedCollection = links && COLLECTIONS[links.collection] ? localizeCollection(COLLECTIONS[links.collection], lang) : null;
+
+  const url = `${SITE_URL}/${lang}/blog/${slug}`;
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader lang={lang} />
+
+      {apercu && (
+        <div className="bg-bien-gold/20 px-4 py-3 text-center text-sm text-black">
+          {lang === "en"
+            ? <>Preview — this article is not published yet. Scheduled for {fmtDate(a.date, lang)}.</>
+            : <>Aperçu — cet article n&apos;est pas encore en ligne. Parution prévue le {fmtDate(a.date, lang)}.</>}
+        </div>
+      )}
+
+      {!apercu && (
+        <>
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: a.title,
+              description: a.metaDescription,
+              image: `${SITE_URL}${a.cover}`,
+              datePublished: a.date,
+              dateModified: a.updated ?? a.date,
+              author: { "@type": "Organization", name: "BIEN" },
+              publisher: {
+                "@type": "Organization",
+                name: "BIEN health",
+                logo: { "@type": "ImageObject", url: `${SITE_URL}/brand/logo-bien.png` },
+              },
+              mainEntityOfPage: url,
+            }}
+          />
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "FAQPage",
+              mainEntity: a.faq.map((f) => ({
+                "@type": "Question",
+                name: f.q,
+                acceptedAnswer: { "@type": "Answer", text: f.a },
+              })),
+            }}
+          />
+          <JsonLd
+            data={{
+              "@context": "https://schema.org",
+              "@type": "BreadcrumbList",
+              itemListElement: [
+                { "@type": "ListItem", position: 1, name: ui.home, item: `${SITE_URL}/${lang}` },
+                { "@type": "ListItem", position: 2, name: ui.journal, item: `${SITE_URL}/${lang}/blog` },
+                { "@type": "ListItem", position: 3, name: a.title, item: url },
+              ],
+            }}
+          />
+        </>
+      )}
+
+      <main className="px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <article className="mx-auto max-w-3xl">
+          {/* Fil d'Ariane */}
+          <nav className="text-sm text-black/55">
+            <Link href={`/${lang}`} className="hover:text-black">{ui.home}</Link>
+            <span className="mx-1.5">/</span>
+            <Link href={`/${lang}/blog`} className="hover:text-black">{ui.journal}</Link>
+          </nav>
+
+          {/* En-tête */}
+          <p className="mt-6 inline-flex items-center rounded-full bg-bien-cream px-3 py-1 text-xs font-semibold text-black">{a.category}</p>
+          <h1 className="mt-4 font-hero text-[clamp(1.76rem,4.4vw,3.08rem)] leading-[1.02] text-black">{a.title}</h1>
+          <div className="mt-4 flex items-center gap-3 text-sm text-black/55">
+            <span>{fmtDate(a.date, lang)}</span>
+            {/* Date de révision visible : elle doit concorder avec `dateModified`,
+                et c'est elle que lisent les moteurs génératifs pour juger de la
+                fraîcheur d'une source. */}
+            {a.updated && a.updated > a.date && (
+              <>
+                <span>·</span>
+                <span>{ui.updated} {fmtDate(a.updated, lang)}</span>
+              </>
+            )}
+            <span>·</span>
+            <span className="inline-flex items-center gap-1"><Clock className="h-4 w-4" /> {a.readingMinutes} {ui.readTime}</span>
+          </div>
+
+          {/* Couverture */}
+          <div className="mt-7 relative aspect-[16/9] rounded-3xl overflow-hidden ring-1 ring-border bg-bien-cream">
+            <Image src={a.cover} alt={a.title} fill fetchPriority="high" loading="eager" sizes="(max-width:768px) 100vw, 768px" className="object-cover" />
+          </div>
+
+          {/* Corps */}
+          <div className="mt-8 [&_a]:text-bien-leaf [&_a]:underline [&_a]:underline-offset-2 [&_strong]:text-black">
+            <p className="text-lg text-black/80 leading-relaxed font-medium" dangerouslySetInnerHTML={{ __html: a.intro }} />
+
+            {a.blocks.map((b, i) => {
+              if ("h2" in b) return <h2 key={i} className="mt-10 font-display tracking-tight text-2xl sm:text-3xl text-black">{b.h2}</h2>;
+              if ("h3" in b) return <h3 key={i} className="mt-7 font-display text-lg sm:text-xl text-black">{b.h3}</h3>;
+              if ("ul" in b)
+                return (
+                  <ul key={i} className="mt-4 space-y-2 list-disc pl-5 text-[15px] sm:text-base text-black/75 leading-relaxed">
+                    {b.ul.map((li, j) => <li key={j} dangerouslySetInnerHTML={{ __html: li }} />)}
+                  </ul>
+                );
+              return <p key={i} className="mt-4 text-[15px] sm:text-base text-black/75 leading-relaxed" dangerouslySetInnerHTML={{ __html: b.p }} />;
+            })}
+          </div>
+
+          {/* FAQ */}
+          {a.faq.length > 0 && (
+            <section className="mt-12 pt-10 border-t border-border">
+              <h2 className="font-display tracking-tight text-2xl sm:text-3xl text-black">{ui.faqTitle}</h2>
+              <div className="mt-5 space-y-3">
+                {a.faq.map((f) => (
+                  <details key={f.q} className="group bg-card rounded-2xl ring-1 ring-border px-5">
+                    <summary className="flex items-center justify-between gap-4 cursor-pointer list-none [&::-webkit-details-marker]:hidden py-4">
+                      <h3 className="font-display text-black">{f.q}</h3>
+                      <ChevronDown className="h-5 w-5 shrink-0 text-bien-leaf transition-transform group-open:rotate-180" />
+                    </summary>
+                    <p className="pb-5 -mt-0.5 text-sm text-black/75 leading-relaxed">{f.a}</p>
+                  </details>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Pour aller plus loin : la collection et les produits liés au sujet
+              (maillage, audit du 22/09/2026). */}
+          {links && linkedCollection && (
+            <section className="mt-12 rounded-3xl bg-bien-cream/60 ring-1 ring-border p-6 sm:p-8">
+              <h2 className="font-display tracking-tight text-xl sm:text-2xl text-black">{ui.further}</h2>
+              <p className="mt-2 text-[15px] text-black/70 leading-relaxed">{linkedCollection.desc}</p>
+              <div className="mt-5 flex flex-wrap items-center gap-2.5">
+                <Link
+                  href={`/${lang}/collections/${links.collection}`}
+                  className="inline-flex items-center gap-2 rounded-full bg-bien-forest text-bien-cream px-5 py-2.5 text-sm font-semibold hover:bg-bien-leaf transition-colors"
+                >
+                  {ui.seeCollection} {linkedCollection.label} <ArrowRight className="h-4 w-4" />
+                </Link>
+                {links.products.map((p) => (
+                  <Link
+                    key={p.handle}
+                    href={`/${lang}/products/${p.handle}`}
+                    className="rounded-full ring-1 ring-black/15 bg-white px-4 py-2.5 text-sm font-semibold text-black hover:ring-bien-leaf transition"
+                  >
+                    {p.name}
+                  </Link>
+                ))}
+              </div>
+            </section>
+          )}
+
+          <div className="mt-10">
+            <Link href={`/${lang}/blog`} className="inline-flex items-center gap-2 text-sm font-semibold text-bien-leaf hover:gap-3 transition-all">
+              <ArrowLeft className="h-4 w-4" /> {ui.back}
+            </Link>
+          </div>
+        </article>
+      </main>
+
+      <DiagnosticCTA lang={lang} />
+    </div>
+  );
+}

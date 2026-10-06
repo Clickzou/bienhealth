@@ -4,7 +4,8 @@ import { hasLocale } from "../dictionaries";
 import SiteHeader from "@/components/site-header";
 import BlogListing from "@/components/blog-listing";
 import { blogPageCount } from "@/lib/blog-pages";
-import { ARTICLES, localizeArticle } from "@/lib/blog";
+import { localizeArticle } from "@/lib/blog";
+import { articlesPublies } from "@/lib/blog-publication";
 
 /**
  * Index du blog, partagé par `/blog` et `/blog/page/N`.
@@ -32,7 +33,7 @@ export default function BlogIndex({ lang, page }: { lang: string; page: number }
   const en = lang === "en";
   const hero = blogHero(lang);
 
-  const items = ARTICLES.map((base) => {
+  const items = articlesPublies().map((base) => {
     const a = localizeArticle(base, lang);
     return {
       slug: a.slug,

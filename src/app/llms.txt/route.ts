@@ -1,5 +1,5 @@
 import { SITE_URL, IS_INDEXABLE } from "@/lib/seo";
-import { ARTICLES } from "@/lib/blog";
+import { articlesPublies } from "@/lib/blog-publication";
 import { COLLECTIONS } from "@/lib/shop";
 import { PRODUCT_FACTS, PACK_FACTS, productFactLine } from "@/lib/brand-facts";
 
@@ -20,6 +20,8 @@ import { PRODUCT_FACTS, PACK_FACTS, productFactLine } from "@/lib/brand-facts";
  *   — le garder synchronisé avec le catalogue, d'où la génération dynamique.
  */
 export const dynamic = "force-static";
+// Publication à date (blog-publication.ts) : régénéré au plus toutes les heures.
+export const revalidate = 3600;
 
 export async function GET() {
   // Préprod : même logique que robots.ts, on ne s'expose pas depuis un domaine
@@ -34,7 +36,7 @@ export async function GET() {
     .map((c) => `- [${c.label}](${SITE_URL}/fr/collections/${c.slug}) : ${c.desc}`)
     .join("\n");
 
-  const articles = ARTICLES.map((a) => `- [${a.title}](${SITE_URL}/fr/blog/${a.slug}) — ${a.category}`).join("\n");
+  const articles = articlesPublies().map((a) => `- [${a.title}](${SITE_URL}/fr/blog/${a.slug}) — ${a.category}`).join("\n");
 
   const body = `# BIEN health
 

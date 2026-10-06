@@ -15,7 +15,18 @@ export function proxy(request: NextRequest) {
   const hasLocale = locales.some(
     (locale) => pathname === `/${locale}` || pathname.startsWith(`/${locale}/`),
   );
-  if (hasLocale) return;
+  if (hasLocale) {
+    // Aperçu signé des articles programmés (`/[lang]/blog/apercu/…`) : jamais
+    // indexé, et la signature ne part pas dans l'en-tête Referer des liens
+    // sortants. Posé ici plutôt que dans next.config.ts (table des 301).
+    if (/^\/(fr|en)\/blog\/apercu\//.test(pathname)) {
+      const res = NextResponse.next();
+      res.headers.set("X-Robots-Tag", "noindex, nofollow");
+      res.headers.set("Referrer-Policy", "no-referrer");
+      return res;
+    }
+    return;
+  }
 
   const locale = getLocale(request);
   request.nextUrl.pathname = `/${locale}${pathname}`;

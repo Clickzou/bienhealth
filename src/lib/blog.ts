@@ -5,6 +5,8 @@
  *
  * `lang` réservé pour l'internationalisation future (articles FR pour l'instant).
  */
+import { appliquerCorrections } from "./blog-edition-client";
+
 export type Block = { h2: string } | { h3: string } | { p: string } | { ul: string[] };
 
 /** Champs traduisibles d'un article (le reste — slug, date, cover… — est commun). */
@@ -28,6 +30,12 @@ export type Article = ArticleL10n & {
   updated?: string;
   readingMinutes: number;
   cover: string;
+  /** Requête Google visée par l'article (en français), lue par le tableau de
+   *  bord client Clickzou (`/api/articles-programmes`). Une vraie requête,
+   *  tirée des documents SEO ou de la Search Console, jamais un titre.
+   *  Obligatoire : un article sans requête cible ne compile pas. */
+  motCle: string;
+  motsClesSecondaires?: string[];
   en?: ArticleL10n; // version anglaise (repli FR si absente)
 };
 
@@ -39,9 +47,11 @@ export function localizeArticle(a: Article, lang: string): Article {
   return lang === "en" && a.en ? { ...a, ...a.en } : a;
 }
 
-export const ARTICLES: Article[] = [
+const ARTICLES_REDIGES: Article[] = [
   {
     slug: "champignons-adaptogenes-guide-complet",
+    motCle: "champignons adaptogènes",
+    motsClesSecondaires: ["champignon adaptogène"],
     title: "Champignons adaptogènes : bienfaits et guide complet",
     metaTitle: "Champignons adaptogènes : le guide complet",
     metaDescription:
@@ -180,6 +190,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "gerer-le-stress-naturellement",
+    motCle: "gérer le stress naturellement",
     title: "Comment gérer le stress naturellement : 7 solutions qui marchent",
     metaTitle: "Gérer le stress naturellement : 7 solutions",
     metaDescription:
@@ -350,6 +361,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "ameliorer-sa-concentration",
+    motCle: "améliorer sa concentration",
     title: "Améliorer sa concentration : méthodes et compléments naturels",
     metaTitle: "Améliorer sa concentration : le guide",
     metaDescription:
@@ -492,6 +504,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "retrouver-de-l-energie-naturellement",
+    motCle: "retrouver de l'énergie",
     title: "Retrouver de l'énergie naturellement : les vraies solutions",
     metaTitle: "Retrouver de l'énergie naturellement",
     metaDescription:
@@ -636,6 +649,8 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "quest-ce-quun-adaptogene",
+    motCle: "qu'est-ce qu'un adaptogène",
+    motsClesSecondaires: ["adaptogène définition"],
     title: "Qu'est-ce qu'un adaptogène ? Définition, plantes et bienfaits",
     metaTitle: "Qu'est-ce qu'un adaptogène ? Définition",
     metaDescription:
@@ -768,6 +783,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "collagene-bienfaits-peau",
+    motCle: "collagène bienfaits peau",
     title: "Collagène : bienfaits pour la peau et comment en profiter",
     metaTitle: "Collagène : bienfaits pour la peau",
     metaDescription:
@@ -902,6 +918,8 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "lions-mane",
+    motCle: "lion's mane",
+    motsClesSecondaires: ["lion's mane effets secondaires"],
     title: "Lion's Mane : ce que la recherche montre vraiment sur la mémoire et la concentration",
     metaTitle: "Lion's Mane : bienfaits, dosage & preuves",
     metaDescription:
@@ -1037,6 +1055,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "ashwagandha",
+    motCle: "ashwagandha bienfaits",
     title: "Ashwagandha : bienfaits réels, dosage et précautions à connaître",
     metaTitle: "Ashwagandha : bienfaits, dosage & précautions",
     metaDescription:
@@ -1204,6 +1223,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "reishi-cordyceps-chaga",
+    motCle: "reishi cordyceps chaga",
     title: "Reishi, Cordyceps, Chaga : à quoi sert vraiment chacun de ces champignons",
     metaTitle: "Reishi, Cordyceps, Chaga : le guide comparatif",
     metaDescription:
@@ -1367,6 +1387,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "mieux-dormir-naturellement",
+    motCle: "mieux dormir naturellement",
     title: "Mieux dormir naturellement : ce qui marche vraiment, dans l'ordre",
     metaTitle: "Mieux dormir naturellement : le guide complet",
     metaDescription:
@@ -1518,6 +1539,8 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "cortisol-stress",
+    motCle: "cortisol",
+    motsClesSecondaires: ["hormone du stress"],
     title: "Cortisol : comment il fonctionne vraiment, et ce qui le fait baisser",
     metaTitle: "Cortisol : comprendre et réguler l'hormone du stress",
     metaDescription:
@@ -1673,6 +1696,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "brouillard-mental",
+    motCle: "brouillard mental",
     title: "Brouillard mental : les causes possibles, dans l'ordre où il faut les chercher",
     metaTitle: "Brouillard mental : causes et solutions",
     metaDescription:
@@ -1842,6 +1866,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "alternative-cafe-focus",
+    motCle: "alternative au café",
     title: "Alternatives au café : ce qui remplace vraiment la caféine, et ce qui n'y prétend pas",
     metaTitle: "Alternatives naturelles au café : le comparatif",
     metaDescription:
@@ -2003,6 +2028,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "fatigue-chronique-solution",
+    motCle: "fatigue chronique",
     title: "Fatigue qui dure : ce qu'il faut chercher avant de se supplémenter",
     metaTitle: "Fatigue chronique : causes, bilan et solutions",
     metaDescription:
@@ -2174,6 +2200,8 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "complement-recuperation-sport",
+    motCle: "complément alimentaire récupération musculaire",
+    motsClesSecondaires: ["récupération sportive"],
     title: "Récupération sportive : ce qui marche, par ordre d'importance",
     metaTitle: "Compléments et récupération sportive : le guide",
     metaDescription:
@@ -2327,6 +2355,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "complement-peau-guide",
+    motCle: "compléments belle peau",
     title: "Compléments pour la peau : ce qui a des preuves, et ce qui n'en a pas",
     metaTitle: "Compléments pour une belle peau : le guide",
     metaDescription:
@@ -2492,6 +2521,7 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "gummies-vs-gelules",
+    motCle: "gummies ou gélules",
     title: "Gummies ou gélules : ce qui change vraiment, et comment choisir",
     metaTitle: "Gummies ou gélules : le comparatif honnête",
     metaDescription:
@@ -2657,6 +2687,8 @@ export const ARTICLES: Article[] = [
   },
   {
     slug: "cafe-champignons-mushroom-coffee",
+    motCle: "café aux champignons",
+    motsClesSecondaires: ["mushroom coffee"],
     title: "Café aux champignons : ce qu'il contient vraiment, et ce qu'il vaut",
     metaTitle: "Café aux champignons (mushroom coffee) : le guide",
     metaDescription:
@@ -2791,6 +2823,15 @@ export const ARTICLES: Article[] = [
     },
   },
 ];
+
+/**
+ * TOUS les articles rédigés, publiés ou programmés, avec les corrections de la
+ * cliente (relecture depuis l'espace client Clickzou, `blog-edition-client.ts`)
+ * déjà appliquées. Une page publique ne lit jamais ce tableau directement :
+ * elle passe par `articlesPublies()` / `getArticlePublie()` (`blog-publication.ts`),
+ * sinon un article programmé paraîtrait avant sa date.
+ */
+export const ARTICLES: Article[] = ARTICLES_REDIGES.map(appliquerCorrections);
 
 export function getArticle(slug: string): Article | undefined {
   return ARTICLES.find((a) => a.slug === slug);

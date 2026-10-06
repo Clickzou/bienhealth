@@ -1,5 +1,5 @@
 import { SITE_URL, IS_INDEXABLE } from "@/lib/seo";
-import { ARTICLES } from "@/lib/blog";
+import { articlesPublies } from "@/lib/blog-publication";
 import { COLLECTIONS } from "@/lib/shop";
 import { COLLECTION_SEO } from "@/lib/collection-seo";
 import { PRODUCT_FACTS, PACK_FACTS, productFactLine } from "@/lib/brand-facts";
@@ -15,6 +15,8 @@ import { PRODUCT_FACTS, PACK_FACTS, productFactLine } from "@/lib/brand-facts";
  * site. Version française seulement, la langue de référence du contenu.
  */
 export const dynamic = "force-static";
+// Publication à date (blog-publication.ts) : régénéré au plus toutes les heures.
+export const revalidate = 3600;
 
 /** Retire le HTML léger des articles (liens, gras) sans perdre le texte. */
 function plain(html: string): string {
@@ -71,7 +73,7 @@ export async function GET() {
   }
 
   out.push("## Guides du Journal", "");
-  for (const a of ARTICLES) {
+  for (const a of articlesPublies()) {
     out.push(
       `### ${a.title}`,
       "",

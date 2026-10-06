@@ -5,6 +5,9 @@ import BlogIndex from "../../blog-index";
 import { blogPageCount } from "@/lib/blog-pages";
 import { blogMetadata } from "../../metadata";
 
+// Publication à date (blog-publication.ts) : la pagination suit le nombre d'articles parus.
+export const revalidate = 3600;
+
 /**
  * Pages 2 et suivantes de l'index du blog.
  *

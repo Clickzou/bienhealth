@@ -8,12 +8,12 @@
  * nombre de pages calculé à partir d'elle tombait silencieusement à `NaN` — la
  * pagination disparaissait du HTML sans la moindre erreur.
  */
-import { ARTICLES } from "./blog";
+import { articlesPublies } from "./blog-publication";
 
 /** Articles par page de l'index. */
 export const BLOG_PAGE_SIZE = 9;
 
-/** Nombre total de pages, au moins une même si le blog est vide. */
+/** Nombre total de pages (articles publiés seulement), au moins une même si le blog est vide. */
 export function blogPageCount(): number {
-  return Math.max(1, Math.ceil(ARTICLES.length / BLOG_PAGE_SIZE));
+  return Math.max(1, Math.ceil(articlesPublies().length / BLOG_PAGE_SIZE));
 }

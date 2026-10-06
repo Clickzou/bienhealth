@@ -1,11 +1,11 @@
 import { NextResponse } from "next/server";
-import { timingSafeEqual } from "node:crypto";
 import {
   adminGraphQl,
   hasFullOrderHistory,
   isShopifySalesConfigured,
   type GraphQlResponse,
 } from "@/lib/seo-dashboard/shopify-sales";
+import { ENTETES_TABLEAU_DE_BORD, refusTableauDeBord } from "@/lib/tableau-de-bord";
 
 /**
  * GET /api/tableau-de-bord/ventes?du=YYYY-MM-DD&au=YYYY-MM-DD — les ventes de
@@ -31,7 +31,7 @@ const JOURS_MAX = 400;
 const MAX_PAGES = 40;
 /** `read_orders` seul : soixante jours d'historique (cf. shopify-sales.ts). */
 const JOURS_HISTORIQUE = 60;
-const ENTETES = { "Cache-Control": "no-store", "X-Robots-Tag": "noindex, nofollow" } as const;
+const ENTETES = ENTETES_TABLEAU_DE_BORD;
 
 /** Statuts financiers d'une commande dont l'argent a été (au moins en partie) encaissé. */
 const PAYEES = new Set(["PAID", "PARTIALLY_PAID", "PARTIALLY_REFUNDED", "REFUNDED"]);
@@ -79,18 +79,12 @@ function dateValide(texte: string | null): Date | null {
   return Number.isNaN(d.getTime()) || d.toISOString().slice(0, 10) !== texte ? null : d;
 }
 
-function autorise(req: Request, cle: string): boolean {
-  const attendu = Buffer.from(`Bearer ${cle}`);
-  const donne = Buffer.from(req.headers.get("authorization") ?? "");
-  return attendu.length === donne.length && timingSafeEqual(attendu, donne);
-}
-
 const jourFr = (iso: string) => iso.split("-").reverse().join("/");
 
 export async function GET(req: Request) {
-  const cle = process.env.TABLEAU_DE_BORD_CLE;
-  if (!cle || cle.length < 32) return reponse({ erreur: "Accès non configuré" }, 503);
-  if (!autorise(req, cle)) return reponse({ erreur: "Non autorisé" }, 401);
+  // Contrôle de clé commun aux routes du tableau de bord (503 / 401).
+  const refus = refusTableauDeBord(req);
+  if (refus) return refus;
 
   const q = new URL(req.url).searchParams;
   const du = dateValide(q.get("du"));

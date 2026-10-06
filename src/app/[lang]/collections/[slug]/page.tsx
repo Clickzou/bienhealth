@@ -7,7 +7,8 @@ import { getProducts } from "@/lib/shopify-products";
 import { COLLECTIONS, localizeCollection, sortForCollection, isAccessory } from "@/lib/shop";
 import JsonLd from "@/components/json-ld";
 import { COLLECTION_SEO, localizeCollectionSeo } from "@/lib/collection-seo";
-import { getArticle, localizeArticle } from "@/lib/blog";
+import { localizeArticle } from "@/lib/blog";
+import { getArticlePublie } from "@/lib/blog-publication";
 import { SITE_URL, pageMetadata, metaDescription } from "@/lib/seo";
 import SiteHeader from "@/components/site-header";
 import ProductCard from "@/components/product-card";
@@ -56,7 +57,7 @@ export default async function CollectionPage({
   const t = T[lang === "en" ? "en" : "fr"];
   const c = localizeCollection(col, lang);
   const related = (seoRaw?.related ?? [])
-    .map((s) => getArticle(s))
+    .map((s) => getArticlePublie(s))
     .filter((a) => a !== undefined)
     .map((a) => localizeArticle(a, lang));
 
