@@ -74,7 +74,7 @@ export default async function ContactPage({
           <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">
             <span className="grid place-items-center h-12 w-12 rounded-2xl bg-bien-leaf/15 text-bien-leaf"><MapPin className="h-6 w-6" /></span>
             <h2 className="mt-4 font-display text-black">{t.addressTitle}</h2>
-            <p className="mt-1 text-sm text-black/65 leading-relaxed">SAS BIEN Health France<br />100 Rue du Verbial<br />81000 Albi, France</p>
+            <p className="mt-1 text-sm text-black/65 leading-relaxed">BIEN HEALTH FRANCE SAS<br />100 Rue du Verbial<br />81000 Albi, France</p>
           </div>
 
           <div className="bg-card rounded-3xl ring-1 ring-border bien-shadow-sm p-6">

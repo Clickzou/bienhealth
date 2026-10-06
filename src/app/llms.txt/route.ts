@@ -46,7 +46,7 @@ export async function GET() {
 > sucre ajouté et sans gluten (gummies vegan ; poudre MUSHGLOW végétarienne,
 > contient de l'œuf).
 
-Éditeur : BIEN Health France SAS — 100 rue du Verbial, 81000 Albi, France.
+Éditeur : BIEN HEALTH FRANCE SAS — 100 rue du Verbial, 81000 Albi, France.
 Fondatrice : Carla Debard.
 Site : ${SITE_URL} (français : ${SITE_URL}/fr · anglais : ${SITE_URL}/en)
 Contact : info@bien.health

@@ -40,7 +40,7 @@ export async function GET() {
   out.push(
     "# BIEN health — contenu intégral",
     "",
-    "> Marque française de compléments alimentaires à base de champignons fonctionnels et de plantes adaptogènes. Gummies et poudre fabriqués en France. Éditeur : BIEN Health France SAS, Albi. Fondatrice : Carla Debard.",
+    "> Marque française de compléments alimentaires à base de champignons fonctionnels et de plantes adaptogènes. Gummies et poudre fabriqués en France. Éditeur : BIEN HEALTH FRANCE SAS, Albi. Fondatrice : Carla Debard.",
     "",
     `Sommaire : ${SITE_URL}/llms.txt`,
     "",
