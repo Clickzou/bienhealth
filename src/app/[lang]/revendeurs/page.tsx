@@ -27,6 +27,8 @@ const T = {
     proTitle: "Vous êtes un professionnel ?",
     proText: "Café, studio, pharmacie, concept-store… Rejoignez le réseau de revendeurs BIEN et proposez nos compléments à vos clients.",
     become: "Devenir revendeur", order: "Commander en ligne",
+    listTitle: "Tous nos points de vente",
+    countries: { France: "France", Espagne: "Espagne", Suisse: "Suisse", Portugal: "Portugal" },
   },
   en: {
     eyebrow: "Stockists", h1: "Where to find BIEN.",
@@ -35,6 +37,8 @@ const T = {
     proTitle: "Are you a professional?",
     proText: "Café, studio, pharmacy, concept store… Join the BIEN reseller network and offer our supplements to your customers.",
     become: "Become a reseller", order: "Order online",
+    listTitle: "All our stockists",
+    countries: { France: "France", Espagne: "Spain", Suisse: "Switzerland", Portugal: "Portugal" },
   },
 } as const;
 
@@ -51,6 +55,8 @@ const RESELLERS: Reseller[] = [
   { name: "Vinent & Miller Lda", address: "Rua de São Bento 106 B", city: "1200-820 Lisboa", country: "Portugal", lat: 38.7139, lng: -9.1522 },
   { name: "Mudita Herbals", address: "Plaça del Dr. Pont, 7", city: "17488 Cadaqués, Girona", country: "Espagne", lat: 42.2887, lng: 3.2789 },
 ];
+
+const COUNTRY_ORDER = ["France", "Espagne", "Suisse", "Portugal"] as const;
 
 export default async function RevendeursPage({
   params,
@@ -84,6 +90,28 @@ export default async function RevendeursPage({
         <p className="mt-6 text-center text-sm text-black/55">
           {t.note}
         </p>
+      </section>
+
+      {/* Liste en clair, rendue côté serveur : la carte (et sa liste) ne se
+          dessinent que dans le navigateur, les moteurs et les IA n'y lisaient
+          aucun nom ni aucune adresse. Mêmes données que la carte. */}
+      <section className="px-4 sm:px-6 lg:px-12 xl:px-16 mt-12 sm:mt-16">
+        <h2 className="font-display tracking-tight text-2xl text-black text-center">{t.listTitle}</h2>
+        <div className="mt-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {COUNTRY_ORDER.map((country) => (
+            <div key={country}>
+              <h3 className="font-display text-sm uppercase tracking-wider text-bien-leaf">{t.countries[country]}</h3>
+              <ul className="mt-4 space-y-3 text-sm text-black/70 leading-snug">
+                {RESELLERS.filter((r) => r.country === country).map((r) => (
+                  <li key={r.name}>
+                    <span className="block font-semibold text-black">{r.name}</span>
+                    {r.address}, {r.city}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
       </section>
 
       {/* Devenir revendeur */}
