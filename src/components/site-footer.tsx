@@ -36,6 +36,25 @@ const COMMITMENTS = [
  */
 export default function SiteFooter({ lang }: { lang: string }) {
   const t = ui(lang).footer;
+  const nav = ui(lang).chrome;
+  // Liens du méga-menu repris en clair : le menu du haut n'insère ses liens
+  // qu'au survol, ces pages n'étaient donc reliées que depuis le plan du site.
+  const PRODUCT_LINKS = [
+    { label: nav.allProducts, href: `/${lang}/boutique` },
+    { label: nav.gummies, href: `/${lang}/collections/gummies` },
+    { label: nav.powders, href: `/${lang}/collections/nos-poudres` },
+    { label: nav.packs, href: `/${lang}/collections/packs` },
+    { label: nav.accessories, href: `/${lang}/collections/nos-accessoires` },
+    { label: nav.needPerformance, href: `/${lang}/collections/performance-et-vitalite` },
+    { label: nav.needSleep, href: `/${lang}/collections/serenite` },
+    { label: nav.needFocus, href: `/${lang}/collections/concentration` },
+    { label: nav.needBeauty, href: `/${lang}/collections/beaute-et-bien-etre` },
+  ];
+  const ABOUT_LINKS = [
+    { label: nav.story, href: `/${lang}/histoire` },
+    { label: nav.press, href: `/${lang}/presse` },
+    { label: nav.resellers, href: `/${lang}/revendeurs` },
+  ];
   return (
     <footer className="mt-24 bg-bien-forest text-bien-cream">
       <div className="mx-auto max-w-[1600px] px-4 sm:px-6 lg:px-12 xl:px-16 py-14 lg:py-20">
@@ -52,7 +71,7 @@ export default function SiteFooter({ lang }: { lang: string }) {
           </div>
         </div>
 
-        <div className="grid lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-10">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-[1.4fr_repeat(5,1fr)] gap-10">
           <div>
             <Image src="/brand/logo-bien.png" alt="BIEN" width={130} height={41} className="h-9 w-auto invert brightness-0" />
             <p className="mt-4 text-sm text-bien-cream/70 leading-relaxed max-w-xs">{t.tagline}</p>
@@ -64,6 +83,22 @@ export default function SiteFooter({ lang }: { lang: string }) {
               <p><a href="tel:+33638621213" className="inline-block py-1.5 hover:text-bien-gold">+33 6 38 62 12 13</a></p>
               <p><a href="mailto:info@bien.health" className="inline-block py-1.5 hover:text-bien-gold">info@bien.health</a></p>
             </div>
+          </div>
+          <div>
+            <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{nav.products}</h3>
+            <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
+              {PRODUCT_LINKS.map(({ label, href }) => (
+                <li key={href}><Link href={href} className="hover:text-bien-gold" prefetch={false}>{label}</Link></li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{nav.about}</h3>
+            <ul className="mt-5 space-y-3 text-sm text-bien-cream/80">
+              {ABOUT_LINKS.map(({ label, href }) => (
+                <li key={href}><Link href={href} className="hover:text-bien-gold" prefetch={false}>{label}</Link></li>
+              ))}
+            </ul>
           </div>
           <div>
             <h3 className="font-display text-sm uppercase tracking-wider text-bien-gold">{t.helpTitle}</h3>
