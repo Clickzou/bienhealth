@@ -9,7 +9,7 @@
     "statut": "faite",
     "prevue_le": "2026-10-07",
     "faite_le": "2026-10-10",
-    "verifiee_le": null,
+    "verifiee_le": "2026-10-10",
     "mesure": "citation",
     "questions": []
   },
@@ -37,7 +37,7 @@
     "statut": "faite",
     "prevue_le": "2026-10-09",
     "faite_le": "2026-10-10",
-    "verifiee_le": null,
+    "verifiee_le": "2026-10-10",
     "mesure": "citation",
     "questions": ["Où trouver des compléments aux adaptogènes en boutique ou en pharmacie à Paris ?"]
   },
